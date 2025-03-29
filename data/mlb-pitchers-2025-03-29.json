@@ -1,0 +1,1506 @@
+{
+  "date": "2025-03-29",
+  "analysisTimestamp": "2025-03-29T18:22:26.328Z",
+  "pitchers": [
+    {
+      "pitcherId": 608331,
+      "name": "Max Fried",
+      "team": "New York Yankees",
+      "opponent": "Milwaukee Brewers",
+      "gameId": 778538,
+      "venue": "Yankee Stadium",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 1,
+          "gamesStarted": 1,
+          "inningsPitched": 3,
+          "wins": 0,
+          "losses": 0,
+          "era": "6.00",
+          "whip": "1.67",
+          "strikeouts": 0,
+          "walks": 1,
+          "saves": 0,
+          "homeRunsAllowed": 0,
+          "hitBatsmen": 2
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 3,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 10
+        }
+      },
+      "projections": {
+        "winProbability": 22,
+        "expectedStrikeouts": 0,
+        "expectedInnings": 3.3000000000000003,
+        "dfsProjection": {
+          "expectedPoints": -2.5165,
+          "upside": -3.0198,
+          "floor": -2.0132000000000003
+        }
+      },
+      "environment": {
+        "temperature": 78,
+        "windSpeed": 15,
+        "windDirection": "Out To CF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 641482,
+      "name": "Nestor Cortes",
+      "team": "Milwaukee Brewers",
+      "opponent": "New York Yankees",
+      "gameId": 778538,
+      "venue": "Yankee Stadium",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 1,
+          "gamesStarted": 1,
+          "inningsPitched": 2,
+          "wins": 0,
+          "losses": 0,
+          "era": "31.50",
+          "whip": "5.50",
+          "strikeouts": 0,
+          "walks": 5,
+          "saves": 0,
+          "homeRunsAllowed": 5,
+          "hitBatsmen": 0
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 22.5,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 10
+        }
+      },
+      "projections": {
+        "winProbability": 22,
+        "expectedStrikeouts": 0,
+        "expectedInnings": 2.2,
+        "dfsProjection": {
+          "expectedPoints": -6.429227272727272,
+          "upside": -7.715072727272726,
+          "floor": -5.143381818181818
+        }
+      },
+      "environment": {
+        "temperature": 78,
+        "windSpeed": 15,
+        "windDirection": "Out To CF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 686563,
+      "name": "Jonathan Cannon",
+      "team": "Chicago White Sox",
+      "opponent": "Los Angeles Angels",
+      "gameId": 778534,
+      "venue": "Rate Field",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 1,
+          "gamesStarted": 1,
+          "inningsPitched": 0.2,
+          "wins": 0,
+          "losses": 0,
+          "era": "0.00",
+          "whip": "3.00",
+          "strikeouts": 0,
+          "walks": 1,
+          "saves": 0,
+          "homeRunsAllowed": 0,
+          "hitBatsmen": 0
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 0,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 1
+        }
+      },
+      "projections": {
+        "winProbability": 20,
+        "expectedStrikeouts": 0,
+        "expectedInnings": 0.22000000000000003,
+        "dfsProjection": {
+          "expectedPoints": -14.360875,
+          "upside": -17.23305,
+          "floor": -11.488700000000001
+        }
+      },
+      "environment": {
+        "temperature": 67,
+        "windSpeed": 14,
+        "windDirection": "In From RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 667755,
+      "name": "José Soriano",
+      "team": "Los Angeles Angels",
+      "opponent": "Chicago White Sox",
+      "gameId": 778534,
+      "venue": "Rate Field",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 22,
+          "gamesStarted": 20,
+          "inningsPitched": 113,
+          "wins": 6,
+          "losses": 7,
+          "era": "3.42",
+          "whip": "1.20",
+          "strikeouts": 0,
+          "walks": 45,
+          "saves": 0,
+          "homeRunsAllowed": 8,
+          "hitBatsmen": 9
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 0.6371681415929203,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 2.5486725663716814
+        }
+      },
+      "projections": {
+        "winProbability": 45,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 5.650000000000001,
+        "dfsProjection": {
+          "expectedPoints": 4.213500000000002,
+          "upside": 5.056200000000001,
+          "floor": 3.3708000000000014
+        }
+      },
+      "environment": {
+        "temperature": 67,
+        "windSpeed": 14,
+        "windDirection": "In From RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 607200,
+      "name": "Erick Fedde",
+      "team": "St. Louis Cardinals",
+      "opponent": "Minnesota Twins",
+      "gameId": 778528,
+      "venue": "Busch Stadium",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 1,
+          "gamesStarted": 1,
+          "inningsPitched": 1,
+          "wins": 0,
+          "losses": 0,
+          "era": "0.00",
+          "whip": "0.00",
+          "strikeouts": 0,
+          "walks": 0,
+          "saves": 0,
+          "homeRunsAllowed": 0,
+          "hitBatsmen": 0
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 0,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 1
+        }
+      },
+      "projections": {
+        "winProbability": 21,
+        "expectedStrikeouts": 0,
+        "expectedInnings": 1.1,
+        "dfsProjection": {
+          "expectedPoints": 0.9818437499999998,
+          "upside": 1.1782124999999997,
+          "floor": 0.7854749999999999
+        }
+      },
+      "environment": {
+        "temperature": 68,
+        "windSpeed": 10,
+        "windDirection": "Out To LF",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 657746,
+      "name": "Joe Ryan",
+      "team": "Minnesota Twins",
+      "opponent": "St. Louis Cardinals",
+      "gameId": 778528,
+      "venue": "Busch Stadium",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 23,
+          "gamesStarted": 23,
+          "inningsPitched": 135,
+          "wins": 7,
+          "losses": 7,
+          "era": "3.60",
+          "whip": "0.99",
+          "strikeouts": 0,
+          "walks": 23,
+          "saves": 0,
+          "homeRunsAllowed": 19,
+          "hitBatsmen": 5
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 1.2666666666666668,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 5.066666666666667
+        }
+      },
+      "projections": {
+        "winProbability": 46,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 6.4565217391304355,
+        "dfsProjection": {
+          "expectedPoints": 4.713500000000002,
+          "upside": 5.656200000000002,
+          "floor": 3.7708000000000013
+        }
+      },
+      "environment": {
+        "temperature": 68,
+        "windSpeed": 10,
+        "windDirection": "Out To LF",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 453286,
+      "name": "Max Scherzer",
+      "team": "Toronto Blue Jays",
+      "opponent": "Baltimore Orioles",
+      "gameId": 778536,
+      "venue": "Rogers Centre",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 9,
+          "gamesStarted": 9,
+          "inningsPitched": 43.1,
+          "wins": 2,
+          "losses": 4,
+          "era": "3.95",
+          "whip": "1.15",
+          "strikeouts": 0,
+          "walks": 10,
+          "saves": 0,
+          "homeRunsAllowed": 7,
+          "hitBatsmen": 1
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 1.4617169373549883,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 5.846867749419953
+        }
+      },
+      "projections": {
+        "winProbability": 46,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 5.267777777777778,
+        "dfsProjection": {
+          "expectedPoints": 4.0135000000000005,
+          "upside": 4.8162,
+          "floor": 3.2108000000000008
+        }
+      },
+      "environment": {
+        "temperature": 68,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 665152,
+      "name": "Dean Kremer",
+      "team": "Baltimore Orioles",
+      "opponent": "Toronto Blue Jays",
+      "gameId": 778536,
+      "venue": "Rogers Centre",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 24,
+          "gamesStarted": 24,
+          "inningsPitched": 129.2,
+          "wins": 8,
+          "losses": 10,
+          "era": "4.10",
+          "whip": "1.24",
+          "strikeouts": 0,
+          "walks": 51,
+          "saves": 0,
+          "homeRunsAllowed": 18,
+          "hitBatsmen": 3
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 1.2538699690402477,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 5.015479876160991
+        }
+      },
+      "projections": {
+        "winProbability": 46,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 5.921666666666667,
+        "dfsProjection": {
+          "expectedPoints": 4.413500000000001,
+          "upside": 5.296200000000001,
+          "floor": 3.530800000000001
+        }
+      },
+      "environment": {
+        "temperature": 68,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 663623,
+      "name": "Jake Irvin",
+      "team": "Washington Nationals",
+      "opponent": "Philadelphia Phillies",
+      "gameId": 778535,
+      "venue": "Nationals Park",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 33,
+          "gamesStarted": 33,
+          "inningsPitched": 187.2,
+          "wins": 10,
+          "losses": 14,
+          "era": "4.41",
+          "whip": "1.20",
+          "strikeouts": 0,
+          "walks": 52,
+          "saves": 0,
+          "homeRunsAllowed": 29,
+          "hitBatsmen": 4
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 1.3942307692307692,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 5.576923076923077
+        }
+      },
+      "projections": {
+        "winProbability": 47,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 6.239999999999999,
+        "dfsProjection": {
+          "expectedPoints": 4.6135,
+          "upside": 5.5362,
+          "floor": 3.6908000000000003
+        }
+      },
+      "environment": {
+        "temperature": 82,
+        "windSpeed": 11,
+        "windDirection": "Out To RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 666200,
+      "name": "Jesús Luzardo",
+      "team": "Philadelphia Phillies",
+      "opponent": "Washington Nationals",
+      "gameId": 778535,
+      "venue": "Nationals Park",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 12,
+          "gamesStarted": 12,
+          "inningsPitched": 66.2,
+          "wins": 3,
+          "losses": 6,
+          "era": "5.00",
+          "whip": "1.25",
+          "strikeouts": 0,
+          "walks": 22,
+          "saves": 0,
+          "homeRunsAllowed": 9,
+          "hitBatsmen": 2
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 1.2235649546827796,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 4.894259818731118
+        }
+      },
+      "projections": {
+        "winProbability": 47,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 6.068333333333333,
+        "dfsProjection": {
+          "expectedPoints": 4.5135000000000005,
+          "upside": 5.416200000000001,
+          "floor": 3.6108000000000007
+        }
+      },
+      "environment": {
+        "temperature": 82,
+        "windSpeed": 11,
+        "windDirection": "Out To RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 607625,
+      "name": "Seth Lugo",
+      "team": "Kansas City Royals",
+      "opponent": "Cleveland Guardians",
+      "gameId": 778529,
+      "venue": "Kauffman Stadium",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 33,
+          "gamesStarted": 33,
+          "inningsPitched": 206.2,
+          "wins": 16,
+          "losses": 9,
+          "era": "3.00",
+          "whip": "1.09",
+          "strikeouts": 0,
+          "walks": 48,
+          "saves": 0,
+          "homeRunsAllowed": 16,
+          "hitBatsmen": 9
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 0.6983511154219205,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 2.7934044616876816
+        }
+      },
+      "projections": {
+        "winProbability": 47,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 6.873333333333333,
+        "dfsProjection": {
+          "expectedPoints": 5.0135000000000005,
+          "upside": 6.0162,
+          "floor": 4.010800000000001
+        }
+      },
+      "environment": {
+        "temperature": 76,
+        "windSpeed": 15,
+        "windDirection": "Out To LF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 668909,
+      "name": "Gavin Williams",
+      "team": "Cleveland Guardians",
+      "opponent": "Kansas City Royals",
+      "gameId": 778529,
+      "venue": "Kauffman Stadium",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 16,
+          "gamesStarted": 16,
+          "inningsPitched": 76,
+          "wins": 3,
+          "losses": 10,
+          "era": "4.86",
+          "whip": "1.37",
+          "strikeouts": 0,
+          "walks": 32,
+          "saves": 0,
+          "homeRunsAllowed": 7,
+          "hitBatsmen": 3
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 0.8289473684210525,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 3.31578947368421
+        }
+      },
+      "projections": {
+        "winProbability": 47,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 5.2250000000000005,
+        "dfsProjection": {
+          "expectedPoints": 4.0135000000000005,
+          "upside": 4.8162,
+          "floor": 3.2108000000000008
+        }
+      },
+      "environment": {
+        "temperature": 76,
+        "windSpeed": 15,
+        "windDirection": "Out To LF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 666157,
+      "name": "Nick Lodolo",
+      "team": "Cincinnati Reds",
+      "opponent": "San Francisco Giants",
+      "gameId": 778540,
+      "venue": "Great American Ball Park",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 21,
+          "gamesStarted": 21,
+          "inningsPitched": 115.1,
+          "wins": 9,
+          "losses": 6,
+          "era": "4.76",
+          "whip": "1.20",
+          "strikeouts": 0,
+          "walks": 37,
+          "saves": 0,
+          "homeRunsAllowed": 13,
+          "hitBatsmen": 18
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 1.0165073848827106,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 4.066029539530843
+        }
+      },
+      "projections": {
+        "winProbability": 45,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 6.02904761904762,
+        "dfsProjection": {
+          "expectedPoints": 4.413500000000001,
+          "upside": 5.296200000000001,
+          "floor": 3.530800000000001
+        }
+      },
+      "environment": {
+        "temperature": 77,
+        "windSpeed": 14,
+        "windDirection": "In From RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 434378,
+      "name": "Justin Verlander",
+      "team": "San Francisco Giants",
+      "opponent": "Cincinnati Reds",
+      "gameId": 778540,
+      "venue": "Great American Ball Park",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 17,
+          "gamesStarted": 17,
+          "inningsPitched": 90.1,
+          "wins": 5,
+          "losses": 6,
+          "era": "5.48",
+          "whip": "1.38",
+          "strikeouts": 0,
+          "walks": 27,
+          "saves": 0,
+          "homeRunsAllowed": 15,
+          "hitBatsmen": 6
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 1.4983351831298557,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 5.993340732519423
+        }
+      },
+      "projections": {
+        "winProbability": 45,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 5.83,
+        "dfsProjection": {
+          "expectedPoints": 4.313500000000001,
+          "upside": 5.1762000000000015,
+          "floor": 3.450800000000001
+        }
+      },
+      "environment": {
+        "temperature": 77,
+        "windSpeed": 14,
+        "windDirection": "In From RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 641793,
+      "name": "Zack Littell",
+      "team": "Tampa Bay Rays",
+      "opponent": "Colorado Rockies",
+      "gameId": 778537,
+      "venue": "George M. Steinbrenner Field",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 29,
+          "gamesStarted": 29,
+          "inningsPitched": 156.1,
+          "wins": 8,
+          "losses": 10,
+          "era": "3.63",
+          "whip": "1.25",
+          "strikeouts": 0,
+          "walks": 31,
+          "saves": 0,
+          "homeRunsAllowed": 22,
+          "hitBatsmen": 5
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 1.2684176809737349,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 5.0736707238949394
+        }
+      },
+      "projections": {
+        "winProbability": 46,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 5.921034482758621,
+        "dfsProjection": {
+          "expectedPoints": 4.413500000000001,
+          "upside": 5.296200000000001,
+          "floor": 3.530800000000001
+        }
+      },
+      "environment": {
+        "temperature": 86,
+        "windSpeed": 8,
+        "windDirection": "In From RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 622608,
+      "name": "Antonio Senzatela",
+      "team": "Colorado Rockies",
+      "opponent": "Tampa Bay Rays",
+      "gameId": 778537,
+      "venue": "George M. Steinbrenner Field",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 3,
+          "gamesStarted": 3,
+          "inningsPitched": 12.1,
+          "wins": 0,
+          "losses": 1,
+          "era": "6.57",
+          "whip": "1.86",
+          "strikeouts": 0,
+          "walks": 8,
+          "saves": 0,
+          "homeRunsAllowed": 3,
+          "hitBatsmen": 0
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 2.231404958677686,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 8.925619834710744
+        }
+      },
+      "projections": {
+        "winProbability": 46,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 4.4366666666666665,
+        "dfsProjection": {
+          "expectedPoints": 3.5135000000000005,
+          "upside": 4.216200000000001,
+          "floor": 2.8108000000000004
+        }
+      },
+      "environment": {
+        "temperature": 86,
+        "windSpeed": 8,
+        "windDirection": "In From RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 678368,
+      "name": "Valente Bellozo",
+      "team": "Miami Marlins",
+      "opponent": "Pittsburgh Pirates",
+      "gameId": 778539,
+      "venue": "loanDepot park",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 13,
+          "gamesStarted": 13,
+          "inningsPitched": 68.2,
+          "wins": 3,
+          "losses": 4,
+          "era": "3.67",
+          "whip": "1.31",
+          "strikeouts": 0,
+          "walks": 21,
+          "saves": 0,
+          "homeRunsAllowed": 15,
+          "hitBatsmen": 2
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 1.9794721407624634,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 7.9178885630498534
+        }
+      },
+      "projections": {
+        "winProbability": 45,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 5.770769230769231,
+        "dfsProjection": {
+          "expectedPoints": 4.313500000000001,
+          "upside": 5.1762000000000015,
+          "floor": 3.450800000000001
+        }
+      },
+      "environment": {
+        "temperature": 76,
+        "windSpeed": 17,
+        "windDirection": "In From LF",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 663559,
+      "name": "Bailey Falter",
+      "team": "Pittsburgh Pirates",
+      "opponent": "Miami Marlins",
+      "gameId": 778539,
+      "venue": "loanDepot park",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 28,
+          "gamesStarted": 28,
+          "inningsPitched": 142.1,
+          "wins": 8,
+          "losses": 9,
+          "era": "4.43",
+          "whip": "1.29",
+          "strikeouts": 0,
+          "walks": 45,
+          "saves": 0,
+          "homeRunsAllowed": 17,
+          "hitBatsmen": 0
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 1.0767065446868402,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 4.306826178747361
+        }
+      },
+      "projections": {
+        "winProbability": 45,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 5.5825000000000005,
+        "dfsProjection": {
+          "expectedPoints": 4.213500000000002,
+          "upside": 5.056200000000001,
+          "floor": 3.3708000000000014
+        }
+      },
+      "environment": {
+        "temperature": 76,
+        "windSpeed": 17,
+        "windDirection": "In From LF",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 641816,
+      "name": "Tyler Mahle",
+      "team": "Texas Rangers",
+      "opponent": "Boston Red Sox",
+      "gameId": 778531,
+      "venue": "Globe Life Field",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 3,
+          "gamesStarted": 3,
+          "inningsPitched": 12.2,
+          "wins": 0,
+          "losses": 1,
+          "era": "4.97",
+          "whip": "1.42",
+          "strikeouts": 0,
+          "walks": 4,
+          "saves": 0,
+          "homeRunsAllowed": 1,
+          "hitBatsmen": 1
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 0.7377049180327869,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 2.9508196721311473
+        }
+      },
+      "projections": {
+        "winProbability": 45,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 4.473333333333334,
+        "dfsProjection": {
+          "expectedPoints": 3.5135000000000005,
+          "upside": 4.216200000000001,
+          "floor": 2.8108000000000004
+        }
+      },
+      "environment": {
+        "temperature": 0,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 0.98,
+        "homeRuns": 0.92
+      }
+    },
+    {
+      "pitcherId": 621111,
+      "name": "Walker Buehler",
+      "team": "Boston Red Sox",
+      "opponent": "Texas Rangers",
+      "gameId": 778531,
+      "venue": "Globe Life Field",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 16,
+          "gamesStarted": 16,
+          "inningsPitched": 75.1,
+          "wins": 1,
+          "losses": 6,
+          "era": "5.38",
+          "whip": "1.55",
+          "strikeouts": 0,
+          "walks": 28,
+          "saves": 0,
+          "homeRunsAllowed": 16,
+          "hitBatsmen": 5
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 1.9174434087882826,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 7.669773635153129
+        }
+      },
+      "projections": {
+        "winProbability": 45,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 5.163125,
+        "dfsProjection": {
+          "expectedPoints": 3.913500000000001,
+          "upside": 4.696200000000001,
+          "floor": 3.1308000000000007
+        }
+      },
+      "environment": {
+        "temperature": 0,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 0.98,
+        "homeRuns": 0.92
+      }
+    },
+    {
+      "pitcherId": 681293,
+      "name": "Spencer Arrighetti",
+      "team": "Houston Astros",
+      "opponent": "New York Mets",
+      "gameId": 778530,
+      "venue": "Daikin Park",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 29,
+          "gamesStarted": 28,
+          "inningsPitched": 145,
+          "wins": 7,
+          "losses": 13,
+          "era": "4.53",
+          "whip": "1.41",
+          "strikeouts": 0,
+          "walks": 65,
+          "saves": 0,
+          "homeRunsAllowed": 21,
+          "hitBatsmen": 7
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 1.3034482758620691,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 5.2137931034482765
+        }
+      },
+      "projections": {
+        "winProbability": 45,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 5.5,
+        "dfsProjection": {
+          "expectedPoints": 4.1135,
+          "upside": 4.9362,
+          "floor": 3.2908000000000004
+        }
+      },
+      "environment": {
+        "temperature": 0,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 656288,
+      "name": "Griffin Canning",
+      "team": "New York Mets",
+      "opponent": "Houston Astros",
+      "gameId": 778530,
+      "venue": "Daikin Park",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 32,
+          "gamesStarted": 31,
+          "inningsPitched": 171.2,
+          "wins": 6,
+          "losses": 13,
+          "era": "5.19",
+          "whip": "1.40",
+          "strikeouts": 0,
+          "walks": 66,
+          "saves": 0,
+          "homeRunsAllowed": 31,
+          "hitBatsmen": 6
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 1.6296728971962617,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 6.518691588785047
+        }
+      },
+      "projections": {
+        "winProbability": 45,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 5.885,
+        "dfsProjection": {
+          "expectedPoints": 4.313500000000001,
+          "upside": 5.1762000000000015,
+          "floor": 3.450800000000001
+        }
+      },
+      "environment": {
+        "temperature": 0,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 681190,
+      "name": "Randy Vásquez",
+      "team": "San Diego Padres",
+      "opponent": "Atlanta Braves",
+      "gameId": 778520,
+      "venue": "Petco Park",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 20,
+          "gamesStarted": 20,
+          "inningsPitched": 98,
+          "wins": 4,
+          "losses": 7,
+          "era": "4.87",
+          "whip": "1.51",
+          "strikeouts": 0,
+          "walks": 29,
+          "saves": 0,
+          "homeRunsAllowed": 13,
+          "hitBatsmen": 6
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 1.1938775510204083,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 4.775510204081633
+        }
+      },
+      "projections": {
+        "winProbability": 45,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 5.390000000000001,
+        "dfsProjection": {
+          "expectedPoints": 4.0135000000000005,
+          "upside": 4.8162,
+          "floor": 3.2108000000000008
+        }
+      },
+      "environment": {
+        "temperature": 0,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 680885,
+      "name": "Spencer Schwellenbach",
+      "team": "Atlanta Braves",
+      "opponent": "San Diego Padres",
+      "gameId": 778520,
+      "venue": "Petco Park",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 21,
+          "gamesStarted": 21,
+          "inningsPitched": 123.2,
+          "wins": 8,
+          "losses": 7,
+          "era": "3.35",
+          "whip": "1.04",
+          "strikeouts": 0,
+          "walks": 23,
+          "saves": 0,
+          "homeRunsAllowed": 14,
+          "hitBatsmen": 6
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 1.0227272727272727,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 4.090909090909091
+        }
+      },
+      "projections": {
+        "winProbability": 45,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 6.453333333333334,
+        "dfsProjection": {
+          "expectedPoints": 4.713500000000002,
+          "upside": 5.656200000000002,
+          "floor": 3.7708000000000013
+        }
+      },
+      "environment": {
+        "temperature": 0,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 694297,
+      "name": "Brandon Pfaadt",
+      "team": "Arizona Diamondbacks",
+      "opponent": "Chicago Cubs",
+      "gameId": 778532,
+      "venue": "Chase Field",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 32,
+          "gamesStarted": 32,
+          "inningsPitched": 181.2,
+          "wins": 11,
+          "losses": 10,
+          "era": "4.71",
+          "whip": "1.24",
+          "strikeouts": 0,
+          "walks": 42,
+          "saves": 0,
+          "homeRunsAllowed": 24,
+          "hitBatsmen": 4
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 1.1920529801324504,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 4.768211920529802
+        }
+      },
+      "projections": {
+        "winProbability": 45,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 6.22875,
+        "dfsProjection": {
+          "expectedPoints": 4.5135000000000005,
+          "upside": 5.416200000000001,
+          "floor": 3.6108000000000007
+        }
+      },
+      "environment": {
+        "temperature": 0,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1.05,
+        "homeRuns": 1.02
+      }
+    },
+    {
+      "pitcherId": 684007,
+      "name": "Shota Imanaga",
+      "team": "Chicago Cubs",
+      "opponent": "Arizona Diamondbacks",
+      "gameId": 778532,
+      "venue": "Chase Field",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 1,
+          "gamesStarted": 1,
+          "inningsPitched": 4,
+          "wins": 0,
+          "losses": 0,
+          "era": "0.00",
+          "whip": "1.00",
+          "strikeouts": 0,
+          "walks": 4,
+          "saves": 0,
+          "homeRunsAllowed": 0,
+          "hitBatsmen": 0
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 0,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 1
+        }
+      },
+      "projections": {
+        "winProbability": 20,
+        "expectedStrikeouts": 0,
+        "expectedInnings": 4.4,
+        "dfsProjection": {
+          "expectedPoints": 6.5688125,
+          "upside": 7.882574999999999,
+          "floor": 5.255050000000001
+        }
+      },
+      "environment": {
+        "temperature": 0,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1.05,
+        "homeRuns": 1.02
+      }
+    },
+    {
+      "pitcherId": 808963,
+      "name": "Roki Sasaki",
+      "team": "Los Angeles Dodgers",
+      "opponent": "Detroit Tigers",
+      "gameId": 778533,
+      "venue": "Dodger Stadium",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 1,
+          "gamesStarted": 1,
+          "inningsPitched": 3,
+          "wins": 0,
+          "losses": 0,
+          "era": "3.00",
+          "whip": "2.00",
+          "strikeouts": 0,
+          "walks": 5,
+          "saves": 0,
+          "homeRunsAllowed": 0,
+          "hitBatsmen": 0
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 0,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 1
+        }
+      },
+      "projections": {
+        "winProbability": 20,
+        "expectedStrikeouts": 0,
+        "expectedInnings": 3.3000000000000003,
+        "dfsProjection": {
+          "expectedPoints": 4.983499999999999,
+          "upside": 5.980199999999999,
+          "floor": 3.9867999999999997
+        }
+      },
+      "environment": {
+        "temperature": 0,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 681857,
+      "name": "Reese Olson",
+      "team": "Detroit Tigers",
+      "opponent": "Los Angeles Dodgers",
+      "gameId": 778533,
+      "venue": "Dodger Stadium",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 22,
+          "gamesStarted": 22,
+          "inningsPitched": 112.1,
+          "wins": 4,
+          "losses": 8,
+          "era": "3.53",
+          "whip": "1.18",
+          "strikeouts": 0,
+          "walks": 33,
+          "saves": 0,
+          "homeRunsAllowed": 7,
+          "hitBatsmen": 4
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 0.5619982158786798,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 2.2479928635147193
+        }
+      },
+      "projections": {
+        "winProbability": 45,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 5.6049999999999995,
+        "dfsProjection": {
+          "expectedPoints": 4.213500000000002,
+          "upside": 5.056200000000001,
+          "floor": 3.3708000000000014
+        }
+      },
+      "environment": {
+        "temperature": 0,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 682243,
+      "name": "Bryce Miller",
+      "team": "Seattle Mariners",
+      "opponent": "Athletics",
+      "gameId": 778521,
+      "venue": "T-Mobile Park",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 31,
+          "gamesStarted": 31,
+          "inningsPitched": 180.1,
+          "wins": 12,
+          "losses": 8,
+          "era": "2.94",
+          "whip": "0.98",
+          "strikeouts": 0,
+          "walks": 45,
+          "saves": 0,
+          "homeRunsAllowed": 21,
+          "hitBatsmen": 3
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 1.0494169905607995,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 4.197667962243198
+        }
+      },
+      "projections": {
+        "winProbability": 45,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 6.390645161290323,
+        "dfsProjection": {
+          "expectedPoints": 4.6135,
+          "upside": 5.5362,
+          "floor": 3.6908000000000003
+        }
+      },
+      "environment": {
+        "temperature": 0,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    },
+    {
+      "pitcherId": 674370,
+      "name": "Osvaldo Bido",
+      "team": "Athletics",
+      "opponent": "Seattle Mariners",
+      "gameId": 778521,
+      "venue": "T-Mobile Park",
+      "stats": {
+        "seasonStats": {
+          "gamesPlayed": 16,
+          "gamesStarted": 9,
+          "inningsPitched": 63.1,
+          "wins": 5,
+          "losses": 3,
+          "era": "3.41",
+          "whip": "1.09",
+          "strikeouts": 0,
+          "walks": 26,
+          "saves": 0,
+          "homeRunsAllowed": 3,
+          "hitBatsmen": 7
+        },
+        "homeRunVulnerability": {
+          "hrPer9": 0.42789223454833597,
+          "flyBallPct": 0.35,
+          "hrPerFlyBall": 0.12,
+          "homeRunVulnerability": 1.7115689381933439
+        }
+      },
+      "projections": {
+        "winProbability": 45,
+        "expectedStrikeouts": 4.166666666666667,
+        "expectedInnings": 4.338125000000001,
+        "dfsProjection": {
+          "expectedPoints": 3.413500000000001,
+          "upside": 4.0962000000000005,
+          "floor": 2.730800000000001
+        }
+      },
+      "environment": {
+        "temperature": 0,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1
+      }
+    }
+  ]
+}

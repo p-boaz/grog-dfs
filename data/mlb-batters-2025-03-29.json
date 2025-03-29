@@ -1,0 +1,3894 @@
+{
+  "date": "2025-03-29",
+  "analysisTimestamp": "2025-03-29T18:22:42.033Z",
+  "batters": [
+    {
+      "batterId": 669224,
+      "name": "Austin Wells",
+      "team": "New York Yankees",
+      "opponent": "Milwaukee Brewers",
+      "opposingPitcher": {
+        "id": 641482,
+        "name": "Nestor Cortes",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778538,
+      "venue": "Yankee Stadium",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 115,
+            "atBats": 354,
+            "hits": 81,
+            "homeRuns": 13,
+            "rbi": 55,
+            "avg": ".229",
+            "obp": ".322",
+            "slg": ".395",
+            "ops": ".717",
+            "stolenBases": 1,
+            "caughtStealing": 2
+          },
+          "2025": {
+            "gamesPlayed": 2,
+            "atBats": 4,
+            "hits": 2,
+            "homeRuns": 2,
+            "rbi": 2,
+            "avg": ".500",
+            "obp": ".667",
+            "slg": ".000",
+            "ops": ".667",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 43.815294117647056,
+          "upside": 65.72294117647058,
+          "floor": 21.907647058823528,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.9,
+            "rbi": 7.00764705882353,
+            "stolenBases": 0,
+            "walks": 14
+          }
+        }
+      },
+      "environment": {
+        "temperature": 78,
+        "windSpeed": 15,
+        "windDirection": "Out To CF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 6,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 691176,
+      "name": "Jasson Domínguez",
+      "team": "New York Yankees",
+      "opponent": "Milwaukee Brewers",
+      "opposingPitcher": {
+        "id": 641482,
+        "name": "Nestor Cortes",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778538,
+      "venue": "Yankee Stadium",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 18,
+            "atBats": 56,
+            "hits": 10,
+            "homeRuns": 2,
+            "rbi": 4,
+            "avg": ".179",
+            "obp": ".313",
+            "slg": ".304",
+            "ops": ".617",
+            "stolenBases": 5,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 2,
+            "atBats": 3,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".000",
+            "obp": ".400",
+            "slg": ".000",
+            "ops": ".400",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 35.44571428571429,
+          "upside": 53.16857142857143,
+          "floor": 17.722857142857144,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.7,
+            "rbi": 0.22285714285714286,
+            "stolenBases": 0,
+            "walks": 16.8
+          }
+        }
+      },
+      "environment": {
+        "temperature": 78,
+        "windSpeed": 15,
+        "windDirection": "Out To CF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 8,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 592885,
+      "name": "Christian Yelich",
+      "team": "Milwaukee Brewers",
+      "opponent": "New York Yankees",
+      "opposingPitcher": {
+        "id": 608331,
+        "name": "Max Fried",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778538,
+      "venue": "Yankee Stadium",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 73,
+            "atBats": 270,
+            "hits": 85,
+            "homeRuns": 11,
+            "rbi": 42,
+            "avg": ".315",
+            "obp": ".406",
+            "slg": ".504",
+            "ops": ".910",
+            "stolenBases": 21,
+            "caughtStealing": 1
+          },
+          "2025": {
+            "gamesPlayed": 2,
+            "atBats": 5,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".000",
+            "obp": ".286",
+            "slg": ".000",
+            "ops": ".286",
+            "stolenBases": 1,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 7.615622161671208,
+          "upside": 11.423433242506812,
+          "floor": 3.807811080835604,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.8666666666666667,
+            "rbi": 0.18114441416893734,
+            "stolenBases": 0,
+            "walks": 2.7600000000000002
+          }
+        }
+      },
+      "environment": {
+        "temperature": 78,
+        "windSpeed": 15,
+        "windDirection": "Out To CF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 2,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 661388,
+      "name": "William Contreras",
+      "team": "Milwaukee Brewers",
+      "opponent": "New York Yankees",
+      "opposingPitcher": {
+        "id": 608331,
+        "name": "Max Fried",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778538,
+      "venue": "Yankee Stadium",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 155,
+            "atBats": 595,
+            "hits": 167,
+            "homeRuns": 23,
+            "rbi": 92,
+            "avg": ".281",
+            "obp": ".365",
+            "slg": ".466",
+            "ops": ".831",
+            "stolenBases": 9,
+            "caughtStealing": 2
+          },
+          "2025": {
+            "gamesPlayed": 2,
+            "atBats": 6,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".000",
+            "obp": ".000",
+            "slg": ".000",
+            "ops": ".000",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 2.1711751662971173,
+          "upside": 3.256762749445676,
+          "floor": 1.0855875831485586,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.7999999999999999,
+            "rbi": 0.28558758314855864,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 78,
+        "windSpeed": 15,
+        "windDirection": "Out To CF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 3,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 665155,
+      "name": "Nick Maton",
+      "team": "Chicago White Sox",
+      "opponent": "Los Angeles Angels",
+      "opposingPitcher": {
+        "id": 667755,
+        "name": "José Soriano",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778534,
+      "venue": "Rate Field",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 5,
+            "atBats": 5,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".000",
+            "obp": ".000",
+            "slg": ".000",
+            "ops": ".000",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 1,
+            "atBats": 0,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".000",
+            "obp": ".000",
+            "slg": ".000",
+            "ops": ".000",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 5.634745505629846,
+          "upside": 8.45211825844477,
+          "floor": 2.817372752814923,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.5,
+            "rbi": 0.5801075268817204,
+            "stolenBases": 0,
+            "walks": 1.7372652259332024
+          }
+        }
+      },
+      "environment": {
+        "temperature": 67,
+        "windSpeed": 14,
+        "windDirection": "In From RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 5,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 642136,
+      "name": "Matt Thaiss",
+      "team": "Chicago White Sox",
+      "opponent": "Los Angeles Angels",
+      "opposingPitcher": {
+        "id": 667755,
+        "name": "José Soriano",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778534,
+      "venue": "Rate Field",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 57,
+            "atBats": 157,
+            "hits": 32,
+            "homeRuns": 2,
+            "rbi": 16,
+            "avg": ".204",
+            "obp": ".323",
+            "slg": ".299",
+            "ops": ".622",
+            "stolenBases": 3,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 1,
+            "atBats": 0,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".000",
+            "obp": ".000",
+            "slg": ".000",
+            "ops": ".000",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 2.744552845528456,
+          "upside": 4.116829268292683,
+          "floor": 1.372276422764228,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.4,
+            "rbi": 0.3963414634146342,
+            "stolenBases": 0,
+            "walks": 0.5759349593495936
+          }
+        }
+      },
+      "environment": {
+        "temperature": 67,
+        "windSpeed": 14,
+        "windDirection": "In From RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 7,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 624585,
+      "name": "Jorge Soler",
+      "team": "Los Angeles Angels",
+      "opponent": "Chicago White Sox",
+      "opposingPitcher": {
+        "id": 686563,
+        "name": "Jonathan Cannon",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778534,
+      "venue": "Rate Field",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 93,
+            "atBats": 341,
+            "hits": 82,
+            "homeRuns": 12,
+            "rbi": 40,
+            "avg": ".240",
+            "obp": ".330",
+            "slg": ".419",
+            "ops": ".749",
+            "stolenBases": 1,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 2,
+            "atBats": 4,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".000",
+            "obp": ".200",
+            "slg": ".000",
+            "ops": ".200",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 18.349425287356322,
+          "upside": 27.52413793103448,
+          "floor": 9.174712643678161,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.55,
+            "rbi": 0.2247126436781609,
+            "stolenBases": 0,
+            "walks": 8.4
+          }
+        }
+      },
+      "environment": {
+        "temperature": 67,
+        "windSpeed": 14,
+        "windDirection": "In From RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 4,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 681351,
+      "name": "Logan O'Hoppe",
+      "team": "Los Angeles Angels",
+      "opponent": "Chicago White Sox",
+      "opposingPitcher": {
+        "id": 686563,
+        "name": "Jonathan Cannon",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778534,
+      "venue": "Rate Field",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 136,
+            "atBats": 479,
+            "hits": 117,
+            "homeRuns": 20,
+            "rbi": 56,
+            "avg": ".244",
+            "obp": ".303",
+            "slg": ".409",
+            "ops": ".712",
+            "stolenBases": 2,
+            "caughtStealing": 3
+          },
+          "2025": {
+            "gamesPlayed": 1,
+            "atBats": 4,
+            "hits": 2,
+            "homeRuns": 1,
+            "rbi": 1,
+            "avg": ".500",
+            "obp": ".500",
+            "slg": ".250",
+            "ops": ".750",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 5.380077720207254,
+          "upside": 8.07011658031088,
+          "floor": 2.690038860103627,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.45,
+            "rbi": 2.2400388601036267,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 67,
+        "windSpeed": 14,
+        "windDirection": "In From RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 6,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 676475,
+      "name": "Alec Burleson",
+      "team": "St. Louis Cardinals",
+      "opponent": "Minnesota Twins",
+      "opposingPitcher": {
+        "id": 657746,
+        "name": "Joe Ryan",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778528,
+      "venue": "Busch Stadium",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 152,
+            "atBats": 547,
+            "hits": 147,
+            "homeRuns": 21,
+            "rbi": 78,
+            "avg": ".269",
+            "obp": ".314",
+            "slg": ".420",
+            "ops": ".734",
+            "stolenBases": 9,
+            "caughtStealing": 4
+          },
+          "2025": {
+            "gamesPlayed": 1,
+            "atBats": 4,
+            "hits": 1,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".250",
+            "obp": ".250",
+            "slg": ".250",
+            "ops": ".500",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 1.9101177536231884,
+          "upside": 2.8651766304347825,
+          "floor": 0.9550588768115942,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.5,
+            "rbi": 0.4550588768115942,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 68,
+        "windSpeed": 10,
+        "windDirection": "Out To LF",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 5,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 671056,
+      "name": "Iván Herrera",
+      "team": "St. Louis Cardinals",
+      "opponent": "Minnesota Twins",
+      "opposingPitcher": {
+        "id": 657746,
+        "name": "Joe Ryan",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778528,
+      "venue": "Busch Stadium",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 72,
+            "atBats": 229,
+            "hits": 69,
+            "homeRuns": 5,
+            "rbi": 27,
+            "avg": ".301",
+            "obp": ".372",
+            "slg": ".428",
+            "ops": ".800",
+            "stolenBases": 5,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 2,
+            "atBats": 3,
+            "hits": 2,
+            "homeRuns": 0,
+            "rbi": 1,
+            "avg": ".667",
+            "obp": ".750",
+            "slg": ".000",
+            "ops": ".750",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 5.009557823129251,
+          "upside": 7.5143367346938765,
+          "floor": 2.5047789115646255,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.45,
+            "rbi": 1.0047789115646257,
+            "stolenBases": 0,
+            "walks": 1.05
+          }
+        }
+      },
+      "environment": {
+        "temperature": 68,
+        "windSpeed": 10,
+        "windDirection": "Out To LF",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 6,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 681508,
+      "name": "Mickey Gasper",
+      "team": "Minnesota Twins",
+      "opponent": "St. Louis Cardinals",
+      "opposingPitcher": {
+        "id": 607200,
+        "name": "Erick Fedde",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778528,
+      "venue": "Busch Stadium",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 13,
+            "atBats": 18,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".000",
+            "obp": ".217",
+            "slg": ".000",
+            "ops": ".217",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 0,
+            "atBats": 0,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".000",
+            "obp": ".000",
+            "slg": ".000",
+            "ops": ".000",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 2,
+          "upside": 3,
+          "floor": 1,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.45,
+            "rbi": 0.55,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 68,
+        "windSpeed": 10,
+        "windDirection": "Out To LF",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 6,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 543877,
+      "name": "Christian Vázquez",
+      "team": "Minnesota Twins",
+      "opponent": "St. Louis Cardinals",
+      "opposingPitcher": {
+        "id": 607200,
+        "name": "Erick Fedde",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778528,
+      "venue": "Busch Stadium",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 93,
+            "atBats": 294,
+            "hits": 65,
+            "homeRuns": 7,
+            "rbi": 27,
+            "avg": ".221",
+            "obp": ".248",
+            "slg": ".327",
+            "ops": ".575",
+            "stolenBases": 3,
+            "caughtStealing": 1
+          },
+          "2025": {
+            "gamesPlayed": 0,
+            "atBats": 0,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".000",
+            "obp": ".000",
+            "slg": ".000",
+            "ops": ".000",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 1.6374217720476307,
+          "upside": 2.456132658071446,
+          "floor": 0.8187108860238154,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.3,
+            "rbi": 0.31957975167144215,
+            "stolenBases": 0,
+            "walks": 0.1991311343523733
+          }
+        }
+      },
+      "environment": {
+        "temperature": 68,
+        "windSpeed": 10,
+        "windDirection": "Out To LF",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 9,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 672386,
+      "name": "Alejandro Kirk",
+      "team": "Toronto Blue Jays",
+      "opponent": "Baltimore Orioles",
+      "opposingPitcher": {
+        "id": 665152,
+        "name": "Dean Kremer",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778536,
+      "venue": "Rogers Centre",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 103,
+            "atBats": 340,
+            "hits": 86,
+            "homeRuns": 5,
+            "rbi": 54,
+            "avg": ".253",
+            "obp": ".319",
+            "slg": ".359",
+            "ops": ".678",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 2,
+            "atBats": 8,
+            "hits": 2,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".250",
+            "obp": ".250",
+            "slg": ".250",
+            "ops": ".500",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 1.9133046636085629,
+          "upside": 2.8699569954128443,
+          "floor": 0.9566523318042814,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.5,
+            "rbi": 0.45665233180428144,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 68,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 5,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 695238,
+      "name": "Will Wagner",
+      "team": "Toronto Blue Jays",
+      "opponent": "Baltimore Orioles",
+      "opposingPitcher": {
+        "id": 665152,
+        "name": "Dean Kremer",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778536,
+      "venue": "Rogers Centre",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 24,
+            "atBats": 82,
+            "hits": 25,
+            "homeRuns": 2,
+            "rbi": 11,
+            "avg": ".305",
+            "obp": ".337",
+            "slg": ".451",
+            "ops": ".788",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 2,
+            "atBats": 6,
+            "hits": 3,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".500",
+            "obp": ".500",
+            "slg": ".667",
+            "ops": ".167",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 2.431207051282051,
+          "upside": 3.6468105769230768,
+          "floor": 1.2156035256410256,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.45,
+            "rbi": 0.7656035256410256,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 68,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 6,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 668939,
+      "name": "Adley Rutschman",
+      "team": "Baltimore Orioles",
+      "opponent": "Toronto Blue Jays",
+      "opposingPitcher": {
+        "id": 453286,
+        "name": "Max Scherzer",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778536,
+      "venue": "Rogers Centre",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 148,
+            "atBats": 571,
+            "hits": 143,
+            "homeRuns": 19,
+            "rbi": 79,
+            "avg": ".250",
+            "obp": ".318",
+            "slg": ".391",
+            "ops": ".709",
+            "stolenBases": 1,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 2,
+            "atBats": 7,
+            "hits": 3,
+            "homeRuns": 2,
+            "rbi": 3,
+            "avg": ".429",
+            "obp": ".556",
+            "slg": ".286",
+            "ops": ".842",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 9.812869304556354,
+          "upside": 14.719303956834532,
+          "floor": 4.906434652278177,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.65,
+            "rbi": 2.669767985611511,
+            "stolenBases": 0,
+            "walks": 1.586666666666667
+          }
+        }
+      },
+      "environment": {
+        "temperature": 68,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 2,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 596142,
+      "name": "Gary Sánchez",
+      "team": "Baltimore Orioles",
+      "opponent": "Toronto Blue Jays",
+      "opposingPitcher": {
+        "id": 453286,
+        "name": "Max Scherzer",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778536,
+      "venue": "Rogers Centre",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 89,
+            "atBats": 245,
+            "hits": 54,
+            "homeRuns": 11,
+            "rbi": 37,
+            "avg": ".220",
+            "obp": ".307",
+            "slg": ".392",
+            "ops": ".699",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 0,
+            "atBats": 0,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".000",
+            "obp": ".000",
+            "slg": ".000",
+            "ops": ".000",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 2.389848392695082,
+          "upside": 3.5847725890426227,
+          "floor": 1.194924196347541,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.4,
+            "rbi": 0.4763535911602211,
+            "stolenBases": 0,
+            "walks": 0.3185706051873199
+          }
+        }
+      },
+      "environment": {
+        "temperature": 68,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 7,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 605137,
+      "name": "Josh Bell",
+      "team": "Washington Nationals",
+      "opponent": "Philadelphia Phillies",
+      "opposingPitcher": {
+        "id": 666200,
+        "name": "Jesús Luzardo",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778535,
+      "venue": "Nationals Park",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 104,
+            "atBats": 398,
+            "hits": 95,
+            "homeRuns": 14,
+            "rbi": 49,
+            "avg": ".239",
+            "obp": ".305",
+            "slg": ".394",
+            "ops": ".699",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 1,
+            "atBats": 4,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".000",
+            "obp": ".000",
+            "slg": ".000",
+            "ops": ".000",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 1.5555347091932459,
+          "upside": 2.3333020637898687,
+          "floor": 0.7777673545966229,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.55,
+            "rbi": 0.22776735459662287,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 82,
+        "windSpeed": 11,
+        "windDirection": "Out To RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 4,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 660688,
+      "name": "Keibert Ruiz",
+      "team": "Washington Nationals",
+      "opponent": "Philadelphia Phillies",
+      "opposingPitcher": {
+        "id": 666200,
+        "name": "Jesús Luzardo",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778535,
+      "venue": "Nationals Park",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 127,
+            "atBats": 459,
+            "hits": 105,
+            "homeRuns": 13,
+            "rbi": 57,
+            "avg": ".229",
+            "obp": ".260",
+            "slg": ".359",
+            "ops": ".619",
+            "stolenBases": 3,
+            "caughtStealing": 1
+          },
+          "2025": {
+            "gamesPlayed": 1,
+            "atBats": 4,
+            "hits": 2,
+            "homeRuns": 1,
+            "rbi": 1,
+            "avg": ".500",
+            "obp": ".500",
+            "slg": ".250",
+            "ops": ".750",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 4.442247706422018,
+          "upside": 6.663371559633027,
+          "floor": 2.221123853211009,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.4,
+            "rbi": 1.821123853211009,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 82,
+        "windSpeed": 11,
+        "windDirection": "Out To RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 7,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 656941,
+      "name": "Kyle Schwarber",
+      "team": "Philadelphia Phillies",
+      "opponent": "Washington Nationals",
+      "opposingPitcher": {
+        "id": 663623,
+        "name": "Jake Irvin",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778535,
+      "venue": "Nationals Park",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 150,
+            "atBats": 573,
+            "hits": 142,
+            "homeRuns": 38,
+            "rbi": 104,
+            "avg": ".248",
+            "obp": ".366",
+            "slg": ".485",
+            "ops": ".851",
+            "stolenBases": 5,
+            "caughtStealing": 3
+          },
+          "2025": {
+            "gamesPlayed": 1,
+            "atBats": 4,
+            "hits": 2,
+            "homeRuns": 1,
+            "rbi": 1,
+            "avg": ".500",
+            "obp": ".600",
+            "slg": ".250",
+            "ops": ".850",
+            "stolenBases": 0,
+            "caughtStealing": 1
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 6.800207723250201,
+          "upside": 10.200311584875301,
+          "floor": 3.4001038616251007,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.7,
+            "rbi": 1.4989038616251003,
+            "stolenBases": 0,
+            "walks": 1.2012000000000003
+          }
+        }
+      },
+      "environment": {
+        "temperature": 82,
+        "windSpeed": 11,
+        "windDirection": "Out To RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 1,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 592663,
+      "name": "J.T. Realmuto",
+      "team": "Philadelphia Phillies",
+      "opponent": "Washington Nationals",
+      "opposingPitcher": {
+        "id": 663623,
+        "name": "Jake Irvin",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778535,
+      "venue": "Nationals Park",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 99,
+            "atBats": 380,
+            "hits": 101,
+            "homeRuns": 14,
+            "rbi": 47,
+            "avg": ".266",
+            "obp": ".322",
+            "slg": ".429",
+            "ops": ".751",
+            "stolenBases": 2,
+            "caughtStealing": 2
+          },
+          "2025": {
+            "gamesPlayed": 1,
+            "atBats": 5,
+            "hits": 1,
+            "homeRuns": 0,
+            "rbi": 2,
+            "avg": ".200",
+            "obp": ".200",
+            "slg": ".600",
+            "ops": ".800",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 5.36058870967742,
+          "upside": 8.04088306451613,
+          "floor": 2.68029435483871,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.45,
+            "rbi": 2.2302943548387097,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 82,
+        "windSpeed": 11,
+        "windDirection": "Out To RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 6,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 686469,
+      "name": "Vinnie Pasquantino",
+      "team": "Kansas City Royals",
+      "opponent": "Cleveland Guardians",
+      "opposingPitcher": {
+        "id": 668909,
+        "name": "Gavin Williams",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778529,
+      "venue": "Kauffman Stadium",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 131,
+            "atBats": 496,
+            "hits": 130,
+            "homeRuns": 19,
+            "rbi": 97,
+            "avg": ".262",
+            "obp": ".315",
+            "slg": ".446",
+            "ops": ".761",
+            "stolenBases": 1,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 1,
+            "atBats": 4,
+            "hits": 2,
+            "homeRuns": 1,
+            "rbi": 3,
+            "avg": ".500",
+            "obp": ".500",
+            "slg": ".500",
+            "ops": ".000",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 19.145886792452824,
+          "upside": 28.718830188679235,
+          "floor": 9.572943396226412,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.6,
+            "rbi": 8.972943396226412,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 76,
+        "windSpeed": 15,
+        "windDirection": "Out To LF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 3,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 521692,
+      "name": "Salvador Perez",
+      "team": "Kansas City Royals",
+      "opponent": "Cleveland Guardians",
+      "opposingPitcher": {
+        "id": 668909,
+        "name": "Gavin Williams",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778529,
+      "venue": "Kauffman Stadium",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 158,
+            "atBats": 590,
+            "hits": 160,
+            "homeRuns": 27,
+            "rbi": 104,
+            "avg": ".271",
+            "obp": ".330",
+            "slg": ".456",
+            "ops": ".786",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 1,
+            "atBats": 4,
+            "hits": 1,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".250",
+            "obp": ".250",
+            "slg": ".250",
+            "ops": ".500",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 2.272496780424984,
+          "upside": 3.4087451706374763,
+          "floor": 1.136248390212492,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.55,
+            "rbi": 0.586248390212492,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 76,
+        "windSpeed": 15,
+        "windDirection": "Out To LF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 4,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 700932,
+      "name": "Kyle Manzardo",
+      "team": "Cleveland Guardians",
+      "opponent": "Kansas City Royals",
+      "opposingPitcher": {
+        "id": 607625,
+        "name": "Seth Lugo",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778529,
+      "venue": "Kauffman Stadium",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 53,
+            "atBats": 145,
+            "hits": 34,
+            "homeRuns": 5,
+            "rbi": 15,
+            "avg": ".234",
+            "obp": ".282",
+            "slg": ".421",
+            "ops": ".703",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 1,
+            "atBats": 4,
+            "hits": 3,
+            "homeRuns": 1,
+            "rbi": 4,
+            "avg": ".750",
+            "obp": ".800",
+            "slg": ".250",
+            "ops": ".050",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 36.017974074074075,
+          "upside": 54.02696111111111,
+          "floor": 18.008987037037038,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.6,
+            "rbi": 16.515787037037036,
+            "stolenBases": 0,
+            "walks": 0.8932000000000002
+          }
+        }
+      },
+      "environment": {
+        "temperature": 76,
+        "windSpeed": 15,
+        "windDirection": "Out To LF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 3,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 666310,
+      "name": "Bo Naylor",
+      "team": "Cleveland Guardians",
+      "opponent": "Kansas City Royals",
+      "opposingPitcher": {
+        "id": 607625,
+        "name": "Seth Lugo",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778529,
+      "venue": "Kauffman Stadium",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 123,
+            "atBats": 354,
+            "hits": 71,
+            "homeRuns": 13,
+            "rbi": 39,
+            "avg": ".201",
+            "obp": ".264",
+            "slg": ".350",
+            "ops": ".614",
+            "stolenBases": 6,
+            "caughtStealing": 3
+          },
+          "2025": {
+            "gamesPlayed": 1,
+            "atBats": 4,
+            "hits": 1,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".250",
+            "obp": ".250",
+            "slg": ".250",
+            "ops": ".500",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 1.4027933673469388,
+          "upside": 2.1041900510204083,
+          "floor": 0.7013966836734694,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.4,
+            "rbi": 0.3013966836734694,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 76,
+        "windSpeed": 15,
+        "windDirection": "Out To LF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 7,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 600869,
+      "name": "Jeimer Candelario",
+      "team": "Cincinnati Reds",
+      "opponent": "San Francisco Giants",
+      "opposingPitcher": {
+        "id": 434378,
+        "name": "Justin Verlander",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778540,
+      "venue": "Great American Ball Park",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 112,
+            "atBats": 427,
+            "hits": 96,
+            "homeRuns": 20,
+            "rbi": 56,
+            "avg": ".225",
+            "obp": ".279",
+            "slg": ".429",
+            "ops": ".708",
+            "stolenBases": 4,
+            "caughtStealing": 3
+          },
+          "2025": {
+            "gamesPlayed": 1,
+            "atBats": 3,
+            "hits": 2,
+            "homeRuns": 0,
+            "rbi": 3,
+            "avg": ".667",
+            "obp": ".750",
+            "slg": ".667",
+            "ops": ".417",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 11.06411837029894,
+          "upside": 16.59617755544841,
+          "floor": 5.53205918514947,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.5,
+            "rbi": 4.098725851816137,
+            "stolenBases": 0,
+            "walks": 0.9333333333333335
+          }
+        }
+      },
+      "environment": {
+        "temperature": 77,
+        "windSpeed": 14,
+        "windDirection": "In From RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 5,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 624431,
+      "name": "Jose Trevino",
+      "team": "Cincinnati Reds",
+      "opponent": "San Francisco Giants",
+      "opposingPitcher": {
+        "id": 434378,
+        "name": "Justin Verlander",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778540,
+      "venue": "Great American Ball Park",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 74,
+            "atBats": 209,
+            "hits": 45,
+            "homeRuns": 8,
+            "rbi": 28,
+            "avg": ".215",
+            "obp": ".288",
+            "slg": ".354",
+            "ops": ".642",
+            "stolenBases": 1,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 1,
+            "atBats": 2,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".000",
+            "obp": ".333",
+            "slg": ".000",
+            "ops": ".333",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 3.269226932668329,
+          "upside": 4.903840399002494,
+          "floor": 1.6346134663341645,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.3,
+            "rbi": 0.09461346633416459,
+            "stolenBases": 0,
+            "walks": 1.24
+          }
+        }
+      },
+      "environment": {
+        "temperature": 77,
+        "windSpeed": 14,
+        "windDirection": "In From RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 9,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 672275,
+      "name": "Patrick Bailey",
+      "team": "San Francisco Giants",
+      "opponent": "Cincinnati Reds",
+      "opposingPitcher": {
+        "id": 666157,
+        "name": "Nick Lodolo",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778540,
+      "venue": "Great American Ball Park",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 121,
+            "atBats": 401,
+            "hits": 94,
+            "homeRuns": 8,
+            "rbi": 46,
+            "avg": ".234",
+            "obp": ".298",
+            "slg": ".339",
+            "ops": ".637",
+            "stolenBases": 4,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 1,
+            "atBats": 4,
+            "hits": 1,
+            "homeRuns": 0,
+            "rbi": 1,
+            "avg": ".250",
+            "obp": ".250",
+            "slg": ".250",
+            "ops": ".500",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 1.8769520547945207,
+          "upside": 2.815428082191781,
+          "floor": 0.9384760273972603,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.4,
+            "rbi": 0.5384760273972603,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 77,
+        "windSpeed": 14,
+        "windDirection": "In From RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 7,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 669477,
+      "name": "Casey Schmitt",
+      "team": "San Francisco Giants",
+      "opponent": "Cincinnati Reds",
+      "opposingPitcher": {
+        "id": 666157,
+        "name": "Nick Lodolo",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778540,
+      "venue": "Great American Ball Park",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 40,
+            "atBats": 107,
+            "hits": 27,
+            "homeRuns": 6,
+            "rbi": 16,
+            "avg": ".252",
+            "obp": ".283",
+            "slg": ".477",
+            "ops": ".760",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 0,
+            "atBats": 0,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".000",
+            "obp": ".000",
+            "slg": ".000",
+            "ops": ".000",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 1.7442666666666666,
+          "upside": 2.6164,
+          "floor": 0.8721333333333333,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.35,
+            "rbi": 0.36102564102564105,
+            "stolenBases": 0,
+            "walks": 0.1611076923076923
+          }
+        }
+      },
+      "environment": {
+        "temperature": 77,
+        "windSpeed": 14,
+        "windDirection": "In From RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 8,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 650490,
+      "name": "Yandy Díaz",
+      "team": "Tampa Bay Rays",
+      "opponent": "Colorado Rockies",
+      "opposingPitcher": {
+        "id": 622608,
+        "name": "Antonio Senzatela",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778537,
+      "venue": "George M. Steinbrenner Field",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 145,
+            "atBats": 563,
+            "hits": 158,
+            "homeRuns": 14,
+            "rbi": 65,
+            "avg": ".281",
+            "obp": ".341",
+            "slg": ".414",
+            "ops": ".755",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 1,
+            "atBats": 4,
+            "hits": 1,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".250",
+            "obp": ".250",
+            "slg": ".250",
+            "ops": ".500",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 1.8996114790286975,
+          "upside": 2.849417218543046,
+          "floor": 0.9498057395143488,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.7,
+            "rbi": 0.24980573951434884,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 86,
+        "windSpeed": 8,
+        "windDirection": "In From RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 1,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 643376,
+      "name": "Danny Jansen",
+      "team": "Tampa Bay Rays",
+      "opponent": "Colorado Rockies",
+      "opposingPitcher": {
+        "id": 622608,
+        "name": "Antonio Senzatela",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778537,
+      "venue": "George M. Steinbrenner Field",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 62,
+            "atBats": 198,
+            "hits": 42,
+            "homeRuns": 6,
+            "rbi": 18,
+            "avg": ".212",
+            "obp": ".303",
+            "slg": ".369",
+            "ops": ".672",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 1,
+            "atBats": 2,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".000",
+            "obp": ".333",
+            "slg": ".000",
+            "ops": ".333",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 3.8540640809443505,
+          "upside": 5.7810961214165255,
+          "floor": 1.9270320404721752,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.4,
+            "rbi": 0.12703204047217537,
+            "stolenBases": 0,
+            "walks": 1.4
+          }
+        }
+      },
+      "environment": {
+        "temperature": 86,
+        "windSpeed": 8,
+        "windDirection": "In From RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 7,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 592178,
+      "name": "Kris Bryant",
+      "team": "Colorado Rockies",
+      "opponent": "Tampa Bay Rays",
+      "opposingPitcher": {
+        "id": 641793,
+        "name": "Zack Littell",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778537,
+      "venue": "George M. Steinbrenner Field",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 37,
+            "atBats": 133,
+            "hits": 29,
+            "homeRuns": 2,
+            "rbi": 15,
+            "avg": ".218",
+            "obp": ".323",
+            "slg": ".301",
+            "ops": ".624",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 1,
+            "atBats": 4,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".000",
+            "obp": ".000",
+            "slg": ".000",
+            "ops": ".000",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 1.5565656565656567,
+          "upside": 2.334848484848485,
+          "floor": 0.7782828282828284,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.55,
+            "rbi": 0.2282828282828283,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 86,
+        "windSpeed": 8,
+        "windDirection": "In From RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 4,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 696100,
+      "name": "Hunter Goodman",
+      "team": "Colorado Rockies",
+      "opponent": "Tampa Bay Rays",
+      "opposingPitcher": {
+        "id": 641793,
+        "name": "Zack Littell",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778537,
+      "venue": "George M. Steinbrenner Field",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 70,
+            "atBats": 211,
+            "hits": 40,
+            "homeRuns": 13,
+            "rbi": 36,
+            "avg": ".190",
+            "obp": ".228",
+            "slg": ".417",
+            "ops": ".645",
+            "stolenBases": 1,
+            "caughtStealing": 1
+          },
+          "2025": {
+            "gamesPlayed": 1,
+            "atBats": 4,
+            "hits": 2,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".500",
+            "obp": ".500",
+            "slg": ".750",
+            "ops": ".250",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 2.7492287234042556,
+          "upside": 4.123843085106383,
+          "floor": 1.3746143617021278,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.45,
+            "rbi": 0.9246143617021279,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 86,
+        "windSpeed": 8,
+        "windDirection": "In From RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 6,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 669065,
+      "name": "Kyle Stowers",
+      "team": "Miami Marlins",
+      "opponent": "Pittsburgh Pirates",
+      "opposingPitcher": {
+        "id": 663559,
+        "name": "Bailey Falter",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778539,
+      "venue": "loanDepot park",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 19,
+            "atBats": 36,
+            "hits": 11,
+            "homeRuns": 1,
+            "rbi": 9,
+            "avg": ".306",
+            "obp": ".297",
+            "slg": ".500",
+            "ops": ".797",
+            "stolenBases": 0,
+            "caughtStealing": 1
+          },
+          "2025": {
+            "gamesPlayed": 2,
+            "atBats": 7,
+            "hits": 1,
+            "homeRuns": 0,
+            "rbi": 1,
+            "avg": ".143",
+            "obp": ".333",
+            "slg": ".143",
+            "ops": ".476",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 4.40885035460993,
+          "upside": 6.613275531914895,
+          "floor": 2.204425177304965,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.4,
+            "rbi": 0.21775851063829782,
+            "stolenBases": 0,
+            "walks": 1.586666666666667
+          }
+        }
+      },
+      "environment": {
+        "temperature": 76,
+        "windSpeed": 17,
+        "windDirection": "In From LF",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 7,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 663743,
+      "name": "Nick Fortes",
+      "team": "Miami Marlins",
+      "opponent": "Pittsburgh Pirates",
+      "opposingPitcher": {
+        "id": 663559,
+        "name": "Bailey Falter",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778539,
+      "venue": "loanDepot park",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 110,
+            "atBats": 308,
+            "hits": 70,
+            "homeRuns": 4,
+            "rbi": 29,
+            "avg": ".227",
+            "obp": ".259",
+            "slg": ".318",
+            "ops": ".577",
+            "stolenBases": 0,
+            "caughtStealing": 1
+          },
+          "2025": {
+            "gamesPlayed": 1,
+            "atBats": 3,
+            "hits": 1,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".333",
+            "obp": ".500",
+            "slg": ".000",
+            "ops": ".500",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 2.1016174863387977,
+          "upside": 3.1524262295081966,
+          "floor": 1.0508087431693989,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.35,
+            "rbi": 0.7008087431693989,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 76,
+        "windSpeed": 17,
+        "windDirection": "In From LF",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 8,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 668804,
+      "name": "Bryan Reynolds",
+      "team": "Pittsburgh Pirates",
+      "opponent": "Miami Marlins",
+      "opposingPitcher": {
+        "id": 678368,
+        "name": "Valente Bellozo",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778539,
+      "venue": "loanDepot park",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 156,
+            "atBats": 622,
+            "hits": 171,
+            "homeRuns": 24,
+            "rbi": 88,
+            "avg": ".275",
+            "obp": ".344",
+            "slg": ".447",
+            "ops": ".791",
+            "stolenBases": 10,
+            "caughtStealing": 2
+          },
+          "2025": {
+            "gamesPlayed": 2,
+            "atBats": 9,
+            "hits": 1,
+            "homeRuns": 0,
+            "rbi": 2,
+            "avg": ".111",
+            "obp": ".200",
+            "slg": ".111",
+            "ops": ".311",
+            "stolenBases": 1,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 3.2789632537688442,
+          "upside": 4.918444880653267,
+          "floor": 1.6394816268844221,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.65,
+            "rbi": 0.3734816268844221,
+            "stolenBases": 0,
+            "walks": 0.6160000000000001
+          }
+        }
+      },
+      "environment": {
+        "temperature": 76,
+        "windSpeed": 17,
+        "windDirection": "In From LF",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 2,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    },
+    {
+      "batterId": 663698,
+      "name": "Joey Bart",
+      "team": "Pittsburgh Pirates",
+      "opponent": "Miami Marlins",
+      "opposingPitcher": {
+        "id": 678368,
+        "name": "Valente Bellozo",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778539,
+      "venue": "loanDepot park",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 80,
+            "atBats": 253,
+            "hits": 67,
+            "homeRuns": 13,
+            "rbi": 45,
+            "avg": ".265",
+            "obp": ".337",
+            "slg": ".462",
+            "ops": ".799",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 2,
+            "atBats": 6,
+            "hits": 1,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".167",
+            "obp": ".444",
+            "slg": ".167",
+            "ops": ".611",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 3.9937120901639345,
+          "upside": 5.990568135245901,
+          "floor": 1.9968560450819672,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.55,
+            "rbi": 0.39685604508196715,
+            "stolenBases": 0,
+            "walks": 1.05
+          }
+        }
+      },
+      "environment": {
+        "temperature": 76,
+        "windSpeed": 17,
+        "windDirection": "In From LF",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 4,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      }
+    }
+  ]
+}
