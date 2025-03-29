@@ -8,35 +8,21 @@ interface PitcherStats {
   primaryPosition: string;
   pitchHand: string;
   seasonStats: {
-    gamesPlayed: number;
-    gamesStarted: number;
-    inningsPitched: number;
-    wins: number;
-    losses: number;
-    era: number;
-    whip: number;
-    strikeouts: number;
-    walks: number;
-    saves: number;
-    homeRunsAllowed?: number;
-    hitBatsmen: number;
+    [season: string]: {
+      gamesPlayed: number;
+      gamesStarted: number;
+      inningsPitched: number;
+      wins: number;
+      losses: number;
+      era: number;
+      whip: number;
+      strikeouts: number;
+      walks: number;
+      saves: number;
+      homeRunsAllowed?: number;
+      hitBatsmen: number;
+    };
   };
-  careerStats: Array<{
-    season: string;
-    team: string;
-    gamesPlayed: number;
-    gamesStarted: number;
-    inningsPitched: number;
-    wins: number;
-    losses: number;
-    era: number;
-    whip: number;
-    strikeouts: number;
-    walks: number;
-    saves: number;
-    homeRunsAllowed?: number;
-    hitBatsmen: number;
-  }>;
   sourceTimestamp?: Date;
 }
 
@@ -151,21 +137,7 @@ async function fetchPitcherStats(params: {
       currentTeam: "",
       primaryPosition: "P",
       pitchHand: "",
-      seasonStats: {
-        gamesPlayed: 0,
-        gamesStarted: 0,
-        inningsPitched: 0,
-        wins: 0,
-        losses: 0,
-        era: 0,
-        whip: 0,
-        strikeouts: 0,
-        walks: 0,
-        saves: 0,
-        homeRunsAllowed: 0,
-        hitBatsmen: 0,
-      },
-      careerStats: [],
+      seasonStats: {},
       sourceTimestamp: new Date(),
     });
   } catch (error) {
@@ -179,21 +151,7 @@ async function fetchPitcherStats(params: {
       currentTeam: "",
       primaryPosition: "P",
       pitchHand: "",
-      seasonStats: {
-        gamesPlayed: 0,
-        gamesStarted: 0,
-        inningsPitched: 0,
-        wins: 0,
-        losses: 0,
-        era: 0,
-        whip: 0,
-        strikeouts: 0,
-        walks: 0,
-        saves: 0,
-        homeRunsAllowed: 0,
-        hitBatsmen: 0,
-      },
-      careerStats: [],
+      seasonStats: {},
       sourceTimestamp: new Date(),
     });
   }
@@ -223,22 +181,6 @@ function transformPitcherStats(data: any): PitcherStats {
 
   console.log(`Processing pitcher data for ${pitcherName} (ID: ${pitcherId})`);
 
-  // Log received data structure for debugging
-  console.log(`Stats array received: ${stats.length} stat groups`);
-  stats.forEach((s: any, i: number) => {
-    console.log(
-      `Stat group ${i}: ${s.group?.displayName || "unknown"}, type: ${
-        s.type?.displayName || "unknown"
-      }, splits: ${s.splits?.length || 0}`
-    );
-  });
-
-  // Get the requested season from the URL (extract from response data if available)
-  // This helps deal with historical data requests
-  const requestedSeason =
-    data.__requestedSeason || new Date().getFullYear().toString();
-  console.log(`Requested season: ${requestedSeason}`);
-
   // Get yearByYear pitching data
   const yearByYearPitchingStats =
     stats.find(
@@ -247,47 +189,35 @@ function transformPitcherStats(data: any): PitcherStats {
         s.type?.displayName === "yearByYear"
     )?.splits || [];
 
-  console.log(
-    `Found ${yearByYearPitchingStats.length} yearByYear pitching stat splits`
-  );
+  // Transform yearByYear stats into season-based structure
+  const seasonStats: { [season: string]: any } = {};
+  yearByYearPitchingStats.forEach((year: any) => {
+    const season = year.season;
+    const stat = year.stat || {};
 
-  // Get requested season stats from yearByYear data
-  const seasonPitchingStatsFromYearByYear = yearByYearPitchingStats.find(
-    (s: any) => s.season === requestedSeason
-  )?.stat;
+    // Calculate HR allowed based on available stats
+    const estimateHRAllowed = (stats: any) => {
+      if (stats.homeRuns !== undefined) return stats.homeRuns;
+      const ip = parseFloat(stats.inningsPitched || "0");
+      const era = stats.era || 4.5;
+      return Math.round((era / 9) * (ip / 9));
+    };
 
-  if (seasonPitchingStatsFromYearByYear) {
-    console.log(`Found yearByYear data for season ${requestedSeason}`);
-  } else {
-    console.log(`No yearByYear data found for season ${requestedSeason}`);
-  }
-
-  // Use direct season API data as fallback
-  const directSeasonPitchingData = stats.find(
-    (s: any) =>
-      s.group?.displayName === "pitching" && s.type?.displayName === "season"
-  );
-
-  const hasDirectSeasonData = !!directSeasonPitchingData?.splits?.[0]?.stat;
-  console.log(`Direct season pitching data available: ${hasDirectSeasonData}`);
-
-  const seasonPitchingStats =
-    directSeasonPitchingData?.splits?.[0]?.stat ||
-    seasonPitchingStatsFromYearByYear ||
-    {};
-
-  // Use all seasons for career stats
-  const careerPitchingStats = yearByYearPitchingStats;
-
-  // Calculate HR allowed based on available stats
-  const estimateHRAllowed = (stats: any) => {
-    if (stats.homeRuns !== undefined) return stats.homeRuns;
-
-    // Estimate based on IP and ERA if real data not available
-    const ip = parseFloat(stats.inningsPitched || "0");
-    const era = stats.era || 4.5;
-    return Math.round((era / 9) * (ip / 9));
-  };
+    seasonStats[season] = {
+      gamesPlayed: stat.gamesPlayed || 0,
+      gamesStarted: stat.gamesStarted || 0,
+      inningsPitched: parseFloat(stat.inningsPitched || "0"),
+      wins: stat.wins || 0,
+      losses: stat.losses || 0,
+      era: stat.era || 0,
+      whip: stat.whip || 0,
+      strikeouts: stat.strikeOuts || stat.strikeouts || 0,
+      walks: stat.baseOnBalls || 0,
+      saves: stat.saves || 0,
+      homeRunsAllowed: estimateHRAllowed(stat),
+      hitBatsmen: stat.hitBatsmen || 0,
+    };
+  });
 
   return {
     id: data.people[0].id,
@@ -295,36 +225,8 @@ function transformPitcherStats(data: any): PitcherStats {
     currentTeam: data.people[0].currentTeam?.name || "",
     primaryPosition: data.people[0].primaryPosition?.abbreviation || "P",
     pitchHand: data.people[0].pitchHand?.code || "",
-    seasonStats: {
-      gamesPlayed: seasonPitchingStats.gamesPlayed || 0,
-      gamesStarted: seasonPitchingStats.gamesStarted || 0,
-      inningsPitched: parseFloat(seasonPitchingStats.inningsPitched || "0"),
-      wins: seasonPitchingStats.wins || 0,
-      losses: seasonPitchingStats.losses || 0,
-      era: seasonPitchingStats.era || 0,
-      whip: seasonPitchingStats.whip || 0,
-      strikeouts: seasonPitchingStats.strikeouts || 0,
-      walks: seasonPitchingStats.baseOnBalls || 0,
-      saves: seasonPitchingStats.saves || 0,
-      homeRunsAllowed: estimateHRAllowed(seasonPitchingStats),
-      hitBatsmen: seasonPitchingStats.hitBatsmen || 0,
-    },
-    careerStats: careerPitchingStats.map((year: any) => ({
-      season: year.season,
-      team: year.team?.name || "",
-      gamesPlayed: year.stat?.gamesPlayed || 0,
-      gamesStarted: year.stat?.gamesStarted || 0,
-      inningsPitched: parseFloat(year.stat?.inningsPitched || "0"),
-      wins: year.stat?.wins || 0,
-      losses: year.stat?.losses || 0,
-      era: year.stat?.era || 0,
-      whip: year.stat?.whip || 0,
-      strikeouts: year.stat?.strikeouts || 0,
-      walks: year.stat?.baseOnBalls || 0,
-      saves: year.stat?.saves || 0,
-      homeRunsAllowed: estimateHRAllowed(year.stat || {}),
-      hitBatsmen: year.stat?.hitBatsmen || 0,
-    })),
+    seasonStats,
+    sourceTimestamp: new Date(),
   };
 }
 
@@ -597,11 +499,11 @@ export async function getPitcherHomeRunVulnerability(
     });
 
     // If no innings pitched, return null
-    if (!pitcherData.seasonStats.inningsPitched) {
+    if (!pitcherData.seasonStats[season]?.inningsPitched) {
       return null;
     }
 
-    const stats = pitcherData.seasonStats;
+    const stats = pitcherData.seasonStats[season];
     const ip = stats.inningsPitched;
     const era = stats.era || 4.5;
 

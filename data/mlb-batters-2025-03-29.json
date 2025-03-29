@@ -1,6 +1,6 @@
 {
   "date": "2025-03-29",
-  "analysisTimestamp": "2025-03-29T18:22:42.033Z",
+  "analysisTimestamp": "2025-03-29T19:46:11.352Z",
   "batters": [
     {
       "batterId": 669224,
@@ -32,14 +32,14 @@
           },
           "2025": {
             "gamesPlayed": 2,
-            "atBats": 4,
+            "atBats": 6,
             "hits": 2,
             "homeRuns": 2,
             "rbi": 2,
-            "avg": ".500",
-            "obp": ".667",
-            "slg": ".000",
-            "ops": ".667",
+            "avg": ".333",
+            "obp": ".500",
+            "slg": ".333",
+            "ops": ".833",
             "stolenBases": 0,
             "caughtStealing": 0
           }
@@ -75,19 +75,19 @@
           "confidence": 0
         },
         "dfsProjection": {
-          "expectedPoints": 43.815294117647056,
-          "upside": 65.72294117647058,
-          "floor": 21.907647058823528,
+          "expectedPoints": 7.855100735294117,
+          "upside": 11.782651102941177,
+          "floor": 3.9275503676470587,
           "breakdown": {
             "hits": 0,
             "singles": 0,
             "doubles": 0,
             "triples": 0,
             "homeRuns": 0,
-            "runs": 0.9,
-            "rbi": 7.00764705882353,
+            "runs": 0.45,
+            "rbi": 2.4275503676470582,
             "stolenBases": 0,
-            "walks": 14
+            "walks": 1.05
           }
         }
       },
@@ -108,6 +108,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -140,14 +146,14 @@
           },
           "2025": {
             "gamesPlayed": 2,
-            "atBats": 3,
-            "hits": 0,
+            "atBats": 6,
+            "hits": 1,
             "homeRuns": 0,
             "rbi": 0,
-            "avg": ".000",
-            "obp": ".400",
-            "slg": ".000",
-            "ops": ".400",
+            "avg": ".167",
+            "obp": ".375",
+            "slg": ".167",
+            "ops": ".542",
             "stolenBases": 0,
             "caughtStealing": 0
           }
@@ -183,19 +189,19 @@
           "confidence": 0
         },
         "dfsProjection": {
-          "expectedPoints": 35.44571428571429,
-          "upside": 53.16857142857143,
-          "floor": 17.722857142857144,
+          "expectedPoints": 3.6499464285714285,
+          "upside": 5.4749196428571425,
+          "floor": 1.8249732142857142,
           "breakdown": {
             "hits": 0,
             "singles": 0,
             "doubles": 0,
             "triples": 0,
             "homeRuns": 0,
-            "runs": 0.7,
-            "rbi": 0.22285714285714286,
+            "runs": 0.5,
+            "rbi": 0.27497321428571425,
             "stolenBases": 0,
-            "walks": 16.8
+            "walks": 1.05
           }
         }
       },
@@ -210,12 +216,18 @@
         "homeRuns": 1,
         "runs": 1
       },
-      "lineupPosition": 8,
+      "lineupPosition": 10,
       "factors": {
         "weather": null,
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -248,14 +260,14 @@
           },
           "2025": {
             "gamesPlayed": 2,
-            "atBats": 5,
-            "hits": 0,
+            "atBats": 7,
+            "hits": 1,
             "homeRuns": 0,
-            "rbi": 0,
-            "avg": ".000",
-            "obp": ".286",
-            "slg": ".000",
-            "ops": ".286",
+            "rbi": 1,
+            "avg": ".143",
+            "obp": ".333",
+            "slg": ".143",
+            "ops": ".476",
             "stolenBases": 1,
             "caughtStealing": 0
           }
@@ -291,19 +303,19 @@
           "confidence": 0
         },
         "dfsProjection": {
-          "expectedPoints": 7.615622161671208,
-          "upside": 11.423433242506812,
-          "floor": 3.807811080835604,
+          "expectedPoints": 4.131931800635786,
+          "upside": 6.197897700953678,
+          "floor": 2.065965900317893,
           "breakdown": {
             "hits": 0,
             "singles": 0,
             "doubles": 0,
             "triples": 0,
             "homeRuns": 0,
-            "runs": 0.8666666666666667,
-            "rbi": 0.18114441416893734,
+            "runs": 0.65,
+            "rbi": 0.24929923365122608,
             "stolenBases": 0,
-            "walks": 2.7600000000000002
+            "walks": 1.1666666666666667
           }
         }
       },
@@ -324,6 +336,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -356,14 +374,14 @@
           },
           "2025": {
             "gamesPlayed": 2,
-            "atBats": 6,
-            "hits": 0,
+            "atBats": 8,
+            "hits": 1,
             "homeRuns": 0,
             "rbi": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
+            "avg": ".125",
+            "obp": ".125",
+            "slg": ".125",
+            "ops": ".250",
             "stolenBases": 0,
             "caughtStealing": 0
           }
@@ -399,17 +417,17 @@
           "confidence": 0
         },
         "dfsProjection": {
-          "expectedPoints": 2.1711751662971173,
-          "upside": 3.256762749445676,
-          "floor": 1.0855875831485586,
+          "expectedPoints": 1.940742793791574,
+          "upside": 2.911114190687361,
+          "floor": 0.970371396895787,
           "breakdown": {
             "hits": 0,
             "singles": 0,
             "doubles": 0,
             "triples": 0,
             "homeRuns": 0,
-            "runs": 0.7999999999999999,
-            "rbi": 0.28558758314855864,
+            "runs": 0.6,
+            "rbi": 0.3703713968957871,
             "stolenBases": 0,
             "walks": 0
           }
@@ -432,33 +450,39 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
-      "batterId": 665155,
-      "name": "Nick Maton",
-      "team": "Chicago White Sox",
-      "opponent": "Los Angeles Angels",
+      "batterId": 606992,
+      "name": "Eric Haase",
+      "team": "Milwaukee Brewers",
+      "opponent": "New York Yankees",
       "opposingPitcher": {
-        "id": 667755,
-        "name": "José Soriano",
+        "id": 608331,
+        "name": "Max Fried",
         "throwsHand": "R"
       },
-      "position": "DH",
-      "gameId": 778534,
-      "venue": "Rate Field",
+      "position": "C",
+      "gameId": 778538,
+      "venue": "Yankee Stadium",
       "stats": {
         "seasonStats": {
           "2024": {
-            "gamesPlayed": 5,
-            "atBats": 5,
-            "hits": 0,
-            "homeRuns": 0,
-            "rbi": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
+            "gamesPlayed": 30,
+            "atBats": 66,
+            "hits": 18,
+            "homeRuns": 5,
+            "rbi": 14,
+            "avg": ".273",
+            "obp": ".304",
+            "slg": ".515",
+            "ops": ".819",
             "stolenBases": 0,
             "caughtStealing": 0
           },
@@ -507,9 +531,123 @@
           "confidence": 0
         },
         "dfsProjection": {
-          "expectedPoints": 5.634745505629846,
-          "upside": 8.45211825844477,
-          "floor": 2.817372752814923,
+          "expectedPoints": 3.0770485327313772,
+          "upside": 4.615572799097066,
+          "floor": 1.5385242663656886,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.55,
+            "rbi": 0.6997742663656885,
+            "stolenBases": 0,
+            "walks": 0.28875000000000006
+          }
+        }
+      },
+      "environment": {
+        "temperature": 78,
+        "windSpeed": 15,
+        "windDirection": "Out To CF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 4,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
+      }
+    },
+    {
+      "batterId": 665155,
+      "name": "Nick Maton",
+      "team": "Chicago White Sox",
+      "opponent": "Los Angeles Angels",
+      "opposingPitcher": {
+        "id": 667755,
+        "name": "José Soriano",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778534,
+      "venue": "Rate Field",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 5,
+            "atBats": 5,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".000",
+            "obp": ".000",
+            "slg": ".000",
+            "ops": ".000",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 2,
+            "atBats": 2,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".000",
+            "obp": ".333",
+            "slg": ".000",
+            "ops": ".333",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 5.659593582887702,
+          "upside": 8.489390374331553,
+          "floor": 2.829796791443851,
           "breakdown": {
             "hits": 0,
             "singles": 0,
@@ -517,9 +655,9 @@
             "triples": 0,
             "homeRuns": 0,
             "runs": 0.5,
-            "rbi": 0.5801075268817204,
+            "rbi": 0.17379679144385027,
             "stolenBases": 0,
-            "walks": 1.7372652259332024
+            "walks": 2.1560000000000006
           }
         }
       },
@@ -540,6 +678,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -572,14 +716,14 @@
           },
           "2025": {
             "gamesPlayed": 1,
-            "atBats": 0,
+            "atBats": 1,
             "hits": 0,
             "homeRuns": 0,
             "rbi": 0,
             "avg": ".000",
-            "obp": ".000",
+            "obp": ".500",
             "slg": ".000",
-            "ops": ".000",
+            "ops": ".500",
             "stolenBases": 0,
             "caughtStealing": 0
           }
@@ -615,9 +759,9 @@
           "confidence": 0
         },
         "dfsProjection": {
-          "expectedPoints": 2.744552845528456,
-          "upside": 4.116829268292683,
-          "floor": 1.372276422764228,
+          "expectedPoints": 5.657804878048782,
+          "upside": 8.486707317073172,
+          "floor": 2.828902439024391,
           "breakdown": {
             "hits": 0,
             "singles": 0,
@@ -625,9 +769,9 @@
             "triples": 0,
             "homeRuns": 0,
             "runs": 0.4,
-            "rbi": 0.3963414634146342,
+            "rbi": 0.11890243902439027,
             "stolenBases": 0,
-            "walks": 0.5759349593495936
+            "walks": 2.3100000000000005
           }
         }
       },
@@ -648,6 +792,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -680,14 +830,14 @@
           },
           "2025": {
             "gamesPlayed": 2,
-            "atBats": 4,
-            "hits": 0,
+            "atBats": 6,
+            "hits": 1,
             "homeRuns": 0,
             "rbi": 0,
-            "avg": ".000",
-            "obp": ".200",
-            "slg": ".000",
-            "ops": ".200",
+            "avg": ".167",
+            "obp": ".286",
+            "slg": ".167",
+            "ops": ".453",
             "stolenBases": 0,
             "caughtStealing": 0
           }
@@ -723,9 +873,9 @@
           "confidence": 0
         },
         "dfsProjection": {
-          "expectedPoints": 18.349425287356322,
-          "upside": 27.52413793103448,
-          "floor": 9.174712643678161,
+          "expectedPoints": 3.1872404214559387,
+          "upside": 4.7808606321839076,
+          "floor": 1.5936202107279693,
           "breakdown": {
             "hits": 0,
             "singles": 0,
@@ -733,9 +883,9 @@
             "triples": 0,
             "homeRuns": 0,
             "runs": 0.55,
-            "rbi": 0.2247126436781609,
+            "rbi": 0.4436202107279693,
             "stolenBases": 0,
-            "walks": 8.4
+            "walks": 0.6
           }
         }
       },
@@ -756,6 +906,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -787,15 +943,15 @@
             "caughtStealing": 3
           },
           "2025": {
-            "gamesPlayed": 1,
-            "atBats": 4,
+            "gamesPlayed": 2,
+            "atBats": 7,
             "hits": 2,
             "homeRuns": 1,
             "rbi": 1,
-            "avg": ".500",
-            "obp": ".500",
-            "slg": ".250",
-            "ops": ".750",
+            "avg": ".286",
+            "obp": ".286",
+            "slg": ".714",
+            "ops": ".000",
             "stolenBases": 0,
             "caughtStealing": 0
           }
@@ -831,9 +987,9 @@
           "confidence": 0
         },
         "dfsProjection": {
-          "expectedPoints": 5.380077720207254,
-          "upside": 8.07011658031088,
-          "floor": 2.690038860103627,
+          "expectedPoints": 2.5517350515463915,
+          "upside": 3.8276025773195874,
+          "floor": 1.2758675257731957,
           "breakdown": {
             "hits": 0,
             "singles": 0,
@@ -841,7 +997,7 @@
             "triples": 0,
             "homeRuns": 0,
             "runs": 0.45,
-            "rbi": 2.2400388601036267,
+            "rbi": 0.8258675257731958,
             "stolenBases": 0,
             "walks": 0
           }
@@ -864,6 +1020,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -895,15 +1057,15 @@
             "caughtStealing": 4
           },
           "2025": {
-            "gamesPlayed": 1,
-            "atBats": 4,
+            "gamesPlayed": 2,
+            "atBats": 6,
             "hits": 1,
             "homeRuns": 0,
             "rbi": 0,
-            "avg": ".250",
-            "obp": ".250",
-            "slg": ".250",
-            "ops": ".500",
+            "avg": ".167",
+            "obp": ".167",
+            "slg": ".167",
+            "ops": ".334",
             "stolenBases": 0,
             "caughtStealing": 0
           }
@@ -939,9 +1101,9 @@
           "confidence": 0
         },
         "dfsProjection": {
-          "expectedPoints": 1.9101177536231884,
-          "upside": 2.8651766304347825,
-          "floor": 0.9550588768115942,
+          "expectedPoints": 1.7300853188929,
+          "upside": 2.5951279783393497,
+          "floor": 0.86504265944645,
           "breakdown": {
             "hits": 0,
             "singles": 0,
@@ -949,7 +1111,7 @@
             "triples": 0,
             "homeRuns": 0,
             "runs": 0.5,
-            "rbi": 0.4550588768115942,
+            "rbi": 0.36504265944645,
             "stolenBases": 0,
             "walks": 0
           }
@@ -972,6 +1134,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -1004,14 +1172,14 @@
           },
           "2025": {
             "gamesPlayed": 2,
-            "atBats": 3,
+            "atBats": 5,
             "hits": 2,
             "homeRuns": 0,
             "rbi": 1,
-            "avg": ".667",
-            "obp": ".750",
-            "slg": ".000",
-            "ops": ".750",
+            "avg": ".400",
+            "obp": ".500",
+            "slg": ".600",
+            "ops": ".100",
             "stolenBases": 0,
             "caughtStealing": 0
           }
@@ -1047,9 +1215,9 @@
           "confidence": 0
         },
         "dfsProjection": {
-          "expectedPoints": 5.009557823129251,
-          "upside": 7.5143367346938765,
-          "floor": 2.5047789115646255,
+          "expectedPoints": 3.6233673469387755,
+          "upside": 5.435051020408164,
+          "floor": 1.8116836734693877,
           "breakdown": {
             "hits": 0,
             "singles": 0,
@@ -1057,9 +1225,9 @@
             "triples": 0,
             "homeRuns": 0,
             "runs": 0.45,
-            "rbi": 1.0047789115646257,
+            "rbi": 0.6616836734693877,
             "stolenBases": 0,
-            "walks": 1.05
+            "walks": 0.7
           }
         }
       },
@@ -1080,6 +1248,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -1111,8 +1285,8 @@
             "caughtStealing": 0
           },
           "2025": {
-            "gamesPlayed": 0,
-            "atBats": 0,
+            "gamesPlayed": 1,
+            "atBats": 2,
             "hits": 0,
             "homeRuns": 0,
             "rbi": 0,
@@ -1155,9 +1329,9 @@
           "confidence": 0
         },
         "dfsProjection": {
-          "expectedPoints": 2,
-          "upside": 3,
-          "floor": 1,
+          "expectedPoints": 1.23,
+          "upside": 1.845,
+          "floor": 0.615,
           "breakdown": {
             "hits": 0,
             "singles": 0,
@@ -1165,7 +1339,7 @@
             "triples": 0,
             "homeRuns": 0,
             "runs": 0.45,
-            "rbi": 0.55,
+            "rbi": 0.165,
             "stolenBases": 0,
             "walks": 0
           }
@@ -1188,6 +1362,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -1219,8 +1399,8 @@
             "caughtStealing": 1
           },
           "2025": {
-            "gamesPlayed": 0,
-            "atBats": 0,
+            "gamesPlayed": 1,
+            "atBats": 2,
             "hits": 0,
             "homeRuns": 0,
             "rbi": 0,
@@ -1263,9 +1443,9 @@
           "confidence": 0
         },
         "dfsProjection": {
-          "expectedPoints": 1.6374217720476307,
-          "upside": 2.456132658071446,
-          "floor": 0.8187108860238154,
+          "expectedPoints": 0.7916984732824427,
+          "upside": 1.187547709923664,
+          "floor": 0.39584923664122135,
           "breakdown": {
             "hits": 0,
             "singles": 0,
@@ -1273,9 +1453,9 @@
             "triples": 0,
             "homeRuns": 0,
             "runs": 0.3,
-            "rbi": 0.31957975167144215,
+            "rbi": 0.09584923664122136,
             "stolenBases": 0,
-            "walks": 0.1991311343523733
+            "walks": 0
           }
         }
       },
@@ -1296,6 +1476,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -1327,15 +1513,15 @@
             "caughtStealing": 0
           },
           "2025": {
-            "gamesPlayed": 2,
+            "gamesPlayed": 3,
             "atBats": 8,
             "hits": 2,
             "homeRuns": 0,
-            "rbi": 0,
+            "rbi": 1,
             "avg": ".250",
-            "obp": ".250",
+            "obp": ".222",
             "slg": ".250",
-            "ops": ".500",
+            "ops": ".472",
             "stolenBases": 0,
             "caughtStealing": 0
           }
@@ -1371,9 +1557,9 @@
           "confidence": 0
         },
         "dfsProjection": {
-          "expectedPoints": 1.9133046636085629,
-          "upside": 2.8699569954128443,
-          "floor": 0.9566523318042814,
+          "expectedPoints": 1.7010844139333843,
+          "upside": 2.5516266209000764,
+          "floor": 0.8505422069666921,
           "breakdown": {
             "hits": 0,
             "singles": 0,
@@ -1381,7 +1567,7 @@
             "triples": 0,
             "homeRuns": 0,
             "runs": 0.5,
-            "rbi": 0.45665233180428144,
+            "rbi": 0.3505422069666922,
             "stolenBases": 0,
             "walks": 0
           }
@@ -1404,6 +1590,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -1435,15 +1627,15 @@
             "caughtStealing": 0
           },
           "2025": {
-            "gamesPlayed": 2,
-            "atBats": 6,
+            "gamesPlayed": 3,
+            "atBats": 7,
             "hits": 3,
             "homeRuns": 0,
             "rbi": 0,
-            "avg": ".500",
-            "obp": ".500",
-            "slg": ".667",
-            "ops": ".167",
+            "avg": ".429",
+            "obp": ".429",
+            "slg": ".571",
+            "ops": ".000",
             "stolenBases": 0,
             "caughtStealing": 0
           }
@@ -1479,9 +1671,9 @@
           "confidence": 0
         },
         "dfsProjection": {
-          "expectedPoints": 2.431207051282051,
-          "upside": 3.6468105769230768,
-          "floor": 1.2156035256410256,
+          "expectedPoints": 2.2409543209876546,
+          "upside": 3.361431481481482,
+          "floor": 1.1204771604938273,
           "breakdown": {
             "hits": 0,
             "singles": 0,
@@ -1489,7 +1681,7 @@
             "triples": 0,
             "homeRuns": 0,
             "runs": 0.45,
-            "rbi": 0.7656035256410256,
+            "rbi": 0.6704771604938272,
             "stolenBases": 0,
             "walks": 0
           }
@@ -1512,6 +1704,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -1543,15 +1741,15 @@
             "caughtStealing": 0
           },
           "2025": {
-            "gamesPlayed": 2,
-            "atBats": 7,
+            "gamesPlayed": 3,
+            "atBats": 9,
             "hits": 3,
             "homeRuns": 2,
             "rbi": 3,
-            "avg": ".429",
-            "obp": ".556",
-            "slg": ".286",
-            "ops": ".842",
+            "avg": ".333",
+            "obp": ".455",
+            "slg": ".000",
+            "ops": ".455",
             "stolenBases": 0,
             "caughtStealing": 0
           }
@@ -1587,9 +1785,9 @@
           "confidence": 0
         },
         "dfsProjection": {
-          "expectedPoints": 9.812869304556354,
-          "upside": 14.719303956834532,
-          "floor": 4.906434652278177,
+          "expectedPoints": 7.262105263157895,
+          "upside": 10.893157894736841,
+          "floor": 3.6310526315789473,
           "breakdown": {
             "hits": 0,
             "singles": 0,
@@ -1597,9 +1795,9 @@
             "triples": 0,
             "homeRuns": 0,
             "runs": 0.65,
-            "rbi": 2.669767985611511,
+            "rbi": 1.5301435406698563,
             "stolenBases": 0,
-            "walks": 1.586666666666667
+            "walks": 1.4509090909090911
           }
         }
       },
@@ -1620,6 +1818,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -1651,8 +1855,8 @@
             "caughtStealing": 0
           },
           "2025": {
-            "gamesPlayed": 0,
-            "atBats": 0,
+            "gamesPlayed": 1,
+            "atBats": 1,
             "hits": 0,
             "homeRuns": 0,
             "rbi": 0,
@@ -1695,9 +1899,9 @@
           "confidence": 0
         },
         "dfsProjection": {
-          "expectedPoints": 2.389848392695082,
-          "upside": 3.5847725890426227,
-          "floor": 1.194924196347541,
+          "expectedPoints": 1.0856953642384106,
+          "upside": 1.628543046357616,
+          "floor": 0.5428476821192053,
           "breakdown": {
             "hits": 0,
             "singles": 0,
@@ -1705,9 +1909,9 @@
             "triples": 0,
             "homeRuns": 0,
             "runs": 0.4,
-            "rbi": 0.4763535911602211,
+            "rbi": 0.1428476821192053,
             "stolenBases": 0,
-            "walks": 0.3185706051873199
+            "walks": 0
           }
         }
       },
@@ -1728,6 +1932,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -1820,9 +2030,9 @@
         }
       },
       "environment": {
-        "temperature": 82,
-        "windSpeed": 11,
-        "windDirection": "Out To RF",
+        "temperature": 78,
+        "windSpeed": 13,
+        "windDirection": "Out To LF",
         "isOutdoor": true
       },
       "ballparkFactors": {
@@ -1836,6 +2046,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -1928,9 +2144,9 @@
         }
       },
       "environment": {
-        "temperature": 82,
-        "windSpeed": 11,
-        "windDirection": "Out To RF",
+        "temperature": 78,
+        "windSpeed": 13,
+        "windDirection": "Out To LF",
         "isOutdoor": true
       },
       "ballparkFactors": {
@@ -1944,6 +2160,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -2019,9 +2241,9 @@
           "confidence": 0
         },
         "dfsProjection": {
-          "expectedPoints": 6.800207723250201,
-          "upside": 10.200311584875301,
-          "floor": 3.4001038616251007,
+          "expectedPoints": 5.790915415557893,
+          "upside": 8.686373123336839,
+          "floor": 2.8954577077789465,
           "breakdown": {
             "hits": 0,
             "singles": 0,
@@ -2031,14 +2253,14 @@
             "runs": 0.7,
             "rbi": 1.4989038616251003,
             "stolenBases": 0,
-            "walks": 1.2012000000000003
+            "walks": 0.6965538461538463
           }
         }
       },
       "environment": {
-        "temperature": 82,
-        "windSpeed": 11,
-        "windDirection": "Out To RF",
+        "temperature": 78,
+        "windSpeed": 13,
+        "windDirection": "Out To LF",
         "isOutdoor": true
       },
       "ballparkFactors": {
@@ -2052,6 +2274,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -2127,26 +2355,26 @@
           "confidence": 0
         },
         "dfsProjection": {
-          "expectedPoints": 5.36058870967742,
-          "upside": 8.04088306451613,
-          "floor": 2.68029435483871,
+          "expectedPoints": 7.182620967741935,
+          "upside": 10.773931451612903,
+          "floor": 3.5913104838709673,
           "breakdown": {
             "hits": 0,
             "singles": 0,
             "doubles": 0,
             "triples": 0,
             "homeRuns": 0,
-            "runs": 0.45,
-            "rbi": 2.2302943548387097,
+            "runs": 0.55,
+            "rbi": 3.0413104838709675,
             "stolenBases": 0,
             "walks": 0
           }
         }
       },
       "environment": {
-        "temperature": 82,
-        "windSpeed": 11,
-        "windDirection": "Out To RF",
+        "temperature": 78,
+        "windSpeed": 13,
+        "windDirection": "Out To LF",
         "isOutdoor": true
       },
       "ballparkFactors": {
@@ -2154,12 +2382,18 @@
         "homeRuns": 1,
         "runs": 1
       },
-      "lineupPosition": 6,
+      "lineupPosition": 4,
       "factors": {
         "weather": null,
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -2253,8 +2487,8 @@
       },
       "environment": {
         "temperature": 76,
-        "windSpeed": 15,
-        "windDirection": "Out To LF",
+        "windSpeed": 16,
+        "windDirection": "R To L",
         "isOutdoor": true
       },
       "ballparkFactors": {
@@ -2268,6 +2502,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -2361,8 +2601,8 @@
       },
       "environment": {
         "temperature": 76,
-        "windSpeed": 15,
-        "windDirection": "Out To LF",
+        "windSpeed": 16,
+        "windDirection": "R To L",
         "isOutdoor": true
       },
       "ballparkFactors": {
@@ -2376,6 +2616,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -2469,8 +2715,8 @@
       },
       "environment": {
         "temperature": 76,
-        "windSpeed": 15,
-        "windDirection": "Out To LF",
+        "windSpeed": 16,
+        "windDirection": "R To L",
         "isOutdoor": true
       },
       "ballparkFactors": {
@@ -2484,6 +2730,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -2577,8 +2829,8 @@
       },
       "environment": {
         "temperature": 76,
-        "windSpeed": 15,
-        "windDirection": "Out To LF",
+        "windSpeed": 16,
+        "windDirection": "R To L",
         "isOutdoor": true
       },
       "ballparkFactors": {
@@ -2592,6 +2844,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -2667,9 +2925,9 @@
           "confidence": 0
         },
         "dfsProjection": {
-          "expectedPoints": 11.06411837029894,
-          "upside": 16.59617755544841,
-          "floor": 5.53205918514947,
+          "expectedPoints": 11.297451703632273,
+          "upside": 16.946177555448408,
+          "floor": 5.6487258518161365,
           "breakdown": {
             "hits": 0,
             "singles": 0,
@@ -2679,7 +2937,7 @@
             "runs": 0.5,
             "rbi": 4.098725851816137,
             "stolenBases": 0,
-            "walks": 0.9333333333333335
+            "walks": 1.05
           }
         }
       },
@@ -2700,6 +2958,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -2775,9 +3039,9 @@
           "confidence": 0
         },
         "dfsProjection": {
-          "expectedPoints": 3.269226932668329,
-          "upside": 4.903840399002494,
-          "floor": 1.6346134663341645,
+          "expectedPoints": 3.8692269326683295,
+          "upside": 5.803840399002494,
+          "floor": 1.9346134663341648,
           "breakdown": {
             "hits": 0,
             "singles": 0,
@@ -2787,7 +3051,7 @@
             "runs": 0.3,
             "rbi": 0.09461346633416459,
             "stolenBases": 0,
-            "walks": 1.24
+            "walks": 1.5400000000000003
           }
         }
       },
@@ -2808,6 +3072,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -2916,6 +3186,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -3024,6 +3300,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -3132,6 +3414,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -3240,6 +3528,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -3348,6 +3642,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -3456,6 +3756,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -3549,8 +3855,8 @@
       },
       "environment": {
         "temperature": 76,
-        "windSpeed": 17,
-        "windDirection": "In From LF",
+        "windSpeed": 0,
+        "windDirection": "None",
         "isOutdoor": false
       },
       "ballparkFactors": {
@@ -3564,6 +3870,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -3657,8 +3969,8 @@
       },
       "environment": {
         "temperature": 76,
-        "windSpeed": 17,
-        "windDirection": "In From LF",
+        "windSpeed": 0,
+        "windDirection": "None",
         "isOutdoor": false
       },
       "ballparkFactors": {
@@ -3672,6 +3984,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -3765,8 +4083,8 @@
       },
       "environment": {
         "temperature": 76,
-        "windSpeed": 17,
-        "windDirection": "In From LF",
+        "windSpeed": 0,
+        "windDirection": "None",
         "isOutdoor": false
       },
       "ballparkFactors": {
@@ -3780,6 +4098,12 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     },
     {
@@ -3873,8 +4197,8 @@
       },
       "environment": {
         "temperature": 76,
-        "windSpeed": 17,
-        "windDirection": "In From LF",
+        "windSpeed": 0,
+        "windDirection": "None",
         "isOutdoor": false
       },
       "ballparkFactors": {
@@ -3888,6 +4212,1380 @@
         "ballpark": null,
         "platoon": false,
         "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
+      }
+    },
+    {
+      "batterId": 592626,
+      "name": "Joc Pederson",
+      "team": "Texas Rangers",
+      "opponent": "Boston Red Sox",
+      "opposingPitcher": {
+        "id": 621111,
+        "name": "Walker Buehler",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778531,
+      "venue": "Globe Life Field",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 132,
+            "atBats": 367,
+            "hits": 101,
+            "homeRuns": 23,
+            "rbi": 64,
+            "avg": ".275",
+            "obp": ".393",
+            "slg": ".515",
+            "ops": ".908",
+            "stolenBases": 7,
+            "caughtStealing": 4
+          },
+          "2025": {
+            "gamesPlayed": 2,
+            "atBats": 4,
+            "hits": 1,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".250",
+            "obp": ".250",
+            "slg": ".250",
+            "ops": ".500",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 2.1563341601700925,
+          "upside": 3.2345012402551387,
+          "floor": 1.0781670800850462,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.55,
+            "rbi": 0.5281670800850461,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 72,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 0.98,
+        "homeRuns": 0.92,
+        "runs": 0.96
+      },
+      "lineupPosition": 4,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
+      }
+    },
+    {
+      "batterId": 641680,
+      "name": "Jonah Heim",
+      "team": "Texas Rangers",
+      "opponent": "Boston Red Sox",
+      "opposingPitcher": {
+        "id": 621111,
+        "name": "Walker Buehler",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778531,
+      "venue": "Globe Life Field",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 131,
+            "atBats": 459,
+            "hits": 101,
+            "homeRuns": 13,
+            "rbi": 59,
+            "avg": ".220",
+            "obp": ".267",
+            "slg": ".336",
+            "ops": ".603",
+            "stolenBases": 1,
+            "caughtStealing": 1
+          },
+          "2025": {
+            "gamesPlayed": 1,
+            "atBats": 3,
+            "hits": 2,
+            "homeRuns": 2,
+            "rbi": 2,
+            "avg": ".667",
+            "obp": ".667",
+            "slg": ".667",
+            "ops": ".334",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 12.613206597938142,
+          "upside": 18.91980989690721,
+          "floor": 6.306603298969071,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.35,
+            "rbi": 5.956603298969071,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 72,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 0.98,
+        "homeRuns": 0.92,
+        "runs": 0.96
+      },
+      "lineupPosition": 8,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
+      }
+    },
+    {
+      "batterId": 646240,
+      "name": "Rafael Devers",
+      "team": "Boston Red Sox",
+      "opponent": "Texas Rangers",
+      "opposingPitcher": {
+        "id": 641816,
+        "name": "Tyler Mahle",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778531,
+      "venue": "Globe Life Field",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 138,
+            "atBats": 525,
+            "hits": 143,
+            "homeRuns": 28,
+            "rbi": 83,
+            "avg": ".272",
+            "obp": ".354",
+            "slg": ".516",
+            "ops": ".870",
+            "stolenBases": 3,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 2,
+            "atBats": 8,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".000",
+            "obp": ".000",
+            "slg": ".000",
+            "ops": ".000",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 1.5969450101832994,
+          "upside": 2.395417515274949,
+          "floor": 0.7984725050916497,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.65,
+            "rbi": 0.1484725050916497,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 72,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 0.98,
+        "homeRuns": 0.92,
+        "runs": 0.96
+      },
+      "lineupPosition": 2,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
+      }
+    },
+    {
+      "batterId": 665966,
+      "name": "Carlos Narváez",
+      "team": "Boston Red Sox",
+      "opponent": "Texas Rangers",
+      "opposingPitcher": {
+        "id": 641816,
+        "name": "Tyler Mahle",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778531,
+      "venue": "Globe Life Field",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 6,
+            "atBats": 13,
+            "hits": 3,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".231",
+            "obp": ".333",
+            "slg": ".231",
+            "ops": ".564",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 0,
+            "atBats": 0,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".000",
+            "obp": ".000",
+            "slg": ".000",
+            "ops": ".000",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 1.2999999999999998,
+          "upside": 1.9499999999999997,
+          "floor": 0.6499999999999999,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.3,
+            "rbi": 0.35,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 72,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 0.98,
+        "homeRuns": 0.92,
+        "runs": 0.96
+      },
+      "lineupPosition": 9,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
+      }
+    },
+    {
+      "batterId": 670541,
+      "name": "Yordan Alvarez",
+      "team": "Houston Astros",
+      "opponent": "New York Mets",
+      "opposingPitcher": {
+        "id": 656288,
+        "name": "Griffin Canning",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778530,
+      "venue": "Daikin Park",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 147,
+            "atBats": 552,
+            "hits": 170,
+            "homeRuns": 35,
+            "rbi": 86,
+            "avg": ".308",
+            "obp": ".392",
+            "slg": ".567",
+            "ops": ".959",
+            "stolenBases": 6,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 2,
+            "atBats": 4,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 1,
+            "avg": ".000",
+            "obp": ".375",
+            "slg": ".000",
+            "ops": ".375",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 5.647226624405705,
+          "upside": 8.470839936608558,
+          "floor": 2.8236133122028524,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.6,
+            "rbi": 0.24361331220285257,
+            "stolenBases": 0,
+            "walks": 1.98
+          }
+        }
+      },
+      "environment": {
+        "temperature": 72,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 3,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
+      }
+    },
+    {
+      "batterId": 605170,
+      "name": "Victor Caratini",
+      "team": "Houston Astros",
+      "opponent": "New York Mets",
+      "opposingPitcher": {
+        "id": 656288,
+        "name": "Griffin Canning",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778530,
+      "venue": "Daikin Park",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 87,
+            "atBats": 245,
+            "hits": 66,
+            "homeRuns": 8,
+            "rbi": 30,
+            "avg": ".269",
+            "obp": ".336",
+            "slg": ".408",
+            "ops": ".744",
+            "stolenBases": 0,
+            "caughtStealing": 1
+          },
+          "2025": {
+            "gamesPlayed": 0,
+            "atBats": 0,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".000",
+            "obp": ".000",
+            "slg": ".000",
+            "ops": ".000",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 2.476491792350984,
+          "upside": 3.7147376885264762,
+          "floor": 1.238245896175492,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.45,
+            "rbi": 0.4880834706205382,
+            "stolenBases": 0,
+            "walks": 0.300162425554954
+          }
+        }
+      },
+      "environment": {
+        "temperature": 72,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 6,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
+      }
+    },
+    {
+      "batterId": 608385,
+      "name": "Jesse Winker",
+      "team": "New York Mets",
+      "opponent": "Houston Astros",
+      "opposingPitcher": {
+        "id": 681293,
+        "name": "Spencer Arrighetti",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778530,
+      "venue": "Daikin Park",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 101,
+            "atBats": 315,
+            "hits": 81,
+            "homeRuns": 11,
+            "rbi": 45,
+            "avg": ".257",
+            "obp": ".374",
+            "slg": ".419",
+            "ops": ".793",
+            "stolenBases": 14,
+            "caughtStealing": 4
+          },
+          "2025": {
+            "gamesPlayed": 2,
+            "atBats": 4,
+            "hits": 1,
+            "homeRuns": 0,
+            "rbi": 1,
+            "avg": ".250",
+            "obp": ".400",
+            "slg": ".250",
+            "ops": ".650",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 3.518477642276423,
+          "upside": 5.2777164634146345,
+          "floor": 1.7592388211382115,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.45,
+            "rbi": 0.3852388211382114,
+            "stolenBases": 0,
+            "walks": 0.9240000000000002
+          }
+        }
+      },
+      "environment": {
+        "temperature": 72,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 6,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
+      }
+    },
+    {
+      "batterId": 620443,
+      "name": "Luis Torrens",
+      "team": "New York Mets",
+      "opponent": "Houston Astros",
+      "opposingPitcher": {
+        "id": 681293,
+        "name": "Spencer Arrighetti",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778530,
+      "venue": "Daikin Park",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 48,
+            "atBats": 118,
+            "hits": 27,
+            "homeRuns": 3,
+            "rbi": 15,
+            "avg": ".229",
+            "obp": ".292",
+            "slg": ".373",
+            "ops": ".665",
+            "stolenBases": 0,
+            "caughtStealing": 1
+          },
+          "2025": {
+            "gamesPlayed": 2,
+            "atBats": 5,
+            "hits": 2,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".400",
+            "obp": ".400",
+            "slg": ".800",
+            "ops": ".200",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 2.111428571428571,
+          "upside": 3.167142857142857,
+          "floor": 1.0557142857142856,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.4,
+            "rbi": 0.6557142857142856,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 72,
+        "windSpeed": 0,
+        "windDirection": "None",
+        "isOutdoor": false
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 7,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
+      }
+    },
+    {
+      "batterId": 657757,
+      "name": "Gavin Sheets",
+      "team": "San Diego Padres",
+      "opponent": "Atlanta Braves",
+      "opposingPitcher": {
+        "id": 680885,
+        "name": "Spencer Schwellenbach",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778520,
+      "venue": "Petco Park",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 139,
+            "atBats": 451,
+            "hits": 105,
+            "homeRuns": 10,
+            "rbi": 45,
+            "avg": ".233",
+            "obp": ".303",
+            "slg": ".357",
+            "ops": ".660",
+            "stolenBases": 2,
+            "caughtStealing": 2
+          },
+          "2025": {
+            "gamesPlayed": 2,
+            "atBats": 5,
+            "hits": 2,
+            "homeRuns": 1,
+            "rbi": 1,
+            "avg": ".400",
+            "obp": ".400",
+            "slg": ".000",
+            "ops": ".400",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 2.5253775743707094,
+          "upside": 3.788066361556064,
+          "floor": 1.2626887871853547,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.4,
+            "rbi": 0.8626887871853547,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 61,
+        "windSpeed": 9,
+        "windDirection": "Out To RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 7,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
+      }
+    },
+    {
+      "batterId": 455117,
+      "name": "Martín Maldonado",
+      "team": "San Diego Padres",
+      "opponent": "Atlanta Braves",
+      "opposingPitcher": {
+        "id": 680885,
+        "name": "Spencer Schwellenbach",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778520,
+      "venue": "Petco Park",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 48,
+            "atBats": 135,
+            "hits": 16,
+            "homeRuns": 4,
+            "rbi": 11,
+            "avg": ".119",
+            "obp": ".174",
+            "slg": ".230",
+            "ops": ".404",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 2,
+            "atBats": 4,
+            "hits": 2,
+            "homeRuns": 0,
+            "rbi": 1,
+            "avg": ".500",
+            "obp": ".500",
+            "slg": ".500",
+            "ops": ".000",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 1.323107202680067,
+          "upside": 1.9846608040201006,
+          "floor": 0.6615536013400335,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.3,
+            "rbi": 0.3615536013400335,
+            "stolenBases": 0,
+            "walks": 0
+          }
+        }
+      },
+      "environment": {
+        "temperature": 61,
+        "windSpeed": 9,
+        "windDirection": "Out To RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 9,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
+      }
+    },
+    {
+      "batterId": 542303,
+      "name": "Marcell Ozuna",
+      "team": "Atlanta Braves",
+      "opponent": "San Diego Padres",
+      "opposingPitcher": {
+        "id": 681190,
+        "name": "Randy Vásquez",
+        "throwsHand": "R"
+      },
+      "position": "DH",
+      "gameId": 778520,
+      "venue": "Petco Park",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 162,
+            "atBats": 606,
+            "hits": 183,
+            "homeRuns": 39,
+            "rbi": 104,
+            "avg": ".302",
+            "obp": ".378",
+            "slg": ".546",
+            "ops": ".924",
+            "stolenBases": 1,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 2,
+            "atBats": 6,
+            "hits": 2,
+            "homeRuns": 0,
+            "rbi": 2,
+            "avg": ".333",
+            "obp": ".556",
+            "slg": ".333",
+            "ops": ".889",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 10.674789938817131,
+          "upside": 16.0121849082257,
+          "floor": 5.337394969408566,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.55,
+            "rbi": 1.1473949694085654,
+            "stolenBases": 0,
+            "walks": 3.64
+          }
+        }
+      },
+      "environment": {
+        "temperature": 61,
+        "windSpeed": 9,
+        "windDirection": "Out To RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 4,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
+      }
+    },
+    {
+      "batterId": 686948,
+      "name": "Drake Baldwin",
+      "team": "Atlanta Braves",
+      "opponent": "San Diego Padres",
+      "opposingPitcher": {
+        "id": 681190,
+        "name": "Randy Vásquez",
+        "throwsHand": "R"
+      },
+      "position": "C",
+      "gameId": 778520,
+      "venue": "Petco Park",
+      "stats": {
+        "seasonStats": {
+          "2024": {
+            "gamesPlayed": 0,
+            "atBats": 0,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".000",
+            "obp": ".000",
+            "slg": ".000",
+            "ops": ".000",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          },
+          "2025": {
+            "gamesPlayed": 2,
+            "atBats": 7,
+            "hits": 0,
+            "homeRuns": 0,
+            "rbi": 0,
+            "avg": ".000",
+            "obp": ".125",
+            "slg": ".000",
+            "ops": ".125",
+            "stolenBases": 0,
+            "caughtStealing": 0
+          }
+        },
+        "quality": {
+          "battedBallQuality": 0,
+          "power": 0,
+          "contactRate": 0,
+          "plateApproach": 0,
+          "speed": 0
+        }
+      },
+      "matchup": {
+        "advantageScore": 50,
+        "platoonAdvantage": false,
+        "historicalStats": {
+          "atBats": 0,
+          "hits": 0,
+          "avg": 0,
+          "homeRuns": 0,
+          "ops": 0
+        }
+      },
+      "projections": {
+        "homeRunProbability": 0,
+        "stolenBaseProbability": 0,
+        "expectedHits": {
+          "total": 0,
+          "singles": 0,
+          "doubles": 0,
+          "triples": 0,
+          "homeRuns": 0,
+          "confidence": 0
+        },
+        "dfsProjection": {
+          "expectedPoints": 2.2250000000000005,
+          "upside": 3.337500000000001,
+          "floor": 1.1125000000000003,
+          "breakdown": {
+            "hits": 0,
+            "singles": 0,
+            "doubles": 0,
+            "triples": 0,
+            "homeRuns": 0,
+            "runs": 0.4,
+            "rbi": 0.135,
+            "stolenBases": 0,
+            "walks": 0.5775000000000001
+          }
+        }
+      },
+      "environment": {
+        "temperature": 61,
+        "windSpeed": 9,
+        "windDirection": "Out To RF",
+        "isOutdoor": true
+      },
+      "ballparkFactors": {
+        "overall": 1,
+        "homeRuns": 1,
+        "runs": 1
+      },
+      "lineupPosition": 7,
+      "factors": {
+        "weather": null,
+        "ballpark": null,
+        "platoon": false,
+        "career": null
+      },
+      "draftKings": {
+        "draftKingsId": null,
+        "salary": null,
+        "positions": [],
+        "avgPointsPerGame": null
       }
     }
   ]

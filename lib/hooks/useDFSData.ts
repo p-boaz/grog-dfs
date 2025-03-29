@@ -1,8 +1,69 @@
 import { useState, useEffect } from "react";
 
+interface BatterData {
+  batterId: number;
+  name: string;
+  team: string;
+  opponent: string;
+  projections: {
+    dfsProjection: {
+      expectedPoints: number;
+      upside: number;
+      floor: number;
+    };
+    homeRunProbability: number;
+    stolenBaseProbability: number;
+  };
+  environment: {
+    temperature: number;
+    windSpeed: number;
+    windDirection: string;
+    isOutdoor: boolean;
+  };
+  ballparkFactors: {
+    overall: number;
+    homeRuns: number;
+    runs: number;
+  };
+}
+
+interface PitcherData {
+  pitcherId: number;
+  name: string;
+  team: string;
+  opponent: string;
+  projections: {
+    winProbability: number;
+    expectedStrikeouts: number;
+    expectedInnings: number;
+  };
+  environment: {
+    temperature: number;
+    windSpeed: number;
+    windDirection: string;
+    isOutdoor: boolean;
+  };
+  ballparkFactors: {
+    overall: number;
+    homeRuns: number;
+  };
+}
+
+interface BattersResponse {
+  date: string;
+  analysisTimestamp: string;
+  batters: BatterData[];
+}
+
+interface PitchersResponse {
+  date: string;
+  analysisTimestamp: string;
+  pitchers: PitcherData[];
+}
+
 interface DFSData {
-  batters: any[];
-  pitchers: any[];
+  batters: BattersResponse;
+  pitchers: PitchersResponse;
   date: string;
 }
 

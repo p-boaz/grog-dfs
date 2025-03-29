@@ -121,15 +121,11 @@ export async function getTeamStats(
       return null;
     }
 
-    // Now get the stats
+    // Get stats for both current and previous season in a single call
     const response = await makeMLBApiRequest<any>(
-      `/teams/${teamId}/stats?season=${season}&group=hitting,pitching&sportId=1&stats=yearByYear`
-    );
-
-    // Log raw response for debugging
-    console.log(
-      `Raw team stats API response for team ${teamId} (${teamInfo.teams[0].name}), season ${season}:`,
-      JSON.stringify(response, null, 2)
+      `/teams/${teamId}/stats?season=${season},${
+        season - 1
+      }&group=hitting,pitching&sportId=1&stats=yearByYear`
     );
 
     if (!response.stats?.[0]?.splits) {

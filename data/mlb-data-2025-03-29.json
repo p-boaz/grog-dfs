@@ -24,20 +24,20 @@
           592450,
           665862,
           683011,
-          669224,
-          622569,
+          641555,
+          672724,
           691176,
           663757
         ],
         "away": [
           694192,
           592885,
-          661388,
-          656555,
+          606992,
+          641343,
           686217,
           687401,
           669003,
-          681962,
+          686554,
           668930
         ],
         "homeBatters": [
@@ -72,9 +72,19 @@
             "position": "C"
           },
           {
+            "id": 641555,
+            "fullName": "J.C. Escarra",
+            "position": "PH"
+          },
+          {
             "id": 622569,
             "fullName": "Pablo Reyes",
             "position": "3B"
+          },
+          {
+            "id": 672724,
+            "fullName": "Oswald Peraza",
+            "position": "PH"
           },
           {
             "id": 691176,
@@ -89,6 +99,16 @@
           {
             "id": 608331,
             "fullName": "Max Fried",
+            "position": "P"
+          },
+          {
+            "id": 672782,
+            "fullName": "Yoendrys Gómez",
+            "position": "P"
+          },
+          {
+            "id": 687396,
+            "fullName": "Brent Headrick",
             "position": "P"
           }
         ],
@@ -109,8 +129,18 @@
             "position": "C"
           },
           {
+            "id": 606992,
+            "fullName": "Eric Haase",
+            "position": "C"
+          },
+          {
             "id": 656555,
             "fullName": "Rhys Hoskins",
+            "position": "1B"
+          },
+          {
+            "id": 641343,
+            "fullName": "Jake Bauers",
             "position": "1B"
           },
           {
@@ -134,6 +164,11 @@
             "position": "3B"
           },
           {
+            "id": 686554,
+            "fullName": "Oliver Dunn",
+            "position": "3B"
+          },
+          {
             "id": 668930,
             "fullName": "Brice Turang",
             "position": "2B"
@@ -146,6 +181,16 @@
           {
             "id": 671162,
             "fullName": "Connor Thomas",
+            "position": "P"
+          },
+          {
+            "id": 665625,
+            "fullName": "Elvis Peguero",
+            "position": "P"
+          },
+          {
+            "id": 694477,
+            "fullName": "Chad Patrick",
             "position": "P"
           }
         ],
@@ -172,73 +217,17 @@
         "venueId": 3313,
         "venueName": "Yankee Stadium",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T18:21:55.874Z",
+        "sourceTimestamp": "2025-03-29T19:45:26.685Z",
         "__isApiSource": true
       },
       "teamStats": {
         "home": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         },
         "away": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         }
       },
       "ballpark": {
@@ -254,7 +243,7 @@
           "homeRuns": 1,
           "runs": 1
         },
-        "sourceTimestamp": "2025-03-29T18:21:55.763Z",
+        "sourceTimestamp": "2025-03-29T19:45:26.545Z",
         "venueId": 3313,
         "season": "2025",
         "__isApiSource": true
@@ -296,7 +285,7 @@
           660162,
           681351,
           650859,
-          666176,
+          677347,
           621028
         ],
         "homeBatters": [
@@ -349,6 +338,16 @@
             "id": 686563,
             "fullName": "Jonathan Cannon",
             "position": "P"
+          },
+          {
+            "id": 682171,
+            "fullName": "Penn Murfee",
+            "position": "P"
+          },
+          {
+            "id": 669060,
+            "fullName": "Bryse Wilson",
+            "position": "P"
           }
         ],
         "awayBatters": [
@@ -393,6 +392,11 @@
             "position": "CF"
           },
           {
+            "id": 677347,
+            "fullName": "Kyren Paris",
+            "position": "CF"
+          },
+          {
             "id": 621028,
             "fullName": "Kevin Newman",
             "position": "SS"
@@ -426,73 +430,17 @@
         "venueId": 4,
         "venueName": "Rate Field",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T18:21:55.852Z",
+        "sourceTimestamp": "2025-03-29T19:45:26.665Z",
         "__isApiSource": true
       },
       "teamStats": {
         "home": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         },
         "away": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         }
       },
       "ballpark": {
@@ -508,7 +456,7 @@
           "homeRuns": 1,
           "runs": 1
         },
-        "sourceTimestamp": "2025-03-29T18:21:55.763Z",
+        "sourceTimestamp": "2025-03-29T19:45:26.545Z",
         "venueId": 4,
         "season": "2025",
         "__isApiSource": true
@@ -655,6 +603,11 @@
             "id": 657746,
             "fullName": "Joe Ryan",
             "position": "P"
+          },
+          {
+            "id": 660896,
+            "fullName": "Jorge Alcala",
+            "position": "P"
           }
         ],
         "confirmed": true
@@ -680,73 +633,17 @@
         "venueId": 2889,
         "venueName": "Busch Stadium",
         "hasRoof": true,
-        "sourceTimestamp": "2025-03-29T18:21:55.857Z",
+        "sourceTimestamp": "2025-03-29T19:45:26.655Z",
         "__isApiSource": true
       },
       "teamStats": {
         "home": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         },
         "away": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         }
       },
       "ballpark": {
@@ -762,7 +659,7 @@
           "homeRuns": 1,
           "runs": 1
         },
-        "sourceTimestamp": "2025-03-29T18:21:55.763Z",
+        "sourceTimestamp": "2025-03-29T19:45:26.545Z",
         "venueId": 2889,
         "season": "2025",
         "__isApiSource": true
@@ -771,7 +668,7 @@
     {
       "gameId": 778536,
       "gameTime": "2025-03-29T19:07:00.000Z",
-      "status": "Pre-Game",
+      "status": "In Progress",
       "homeTeam": {
         "id": 141,
         "name": "Toronto Blue Jays"
@@ -934,73 +831,17 @@
         "venueId": 14,
         "venueName": "Rogers Centre",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T18:21:55.892Z",
+        "sourceTimestamp": "2025-03-29T19:45:26.649Z",
         "__isApiSource": true
       },
       "teamStats": {
         "home": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         },
         "away": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         }
       },
       "ballpark": {
@@ -1016,7 +857,7 @@
           "homeRuns": 1,
           "runs": 1
         },
-        "sourceTimestamp": "2025-03-29T18:21:55.763Z",
+        "sourceTimestamp": "2025-03-29T19:45:26.545Z",
         "venueId": 14,
         "season": "2025",
         "__isApiSource": true
@@ -1025,7 +866,7 @@
     {
       "gameId": 778535,
       "gameTime": "2025-03-29T20:05:00.000Z",
-      "status": "Pre-Game",
+      "status": "Warmup",
       "homeTeam": {
         "id": 120,
         "name": "Washington Nationals"
@@ -1052,14 +893,14 @@
         ],
         "away": [
           656941,
-          607208,
-          547180,
           664761,
-          596146,
+          547180,
           592663,
+          596146,
           592206,
           681082,
-          669016
+          669016,
+          624641
         ],
         "homeBatters": [
           {
@@ -1120,9 +961,9 @@
             "position": "DH"
           },
           {
-            "id": 607208,
-            "fullName": "Trea Turner",
-            "position": "SS"
+            "id": 664761,
+            "fullName": "Alec Bohm",
+            "position": "3B"
           },
           {
             "id": 547180,
@@ -1130,19 +971,14 @@
             "position": "1B"
           },
           {
-            "id": 664761,
-            "fullName": "Alec Bohm",
-            "position": "3B"
+            "id": 592663,
+            "fullName": "J.T. Realmuto",
+            "position": "C"
           },
           {
             "id": 596146,
             "fullName": "Max Kepler",
             "position": "LF"
-          },
-          {
-            "id": 592663,
-            "fullName": "J.T. Realmuto",
-            "position": "C"
           },
           {
             "id": 592206,
@@ -1158,6 +994,11 @@
             "id": 669016,
             "fullName": "Brandon Marsh",
             "position": "CF"
+          },
+          {
+            "id": 624641,
+            "fullName": "Edmundo Sosa",
+            "position": "SS"
           },
           {
             "id": 666200,
@@ -1180,81 +1021,25 @@
         }
       },
       "environment": {
-        "temperature": 82,
-        "windSpeed": 11,
-        "windDirection": "Out To RF",
+        "temperature": 78,
+        "windSpeed": 13,
+        "windDirection": "Out To LF",
         "precipitation": false,
         "isOutdoor": true,
         "venueId": 3309,
         "venueName": "Nationals Park",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T18:21:55.966Z",
+        "sourceTimestamp": "2025-03-29T19:45:26.673Z",
         "__isApiSource": true
       },
       "teamStats": {
         "home": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         },
         "away": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         }
       },
       "ballpark": {
@@ -1270,7 +1055,7 @@
           "homeRuns": 1,
           "runs": 1
         },
-        "sourceTimestamp": "2025-03-29T18:21:55.764Z",
+        "sourceTimestamp": "2025-03-29T19:45:26.545Z",
         "venueId": 3309,
         "season": "2025",
         "__isApiSource": true
@@ -1435,80 +1220,24 @@
       },
       "environment": {
         "temperature": 76,
-        "windSpeed": 15,
-        "windDirection": "Out To LF",
+        "windSpeed": 16,
+        "windDirection": "R To L",
         "precipitation": false,
         "isOutdoor": true,
         "venueId": 7,
         "venueName": "Kauffman Stadium",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T18:21:55.942Z",
+        "sourceTimestamp": "2025-03-29T19:45:26.716Z",
         "__isApiSource": true
       },
       "teamStats": {
         "home": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         },
         "away": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         }
       },
       "ballpark": {
@@ -1524,7 +1253,7 @@
           "homeRuns": 1,
           "runs": 1
         },
-        "sourceTimestamp": "2025-03-29T18:21:55.764Z",
+        "sourceTimestamp": "2025-03-29T19:45:26.545Z",
         "venueId": 7,
         "season": "2025",
         "__isApiSource": true
@@ -1696,73 +1425,17 @@
         "venueId": 2602,
         "venueName": "Great American Ball Park",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T18:21:56.156Z",
+        "sourceTimestamp": "2025-03-29T19:45:26.869Z",
         "__isApiSource": true
       },
       "teamStats": {
         "home": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         },
         "away": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         }
       },
       "ballpark": {
@@ -1778,7 +1451,7 @@
           "homeRuns": 1,
           "runs": 1
         },
-        "sourceTimestamp": "2025-03-29T18:21:55.764Z",
+        "sourceTimestamp": "2025-03-29T19:45:26.545Z",
         "venueId": 2602,
         "season": "2025",
         "__isApiSource": true
@@ -1787,7 +1460,7 @@
     {
       "gameId": 778537,
       "gameTime": "2025-03-29T20:10:00.000Z",
-      "status": "Pre-Game",
+      "status": "Warmup",
       "homeTeam": {
         "id": 139,
         "name": "Tampa Bay Rays"
@@ -1950,73 +1623,17 @@
         "venueId": 2523,
         "venueName": "George M. Steinbrenner Field",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T18:21:56.337Z",
+        "sourceTimestamp": "2025-03-29T19:45:27.074Z",
         "__isApiSource": true
       },
       "teamStats": {
         "home": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         },
         "away": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         }
       },
       "ballpark": {
@@ -2032,7 +1649,7 @@
           "homeRuns": 1,
           "runs": 1
         },
-        "sourceTimestamp": "2025-03-29T18:21:55.764Z",
+        "sourceTimestamp": "2025-03-29T19:45:26.545Z",
         "venueId": 2523,
         "season": "2025",
         "__isApiSource": true
@@ -2197,80 +1814,25 @@
       },
       "environment": {
         "temperature": 76,
-        "windSpeed": 17,
-        "windDirection": "In From LF",
+        "windSpeed": 0,
+        "windDirection": "None",
         "precipitation": false,
         "isOutdoor": false,
         "venueId": 4169,
         "venueName": "loanDepot park",
         "hasRoof": true,
-        "sourceTimestamp": "2025-03-29T18:21:56.498Z",
+        "roofStatus": "Closed",
+        "sourceTimestamp": "2025-03-29T19:45:27.282Z",
         "__isApiSource": true
       },
       "teamStats": {
         "home": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         },
         "away": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         }
       },
       "ballpark": {
@@ -2286,7 +1848,7 @@
           "homeRuns": 1,
           "runs": 1
         },
-        "sourceTimestamp": "2025-03-29T18:21:55.764Z",
+        "sourceTimestamp": "2025-03-29T19:45:26.545Z",
         "venueId": 4169,
         "season": "2025",
         "__isApiSource": true
@@ -2295,7 +1857,7 @@
     {
       "gameId": 778531,
       "gameTime": "2025-03-29T23:05:00.000Z",
-      "status": "Scheduled",
+      "status": "Pre-Game",
       "homeTeam": {
         "id": 140,
         "name": "Texas Rangers"
@@ -2309,10 +1871,132 @@
         "name": "Globe Life Field"
       },
       "lineups": {
-        "home": [],
-        "away": [],
-        "homeBatters": [],
-        "awayBatters": [],
+        "home": [
+          543760,
+          608369,
+          694671,
+          592626,
+          666969,
+          669394,
+          669701,
+          641680,
+          665750
+        ],
+        "away": [
+          680776,
+          646240,
+          608324,
+          671213,
+          596115,
+          677800,
+          692225,
+          666152,
+          665966
+        ],
+        "homeBatters": [
+          {
+            "id": 543760,
+            "fullName": "Marcus Semien",
+            "position": "2B"
+          },
+          {
+            "id": 608369,
+            "fullName": "Corey Seager",
+            "position": "SS"
+          },
+          {
+            "id": 694671,
+            "fullName": "Wyatt Langford",
+            "position": "LF"
+          },
+          {
+            "id": 592626,
+            "fullName": "Joc Pederson",
+            "position": "DH"
+          },
+          {
+            "id": 666969,
+            "fullName": "Adolis García",
+            "position": "RF"
+          },
+          {
+            "id": 669394,
+            "fullName": "Jake Burger",
+            "position": "1B"
+          },
+          {
+            "id": 669701,
+            "fullName": "Josh Smith",
+            "position": "3B"
+          },
+          {
+            "id": 641680,
+            "fullName": "Jonah Heim",
+            "position": "C"
+          },
+          {
+            "id": 665750,
+            "fullName": "Leody Taveras",
+            "position": "CF"
+          },
+          {
+            "id": 641816,
+            "fullName": "Tyler Mahle",
+            "position": "P"
+          }
+        ],
+        "awayBatters": [
+          {
+            "id": 680776,
+            "fullName": "Jarren Duran",
+            "position": "CF"
+          },
+          {
+            "id": 646240,
+            "fullName": "Rafael Devers",
+            "position": "DH"
+          },
+          {
+            "id": 608324,
+            "fullName": "Alex Bregman",
+            "position": "3B"
+          },
+          {
+            "id": 671213,
+            "fullName": "Triston Casas",
+            "position": "1B"
+          },
+          {
+            "id": 596115,
+            "fullName": "Trevor Story",
+            "position": "SS"
+          },
+          {
+            "id": 677800,
+            "fullName": "Wilyer Abreu",
+            "position": "RF"
+          },
+          {
+            "id": 692225,
+            "fullName": "Kristian Campbell",
+            "position": "LF"
+          },
+          {
+            "id": 666152,
+            "fullName": "David Hamilton",
+            "position": "2B"
+          },
+          {
+            "id": 665966,
+            "fullName": "Carlos Narváez",
+            "position": "C"
+          },
+          {
+            "id": 621111,
+            "fullName": "Walker Buehler",
+            "position": "P"
+          }
+        ],
         "confirmed": true
       },
       "pitchers": {
@@ -2328,7 +2012,7 @@
         }
       },
       "environment": {
-        "temperature": 0,
+        "temperature": 72,
         "windSpeed": 0,
         "windDirection": "None",
         "precipitation": false,
@@ -2337,73 +2021,17 @@
         "venueName": "Globe Life Field",
         "hasRoof": true,
         "roofStatus": "Closed",
-        "sourceTimestamp": "2025-03-29T18:21:56.748Z",
+        "sourceTimestamp": "2025-03-29T19:45:27.487Z",
         "__isApiSource": true
       },
       "teamStats": {
         "home": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         },
         "away": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         }
       },
       "ballpark": {
@@ -2419,7 +2047,7 @@
           "homeRuns": 0.92,
           "runs": 0.96
         },
-        "sourceTimestamp": "2025-03-29T18:21:55.764Z",
+        "sourceTimestamp": "2025-03-29T19:45:26.545Z",
         "venueId": 5325,
         "season": "2025",
         "__isApiSource": true
@@ -2428,7 +2056,7 @@
     {
       "gameId": 778530,
       "gameTime": "2025-03-29T23:15:00.000Z",
-      "status": "Scheduled",
+      "status": "Pre-Game",
       "homeTeam": {
         "id": 117,
         "name": "Houston Astros"
@@ -2442,10 +2070,132 @@
         "name": "Daikin Park"
       },
       "lineups": {
-        "home": [],
-        "away": [],
-        "homeBatters": [],
-        "awayBatters": [],
+        "home": [
+          514888,
+          670623,
+          670541,
+          572233,
+          665161,
+          605170,
+          701305,
+          643289,
+          676801
+        ],
+        "away": [
+          596019,
+          665742,
+          624413,
+          607043,
+          668901,
+          608385,
+          620443,
+          683146,
+          642350
+        ],
+        "homeBatters": [
+          {
+            "id": 514888,
+            "fullName": "Jose Altuve",
+            "position": "LF"
+          },
+          {
+            "id": 670623,
+            "fullName": "Isaac Paredes",
+            "position": "3B"
+          },
+          {
+            "id": 670541,
+            "fullName": "Yordan Alvarez",
+            "position": "DH"
+          },
+          {
+            "id": 572233,
+            "fullName": "Christian Walker",
+            "position": "1B"
+          },
+          {
+            "id": 665161,
+            "fullName": "Jeremy Peña",
+            "position": "SS"
+          },
+          {
+            "id": 605170,
+            "fullName": "Victor Caratini",
+            "position": "C"
+          },
+          {
+            "id": 701305,
+            "fullName": "Zach Dezenzo",
+            "position": "RF"
+          },
+          {
+            "id": 643289,
+            "fullName": "Mauricio Dubón",
+            "position": "2B"
+          },
+          {
+            "id": 676801,
+            "fullName": "Chas McCormick",
+            "position": "CF"
+          },
+          {
+            "id": 681293,
+            "fullName": "Spencer Arrighetti",
+            "position": "P"
+          }
+        ],
+        "awayBatters": [
+          {
+            "id": 596019,
+            "fullName": "Francisco Lindor",
+            "position": "SS"
+          },
+          {
+            "id": 665742,
+            "fullName": "Juan Soto",
+            "position": "RF"
+          },
+          {
+            "id": 624413,
+            "fullName": "Pete Alonso",
+            "position": "1B"
+          },
+          {
+            "id": 607043,
+            "fullName": "Brandon Nimmo",
+            "position": "LF"
+          },
+          {
+            "id": 668901,
+            "fullName": "Mark Vientos",
+            "position": "3B"
+          },
+          {
+            "id": 608385,
+            "fullName": "Jesse Winker",
+            "position": "DH"
+          },
+          {
+            "id": 620443,
+            "fullName": "Luis Torrens",
+            "position": "C"
+          },
+          {
+            "id": 683146,
+            "fullName": "Brett Baty",
+            "position": "2B"
+          },
+          {
+            "id": 642350,
+            "fullName": "Jose Siri",
+            "position": "CF"
+          },
+          {
+            "id": 656288,
+            "fullName": "Griffin Canning",
+            "position": "P"
+          }
+        ],
         "confirmed": true
       },
       "pitchers": {
@@ -2461,7 +2211,7 @@
         }
       },
       "environment": {
-        "temperature": 0,
+        "temperature": 72,
         "windSpeed": 0,
         "windDirection": "None",
         "precipitation": false,
@@ -2470,73 +2220,17 @@
         "venueName": "Daikin Park",
         "hasRoof": true,
         "roofStatus": "Closed",
-        "sourceTimestamp": "2025-03-29T18:21:56.910Z",
+        "sourceTimestamp": "2025-03-29T19:45:27.689Z",
         "__isApiSource": true
       },
       "teamStats": {
         "home": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         },
         "away": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         }
       },
       "ballpark": {
@@ -2552,7 +2246,7 @@
           "homeRuns": 1,
           "runs": 1
         },
-        "sourceTimestamp": "2025-03-29T18:21:55.764Z",
+        "sourceTimestamp": "2025-03-29T19:45:26.545Z",
         "venueId": 2392,
         "season": "2025",
         "__isApiSource": true
@@ -2561,7 +2255,7 @@
     {
       "gameId": 778520,
       "gameTime": "2025-03-29T23:15:00.000Z",
-      "status": "Scheduled",
+      "status": "Pre-Game",
       "homeTeam": {
         "id": 135,
         "name": "San Diego Padres"
@@ -2575,10 +2269,132 @@
         "name": "Petco Park"
       },
       "lineups": {
-        "home": [],
-        "away": [],
-        "homeBatters": [],
-        "awayBatters": [],
+        "home": [
+          665487,
+          650333,
+          592518,
+          701538,
+          630105,
+          593428,
+          657757,
+          518792,
+          455117
+        ],
+        "away": [
+          595777,
+          663586,
+          621566,
+          542303,
+          645277,
+          671739,
+          686948,
+          606115,
+          672284
+        ],
+        "homeBatters": [
+          {
+            "id": 665487,
+            "fullName": "Fernando Tatis Jr.",
+            "position": "RF"
+          },
+          {
+            "id": 650333,
+            "fullName": "Luis Arraez",
+            "position": "1B"
+          },
+          {
+            "id": 592518,
+            "fullName": "Manny Machado",
+            "position": "3B"
+          },
+          {
+            "id": 701538,
+            "fullName": "Jackson Merrill",
+            "position": "CF"
+          },
+          {
+            "id": 630105,
+            "fullName": "Jake Cronenworth",
+            "position": "2B"
+          },
+          {
+            "id": 593428,
+            "fullName": "Xander Bogaerts",
+            "position": "SS"
+          },
+          {
+            "id": 657757,
+            "fullName": "Gavin Sheets",
+            "position": "DH"
+          },
+          {
+            "id": 518792,
+            "fullName": "Jason Heyward",
+            "position": "LF"
+          },
+          {
+            "id": 455117,
+            "fullName": "Martín Maldonado",
+            "position": "C"
+          },
+          {
+            "id": 681190,
+            "fullName": "Randy Vásquez",
+            "position": "P"
+          }
+        ],
+        "awayBatters": [
+          {
+            "id": 595777,
+            "fullName": "Jurickson Profar",
+            "position": "LF"
+          },
+          {
+            "id": 663586,
+            "fullName": "Austin Riley",
+            "position": "3B"
+          },
+          {
+            "id": 621566,
+            "fullName": "Matt Olson",
+            "position": "1B"
+          },
+          {
+            "id": 542303,
+            "fullName": "Marcell Ozuna",
+            "position": "DH"
+          },
+          {
+            "id": 645277,
+            "fullName": "Ozzie Albies",
+            "position": "2B"
+          },
+          {
+            "id": 671739,
+            "fullName": "Michael Harris II",
+            "position": "CF"
+          },
+          {
+            "id": 686948,
+            "fullName": "Drake Baldwin",
+            "position": "C"
+          },
+          {
+            "id": 606115,
+            "fullName": "Orlando Arcia",
+            "position": "SS"
+          },
+          {
+            "id": 672284,
+            "fullName": "Jarred Kelenic",
+            "position": "RF"
+          },
+          {
+            "id": 680885,
+            "fullName": "Spencer Schwellenbach",
+            "position": "P"
+          }
+        ],
         "confirmed": true
       },
       "pitchers": {
@@ -2594,81 +2410,25 @@
         }
       },
       "environment": {
-        "temperature": 0,
-        "windSpeed": 0,
-        "windDirection": "None",
+        "temperature": 61,
+        "windSpeed": 9,
+        "windDirection": "Out To RF",
         "precipitation": false,
-        "isOutdoor": false,
+        "isOutdoor": true,
         "venueId": 2680,
         "venueName": "Petco Park",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T18:21:57.171Z",
+        "sourceTimestamp": "2025-03-29T19:45:27.898Z",
         "__isApiSource": true
       },
       "teamStats": {
         "home": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         },
         "away": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         }
       },
       "ballpark": {
@@ -2684,7 +2444,7 @@
           "homeRuns": 1,
           "runs": 1
         },
-        "sourceTimestamp": "2025-03-29T18:21:55.764Z",
+        "sourceTimestamp": "2025-03-29T19:45:26.545Z",
         "venueId": 2680,
         "season": "2025",
         "__isApiSource": true
@@ -2693,7 +2453,7 @@
     {
       "gameId": 778532,
       "gameTime": "2025-03-30T00:10:00.000Z",
-      "status": "Scheduled",
+      "status": "Pre-Game",
       "homeTeam": {
         "id": 109,
         "name": "Arizona Diamondbacks"
@@ -2707,11 +2467,72 @@
         "name": "Chase Field"
       },
       "lineups": {
-        "home": [],
+        "home": [
+          606466,
+          682998,
+          666971,
+          545341,
+          647304,
+          553993,
+          672515,
+          664983,
+          672695
+        ],
         "away": [],
-        "homeBatters": [],
+        "homeBatters": [
+          {
+            "id": 606466,
+            "fullName": "Ketel Marte",
+            "position": "2B"
+          },
+          {
+            "id": 682998,
+            "fullName": "Corbin Carroll",
+            "position": "RF"
+          },
+          {
+            "id": 666971,
+            "fullName": "Lourdes Gurriel Jr.",
+            "position": "LF"
+          },
+          {
+            "id": 545341,
+            "fullName": "Randal Grichuk",
+            "position": "DH"
+          },
+          {
+            "id": 647304,
+            "fullName": "Josh Naylor",
+            "position": "1B"
+          },
+          {
+            "id": 553993,
+            "fullName": "Eugenio Suárez",
+            "position": "3B"
+          },
+          {
+            "id": 672515,
+            "fullName": "Gabriel Moreno",
+            "position": "C"
+          },
+          {
+            "id": 664983,
+            "fullName": "Jake McCarthy",
+            "position": "CF"
+          },
+          {
+            "id": 672695,
+            "fullName": "Geraldo Perdomo",
+            "position": "SS"
+          },
+          {
+            "id": 694297,
+            "fullName": "Brandon Pfaadt",
+            "position": "P"
+          }
+        ],
         "awayBatters": [],
-        "confirmed": true
+        "confirmed": false
       },
       "pitchers": {
         "home": {
@@ -2726,7 +2547,7 @@
         }
       },
       "environment": {
-        "temperature": 0,
+        "temperature": 72,
         "windSpeed": 0,
         "windDirection": "None",
         "precipitation": false,
@@ -2734,73 +2555,17 @@
         "venueId": 15,
         "venueName": "Chase Field",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T18:21:57.425Z",
+        "sourceTimestamp": "2025-03-29T19:45:28.103Z",
         "__isApiSource": true
       },
       "teamStats": {
         "home": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         },
         "away": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         }
       },
       "ballpark": {
@@ -2816,7 +2581,7 @@
           "homeRuns": 1.02,
           "runs": 1.05
         },
-        "sourceTimestamp": "2025-03-29T18:21:55.764Z",
+        "sourceTimestamp": "2025-03-29T19:45:26.545Z",
         "venueId": 15,
         "season": "2025",
         "__isApiSource": true
@@ -2843,7 +2608,7 @@
         "away": [],
         "homeBatters": [],
         "awayBatters": [],
-        "confirmed": true
+        "confirmed": false
       },
       "pitchers": {
         "home": {
@@ -2866,73 +2631,17 @@
         "venueId": 22,
         "venueName": "Dodger Stadium",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T18:21:57.579Z",
+        "sourceTimestamp": "2025-03-29T19:45:28.311Z",
         "__isApiSource": true
       },
       "teamStats": {
         "home": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         },
         "away": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         }
       },
       "ballpark": {
@@ -2948,7 +2657,7 @@
           "homeRuns": 1,
           "runs": 1
         },
-        "sourceTimestamp": "2025-03-29T18:21:55.764Z",
+        "sourceTimestamp": "2025-03-29T19:45:26.545Z",
         "venueId": 22,
         "season": "2025",
         "__isApiSource": true
@@ -2975,7 +2684,7 @@
         "away": [],
         "homeBatters": [],
         "awayBatters": [],
-        "confirmed": true
+        "confirmed": false
       },
       "pitchers": {
         "home": {
@@ -2998,73 +2707,17 @@
         "venueId": 680,
         "venueName": "T-Mobile Park",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T18:21:57.847Z",
+        "sourceTimestamp": "2025-03-29T19:45:28.519Z",
         "__isApiSource": true
       },
       "teamStats": {
         "home": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         },
         "away": {
-          "2024": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          },
-          "2025": {
-            "gamesPlayed": 0,
-            "wins": 0,
-            "losses": 0,
-            "runsScored": 0,
-            "runsAllowed": 0,
-            "avg": ".000",
-            "obp": ".000",
-            "slg": ".000",
-            "ops": ".000",
-            "era": "0.00",
-            "whip": "0.00",
-            "strikeouts": 0,
-            "strikeoutRate": 0
-          }
+          "2024": null,
+          "2025": null
         }
       },
       "ballpark": {
@@ -3080,7 +2733,7 @@
           "homeRuns": 1,
           "runs": 1
         },
-        "sourceTimestamp": "2025-03-29T18:21:55.764Z",
+        "sourceTimestamp": "2025-03-29T19:45:26.545Z",
         "venueId": 680,
         "season": "2025",
         "__isApiSource": true
@@ -3088,7 +2741,7 @@
     }
   ],
   "count": 15,
-  "collectTimestamp": "2025-03-29T18:22:08.964Z",
+  "collectTimestamp": "2025-03-29T19:45:41.024Z",
   "seasons": [
     "2024",
     "2025"

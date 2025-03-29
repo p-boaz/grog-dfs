@@ -311,6 +311,7 @@ export interface ProbableLineup {
     position: string;
   }>;
   confirmed?: boolean;
+  confidence?: number; // 0-100 confidence score for predicted lineups
   sourceTimestamp?: Date;
 }
 
