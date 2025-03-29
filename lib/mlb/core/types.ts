@@ -263,22 +263,8 @@ export interface PlayerGameStats {
 }
 
 export interface TeamStats {
-  id: number;
-  name: string;
-  season: string;
-  stats: {
-    gamesPlayed: number;
-    wins: number;
-    losses: number;
-    runsScored: number;
-    runsAllowed: number;
-    avg: number;
-    obp: number;
-    slg: number;
-    ops: number;
-    era: number;
-    whip: number;
-  };
+  hitting: Record<string, any>;
+  pitching: Record<string, any>;
 }
 
 export interface GameEnvironmentData {
@@ -423,4 +409,137 @@ export interface BatterPlateDiscipline {
     vsOffspeed: number | null;
   };
   sourceTimestamp?: Date;
+}
+
+export interface MLBGame {
+  gamePk: number;
+  gameDate: string;
+  status: {
+    abstractGameState?: string;
+    detailedState?: string;
+    statusCode?: string;
+  };
+  teams: {
+    away: {
+      team: {
+        id: number;
+        name: string;
+      };
+      probablePitcher?: {
+        id: number;
+        fullName: string;
+      };
+    };
+    home: {
+      team: {
+        id: number;
+        name: string;
+      };
+      probablePitcher?: {
+        id: number;
+        fullName: string;
+      };
+    };
+  };
+  venue: {
+    id: number;
+    name: string;
+  };
+  lineups?: {
+    away: number[];
+    home: number[];
+    awayBatters?: Array<{
+      id: number;
+      fullName: string;
+      position: string;
+    }>;
+    homeBatters?: Array<{
+      id: number;
+      fullName: string;
+      position: string;
+    }>;
+  };
+  pitchers?: {
+    away?: {
+      id: number;
+      fullName: string;
+      throwsHand?: string;
+    };
+    home?: {
+      id: number;
+      fullName: string;
+      throwsHand?: string;
+    };
+  };
+  environment?: {
+    temperature: number;
+    windSpeed: number;
+    windDirection: string;
+    isOutdoor: boolean;
+  };
+}
+
+export interface DailyMLBData {
+  date: string;
+  games: Array<{
+    gameId: number;
+    gameTime: string;
+    status: {
+      abstractGameState?: string;
+      detailedState?: string;
+      statusCode?: string;
+    };
+    homeTeam: {
+      id: number;
+      name: string;
+    };
+    awayTeam: {
+      id: number;
+      name: string;
+    };
+    venue: {
+      id: number;
+      name: string;
+    };
+    lineups?: {
+      away: number[];
+      home: number[];
+      awayBatters?: Array<{
+        id: number;
+        fullName: string;
+        position: string;
+      }>;
+      homeBatters?: Array<{
+        id: number;
+        fullName: string;
+        position: string;
+      }>;
+    };
+    pitchers?: {
+      away?: {
+        id: number;
+        fullName: string;
+        throwsHand?: string;
+      };
+      home?: {
+        id: number;
+        fullName: string;
+        throwsHand?: string;
+      };
+    };
+    environment?: {
+      temperature: number;
+      windSpeed: number;
+      windDirection: string;
+      isOutdoor: boolean;
+    };
+    teamStats: {
+      home: TeamStats;
+      away: TeamStats;
+    };
+    ballpark: BallparkFactors;
+  }>;
+  count: number;
+  collectTimestamp: Date;
+  seasons: string[];
 }

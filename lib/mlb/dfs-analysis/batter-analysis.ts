@@ -20,11 +20,9 @@ import {
 import {
   calculateExpectedRuns,
   calculateExpectedRBIs,
-  calculateRunProductionProjection
+  calculateRunProductionProjection,
 } from "./run-production";
-import {
-  calculatePlateDisciplineProjection
-} from "./plate-discipline";
+import { calculatePlateDisciplineProjection } from "./plate-discipline";
 
 // Constants for placeholder values - matching daily-data-collector.ts
 const PLACEHOLDER = {
@@ -110,6 +108,12 @@ interface BatterAnalysis {
     ballpark: any;
     platoon: boolean;
     career: any;
+  };
+  draftKings: {
+    draftKingsId: number | null;
+    salary: number | null;
+    positions: string[];
+    avgPointsPerGame: number;
   };
 }
 
@@ -552,6 +556,12 @@ const analyzeBatter = async (
         platoon: false,
         career: null,
       },
+      draftKings: {
+        draftKingsId: null,
+        salary: null,
+        positions: [],
+        avgPointsPerGame: 0,
+      },
     };
   } catch (error) {
     console.error(`Error analyzing batter ${batter.id}:`, error);
@@ -577,9 +587,9 @@ async function calculateProjections(
     ).catch(() => ({
       runs: { expected: 0.5, points: 1.0, confidence: 50 },
       rbis: { expected: 0.5, points: 1.0, confidence: 50 },
-      total: { expected: 1.0, points: 2.0, confidence: 50 }
+      total: { expected: 1.0, points: 2.0, confidence: 50 },
     }));
-    
+
     // Get plate discipline projection
     const disciplineProj = await calculatePlateDisciplineProjection(
       batter.id,
@@ -587,12 +597,13 @@ async function calculateProjections(
     ).catch(() => ({
       walks: { expected: 0.4, points: 0.8, confidence: 50 },
       hbp: { expected: 0.04, points: 0.08, confidence: 40 },
-      total: { expected: 0.44, points: 0.88, confidence: 50 }
+      total: { expected: 0.44, points: 0.88, confidence: 50 },
     }));
-    
+
     // Calculate estimated DFS points
-    const totalPoints = runProductionProj.total.points + disciplineProj.total.points;
-    
+    const totalPoints =
+      runProductionProj.total.points + disciplineProj.total.points;
+
     return {
       homeRunProbability: 0,
       stolenBaseProbability: 0,
@@ -622,8 +633,11 @@ async function calculateProjections(
       },
     };
   } catch (error) {
-    console.error(`Error calculating projections for batter ${batter.id}:`, error);
-    
+    console.error(
+      `Error calculating projections for batter ${batter.id}:`,
+      error
+    );
+
     // Return default projections
     return {
       homeRunProbability: 0,
@@ -1015,6 +1029,12 @@ function getDefaultBatterAnalysis(
       ballpark: null,
       platoon: false,
       career: null,
+    },
+    draftKings: {
+      draftKingsId: null,
+      salary: null,
+      positions: [],
+      avgPointsPerGame: 0,
     },
   };
 }

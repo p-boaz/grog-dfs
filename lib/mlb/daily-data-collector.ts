@@ -1,20 +1,24 @@
 // daily-data-collector.ts
 
-import { getSchedule, getTeamStats } from "../mlb/schedule/schedule";
-import { getProbableLineups } from "../mlb/game/lineups";
 import {
-  getGameEnvironmentData,
+  getSchedule,
+  getTeamStats,
   getBallparkFactors,
-} from "../mlb/weather/weather";
-import {
-  analyzeStartingPitchersForToday,
-  analyzeStartingPitchers,
-} from "./dfs-analysis/starting-pitcher-analysis";
-import {
-  analyzeBatters,
-  analyzeBattersForToday,
-} from "./dfs-analysis/batter-analysis";
+} from "../mlb/schedule/schedule";
+import { getProbableLineups } from "../mlb/game/lineups";
+import { getGameEnvironmentData } from "../mlb/weather/weather";
+import { analyzeStartingPitchers } from "./dfs-analysis/starting-pitcher-analysis";
+import { analyzeBatters } from "./dfs-analysis/batter-analysis";
 import type { ProbableLineup } from "./core/types";
+import { format } from "date-fns";
+import type {
+  MLBScheduleResponse,
+  MLBGame,
+  DailyMLBData,
+  TeamStats,
+} from "./core/types";
+import { getDKSalaries } from "./draftkings/salaries";
+import { saveToJsonFile } from "./core/file-utils";
 
 // Constants for placeholder values
 const PLACEHOLDER = {
@@ -27,43 +31,6 @@ const PLACEHOLDER = {
 // Add multi-season support
 const SUPPORTED_SEASONS = ["2024", "2025"];
 
-interface DraftKingsPlayer {
-  draftKingsId: string;
-  salary: number;
-  positions: string[];
-  avgPointsPerGame: number;
-}
-
-async function loadDraftKingsSalaries(
-  date: string
-): Promise<Map<string, DraftKingsPlayer>> {
-  const fs = require("fs");
-  const path = require("path");
-  const csv = require("csv-parse/sync");
-
-  const salaryMap = new Map<string, DraftKingsPlayer>();
-  const csvPath = path.join(process.cwd(), "data", "DKSalaries.csv");
-
-  if (!fs.existsSync(csvPath)) {
-    console.warn("No DraftKings salary data found for today");
-    return salaryMap;
-  }
-
-  const content = fs.readFileSync(csvPath, "utf-8");
-  const records = csv.parse(content, { columns: true });
-
-  for (const record of records) {
-    salaryMap.set(record.ID, {
-      draftKingsId: record.ID,
-      salary: parseInt(record.Salary),
-      positions: record.Position.split("/"),
-      avgPointsPerGame: parseFloat(record.AvgPointsPerGame),
-    });
-  }
-
-  return salaryMap;
-}
-
 /**
  * Comprehensive DFS data collection for daily analysis
  * Fetches schedule, lineups, weather, and venue data for all games
@@ -75,7 +42,7 @@ async function collectDailyDFSData(date?: string) {
 
   try {
     // 1. Get schedule data for today's games
-    const scheduleData = await getSchedule({ date: targetDate });
+    const scheduleData = await getSchedule(targetDate);
 
     if (!scheduleData.dates || scheduleData.dates.length === 0) {
       console.log(`No games scheduled for ${targetDate}`);
@@ -161,10 +128,7 @@ async function collectDailyDFSData(date?: string) {
           }),
 
           // Get ballpark factors for this venue
-          getBallparkFactors({
-            venueId: game.venue.id,
-            season: new Date().getFullYear().toString(),
-          }).catch((error: Error) => {
+          getBallparkFactors(game.venue.id).catch((error: Error) => {
             console.warn(
               `Failed to get ballpark factors for ${game.venue.name}: ${error.message}`
             );
@@ -238,12 +202,12 @@ async function collectDailyDFSData(date?: string) {
           },
           teamStats: {
             home: {
-              "2024": homeTeamStats2024?.stats || null,
-              "2025": homeTeamStats2025?.stats || null,
+              "2024": homeTeamStats2024 || null,
+              "2025": homeTeamStats2025 || null,
             },
             away: {
-              "2024": awayTeamStats2024?.stats || null,
-              "2025": awayTeamStats2025?.stats || null,
+              "2024": awayTeamStats2024 || null,
+              "2025": awayTeamStats2025 || null,
             },
           },
           ballpark: ballparkFactors || {
@@ -276,107 +240,55 @@ async function collectDailyDFSData(date?: string) {
 }
 
 /**
- * Usage example - collect today's data and save to JSON file
+ * Run daily data collection and analysis
  */
-async function runDailyDataCollection() {
-  try {
-    const todayData = await collectDailyDFSData();
-    const date = todayData.date;
+export async function runDailyDataCollection(): Promise<DailyMLBData> {
+  const date = format(new Date(), "yyyy-MM-dd");
+  console.log(`Starting daily data collection for ${date}...`);
 
-    // Load DraftKings salary data
-    const dkSalaries = await loadDraftKingsSalaries(date);
+  // Load DraftKings salaries
+  const dkSalaries = await getDKSalaries();
 
-    // Create data directory if it doesn't exist
-    const fs = require("fs");
-    const path = require("path");
-    const dataDir = path.join(process.cwd(), "data");
-    if (!fs.existsSync(dataDir)) {
-      fs.mkdirSync(dataDir);
+  // Collect game data
+  const data = await collectDailyDFSData(date);
+
+  // Save raw data
+  await saveToJsonFile(`mlb-data-${date}.json`, data);
+
+  // Analyze pitchers with DraftKings data
+  const pitcherAnalysis = await analyzeStartingPitchers(data.games);
+  // Add DraftKings data to pitcher analysis
+  pitcherAnalysis.forEach((pitcher) => {
+    const dkData = dkSalaries.get(pitcher.pitcherId.toString());
+    if (dkData) {
+      pitcher.draftKings = {
+        draftKingsId: parseInt(dkData.draftKingsId),
+        salary: dkData.salary,
+        positions: [dkData.position],
+        avgPointsPerGame: dkData.avgPointsPerGame,
+      };
     }
+  });
+  await saveToJsonFile(`mlb-pitchers-${date}.json`, pitcherAnalysis);
 
-    // Save to JSON file with date in filename
-    const filename = path.join(dataDir, `mlb-data-${date}.json`);
-    fs.writeFileSync(filename, JSON.stringify(todayData, null, 2));
+  // Analyze batters with DraftKings data
+  const batterAnalysis = await analyzeBatters(data.games);
+  // Add DraftKings data to batter analysis
+  batterAnalysis.forEach((batter) => {
+    const dkData = dkSalaries.get(batter.batterId.toString());
+    if (dkData) {
+      batter.draftKings = {
+        draftKingsId: parseInt(dkData.draftKingsId),
+        salary: dkData.salary,
+        positions: [dkData.position],
+        avgPointsPerGame: dkData.avgPointsPerGame,
+      };
+    }
+  });
+  await saveToJsonFile(`mlb-batters-${date}.json`, batterAnalysis);
 
-    console.log(
-      `Successfully collected data for ${todayData.count} games on ${todayData.date}`
-    );
-    console.log(`Data saved to: ${filename}`);
-
-    // Analyze starting pitchers and save to separate JSON file
-    console.log("\nAnalyzing starting pitchers...");
-    const pitcherAnalysis = await analyzeStartingPitchers(todayData.games);
-
-    // Add DraftKings data to pitchers
-    const pitchersWithSalaries = pitcherAnalysis.map((pitcher) => ({
-      ...pitcher,
-      draftKings: dkSalaries.get(pitcher.pitcherId.toString()) || {
-        draftKingsId: null,
-        salary: null,
-        positions: [],
-        avgPointsPerGame: null,
-      },
-    }));
-
-    // Save pitcher analysis to JSON file
-    const pitcherFilename = path.join(dataDir, `mlb-pitchers-${date}.json`);
-    fs.writeFileSync(
-      pitcherFilename,
-      JSON.stringify(
-        {
-          date: todayData.date,
-          analysisTimestamp: new Date(),
-          pitchers: pitchersWithSalaries,
-        },
-        null,
-        2
-      )
-    );
-
-    console.log(`Pitcher analysis saved to: ${pitcherFilename}`);
-
-    // Analyze batters and save to separate JSON file
-    console.log("\nAnalyzing batters...");
-    const batterAnalysis = await analyzeBatters(todayData.games);
-
-    // Add DraftKings data to batters
-    const battersWithSalaries = batterAnalysis.map((batter) => ({
-      ...batter,
-      draftKings: dkSalaries.get(batter.batterId.toString()) || {
-        draftKingsId: null,
-        salary: null,
-        positions: [],
-        avgPointsPerGame: null,
-      },
-    }));
-
-    // Save batter analysis to JSON file
-    const batterFilename = path.join(dataDir, `mlb-batters-${date}.json`);
-    fs.writeFileSync(
-      batterFilename,
-      JSON.stringify(
-        {
-          date: todayData.date,
-          analysisTimestamp: new Date(),
-          batters: battersWithSalaries,
-        },
-        null,
-        2
-      )
-    );
-
-    console.log(`Batter analysis saved to: ${batterFilename}`);
-
-    // Still run the console output version for immediate feedback
-    await analyzeStartingPitchersForToday(todayData.games);
-    await analyzeBattersForToday(todayData.games);
-
-    return todayData;
-  } catch (error) {
-    console.error("Failed to collect daily data:", error);
-    return null;
-  }
+  return data;
 }
 
 // Export the main functions
-export { collectDailyDFSData, runDailyDataCollection };
+export { collectDailyDFSData };

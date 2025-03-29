@@ -85,6 +85,12 @@ interface StartingPitcherAnalysis {
     overall: number;
     homeRuns: number;
   };
+  draftKings: {
+    draftKingsId: number | null;
+    salary: number | null;
+    positions: string[];
+    avgPointsPerGame: number;
+  };
 }
 
 /**
@@ -234,15 +240,15 @@ async function analyzePitcher({
         pitcherId,
         game.gameId.toString()
       );
-      
+
       // Get control projection (hits/walks/HBP allowed)
       const controlProj = await calculateControlProjection(
         pitcherId,
-        game.lineups.awayBatters?.map(b => b.id) || []
+        game.lineups.awayBatters?.map((b) => b.id) || []
       ).catch(() => ({
-        total: { points: -5.1, expected: 8.55, confidence: 50 }
+        total: { points: -5.1, expected: 8.55, confidence: 50 },
       }));
-      
+
       // Get rare events projection
       const rareEventsProj = await calculateRareEventPotential(
         pitcherId,
@@ -255,16 +261,17 @@ async function analyzePitcher({
           qualityStart: 50,
           shutout: 0.5,
           noHitter: 0.1,
-          perfectGame: 0.01
+          perfectGame: 0.01,
         },
-        riskRewardRating: 5
+        riskRewardRating: 5,
       }));
-      
+
       // Combine all projections
-      const totalPoints = (dfsProjData.points.total || 0) + 
-                         (controlProj.total.points || 0) + 
-                         (rareEventsProj.expectedRareEventPoints || 0);
-      
+      const totalPoints =
+        (dfsProjData.points.total || 0) +
+        (controlProj.total.points || 0) +
+        (rareEventsProj.expectedRareEventPoints || 0);
+
       projections.dfsProjection = {
         expectedPoints: totalPoints,
         upside: totalPoints * 1.2,
@@ -307,6 +314,12 @@ async function analyzePitcher({
       ballparkFactors: {
         overall: game.ballpark?.overall ?? PLACEHOLDER.NUMERIC,
         homeRuns: game.ballpark?.types?.homeRuns ?? PLACEHOLDER.NUMERIC,
+      },
+      draftKings: {
+        draftKingsId: null,
+        salary: null,
+        positions: [],
+        avgPointsPerGame: 0,
       },
     };
   } catch (error) {
@@ -360,6 +373,12 @@ const getDefaultPitcherAnalysis = (
   ballparkFactors: {
     overall: game.ballpark?.overall ?? PLACEHOLDER.NUMERIC,
     homeRuns: game.ballpark?.types?.homeRuns ?? PLACEHOLDER.NUMERIC,
+  },
+  draftKings: {
+    draftKingsId: null,
+    salary: null,
+    positions: [],
+    avgPointsPerGame: 0,
   },
 });
 

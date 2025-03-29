@@ -1,6 +1,6 @@
 import { withCache, DEFAULT_CACHE_TTL, markAsApiSource } from "../cache";
 import { makeMLBApiRequest } from "../core/api-client";
-import { MLBScheduleResponse } from "../core/types";
+import type { MLBScheduleResponse, BallparkFactors } from "../core/types";
 
 /**
  * Fetch MLB schedule data for a specific date
@@ -25,13 +25,22 @@ async function fetchSchedule(params: {
 }
 
 /**
- * Get MLB schedule with caching
+ * Get MLB schedule for a given date
  */
-export const getSchedule = withCache(
-  fetchSchedule,
-  "schedule",
-  DEFAULT_CACHE_TTL.schedule
-);
+export async function getSchedule(date: string): Promise<MLBScheduleResponse> {
+  try {
+    const response = await makeMLBApiRequest<MLBScheduleResponse>(
+      `/schedule/games?sportId=1&date=${date}&hydrate=team,venue,probablePitcher`
+    );
+
+    return response;
+  } catch (error) {
+    console.warn(`Failed to get schedule for date ${date}:`, error);
+    return {
+      dates: [],
+    };
+  }
+}
 
 /**
  * Find a specific game by date and team IDs
@@ -48,7 +57,7 @@ export async function findGameByTeams({
   awayTeamId?: number;
 }): Promise<any> {
   // Get schedule for this date
-  const schedule = await getSchedule({ date });
+  const schedule = await getSchedule(date);
 
   if (
     !schedule.dates ||
@@ -103,64 +112,43 @@ export async function getTeamRoster(params: { teamId: string }): Promise<any> {
   return markAsApiSource(data);
 }
 
+interface MLBTeamStatsResponse {
+  stats: Array<{
+    splits: Array<{
+      stat: Record<string, any>;
+    }>;
+  }>;
+}
+
+interface TeamStats {
+  hitting: Record<string, any>;
+  pitching: Record<string, any>;
+}
+
 /**
  * Get team statistics
  */
 export async function getTeamStats(
   teamId: number,
-  season: number = new Date().getFullYear()
-): Promise<any> {
+  season: number
+): Promise<TeamStats> {
   try {
-    // First try to get team info to validate the team ID
-    const teamInfo = await makeMLBApiRequest<any>(
-      `/teams/${teamId}?season=${season}`
+    const response = await makeMLBApiRequest<MLBTeamStatsResponse>(
+      `/teams/${teamId}/stats?season=${season}&group=hitting,pitching&sportId=1&stats=season`
     );
-
-    if (!teamInfo || !teamInfo.teams || teamInfo.teams.length === 0) {
-      console.error(`Invalid team ID ${teamId} for season ${season}`);
-      return null;
-    }
-
-    // Get stats for both current and previous season in a single call
-    const response = await makeMLBApiRequest<any>(
-      `/teams/${teamId}/stats?season=${season},${
-        season - 1
-      }&group=hitting,pitching&sportId=1&stats=yearByYear`
-    );
-
-    if (!response.stats?.[0]?.splits) {
-      console.log(
-        `No team stats found for team ${teamId} (${teamInfo.teams[0].name}), season ${season}`
-      );
-      return null;
-    }
-
-    // Find the stats for the requested season
-    const seasonStats = response.stats
-      .map((group: any) => ({
-        group: group.group,
-        stats: group.splits.find(
-          (split: any) => split.season === season.toString()
-        )?.stat,
-      }))
-      .filter((stat: any) => stat.stats);
-
-    if (seasonStats.length === 0) {
-      console.log(`No stats found for season ${season}`);
-      return null;
-    }
-
-    return markAsApiSource(
-      transformTeamStats(
-        { stats: seasonStats },
-        teamId,
-        season.toString(),
-        teamInfo.teams[0].name
-      )
-    );
+    return {
+      hitting: response.stats[0]?.splits[0]?.stat || {},
+      pitching: response.stats[1]?.splits[0]?.stat || {},
+    };
   } catch (error) {
-    console.error(`Error fetching team stats for ID ${teamId}:`, error);
-    return null;
+    console.warn(
+      `Failed to get team stats for team ${teamId}, season ${season}:`,
+      error
+    );
+    return {
+      hitting: {},
+      pitching: {},
+    };
   }
 }
 
@@ -198,4 +186,47 @@ function transformTeamStats(
         9,
     },
   };
+}
+
+/**
+ * Get ballpark factors for a venue
+ */
+export async function getBallparkFactors(
+  venueId: number
+): Promise<BallparkFactors> {
+  try {
+    // For now, return default factors
+    return {
+      overall: 1,
+      handedness: {
+        rHB: 1,
+        lHB: 1,
+      },
+      types: {
+        singles: 1,
+        doubles: 1,
+        triples: 1,
+        homeRuns: 1,
+        runs: 1,
+      },
+      venueId,
+    };
+  } catch (error) {
+    console.warn(`Failed to get ballpark factors for venue ${venueId}:`, error);
+    return {
+      overall: 1,
+      handedness: {
+        rHB: 1,
+        lHB: 1,
+      },
+      types: {
+        singles: 1,
+        doubles: 1,
+        triples: 1,
+        homeRuns: 1,
+        runs: 1,
+      },
+      venueId,
+    };
+  }
 }
