@@ -203,6 +203,9 @@ export async function collectDailyDFSData(
             return {
               overall: PLACEHOLDER.NUMERIC,
               types: {
+                singles: PLACEHOLDER.NUMERIC,
+                doubles: PLACEHOLDER.NUMERIC,
+                triples: PLACEHOLDER.NUMERIC,
                 homeRuns: PLACEHOLDER.NUMERIC,
                 runs: PLACEHOLDER.NUMERIC,
               },
