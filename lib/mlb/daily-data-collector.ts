@@ -18,7 +18,9 @@ import type {
   TeamStats,
 } from "./core/types";
 import { getDKSalaries } from "./draftkings/salaries";
+import { populateMlbIds } from "./draftkings/player-mapping";
 import { saveToJsonFile } from "./core/file-utils";
+import { normalizePlayerName } from "../utils";
 
 // Constants for placeholder values
 const PLACEHOLDER = {
@@ -32,76 +34,142 @@ const PLACEHOLDER = {
 const SUPPORTED_SEASONS = ["2024", "2025"];
 
 /**
- * Comprehensive DFS data collection for daily analysis
- * Fetches schedule, lineups, weather, and venue data for all games
+ * Collect and analyze daily DFS data for MLB games
+ * @param date Optional date string in YYYY-MM-DD format. If not provided, uses today's date.
+ * @returns Promise<DailyMLBData> Daily MLB data including games, stats, and analysis
  */
-async function collectDailyDFSData(date?: string) {
-  // Format date as YYYY-MM-DD or use today's date
-  const targetDate = date || new Date().toISOString().split("T")[0];
-  console.log(`Collecting DFS data for ${targetDate}...`);
+export async function collectDailyDFSData(
+  date?: string
+): Promise<DailyMLBData> {
+  const targetDate = date || format(new Date(), "yyyy-MM-dd");
+  console.log(`Starting data collection for ${targetDate}...`);
 
   try {
-    // 1. Get schedule data for today's games
-    const scheduleData = await getSchedule(targetDate);
+    // Load DraftKings salaries first to create maps for both batters and pitchers
+    const dkSalaries = await getDKSalaries();
+    const dkBatters = new Map<number, any>();
+    const dkPitchers = new Map<number, any>();
 
-    if (!scheduleData.dates || scheduleData.dates.length === 0) {
-      console.log(`No games scheduled for ${targetDate}`);
-      return { games: [], date: targetDate };
+    // Process DraftKings data - separate batters and pitchers
+    console.log("\nProcessing DraftKings data...");
+    for (const [mlbId, entry] of dkSalaries.entries()) {
+      const player = {
+        mlbId: mlbId,
+        id: entry.ID,
+        name: entry.Name,
+        position: entry.Position,
+        salary: entry.Salary,
+        avgPointsPerGame: entry.AvgPointsPerGame,
+        team: entry.TeamAbbrev,
+      };
+
+      // Skip invalid MLB IDs (negative temporary IDs)
+      if (mlbId < 0) {
+        console.log(
+          `Skipping player with temporary ID: ${entry.Name} (${mlbId})`
+        );
+        continue;
+      }
+
+      if (entry.Position === "SP" || entry.Position === "RP") {
+        dkPitchers.set(mlbId, player);
+      } else {
+        dkBatters.set(mlbId, player);
+      }
     }
+    console.log(
+      `Found ${dkPitchers.size} pitchers and ${dkBatters.size} batters in DraftKings data`
+    );
 
-    const games = scheduleData.dates[0].games;
-    console.log(`Found ${games.length} games scheduled for ${targetDate}`);
-
-    // 2. Process each game to gather comprehensive data
-    const gameData = await Promise.all(
-      games.map(async (game) => {
-        const gameId = game.gamePk.toString();
-
-        // Extract basic game data
-        const basicData = {
-          gameId: game.gamePk,
-          gameTime: new Date(game.gameDate),
-          status: game.status.detailedState,
-          homeTeam: {
-            id: game.teams.home.team.id,
-            name: game.teams.home.team.name,
+    // Get schedule data
+    const scheduleResponse = await getSchedule(targetDate);
+    const gameData =
+      scheduleResponse.dates?.[0]?.games.map((game) => ({
+        gameId: game.gamePk,
+        gameTime: game.gameDate,
+        status: game.status,
+        homeTeam: {
+          id: game.teams.home.team.id,
+          name: game.teams.home.team.name,
+        },
+        awayTeam: {
+          id: game.teams.away.team.id,
+          name: game.teams.away.team.name,
+        },
+        venue: {
+          id: game.venue.id,
+          name: game.venue.name,
+        },
+        lineups: {
+          away: [],
+          home: [],
+        },
+        pitchers: {
+          away: game.teams.away.probablePitcher
+            ? {
+                id: game.teams.away.probablePitcher.id,
+                fullName: game.teams.away.probablePitcher.fullName,
+              }
+            : undefined,
+          home: game.teams.home.probablePitcher
+            ? {
+                id: game.teams.home.probablePitcher.id,
+                fullName: game.teams.home.probablePitcher.fullName,
+              }
+            : undefined,
+        },
+        environment: {
+          temperature: 0,
+          windSpeed: 0,
+          windDirection: "",
+          isOutdoor: true,
+        },
+        teamStats: {
+          home: {
+            hitting: {},
+            pitching: {},
           },
-          awayTeam: {
-            id: game.teams.away.team.id,
-            name: game.teams.away.team.name,
+          away: {
+            hitting: {},
+            pitching: {},
           },
-          venue: {
-            id: game.venue.id,
-            name: game.venue.name,
+        },
+        ballpark: {
+          overall: 1,
+          types: {
+            singles: 1,
+            doubles: 1,
+            triples: 1,
+            homeRuns: 1,
+            runs: 1,
           },
-        };
+          handedness: {
+            rHB: 1,
+            lHB: 1,
+          },
+        },
+      })) || [];
 
-        // Collect additional data in parallel for efficiency
-        const [
-          lineups,
-          environment,
-          homeTeamStats,
-          awayTeamStats,
-          ballparkFactors,
-        ] = await Promise.all([
-          // Get probable lineups including batting order
-          getProbableLineups({ gamePk: gameId }).catch((error: Error) => {
-            console.warn(
-              `Failed to get lineups for game ${gameId}: ${error.message}`
-            );
-            return {
-              away: [],
-              home: [],
-              awayBatters: [],
-              homeBatters: [],
-              confirmed: PLACEHOLDER.BOOLEAN,
-            } as ProbableLineup;
-          }),
+    // Initialize data object with required properties
+    const data: DailyMLBData = {
+      date: targetDate,
+      games: gameData,
+      count: 0,
+      collectTimestamp: new Date(),
+      seasons: SUPPORTED_SEASONS,
+    };
 
+    // Only fetch additional data if we have games
+    if (gameData.length > 0) {
+      // Collect additional data in parallel for efficiency
+      const [environment, homeTeamStats, awayTeamStats, ballparkFactors] =
+        await Promise.all([
           // Get weather and venue environment data
-          getGameEnvironmentData({ gamePk: gameId }).catch((error: Error) => {
+          getGameEnvironmentData({
+            gamePk: gameData[0].gameId.toString(),
+          }).catch((error: Error) => {
             console.warn(
-              `Failed to get environment data for game ${gameId}: ${error.message}`
+              `Failed to get environment data for game ${gameData[0].gameId}: ${error.message}`
             );
             return {
               temperature: PLACEHOLDER.NUMERIC,
@@ -113,24 +181,24 @@ async function collectDailyDFSData(date?: string) {
           }),
 
           // Get team statistics for both teams
-          getTeamStats(game.teams.home.team.id, 2025).catch((error: Error) => {
+          getTeamStats(gameData[0].homeTeam.id, 2025).catch((error: Error) => {
             console.warn(
-              `Failed to get team stats for ${game.teams.home.team.name}: ${error.message}`
+              `Failed to get team stats for ${gameData[0].homeTeam.name}: ${error.message}`
             );
             return null;
           }),
 
-          getTeamStats(game.teams.away.team.id, 2025).catch((error: Error) => {
+          getTeamStats(gameData[0].awayTeam.id, 2025).catch((error: Error) => {
             console.warn(
-              `Failed to get team stats for ${game.teams.away.team.name}: ${error.message}`
+              `Failed to get team stats for ${gameData[0].awayTeam.name}: ${error.message}`
             );
             return null;
           }),
 
           // Get ballpark factors for this venue
-          getBallparkFactors(game.venue.id).catch((error: Error) => {
+          getBallparkFactors(gameData[0].venue.id).catch((error: Error) => {
             console.warn(
-              `Failed to get ballpark factors for ${game.venue.name}: ${error.message}`
+              `Failed to get ballpark factors for ${gameData[0].venue.name}: ${error.message}`
             );
             return {
               overall: PLACEHOLDER.NUMERIC,
@@ -138,97 +206,187 @@ async function collectDailyDFSData(date?: string) {
                 homeRuns: PLACEHOLDER.NUMERIC,
                 runs: PLACEHOLDER.NUMERIC,
               },
+              handedness: {
+                rHB: PLACEHOLDER.NUMERIC,
+                lHB: PLACEHOLDER.NUMERIC,
+              },
             };
           }),
         ]);
 
-        // Collect multi-season team stats
-        const [
-          homeTeamStats2024,
-          homeTeamStats2025,
-          awayTeamStats2024,
-          awayTeamStats2025,
-        ] = await Promise.all([
-          getTeamStats(game.teams.home.team.id, 2024).catch((error) => {
-            console.warn(
-              `Failed to get 2024 team stats for ${game.teams.home.team.name}: ${error.message}`
-            );
-            return null;
-          }),
-          getTeamStats(game.teams.home.team.id, 2025).catch((error) => {
-            console.warn(
-              `Failed to get 2025 team stats for ${game.teams.home.team.name}: ${error.message}`
-            );
-            return null;
-          }),
-          getTeamStats(game.teams.away.team.id, 2024).catch((error) => {
-            console.warn(
-              `Failed to get 2024 team stats for ${game.teams.away.team.name}: ${error.message}`
-            );
-            return null;
-          }),
-          getTeamStats(game.teams.away.team.id, 2025).catch((error) => {
-            console.warn(
-              `Failed to get 2025 team stats for ${game.teams.away.team.name}: ${error.message}`
-            );
-            return null;
-          }),
-        ]);
+      // Update game data with collected information
+      data.games = data.games.map((game) => ({
+        ...game,
+        environment: environment || game.environment,
+        teamStats: {
+          home: homeTeamStats || game.teamStats.home,
+          away: awayTeamStats || game.teamStats.away,
+        },
+        ballpark: ballparkFactors || game.ballpark,
+      }));
 
-        // Identify starting pitchers from schedule or lineups
-        let homePitcher = game.teams.home.probablePitcher || null;
-        let awayPitcher = game.teams.away.probablePitcher || null;
+      // Get probable lineups for each game
+      for (const game of data.games) {
+        try {
+          const lineups = await getProbableLineups({
+            gamePk: game.gameId.toString(),
+          });
+          game.lineups = lineups;
+        } catch (error) {
+          console.warn(
+            `Failed to get lineups for game ${game.gameId}: ${
+              error instanceof Error ? error.message : "Unknown error"
+            }`
+          );
+        }
+      }
+    } else {
+      console.log(`No games found for date: ${targetDate}`);
+    }
 
-        // Combine all data into a comprehensive game object
-        return {
-          ...basicData,
-          lineups: {
-            home: lineups.home || [],
-            away: lineups.away || [],
-            homeBatters: lineups.homeBatters || [],
-            awayBatters: lineups.awayBatters || [],
-            confirmed: lineups.confirmed || PLACEHOLDER.BOOLEAN,
-          },
-          pitchers: {
-            home: homePitcher,
-            away: awayPitcher,
-          },
-          environment: environment || {
-            temperature: PLACEHOLDER.NUMERIC,
-            windSpeed: PLACEHOLDER.NUMERIC,
-            windDirection: PLACEHOLDER.TEXT,
-            precipitation: PLACEHOLDER.NUMERIC,
-            isOutdoor: PLACEHOLDER.BOOLEAN,
-          },
-          teamStats: {
-            home: {
-              "2024": homeTeamStats2024 || null,
-              "2025": homeTeamStats2025 || null,
-            },
-            away: {
-              "2024": awayTeamStats2024 || null,
-              "2025": awayTeamStats2025 || null,
-            },
-          },
-          ballpark: ballparkFactors || {
-            overall: PLACEHOLDER.NUMERIC,
-            types: {
-              homeRuns: PLACEHOLDER.NUMERIC,
-              runs: PLACEHOLDER.NUMERIC,
-            },
-          },
+    // Analyze starting pitchers
+    console.log("\nStarting pitcher analysis...");
+    const pitcherAnalysis = await analyzeStartingPitchers(data.games);
+
+    // Add DraftKings data to pitcher analysis
+    let matchedPitchers = 0;
+    pitcherAnalysis.forEach((pitcher) => {
+      const dkPlayer = dkPitchers.get(pitcher.pitcherId);
+      if (dkPlayer) {
+        matchedPitchers++;
+        pitcher.draftKings = {
+          draftKingsId: dkPlayer.id,
+          salary: dkPlayer.salary,
+          positions: dkPlayer.position ? [dkPlayer.position] : [],
+          avgPointsPerGame: dkPlayer.avgPointsPerGame,
         };
-      })
+        console.log(
+          `Matched pitcher: ${pitcher.name} - Salary: ${dkPlayer.salary}`
+        );
+      } else {
+        console.log(
+          `No DraftKings data found for pitcher: ${pitcher.name} (ID: ${pitcher.pitcherId})`
+        );
+        // Set default DraftKings data for unmatched pitchers
+        pitcher.draftKings = {
+          draftKingsId: null,
+          salary: 0,
+          positions: ["SP"], // Default to starting pitcher
+          avgPointsPerGame: 0,
+        };
+      }
+    });
+    console.log(
+      `Matched ${matchedPitchers} out of ${pitcherAnalysis.length} pitchers with DraftKings data`
     );
 
-    // 3. Organize and return the collected data
-    return {
-      date: targetDate,
-      games: gameData,
-      count: gameData.length,
-      collectTimestamp: new Date(),
-      seasons: SUPPORTED_SEASONS,
-    };
+    // Save pitcher analysis
+    const pitcherOutputPath = `mlb-pitchers-${targetDate}.json`;
+    await saveToJsonFile(pitcherOutputPath, pitcherAnalysis);
+    console.log(
+      `\nSaved pitcher analysis to ${pitcherOutputPath} (${pitcherAnalysis.length} entries)`
+    );
+
+    // Log sample of pitcher analysis
+    if (pitcherAnalysis.length > 0) {
+      console.log("\nSample pitcher analysis:");
+      const samplePitcher = pitcherAnalysis[0];
+      console.log(`Name: ${samplePitcher.name}`);
+      console.log(`Team: ${samplePitcher.team}`);
+      console.log(`Opponent: ${samplePitcher.opponent}`);
+      console.log(
+        `Expected Points: ${samplePitcher.projections.dfsProjection.expectedPoints}`
+      );
+      console.log(
+        `Win Probability: ${samplePitcher.projections.winProbability}`
+      );
+      console.log(
+        `Expected Strikeouts: ${samplePitcher.projections.expectedStrikeouts}`
+      );
+      console.log(
+        `Expected Innings: ${samplePitcher.projections.expectedInnings}`
+      );
+    }
+
+    // Populate MLB IDs
+    const mlbGames = gameData.map((game) => ({
+      gamePk: game.gameId,
+      gameDate: game.gameTime,
+      status: game.status,
+      teams: {
+        away: {
+          team: game.awayTeam,
+          probablePitcher: game.pitchers?.away
+            ? {
+                id: game.pitchers.away.id,
+                fullName: game.pitchers.away.fullName,
+              }
+            : undefined,
+        },
+        home: {
+          team: game.homeTeam,
+          probablePitcher: game.pitchers?.home
+            ? {
+                id: game.pitchers.home.id,
+                fullName: game.pitchers.home.fullName,
+              }
+            : undefined,
+        },
+      },
+      venue: game.venue,
+      lineups: game.lineups,
+      pitchers: game.pitchers,
+      environment: game.environment,
+    }));
+    populateMlbIds(mlbGames);
+
+    // Save raw data
+    await saveToJsonFile(`mlb-data-${targetDate}.json`, data);
+
+    // Analyze batters
+    console.log("\nStarting batter analysis...");
+    const batterAnalysis = await analyzeBatters(
+      gameData,
+      Array.from(dkBatters.values())
+    );
+    // Add DraftKings data to batter analysis
+    let matchedBatters = 0;
+    batterAnalysis.forEach((batter) => {
+      const dkPlayer = dkBatters.get(batter.batterId);
+      if (dkPlayer) {
+        matchedBatters++;
+        batter.draftKings = {
+          draftKingsId: dkPlayer.id,
+          salary: dkPlayer.salary,
+          positions: dkPlayer.position ? [dkPlayer.position] : [],
+          avgPointsPerGame: dkPlayer.avgPointsPerGame,
+        };
+        console.log(
+          `Matched batter: ${batter.name} - Salary: ${dkPlayer.salary}`
+        );
+      } else {
+        console.log(
+          `No DraftKings data found for batter: ${batter.name} (ID: ${batter.batterId})`
+        );
+        // Set default DraftKings data for unmatched batters
+        batter.draftKings = {
+          draftKingsId: null,
+          salary: 0,
+          positions: [],
+          avgPointsPerGame: 0,
+        };
+      }
+    });
+    console.log(
+      `Matched ${matchedBatters} out of ${batterAnalysis.length} batters with DraftKings data`
+    );
+
+    await saveToJsonFile(`mlb-batters-${targetDate}.json`, batterAnalysis);
+
+    // Update count
+    data.count = batterAnalysis.length;
+
+    return data;
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error(`Error collecting daily DFS data: ${error.message}`);
@@ -240,55 +398,19 @@ async function collectDailyDFSData(date?: string) {
 }
 
 /**
- * Run daily data collection and analysis
+ * Wrapper function for daily automated data collection
+ * Uses today's date and provides simplified interface
  */
 export async function runDailyDataCollection(): Promise<DailyMLBData> {
-  const date = format(new Date(), "yyyy-MM-dd");
-  console.log(`Starting daily data collection for ${date}...`);
+  const today = new Date().toISOString().split("T")[0];
+  console.log(`Starting daily data collection for ${today}...`);
 
-  // Load DraftKings salaries
-  const dkSalaries = await getDKSalaries();
-
-  // Collect game data
-  const data = await collectDailyDFSData(date);
-
-  // Save raw data
-  await saveToJsonFile(`mlb-data-${date}.json`, data);
-
-  // Analyze pitchers with DraftKings data
-  const pitcherAnalysis = await analyzeStartingPitchers(data.games);
-  // Add DraftKings data to pitcher analysis
-  pitcherAnalysis.forEach((pitcher) => {
-    const dkData = dkSalaries.get(pitcher.pitcherId.toString());
-    if (dkData) {
-      pitcher.draftKings = {
-        draftKingsId: parseInt(dkData.draftKingsId),
-        salary: dkData.salary,
-        positions: [dkData.position],
-        avgPointsPerGame: dkData.avgPointsPerGame,
-      };
-    }
-  });
-  await saveToJsonFile(`mlb-pitchers-${date}.json`, pitcherAnalysis);
-
-  // Analyze batters with DraftKings data
-  const batterAnalysis = await analyzeBatters(data.games);
-  // Add DraftKings data to batter analysis
-  batterAnalysis.forEach((batter) => {
-    const dkData = dkSalaries.get(batter.batterId.toString());
-    if (dkData) {
-      batter.draftKings = {
-        draftKingsId: parseInt(dkData.draftKingsId),
-        salary: dkData.salary,
-        positions: [dkData.position],
-        avgPointsPerGame: dkData.avgPointsPerGame,
-      };
-    }
-  });
-  await saveToJsonFile(`mlb-batters-${date}.json`, batterAnalysis);
-
-  return data;
+  try {
+    const data = await collectDailyDFSData(today);
+    console.log(`Successfully collected data for ${today}`);
+    return data;
+  } catch (error) {
+    console.error(`Failed to collect daily data for ${today}:`, error);
+    throw error;
+  }
 }
-
-// Export the main functions
-export { collectDailyDFSData };

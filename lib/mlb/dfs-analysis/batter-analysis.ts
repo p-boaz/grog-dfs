@@ -3,6 +3,8 @@
 import { getBatterStats } from "../player/batter-stats";
 import { estimateHomeRunProbability } from "./home-runs";
 import { calculatePitcherDfsProjection } from "./aggregate-scoring";
+import { getTeamAbbrev } from "../../utils";
+import { findPlayerByNameFuzzy } from "../draftkings/player-mapping";
 import {
   getPlayerSeasonStats,
   getCareerStolenBaseProfile,
@@ -23,14 +25,9 @@ import {
   calculateRunProductionProjection,
 } from "./run-production";
 import { calculatePlateDisciplineProjection } from "./plate-discipline";
-
-// Constants for placeholder values - matching daily-data-collector.ts
-const PLACEHOLDER = {
-  NUMERIC: 0,
-  TEXT: "TBD",
-  BOOLEAN: false,
-  UNKNOWN: undefined,
-};
+import { DailyMLBData } from "../core/types";
+import { getTeamAbbrev } from "../core/team-mapping";
+import playerMapping from "../draftkings/player-mapping.json";
 
 interface BatterAnalysis {
   batterId: number;
@@ -118,6 +115,7 @@ interface BatterAnalysis {
 }
 
 interface BatterQualityMetrics {
+  consistency?: number;
   battedBallQuality?: number;
   power?: number;
   contactRate?: number;
@@ -229,116 +227,254 @@ interface BallparkFactors {
   };
 }
 
+interface DKPlayer {
+  id: number;
+  name: string;
+  position: string;
+  salary: number;
+  avgPointsPerGame: number;
+  team?: string;
+  lineupPosition?: number;
+}
+
+function mapDKPlayerToMLBId(dkPlayer: DKPlayer): DKPlayer {
+  // Find the MLB ID by fuzzy matching the player name
+  const player = findPlayerByNameFuzzy(dkPlayer.name);
+  const id = player?.id || dkPlayer.id; // Keep existing ID if no match found
+
+  if (!player?.id) {
+    console.warn(`No MLB ID found for player: ${dkPlayer.name}`);
+  }
+
+  return {
+    ...dkPlayer,
+    id,
+  };
+}
+
 /**
  * Analyze all batters for a given set of games
  */
-export async function analyzeBatters(games: any[]): Promise<BatterAnalysis[]> {
-  const analyses: BatterAnalysis[] = [];
+export async function analyzeBatters(
+  games: DailyMLBData["games"],
+  dkBatters: Array<{
+    id: number;
+    name: string;
+    position: string;
+    salary: number;
+    avgPointsPerGame: number;
+    team?: string;
+  }>
+): Promise<BatterAnalysis[]> {
+  // Map DraftKings players to include MLB IDs
+  const mappedBatters = dkBatters.map(mapDKPlayerToMLBId);
 
+  // Filter out players without MLB IDs
+  const validBatters = mappedBatters.filter(
+    (batter) => batter.id !== undefined
+  );
+
+  const analysis: BatterAnalysis[] = [];
+
+  // Create maps for easy lookup by team
+  const battersByTeam = new Map<string, DKPlayer[]>();
+  
+  // Group batters by team
+  validBatters.forEach(batter => {
+    if (batter.team) {
+      const team = batter.team.toUpperCase();
+      if (!battersByTeam.has(team)) {
+        battersByTeam.set(team, []);
+      }
+      battersByTeam.get(team)?.push(batter);
+    }
+  });
+  
+  // Process each game
   for (const game of games) {
-    const homeLineup = game.lineups.homeBatters || [];
-    const awayLineup = game.lineups.awayBatters || [];
+    // Get standardized team abbreviations
+    const homeTeamAbbrev = getTeamAbbrev(game.homeTeam.name).toUpperCase();
+    const awayTeamAbbrev = getTeamAbbrev(game.awayTeam.name).toUpperCase();
+    
+    // Get batters for this game
+    const gameHomeBatters = battersByTeam.get(homeTeamAbbrev) || [];
+    const gameAwayBatters = battersByTeam.get(awayTeamAbbrev) || [];
+    
+    console.log(`Processing game: ${game.awayTeam.name} @ ${game.homeTeam.name}`);
+    console.log(`Found ${gameHomeBatters.length} home batters and ${gameAwayBatters.length} away batters`);
 
-    // Skip if no lineups available
-    if (homeLineup.length === 0 || awayLineup.length === 0) {
-      console.warn(`Missing lineup data for game ${game.gameId}`);
-      continue;
-    }
+    // Process each batter
+    for (const batter of [...gameHomeBatters, ...gameAwayBatters]) {
+      const isHome = gameHomeBatters.includes(batter);
+      const team = isHome ? game.homeTeam : game.awayTeam;
+      const opponent = isHome ? game.awayTeam : game.homeTeam;
 
-    // Extract pitcher info for matchup analysis
-    const homePitcher = game.pitchers.home
-      ? {
-          id: game.pitchers.home.id,
-          name: game.pitchers.home.fullName,
-          throwsHand: game.pitchers.home.throwsHand || "R", // Default to right-handed if unknown
-        }
-      : null;
+      // Get batter's stats
+      const stats = await getBatterStats({
+        batterId: batter.id || 0,
+        season: 2025,
+      }).catch(() => null);
 
-    const awayPitcher = game.pitchers.away
-      ? {
-          id: game.pitchers.away.id,
-          name: game.pitchers.away.fullName,
-          throwsHand: game.pitchers.away.throwsHand || "R", // Default to right-handed if unknown
-        }
-      : null;
+      // Create empty season stats
+      const emptySeasonStats: SeasonStats = {
+        gamesPlayed: 0,
+        atBats: 0,
+        hits: 0,
+        runs: 0,
+        doubles: 0,
+        triples: 0,
+        homeRuns: 0,
+        rbi: 0,
+        avg: 0,
+        obp: 0,
+        slg: 0,
+        ops: 0,
+        stolenBases: 0,
+        caughtStealing: 0,
+      };
 
-    // Filter function to exclude pitchers and check for valid position
-    const isValidBatter = (player: any) => {
-      // Exclude pitchers (position code 'P' or '1')
-      if (player.position === "P" || player.position === "1") {
-        return false;
-      }
-
-      // Include only valid batting positions
-      const validPositions = [
-        "C",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        "DH",
-      ];
-      return validPositions.includes(player.position);
-    };
-
-    // Analyze home team batters (excluding pitchers)
-    if (homeLineup.length > 0 && awayPitcher) {
-      for (let i = 0; i < homeLineup.length; i++) {
-        const batter = homeLineup[i];
-        if (!isValidBatter(batter)) {
-          continue;
-        }
-        try {
-          const batterAnalysis = await analyzeBatter(
-            {
-              id: batter.id,
-              name: batter.fullName,
-              position: batter.position,
-              lineupPosition: i + 1,
-              isHome: true,
-              opposingPitcher: awayPitcher,
+      // Create analysis entry
+      const entry: BatterAnalysis = {
+        batterId: batter.id,
+        name: batter.name,
+        position: batter.position,
+        team: team.name,
+        opponent: opponent.name,
+        opposingPitcher: {
+          id: game.pitchers?.[isHome ? "away" : "home"]?.id || 0,
+          name: game.pitchers?.[isHome ? "away" : "home"]?.fullName || "",
+          throwsHand:
+            game.pitchers?.[isHome ? "away" : "home"]?.throwsHand || "R",
+        },
+        gameId: game.gameId,
+        venue: game.venue.name,
+        stats: {
+          seasonStats: {
+            "2024": emptySeasonStats,
+            "2025": emptySeasonStats,
+          },
+          quality: {
+            battedBallQuality: 0,
+            power: 0,
+            contactRate: 0,
+            plateApproach: 0,
+            speed: 0,
+          },
+        },
+        matchup: {
+          advantageScore: 0,
+          platoonAdvantage: false,
+          historicalStats: {
+            atBats: 0,
+            hits: 0,
+            avg: 0,
+            homeRuns: 0,
+            ops: 0,
+          },
+        },
+        projections: {
+          homeRunProbability: 0,
+          stolenBaseProbability: 0,
+          expectedHits: {
+            total: 0,
+            singles: 0,
+            doubles: 0,
+            triples: 0,
+            homeRuns: 0,
+            confidence: 0,
+          },
+          dfsProjection: {
+            expectedPoints: 0,
+            upside: 0,
+            floor: 0,
+            breakdown: {
+              hits: 0,
+              singles: 0,
+              doubles: 0,
+              triples: 0,
+              homeRuns: 0,
+              runs: 0,
+              rbi: 0,
+              stolenBases: 0,
+              walks: 0,
             },
-            game
-          );
-          analyses.push(batterAnalysis);
-        } catch (error) {
-          console.error(`Error analyzing home batter ${batter.id}:`, error);
-        }
-      }
-    }
+          },
+        },
+        environment: game.environment || {
+          temperature: 0,
+          windSpeed: 0,
+          windDirection: "",
+          isOutdoor: true,
+        },
+        ballparkFactors: {
+          overall: game.ballpark.overall,
+          homeRuns: game.ballpark.types.homeRuns,
+          runs: game.ballpark.types.runs,
+        },
+        lineupPosition: batter.lineupPosition,
+        factors: {
+          weather: null,
+          ballpark: null,
+          platoon: false,
+          career: null,
+        },
+        draftKings: {
+          draftKingsId: null,
+          salary: batter.salary,
+          positions: batter.position ? [batter.position] : [],
+          avgPointsPerGame: batter.avgPointsPerGame,
+        },
+      };
 
-    // Analyze away team batters (excluding pitchers)
-    if (awayLineup.length > 0 && homePitcher) {
-      for (let i = 0; i < awayLineup.length; i++) {
-        const batter = awayLineup[i];
-        if (!isValidBatter(batter)) {
-          continue;
-        }
-        try {
-          const batterAnalysis = await analyzeBatter(
-            {
-              id: batter.id,
-              name: batter.fullName,
-              position: batter.position,
-              lineupPosition: i + 1,
-              isHome: false,
-              opposingPitcher: homePitcher,
-            },
-            game
-          );
-          analyses.push(batterAnalysis);
-        } catch (error) {
-          console.error(`Error analyzing away batter ${batter.id}:`, error);
+      // Update stats if available
+      if (stats) {
+        // Create a base stats object with required properties
+        const baseStats: SeasonStats = {
+          gamesPlayed: stats.seasonStats.gamesPlayed || 0,
+          atBats: stats.seasonStats.atBats || 0,
+          hits: stats.seasonStats.hits || 0,
+          runs: 0, // Default value
+          doubles: 0, // Default value
+          triples: 0, // Default value
+          homeRuns: stats.seasonStats.homeRuns || 0,
+          rbi: stats.seasonStats.rbi || 0,
+          avg: stats.seasonStats.avg || 0,
+          obp: stats.seasonStats.obp || 0,
+          slg: stats.seasonStats.slg || 0,
+          ops: stats.seasonStats.ops || 0,
+          stolenBases: stats.seasonStats.stolenBases || 0,
+          caughtStealing: stats.seasonStats.caughtStealing || 0,
+        };
+
+        // Add any available additional properties
+        if ("runs" in stats.seasonStats)
+          baseStats.runs = stats.seasonStats.runs as number;
+        if ("doubles" in stats.seasonStats)
+          baseStats.doubles = stats.seasonStats.doubles as number;
+        if ("triples" in stats.seasonStats)
+          baseStats.triples = stats.seasonStats.triples as number;
+
+        entry.stats.seasonStats["2025"] = baseStats;
+      }
+
+      // Update pitcher handedness if available
+      const opposingPitcher = game.pitchers?.[isHome ? "away" : "home"];
+      if (opposingPitcher) {
+        const pitcherStats = await getBatterStats({
+          batterId: opposingPitcher.id,
+          season: 2025,
+        }).catch(() => null);
+        if (pitcherStats?.batSide) {
+          entry.matchup.platoonAdvantage =
+            pitcherStats.batSide === "L" && batter.position === "L";
         }
       }
+
+      analysis.push(entry);
     }
   }
 
-  return analyses;
+  return analysis;
 }
 
 // Update interfaces for multi-season support
@@ -348,19 +484,7 @@ interface BatterStats {
   currentTeam: string;
   primaryPosition: string;
   batSide: string;
-  seasonStats: {
-    gamesPlayed: number;
-    atBats: number;
-    hits: number;
-    homeRuns: number;
-    rbi: number;
-    avg: number;
-    obp: number;
-    slg: number;
-    ops: number;
-    stolenBases: number;
-    caughtStealing: number;
-  };
+  seasonStats: SeasonStats;
   careerStats: Array<{
     season: string;
     team: string;
@@ -383,13 +507,25 @@ interface SeasonStats {
   atBats: number;
   hits: number;
   homeRuns: number;
+  runs: number;
+  doubles: number;
+  triples: number;
   rbi: number;
-  avg: string;
-  obp: string;
-  slg: string;
-  ops: string;
+  avg: number;
+  obp: number;
+  slg: number;
+  ops: number;
   stolenBases: number;
   caughtStealing: number;
+  strikeouts?: number;
+  walks?: number;
+  wOBA?: number;
+  iso?: number;
+  babip?: number;
+  kRate?: number;
+  bbRate?: number;
+  hrRate?: number;
+  sbRate?: number;
 }
 
 // Helper function to format averages as strings
@@ -414,11 +550,14 @@ function mapSeasonStats(
       atBats: 0,
       hits: 0,
       homeRuns: 0,
+      runs: 0,
+      doubles: 0,
+      triples: 0,
       rbi: 0,
-      avg: ".000",
-      obp: ".000",
-      slg: ".000",
-      ops: ".000",
+      avg: 0,
+      obp: 0,
+      slg: 0,
+      ops: 0,
       stolenBases: 0,
       caughtStealing: 0,
     };
@@ -429,11 +568,14 @@ function mapSeasonStats(
     atBats: stats.atBats || 0,
     hits: stats.hits || 0,
     homeRuns: stats.homeRuns || 0,
+    runs: stats.runs || 0,
+    doubles: stats.doubles || 0,
+    triples: stats.triples || 0,
     rbi: stats.rbi || 0,
-    avg: formatAverage(stats.avg),
-    obp: formatAverage(stats.obp),
-    slg: formatAverage(stats.slg),
-    ops: formatAverage(stats.ops),
+    avg: stats.avg || 0,
+    obp: stats.obp || 0,
+    slg: stats.slg || 0,
+    ops: stats.ops || 0,
     stolenBases: stats.stolenBases || 0,
     caughtStealing: stats.caughtStealing || 0,
   };
@@ -476,17 +618,39 @@ const analyzeBatter = async (
       getBatterStats({ batterId: batter.id, season: 2025 }),
     ]);
 
+    // Create default season stats
+    const defaultSeasonStats: SeasonStats = {
+      gamesPlayed: 0,
+      atBats: 0,
+      hits: 0,
+      homeRuns: 0,
+      runs: 0,
+      doubles: 0,
+      triples: 0,
+      rbi: 0,
+      avg: 0,
+      obp: 0,
+      slg: 0,
+      ops: 0,
+      stolenBases: 0,
+      caughtStealing: 0,
+    };
+
     // Map season stats for both years, ensuring we use the correct season's data
     const seasonStats = {
-      "2024": mapSeasonStats(stats2024?.seasonStats),
-      "2025": mapSeasonStats(stats2025?.seasonStats),
+      "2024": stats2024?.seasonStats
+        ? { ...defaultSeasonStats, ...stats2024.seasonStats }
+        : defaultSeasonStats,
+      "2025": stats2025?.seasonStats
+        ? { ...defaultSeasonStats, ...stats2025.seasonStats }
+        : defaultSeasonStats,
     };
 
     // Use 2025 as primary stats for calculations if available, otherwise fall back to 2024
     const primaryStats =
       stats2025?.seasonStats?.gamesPlayed > 0
-        ? mapSeasonStats(stats2025.seasonStats)
-        : mapSeasonStats(stats2024?.seasonStats);
+        ? { ...defaultSeasonStats, ...stats2025.seasonStats }
+        : { ...defaultSeasonStats, ...stats2024?.seasonStats };
 
     // Get batter handedness
     const handedness = stats2025?.batSide || stats2024?.batSide || "R";
@@ -689,8 +853,7 @@ function estimateBatterPoints(
 
   const expectedRuns = lineupPosition <= 4 ? 0.6 : 0.4;
   const expectedRbi = lineupPosition >= 3 && lineupPosition <= 5 ? 0.7 : 0.4;
-  const expectedWalks =
-    (parseAverage(stats.obp) - parseAverage(stats.avg)) * avgPlateAppearances;
+  const expectedWalks = (stats.obp - stats.avg) * avgPlateAppearances;
 
   return (
     hitPoints +
@@ -708,7 +871,7 @@ function estimateBatterPoints(
 export async function analyzeBattersForToday(games: any[]): Promise<void> {
   console.log("Analyzing batters for today's games...");
 
-  const analyses = await analyzeBatters(games);
+  const analyses = await analyzeBatters(games, []);
 
   // Sort batters by expected DFS points
   const sortedBatters = analyses.sort(
@@ -941,31 +1104,56 @@ function getDefaultBatterAnalysis(
         "2024": {
           gamesPlayed: 0,
           atBats: 0,
+          runs: 0,
           hits: 0,
+          doubles: 0,
+          triples: 0,
           homeRuns: 0,
           rbi: 0,
-          avg: ".000",
-          obp: ".000",
-          slg: ".000",
-          ops: ".000",
           stolenBases: 0,
           caughtStealing: 0,
+          walks: 0,
+          strikeouts: 0,
+          avg: 0,
+          obp: 0,
+          slg: 0,
+          ops: 0,
+          wOBA: 0,
+          iso: 0,
+          babip: 0,
+          kRate: 0,
+          bbRate: 0,
+          hrRate: 0,
+          sbRate: 0,
         },
         "2025": {
           gamesPlayed: 0,
           atBats: 0,
+          runs: 0,
           hits: 0,
+          doubles: 0,
+          triples: 0,
           homeRuns: 0,
           rbi: 0,
-          avg: ".000",
-          obp: ".000",
-          slg: ".000",
-          ops: ".000",
           stolenBases: 0,
           caughtStealing: 0,
+          walks: 0,
+          strikeouts: 0,
+          avg: 0,
+          obp: 0,
+          slg: 0,
+          ops: 0,
+          wOBA: 0,
+          iso: 0,
+          babip: 0,
+          kRate: 0,
+          bbRate: 0,
+          hrRate: 0,
+          sbRate: 0,
         },
       },
       quality: {
+        consistency: 0,
         battedBallQuality: 0,
         power: 0,
         contactRate: 0,

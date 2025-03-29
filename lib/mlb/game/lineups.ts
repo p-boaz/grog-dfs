@@ -56,32 +56,26 @@ async function predictLineup(
 
     // Now filter and sort with the resolved batting orders
     const activePlayers = playersWithOrders
-      .filter(
-        (player) => player.position && player.battingOrder > 0
-      )
-      .sort(
-        (a, b) => a.battingOrder - b.battingOrder
-      );
+      .filter((player) => player.position && player.battingOrder > 0)
+      .sort((a, b) => a.battingOrder - b.battingOrder);
 
     // If we have no players with valid batting orders, use all players with default order
     let playersToUse = activePlayers;
     if (activePlayers.length < 9) {
       // If we have too few players with known batting order, include players without known order
       const remainingPlayers = playersWithOrders
-        .filter(player => player.position && !activePlayers.includes(player))
+        .filter((player) => player.position && !activePlayers.includes(player))
         .slice(0, 9 - activePlayers.length);
-      
+
       playersToUse = [...activePlayers, ...remainingPlayers];
     }
 
     // Take top 9 players for lineup
-    const predictedLineup = playersToUse
-      .slice(0, 9)
-      .map((player) => ({
-        id: player.id,
-        fullName: player.fullName,
-        position: player.position,
-      }));
+    const predictedLineup = playersToUse.slice(0, 9).map((player) => ({
+      id: player.id,
+      fullName: player.fullName,
+      position: player.position,
+    }));
 
     // Calculate confidence based on data quality and how many players have known batting orders
     const confidence = Math.min(100, predictedLineup.length * 10);
@@ -189,7 +183,7 @@ async function fetchProbableLineups(params: {
     const previewData = await makeMLBApiRequest<any>(
       `/game/${gamePk}/content`,
       "V1"
-    );
+    ).catch(() => null);
 
     // Initialize probable lineup
     const probableLineup: ProbableLineup = {
@@ -200,7 +194,7 @@ async function fetchProbableLineups(params: {
     };
 
     // Try to get probable lineups from preview data first
-    if (previewData.gameNotes?.probableLineups) {
+    if (previewData?.gameNotes?.probableLineups) {
       const { away, home } = previewData.gameNotes.probableLineups;
       probableLineup.awayBatters = away?.map((batter: any) => ({
         id: batter.id,
@@ -218,33 +212,42 @@ async function fetchProbableLineups(params: {
 
     // If no lineups available in preview or game is scheduled, predict them
     if (
+      !previewData ||
       previewData.gameData.status.statusCode === "S" || // Scheduled
       !probableLineup.awayBatters?.length ||
       !probableLineup.homeBatters?.length
     ) {
-      const [awayPrediction, homePrediction] = await Promise.all([
-        predictLineup(previewData.gameData.teams.away.id, false),
-        predictLineup(previewData.gameData.teams.home.id, true),
-      ]);
+      // Get team IDs from the game data
+      const gameData = await makeMLBApiRequest<any>(
+        `/game/${gamePk}`,
+        "V1"
+      ).catch(() => null);
 
-      if (awayPrediction.batters.length > 0) {
-        probableLineup.awayBatters = awayPrediction.batters;
-        probableLineup.away = awayPrediction.batters.map((b) => b.id);
+      if (gameData?.gameData?.teams) {
+        const [awayPrediction, homePrediction] = await Promise.all([
+          predictLineup(gameData.gameData.teams.away.id, false),
+          predictLineup(gameData.gameData.teams.home.id, true),
+        ]);
+
+        if (awayPrediction.batters.length > 0) {
+          probableLineup.awayBatters = awayPrediction.batters;
+          probableLineup.away = awayPrediction.batters.map((b) => b.id);
+        }
+
+        if (homePrediction.batters.length > 0) {
+          probableLineup.homeBatters = homePrediction.batters;
+          probableLineup.home = homePrediction.batters.map((b) => b.id);
+        }
+
+        // Set confidence level based on predictions
+        probableLineup.confidence = Math.min(
+          awayPrediction.confidence,
+          homePrediction.confidence
+        );
+
+        // Mark predicted lineups as unconfirmed
+        probableLineup.confirmed = false;
       }
-
-      if (homePrediction.batters.length > 0) {
-        probableLineup.homeBatters = homePrediction.batters;
-        probableLineup.home = homePrediction.batters.map((b) => b.id);
-      }
-
-      // Set confidence level based on predictions
-      probableLineup.confidence = Math.min(
-        awayPrediction.confidence,
-        homePrediction.confidence
-      );
-
-      // Mark predicted lineups as unconfirmed
-      probableLineup.confirmed = false;
     }
 
     return markAsApiSource(probableLineup);
