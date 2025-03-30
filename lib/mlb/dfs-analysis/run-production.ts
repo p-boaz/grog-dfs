@@ -182,8 +182,8 @@ export async function getCareerRunProductionProfile(playerId: number): Promise<{
 
     // Process each season
     playerData.careerStats.forEach((season) => {
-      const seasonRuns = season.runs || 0;
-      const seasonRBI = season.rbi || 0;
+      const seasonRuns = "runs" in season ? (season.runs as number) || 0 : 0;
+      const seasonRBI = "rbi" in season ? (season.rbi as number) || 0 : 0;
       const seasonGames = season.gamesPlayed || 0;
 
       // Update career totals
@@ -310,15 +310,15 @@ export async function getTeamOffensiveContext(
     // Get team stats
     const teamData = await getTeamStats(teamId, season);
 
-    if (!teamData || !teamData.stats) {
+    if (!teamData || !("hitting" in teamData)) {
       return null;
     }
 
-    const stats = teamData.stats;
+    const stats = teamData.hitting || {};
 
     // Calculate key metrics
     const gamesPlayed = stats.gamesPlayed || 162; // Default to full season if not available
-    const runsPerGame = stats.runsScored / gamesPlayed;
+    const runsPerGame = (stats.runs || 0) / gamesPlayed;
 
     // MLB average runs per game is ~4.5
     // Convert to 0-100 scale where 50 is league average
@@ -335,7 +335,7 @@ export async function getTeamOffensiveContext(
 
     // Estimate runners on base frequency using OBP
     // League average OBP is ~.320
-    const teamOBP = parseFloat(stats.obp.toString()) || 0.32;
+    const teamOBP = stats.obp || 0.32;
     const runnersOnBaseFrequency = teamOBP + 0.05; // Adjust upward for baserunners from errors, etc.
 
     return {
@@ -617,7 +617,15 @@ export async function calculateExpectedRuns(
       getBatterStats({ batterId })
         .then((data) => {
           // Use batter data to get team id
-          const teamId = data?.currentTeam?.id;
+          let teamId = 0;
+
+          if (data && typeof data.currentTeam === "object") {
+            const team = data.currentTeam as Record<string, any>;
+            if (team && "id" in team) {
+              teamId = Number(team.id);
+            }
+          }
+
           if (!teamId) return null;
           return getTeamOffensiveContext(teamId).catch(() => null);
         })
@@ -626,7 +634,15 @@ export async function calculateExpectedRuns(
       getPitcherStats({ pitcherId: opposingPitcherId })
         .then((data) => {
           // Use pitcher data to get venue id
-          const venueId = data?.currentTeam?.venueId;
+          let venueId = 0;
+
+          if (data && typeof data.currentTeam === "object") {
+            const team = data.currentTeam as Record<string, any>;
+            if (team && "venueId" in team) {
+              venueId = Number(team.venueId);
+            }
+          }
+
           if (!venueId) return null;
           return getBallparkRunFactor(venueId).catch(() => null);
         })
@@ -769,7 +785,15 @@ export async function calculateExpectedRBIs(
       getBatterStats({ batterId })
         .then((data) => {
           // Use batter data to get team id
-          const teamId = data?.currentTeam?.id;
+          let teamId = 0;
+
+          if (data && typeof data.currentTeam === "object") {
+            const team = data.currentTeam as Record<string, any>;
+            if (team && "id" in team) {
+              teamId = Number(team.id);
+            }
+          }
+
           if (!teamId) return null;
           return getTeamOffensiveContext(teamId).catch(() => null);
         })
@@ -778,7 +802,15 @@ export async function calculateExpectedRBIs(
       getPitcherStats({ pitcherId: opposingPitcherId })
         .then((data) => {
           // Use pitcher data to get venue id
-          const venueId = data?.currentTeam?.venueId;
+          let venueId = 0;
+
+          if (data && typeof data.currentTeam === "object") {
+            const team = data.currentTeam as Record<string, any>;
+            if (team && "venueId" in team) {
+              venueId = Number(team.venueId);
+            }
+          }
+
           if (!venueId) return null;
           return getBallparkRunFactor(venueId).catch(() => null);
         })

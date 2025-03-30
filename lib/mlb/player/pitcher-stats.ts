@@ -188,45 +188,51 @@ export const getPitcherStats = withCache(
  * Transform the MLB API pitcher data into a standardized format
  */
 function transformPitcherStats(data: any): PitcherStats {
-  if (!data?.people?.[0]) {
-    console.error("Invalid data structure received from MLB API");
-    throw new Error("Invalid pitcher data structure from MLB API");
+  if (!data || !data.people || !data.people[0]) {
+    throw new Error("Invalid pitcher data structure");
   }
 
-  const pitcherId = data.people[0].id;
-  const pitcherName = data.people[0].fullName;
-  const stats = data.people[0].stats || [];
+  const seasonStats: Record<string, any> = {};
+  let yearByYearPitchingStats: any[] = [];
 
-  console.log(`Processing pitcher data for ${pitcherName} (ID: ${pitcherId})`);
+  // Get season stats from the stats array
+  if (data.people[0].stats) {
+    // Find the yearByYear pitching stats
+    const yearByYearStats = data.people[0].stats.find(
+      (statGroup: any) =>
+        statGroup.type.displayName === "yearByYear" &&
+        statGroup.group.displayName === "pitching"
+    );
 
-  // Get yearByYear pitching data
-  const yearByYearPitchingStats =
-    stats.find(
-      (s: any) =>
-        s.group?.displayName === "pitching" &&
-        s.type?.displayName === "yearByYear"
-    )?.splits || [];
+    if (yearByYearStats && yearByYearStats.splits) {
+      yearByYearPitchingStats = yearByYearStats.splits;
+    }
+  }
+
+  // Function to estimate HR allowed if not provided in the stats
+  const estimateHRAllowed = (stats: any): number => {
+    // Check if homeRuns or homeRunsAllowed is directly available
+    if (typeof stats.homeRuns === "number") return stats.homeRuns;
+    if (typeof stats.homeRunsAllowed === "number") return stats.homeRunsAllowed;
+
+    // If HR not directly available, estimate from other stats
+    // Using a very rough estimation method
+    const ip =
+      typeof stats.inningsPitched === "number"
+        ? stats.inningsPitched
+        : parseFloat(stats.inningsPitched || "0");
+
+    if (ip <= 0) return 0;
+
+    // MLB average HR/9 is roughly 1.25-1.4
+    const hrPer9Estimate = 1.3;
+    return Math.round((ip / 9) * hrPer9Estimate);
+  };
 
   // Transform yearByYear stats into season-based structure
-  const seasonStats: { [season: string]: any } = {};
   yearByYearPitchingStats.forEach((year: any) => {
     const season = year.season;
     const stat = year.stat || {};
-
-    // Calculate HR allowed based on available stats
-    const estimateHRAllowed = (stats: any) => {
-      if (stats.homeRuns !== undefined) return stats.homeRuns;
-      if (stats.hr !== undefined) return stats.hr;
-
-      // If HR not directly available, estimate from other stats
-      // Using a very rough estimation method
-      const ip = parseFloat(stats.inningsPitched || "0");
-      if (ip <= 0) return 0;
-
-      // MLB average HR/9 is roughly 1.25-1.4
-      const hrPer9Estimate = 1.3;
-      return Math.round((ip / 9) * hrPer9Estimate);
-    };
 
     seasonStats[season] = {
       gamesPlayed: stat.gamesPlayed || 0,

@@ -1,6 +1,6 @@
-import { withCache, DEFAULT_CACHE_TTL, markAsApiSource } from "../cache";
+import { DEFAULT_CACHE_TTL, markAsApiSource, withCache } from "../cache";
 import { makeMLBApiRequest } from "../core/api-client";
-import { GameFeedResponse, GameBoxScoreResponse } from "../core/types";
+import { GameBoxScoreResponse, GameFeedResponse } from "../core/types";
 
 /**
  * Fetch game data with different strategies for live vs historical games
@@ -37,8 +37,18 @@ async function fetchGameFeed(params: {
         gamePk: parseInt(gamePk),
         gameData: {
           teams: {
-            away: { name: boxscoreData.teams.away.team.name },
-            home: { name: boxscoreData.teams.home.team.name },
+            away: {
+              team: {
+                id: 0, // Use a default ID as it's required by the type
+                name: boxscoreData.teams.away.team.name,
+              },
+            },
+            home: {
+              team: {
+                id: 0, // Use a default ID as it's required by the type
+                name: boxscoreData.teams.home.team.name,
+              },
+            },
           },
         },
         liveData: {
@@ -78,7 +88,7 @@ async function fetchGameContent(params: {
   const { gamePk, hydrations = [] } = params;
 
   let url = `/game/${gamePk}/content`;
-  
+
   // Add hydrations if provided
   if (hydrations.length > 0) {
     const hydrationParam = hydrations.join(",");
@@ -86,7 +96,7 @@ async function fetchGameContent(params: {
   }
 
   const data = await makeMLBApiRequest<any>(url, "V1");
-  
+
   return markAsApiSource({
     ...data,
     sourceTimestamp: new Date(),
@@ -117,37 +127,37 @@ export async function getGameStatus(gamePk: string): Promise<any> {
 export async function refreshGameData(gamePk: string): Promise<boolean> {
   try {
     console.log(`Refreshing all cache data for game ${gamePk}...`);
-    
+
     // We can't direct use invalidateGameCache due to circular references
     // So we'll do targeted invalidation by endpoint type
-    
+
     // List of endpoint types that contain game-specific data
     const gameEndpoints = ["game", "environment", "weather", "lineup"];
-    
+
     // Import cache functions dynamically to avoid circular dependencies
     const { invalidateCache } = await import("../cache");
-    
+
     // Invalidate all game-related endpoint types
     for (const endpoint of gameEndpoints) {
       await invalidateCache(endpoint);
     }
-    
+
     // Re-fetch critical game data in parallel
     await Promise.all([
       // Environment and weather data
-      import("../weather/weather").then(module => 
+      import("../weather/weather").then((module) =>
         module.getGameEnvironmentData({ gamePk })
       ),
-      
+
       // Game feed for latest scores/status
       getGameFeed({ gamePk }),
-      
+
       // Latest lineups
-      import("./lineups").then(module => 
+      import("./lineups").then((module) =>
         module.getProbableLineups({ gamePk })
       ),
     ]);
-    
+
     console.log(`Successfully refreshed data for game ${gamePk}`);
     return true;
   } catch (error) {

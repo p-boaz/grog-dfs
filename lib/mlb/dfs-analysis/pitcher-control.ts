@@ -61,7 +61,10 @@ export async function getPitcherControlStats(
     }
 
     // Extract needed values
-    const stats = pitcherData.seasonStats[season.toString()] || {};
+    const stats = (pitcherData.seasonStats[season.toString()] || {}) as Record<
+      string,
+      any
+    >;
     const ip = parseFloat(stats.inningsPitched?.toString() || "0");
     const walks = Number(stats.walks || 0);
     const strikeouts = Number(stats.strikeouts || 0);
@@ -88,7 +91,7 @@ export async function getPitcherControlStats(
       hits: 0, // Placeholder - need to extract from detailed stats
       hitBatsmen: 0, // Placeholder - need to extract from detailed stats
       inningsPitched: ip,
-      gamesStarted: stats.gamesPlayed || 0,
+      gamesStarted: Number(stats.gamesPlayed || 0),
       walksPerNine,
       hitsPerNine: hitsPerNine || 0,
       hbpPerNine: hbpPerNine || 0,

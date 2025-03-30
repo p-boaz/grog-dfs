@@ -1,13 +1,13 @@
 import {
-  getPitcherStats,
   getPitcherHomeRunVulnerability,
+  getPitcherStats,
 } from "../player/pitcher-stats";
-import { calculatePitcherWinProbability } from "./pitcher-win";
-import { calculateExpectedStrikeouts } from "./strikeouts";
-import { calculateExpectedInnings } from "./innings-pitched";
 import { calculatePitcherDfsProjection } from "./aggregate-scoring";
+import { calculateExpectedInnings } from "./innings-pitched";
 import { calculateControlProjection } from "./pitcher-control";
+import { calculatePitcherWinProbability } from "./pitcher-win";
 import { calculateRareEventPotential } from "./rare-events";
+import { calculateExpectedStrikeouts } from "./strikeouts";
 
 // Constants for placeholder values
 const PLACEHOLDER = {
@@ -169,10 +169,13 @@ async function analyzePitcher({
     };
 
     // Use 2025 stats as primary, fall back to 2024 if needed
+    const seasonStats2025 = combinedStats.seasonStats["2025"];
+    const seasonStats2024 = combinedStats.seasonStats["2024"];
     const primaryStats =
-      combinedStats.seasonStats["2025"].gamesPlayed > 0
-        ? combinedStats.seasonStats["2025"]
-        : combinedStats.seasonStats["2024"];
+      typeof seasonStats2025.gamesPlayed === "number" &&
+      seasonStats2025.gamesPlayed > 0
+        ? seasonStats2025
+        : seasonStats2024;
 
     // Get home run vulnerability data for both seasons
     const [hrVulnerability2024, hrVulnerability2025] = await Promise.all([
@@ -284,25 +287,43 @@ async function analyzePitcher({
       );
     }
 
+    // Convert primaryStats to required format for StartingPitcherAnalysis
+    const formattedStats = {
+      gamesPlayed:
+        typeof primaryStats.gamesPlayed === "number"
+          ? primaryStats.gamesPlayed
+          : null,
+      inningsPitched:
+        typeof primaryStats.inningsPitched === "number"
+          ? primaryStats.inningsPitched
+          : null,
+      wins: typeof primaryStats.wins === "number" ? primaryStats.wins : null,
+      losses:
+        typeof primaryStats.losses === "number" ? primaryStats.losses : null,
+      era: typeof primaryStats.era === "number" ? primaryStats.era : null,
+      whip: typeof primaryStats.whip === "number" ? primaryStats.whip : null,
+      strikeouts:
+        typeof primaryStats.strikeouts === "number"
+          ? primaryStats.strikeouts
+          : null,
+      walks: typeof primaryStats.walks === "number" ? primaryStats.walks : null,
+      saves: typeof primaryStats.saves === "number" ? primaryStats.saves : null,
+      homeRunsAllowed:
+        typeof primaryStats.homeRunsAllowed === "number"
+          ? primaryStats.homeRunsAllowed
+          : null,
+    };
+
     return {
       pitcherId,
-      name:
-        stats2025?.fullName || stats2024?.fullName || `Pitcher ${pitcherId}`,
-      team: isHome ? game.homeTeam.name : game.awayTeam.name,
-      opponent: isHome ? game.awayTeam.name : game.homeTeam.name,
+      name: isHome ? game.teams.home.name : game.teams.away.name,
+      team: isHome ? game.teams.home.abbrev : game.teams.away.abbrev,
+      opponent: isHome ? game.teams.away.name : game.teams.home.name,
       gameId: game.gameId,
       venue: game.venue.name,
       stats: {
-        seasonStats: primaryStats,
-        homeRunVulnerability: hrVulnerability
-          ? {
-              hrPer9: hrVulnerability.hrPer9 ?? PLACEHOLDER.NUMERIC,
-              flyBallPct: hrVulnerability.flyBallPct ?? PLACEHOLDER.NUMERIC,
-              hrPerFlyBall: hrVulnerability.hrPerFlyBall ?? PLACEHOLDER.NUMERIC,
-              homeRunVulnerability:
-                hrVulnerability.homeRunVulnerability ?? PLACEHOLDER.NUMERIC,
-            }
-          : undefined,
+        seasonStats: formattedStats,
+        homeRunVulnerability: hrVulnerability || undefined,
       },
       projections,
       environment: {

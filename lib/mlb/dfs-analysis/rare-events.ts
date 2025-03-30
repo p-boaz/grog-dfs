@@ -3,15 +3,10 @@
  * Including complete games, shutouts, no-hitters, and perfect games
  */
 
+import { getGameFeed } from "../game/game-feed";
+import { getGameEnvironmentData } from "../index";
 import { getPitcherStats } from "../player/pitcher-stats";
 import { getTeamStats } from "../schedule/schedule";
-import { getGameEnvironmentData } from "../index";
-import { getGameFeed } from "../game/game-feed";
-import { calculatePitcherWinProbability } from "./pitcher-win";
-import {
-  getPitcherInningsStats,
-  calculateCompleteGamePotential,
-} from "./innings-pitched";
 
 /**
  * Calculate rare event potential and expected DFS points
@@ -119,9 +114,11 @@ export async function calculateRareEventPotential(
 
       // Adjust based on opponent strength
       if (opponentStats) {
-        const runsPerGame =
-          opponentStats.stats.runsScored /
-          (opponentStats.stats.gamesPlayed || 1);
+        // Get hitting stats for runs scored
+        const runsScored = opponentStats.hitting?.runs || 0;
+        const gamesPlayed = opponentStats.hitting?.gamesPlayed || 1;
+
+        const runsPerGame = runsScored / gamesPlayed;
         if (runsPerGame > 5.0) qualityStartProb *= 0.8;
         if (runsPerGame < 4.0) qualityStartProb *= 1.2;
       }
@@ -175,7 +172,7 @@ export async function calculateRareEventPotential(
     } else if (inningsPitched > 15) {
       confidenceScore += 10;
     }
-    if (opponentStats?.stats.gamesPlayed > 10) {
+    if (opponentStats && opponentStats.hitting?.gamesPlayed > 10) {
       confidenceScore += 10;
     }
     if (gameEnvironment) {
@@ -272,7 +269,9 @@ export async function analyzeHistoricalRareEvents(
             (sum, season) => sum + season.era * season.gamesPlayed,
             0
           ) / careerGames
-        : pitcherData.seasonStats.era;
+        : typeof pitcherData.seasonStats.era === "number"
+        ? pitcherData.seasonStats.era
+        : 4.5;
 
     // Better pitchers have more rare events
     const rareEventFactor = Math.max(
@@ -295,17 +294,21 @@ export async function analyzeHistoricalRareEvents(
     const careerQualityStarts = Math.round(careerGames * qualityStartRate);
 
     // Calculate season stats (more restricted sample size)
-    const seasonGames = pitcherData.seasonStats.gamesPlayed;
+    const seasonGamesValue =
+      typeof pitcherData.seasonStats.gamesPlayed === "number"
+        ? pitcherData.seasonStats.gamesPlayed
+        : 0;
 
     // Season stats are more variable due to smaller sample
     const seasonCGs = Math.min(
-      Math.round(seasonGames * 0.01 * rareEventFactor * 1.5),
+      Math.round(seasonGamesValue * 0.01 * rareEventFactor * 1.5),
       2
     );
     const seasonShutouts = Math.min(seasonCGs, 1);
-    const seasonNoHitters = seasonGames > 20 && rareEventFactor > 2 ? 1 : 0;
+    const seasonNoHitters =
+      seasonGamesValue > 20 && rareEventFactor > 2 ? 1 : 0;
     const seasonPerfectGames = 0;
-    const seasonQualityStarts = Math.round(seasonGames * qualityStartRate);
+    const seasonQualityStarts = Math.round(seasonGamesValue * qualityStartRate);
 
     return {
       pitcher: {
@@ -328,8 +331,8 @@ export async function analyzeHistoricalRareEvents(
         noHitters: seasonNoHitters,
         perfectGames: seasonPerfectGames,
         qualityStarts: seasonQualityStarts,
-        totalGames: seasonGames,
-        completionRate: seasonCGs / Math.max(1, seasonGames),
+        totalGames: seasonGamesValue,
+        completionRate: seasonCGs / Math.max(1, seasonGamesValue),
       },
     };
   } catch (error) {

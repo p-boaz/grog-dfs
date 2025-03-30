@@ -1,16 +1,16 @@
 import { z } from "zod";
 import {
   BatterStatcastData,
+  ControlMetricsSchema,
   LeaderboardResponse,
+  MovementMetricsSchema,
   PitcherStatcastData,
   PitchTypeData,
-  PitchUsage,
-  TeamStatcastData,
-  MovementMetricsSchema,
-  ControlMetricsSchema,
-  ResultMetricsSchema,
   PitchTypeDataSchema,
+  PitchUsage,
   PitchUsageSchema,
+  ResultMetricsSchema,
+  TeamStatcastData,
 } from "../types/statcast";
 
 // Use simple import for built-in fetch
@@ -1098,26 +1098,91 @@ function parsePitcherCsvDataExtended(
 
     // Update control metrics if available
     if (basicData.control_metrics) {
-      result.control_metrics = {
-        ...result.control_metrics,
-        ...basicData.control_metrics,
-      };
+      try {
+        // Merge current and new values - ensure required fields have default values
+        const mergedControlMetrics = {
+          zone_rate: result.control_metrics.zone_rate || 0,
+          first_pitch_strike: result.control_metrics.first_pitch_strike || 0,
+          whiff_rate: result.control_metrics.whiff_rate || 0,
+          chase_rate: result.control_metrics.chase_rate || 0,
+          csw_rate: result.control_metrics.csw_rate || 0,
+          called_strike_rate: result.control_metrics.called_strike_rate,
+          edge_percent: result.control_metrics.edge_percent,
+          zone_contact_rate: result.control_metrics.zone_contact_rate,
+          chase_contact_rate: result.control_metrics.chase_contact_rate,
+          ...basicData.control_metrics,
+        };
+
+        const validatedControlMetrics =
+          ControlMetricsSchema.parse(mergedControlMetrics);
+        result.control_metrics = validatedControlMetrics as {
+          zone_rate: number;
+          first_pitch_strike: number;
+          whiff_rate: number;
+          chase_rate: number;
+          csw_rate: number;
+          called_strike_rate?: number;
+          edge_percent?: number;
+          zone_contact_rate?: number;
+          chase_contact_rate?: number;
+        };
+      } catch (error) {
+        console.warn(`Invalid control metrics:`, error);
+      }
     }
 
-    // Update movement metrics if available
+    // Update and validate movement metrics if available
     if (basicData.movement_metrics) {
-      result.movement_metrics = {
-        ...result.movement_metrics,
-        ...basicData.movement_metrics,
-      };
+      try {
+        // Merge current and new values - ensure required fields have default values
+        const mergedMovementMetrics = {
+          horizontal_break: result.movement_metrics.horizontal_break || 0,
+          induced_vertical_break:
+            result.movement_metrics.induced_vertical_break || 0,
+          release_extension: result.movement_metrics.release_extension || 5, // Default mid-range value
+          release_height: result.movement_metrics.release_height || 5, // Default mid-range value
+          ...basicData.movement_metrics,
+        };
+
+        const validatedMovementMetrics = MovementMetricsSchema.parse(
+          mergedMovementMetrics
+        );
+        result.movement_metrics = validatedMovementMetrics as {
+          horizontal_break: number;
+          induced_vertical_break: number;
+          release_extension: number;
+          release_height: number;
+        };
+      } catch (error) {
+        console.warn(`Invalid movement metrics:`, error);
+      }
     }
 
-    // Update result metrics if available
+    // Update and validate result metrics if available
     if (basicData.result_metrics) {
-      result.result_metrics = {
-        ...result.result_metrics,
-        ...basicData.result_metrics,
-      };
+      try {
+        // Merge current and new values - ensure required fields have default values
+        const mergedResultMetrics = {
+          hard_hit_percent: result.result_metrics.hard_hit_percent || 0,
+          batting_avg_against: result.result_metrics.batting_avg_against || 0,
+          slugging_against: result.result_metrics.slugging_against || 0,
+          woba_against: result.result_metrics.woba_against || 0,
+          expected_woba: result.result_metrics.expected_woba || 0,
+          ...basicData.result_metrics,
+        };
+
+        const validatedResultMetrics =
+          ResultMetricsSchema.parse(mergedResultMetrics);
+        result.result_metrics = validatedResultMetrics as {
+          hard_hit_percent: number;
+          batting_avg_against: number;
+          slugging_against: number;
+          woba_against: number;
+          expected_woba: number;
+        };
+      } catch (error) {
+        console.warn(`Invalid result metrics:`, error);
+      }
     }
 
     // Process pitch types data if available
@@ -1568,11 +1633,34 @@ function constructPitcherDataFromArsenal(
         // Update and validate control metrics if available
         if (basicData.control_metrics) {
           try {
-            const validatedControlMetrics = ControlMetricsSchema.parse({
-              ...result.control_metrics,
+            // Merge current and new values - ensure required fields have default values
+            const mergedControlMetrics = {
+              zone_rate: result.control_metrics.zone_rate || 0,
+              first_pitch_strike:
+                result.control_metrics.first_pitch_strike || 0,
+              whiff_rate: result.control_metrics.whiff_rate || 0,
+              chase_rate: result.control_metrics.chase_rate || 0,
+              csw_rate: result.control_metrics.csw_rate || 0,
+              called_strike_rate: result.control_metrics.called_strike_rate,
+              edge_percent: result.control_metrics.edge_percent,
+              zone_contact_rate: result.control_metrics.zone_contact_rate,
+              chase_contact_rate: result.control_metrics.chase_contact_rate,
               ...basicData.control_metrics,
-            });
-            result.control_metrics = validatedControlMetrics;
+            };
+
+            const validatedControlMetrics =
+              ControlMetricsSchema.parse(mergedControlMetrics);
+            result.control_metrics = validatedControlMetrics as {
+              zone_rate: number;
+              first_pitch_strike: number;
+              whiff_rate: number;
+              chase_rate: number;
+              csw_rate: number;
+              called_strike_rate?: number;
+              edge_percent?: number;
+              zone_contact_rate?: number;
+              chase_contact_rate?: number;
+            };
           } catch (error) {
             console.warn(`Invalid control metrics:`, error);
           }
@@ -1581,11 +1669,25 @@ function constructPitcherDataFromArsenal(
         // Update and validate movement metrics if available
         if (basicData.movement_metrics) {
           try {
-            const validatedMovementMetrics = MovementMetricsSchema.parse({
-              ...result.movement_metrics,
+            // Merge current and new values - ensure required fields have default values
+            const mergedMovementMetrics = {
+              horizontal_break: result.movement_metrics.horizontal_break || 0,
+              induced_vertical_break:
+                result.movement_metrics.induced_vertical_break || 0,
+              release_extension: result.movement_metrics.release_extension || 5, // Default mid-range value
+              release_height: result.movement_metrics.release_height || 5, // Default mid-range value
               ...basicData.movement_metrics,
-            });
-            result.movement_metrics = validatedMovementMetrics;
+            };
+
+            const validatedMovementMetrics = MovementMetricsSchema.parse(
+              mergedMovementMetrics
+            );
+            result.movement_metrics = validatedMovementMetrics as {
+              horizontal_break: number;
+              induced_vertical_break: number;
+              release_extension: number;
+              release_height: number;
+            };
           } catch (error) {
             console.warn(`Invalid movement metrics:`, error);
           }
@@ -1594,11 +1696,26 @@ function constructPitcherDataFromArsenal(
         // Update and validate result metrics if available
         if (basicData.result_metrics) {
           try {
-            const validatedResultMetrics = ResultMetricsSchema.parse({
-              ...result.result_metrics,
+            // Merge current and new values - ensure required fields have default values
+            const mergedResultMetrics = {
+              hard_hit_percent: result.result_metrics.hard_hit_percent || 0,
+              batting_avg_against:
+                result.result_metrics.batting_avg_against || 0,
+              slugging_against: result.result_metrics.slugging_against || 0,
+              woba_against: result.result_metrics.woba_against || 0,
+              expected_woba: result.result_metrics.expected_woba || 0,
               ...basicData.result_metrics,
-            });
-            result.result_metrics = validatedResultMetrics;
+            };
+
+            const validatedResultMetrics =
+              ResultMetricsSchema.parse(mergedResultMetrics);
+            result.result_metrics = validatedResultMetrics as {
+              hard_hit_percent: number;
+              batting_avg_against: number;
+              slugging_against: number;
+              woba_against: number;
+              expected_woba: number;
+            };
           } catch (error) {
             console.warn(`Invalid result metrics:`, error);
           }

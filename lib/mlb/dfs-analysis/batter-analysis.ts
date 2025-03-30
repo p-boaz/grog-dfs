@@ -1,32 +1,25 @@
 // batter-analysis.ts
 
-import { getBatterStats } from "../player/batter-stats";
-import { estimateHomeRunProbability } from "./home-runs";
-import { calculatePitcherDfsProjection } from "./aggregate-scoring";
 import { getTeamAbbrev } from "../core/team-mapping";
+import { DailyMLBData } from "../core/types";
 import { findPlayerByNameFuzzy } from "../draftkings/player-mapping";
-import {
-  getPlayerSeasonStats,
-  getCareerStolenBaseProfile,
-  getCatcherStolenBaseDefense,
-} from "./stolen-bases";
+import { getBatterStats } from "../player/batter-stats";
+import { calculatePitcherDfsProjection } from "./aggregate-scoring";
 import {
   calculateHitProjection,
-  getPlayerHitStats,
-  getCareerHitProfile,
-  getWeatherHitImpact,
   getBallparkHitFactor,
-  HIT_TYPE_POINTS,
-  HitType,
+  getCareerHitProfile,
+  getPlayerHitStats,
+  getWeatherHitImpact,
 } from "./hits";
-import {
-  calculateExpectedRuns,
-  calculateExpectedRBIs,
-  calculateRunProductionProjection,
-} from "./run-production";
+import { estimateHomeRunProbability } from "./home-runs";
 import { calculatePlateDisciplineProjection } from "./plate-discipline";
-import { DailyMLBData } from "../core/types";
-import playerMapping from "../draftkings/player-mapping.json";
+import { calculateRunProductionProjection } from "./run-production";
+import {
+  getCareerStolenBaseProfile,
+  getCatcherStolenBaseDefense,
+  getPlayerSeasonStats,
+} from "./stolen-bases";
 
 interface BatterAnalysis {
   batterId: number;
@@ -1041,8 +1034,8 @@ const analyzeBatter = async (
 
     // Calculate plate discipline
     const plateDiscipline = await calculatePlateDisciplineProjection(
-      currentStats.seasonStats,
-      game.pitchers.away
+      currentStats.id,
+      game.pitchers.away.id
     );
 
     // Calculate final projections

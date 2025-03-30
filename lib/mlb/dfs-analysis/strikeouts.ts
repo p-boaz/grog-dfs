@@ -2,16 +2,14 @@
  * Specialized functions for analyzing strikeout potential for pitchers
  */
 
+import { getGameFeed } from "../game/game-feed";
+import { getGameEnvironmentData } from "../index";
 import {
+  getPitcherPitchMix,
   getPitcherStats,
   PitcherPitchMixData,
-  getPitcherPitchMix,
 } from "../player/pitcher-stats";
 import { getTeamStats } from "../schedule/schedule";
-import { getGameEnvironmentData } from "../index";
-import { getGameFeed } from "../game/game-feed";
-import { makeMLBApiRequest } from "../core/api-client";
-import { GameFeedResponse } from "../core/types";
 
 export interface PitcherStrikeoutStats {
   name: string;
@@ -176,12 +174,14 @@ export async function getTeamStrikeoutVulnerability(
       };
     }
 
-    const { stats } = teamStats;
+    // Access hitting stats directly since TeamStats doesn't have a stats property
+    const stats = teamStats.hitting || {};
 
     // Calculate strikeout vulnerability
-    const strikeoutsPerGame = stats.strikeouts / (stats.gamesPlayed || 1);
+    const strikeoutsPerGame =
+      (stats.strikeouts || 0) / (stats.gamesPlayed || 1);
     const strikeoutRate =
-      stats.strikeouts / (stats.plateAppearances || stats.atBats || 1);
+      (stats.strikeouts || 0) / (stats.plateAppearances || stats.atBats || 1);
 
     // Scale from 1-10 where 5 is league average
     // Higher number means more vulnerable to strikeouts
@@ -190,7 +190,7 @@ export async function getTeamStrikeoutVulnerability(
       5 + ((strikeoutsPerGame - leagueAvgKPerGame) / leagueAvgKPerGame) * 5;
 
     return {
-      teamName: teamStats.name,
+      teamName: "Unknown", // TeamStats doesn't have a name property, using default
       gamesPlayed: stats.gamesPlayed || 0,
       strikeouts: stats.strikeouts || 0,
       strikeoutsPerGame,
@@ -289,11 +289,18 @@ export async function calculateExpectedStrikeouts(
       : null;
 
     // Calculate base strikeout rate (K/9)
+    const seasonInningsPitched =
+      typeof pitcherStats.seasonStats.inningsPitched === "number"
+        ? pitcherStats.seasonStats.inningsPitched
+        : 0;
+    const seasonStrikeouts =
+      typeof pitcherStats.seasonStats.strikeouts === "number"
+        ? pitcherStats.seasonStats.strikeouts
+        : 0;
+
     const baseK9 =
-      pitcherStats.seasonStats.inningsPitched > 0
-        ? (pitcherStats.seasonStats.strikeouts /
-            pitcherStats.seasonStats.inningsPitched) *
-          9
+      seasonInningsPitched > 0
+        ? (seasonStrikeouts / seasonInningsPitched) * 9
         : 7.5; // League average K/9
 
     // Get expected innings

@@ -3,9 +3,9 @@
  * Handles singles (+3 pts), doubles (+5 pts), and triples (+8 pts)
  */
 
+import { getBallparkFactors, getGameEnvironmentData } from "../index";
 import { getBatterStats } from "../player/batter-stats";
 import { getPitcherStats } from "../player/pitcher-stats";
-import { getGameEnvironmentData, getBallparkFactors } from "../index";
 
 // Enum for hit types
 export enum HitType {
@@ -544,16 +544,18 @@ export async function getPitcherHitVulnerability(
     // Extract hits allowed
     const ip = parseFloat(stats.inningsPitched.toString());
     const whip = parseFloat(stats.whip?.toString() || "1.3");
-    const walks = stats.walks || Math.round((ip * 3.5) / 9); // Estimate walks if not available
-    const hitsAllowed = Math.round(Number(whip) * Number(ip) - Number(walks));
+    const walks = Number(stats.walks || Math.round((ip * 3.5) / 9)); // Ensure numeric with Number()
+    const hitsAllowed = Math.round(Number(whip) * Number(ip) - walks);
     const hitsPer9 = (hitsAllowed / ip) * 9;
 
     // Calculate BABIP (Batting Average on Balls In Play allowed)
     // For pitchers, league average BABIP is around .300
-    const homeRunsAllowed = stats.homeRunsAllowed || Math.round((ip * 1.2) / 9); // Estimate HR if not available
-    const strikeouts = stats.strikeouts || Math.round((ip * 8.0) / 9); // Estimate K if not available
-    const battersFaced = ip * 4.3; // Estimate batters faced
-    const atBats = battersFaced - walks; // Approximation of at-bats
+    const homeRunsAllowed = Number(
+      stats.homeRunsAllowed || Math.round((ip * 1.2) / 9)
+    ); // Ensure numeric
+    const strikeouts = Number(stats.strikeouts || Math.round((ip * 8.0) / 9)); // Ensure numeric
+    const battersFaced = Number(ip * 4.3); // Ensure numeric
+    const atBats = battersFaced - walks; // Now both are definitely numbers
     const babip =
       (hitsAllowed - homeRunsAllowed) /
       Math.max(1, atBats - strikeouts - homeRunsAllowed);

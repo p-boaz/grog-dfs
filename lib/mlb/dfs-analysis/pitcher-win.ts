@@ -2,11 +2,11 @@
  * Specialized functions for analyzing pitcher win probability and DFS win points
  */
 
+import { makeMLBApiRequest } from "../core/api-client";
+import { getGameFeed } from "../game/game-feed";
+import { getGameEnvironmentData } from "../index";
 import { getPitcherStats } from "../player/pitcher-stats";
 import { getTeamStats } from "../schedule/schedule";
-import { getGameEnvironmentData } from "../index";
-import { getGameFeed } from "../game/game-feed";
-import { makeMLBApiRequest } from "../core/api-client";
 
 /**
  * Get pitcher's win statistics and performance metrics
@@ -30,31 +30,30 @@ export async function getPitcherWinStats(
   avgInningsPerStart: number;
 } | null> {
   try {
-    // Fetch full pitcher stats
-    const pitcherData = await getPitcherStats({
-      pitcherId,
-      season,
-    });
+    // Get pitcher stats
+    const pitcherData = await getPitcherStats({ pitcherId, season });
 
-    if (!pitcherData || !pitcherData.seasonStats.gamesPlayed) {
-      console.log(
-        `No pitching stats found for pitcher ${pitcherId}, season ${season}`
-      );
-      return null;
-    }
-
-    // Extract team info to get team's win percentage
+    // Get current team
     const currentTeam = pitcherData.currentTeam || "";
-    const teamId = currentTeam ? await getTeamIdByName(currentTeam) : null;
+    const teamId = await getTeamIdByName(currentTeam);
 
+    // Get team win percentage
     let teamWinPct = 0.5; // Default value if we can't get team data
 
     if (teamId) {
       try {
         const teamData = await getTeamStats(teamId, season);
-        if (teamData && teamData.stats.gamesPlayed > 0) {
-          teamWinPct =
-            teamData.stats.wins / (teamData.stats.wins + teamData.stats.losses);
+        // Extract hitting stats which should contain games played
+        const hittingStats = teamData.hitting || {};
+        // Extract pitching stats which should contain wins and losses
+        const pitchingStats = teamData.pitching || {};
+
+        const gamesPlayed = hittingStats.gamesPlayed || 0;
+        const wins = pitchingStats.wins || 0;
+        const losses = pitchingStats.losses || 0;
+
+        if (gamesPlayed > 0) {
+          teamWinPct = wins / (wins + losses);
         }
       } catch (error) {
         console.warn(`Error fetching team stats for ${currentTeam}:`, error);

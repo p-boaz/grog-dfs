@@ -1,10 +1,10 @@
-import { withCache, DEFAULT_CACHE_TTL, markAsApiSource } from "../cache";
+import { DEFAULT_CACHE_TTL, markAsApiSource, withCache } from "../cache";
 import { makeMLBApiRequest } from "../core/api-client";
 import {
-  PitcherBatterMatchup,
-  PitcherPitchMixData,
   BatterPlateDiscipline,
   PlayerStats as ImportedPlayerStats,
+  PitcherBatterMatchup,
+  PitcherPitchMixData,
 } from "../core/types";
 import { getBatterStats } from "./batter-stats";
 import { getPitcherStats } from "./pitcher-stats";
@@ -1019,26 +1019,29 @@ export async function analyzeHitterMatchup(
 
   // Calculate strikeout probability using pitcher K/9 and batter K rate
   const pitcherKRate =
-    (pitcherSeasonStats.strikeouts || 0) /
-    ((pitcherSeasonStats.inningsPitched || 1) * 3);
+    (Number(pitcherSeasonStats.strikeouts) || 0) /
+    ((Number(pitcherSeasonStats.inningsPitched) || 1) * 3);
   const batterKRate =
-    (batterSeasonStats.strikeouts || 0) / (batterSeasonStats.atBats || 1);
+    (Number(batterSeasonStats.strikeouts) || 0) /
+    (Number(batterSeasonStats.atBats) || 1);
   const strikeoutProbability = (pitcherKRate + batterKRate) / 2;
 
   // Calculate walk probability using pitcher BB/9 and batter BB rate
   const pitcherBBRate =
-    (pitcherSeasonStats.walks || 0) /
-    ((pitcherSeasonStats.inningsPitched || 1) * 3);
+    (Number(pitcherSeasonStats.walks) || 0) /
+    ((Number(pitcherSeasonStats.inningsPitched) || 1) * 3);
   const batterBBRate =
-    (batterSeasonStats.walks || 0) / (batterSeasonStats.atBats || 1);
+    (Number(batterSeasonStats.walks) || 0) /
+    (Number(batterSeasonStats.atBats) || 1);
   const walkProbability = (pitcherBBRate + batterBBRate) / 2;
 
   // Calculate home run probability
   const batterHRRate =
-    (batterSeasonStats.homeRuns || 0) / (batterSeasonStats.atBats || 1);
+    (Number(batterSeasonStats.homeRuns) || 0) /
+    (Number(batterSeasonStats.atBats) || 1);
   const pitcherHRRate =
-    (pitcherSeasonStats.homeRunsAllowed || 0) /
-    ((pitcherSeasonStats.inningsPitched || 1) * 3);
+    (Number(pitcherSeasonStats.homeRunsAllowed) || 0) /
+    ((Number(pitcherSeasonStats.inningsPitched) || 1) * 3);
   const homeProbability = (batterHRRate + pitcherHRRate) / 2;
 
   return {

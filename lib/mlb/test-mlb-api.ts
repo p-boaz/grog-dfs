@@ -3,14 +3,14 @@
  */
 
 import { makeMLBApiRequest } from "./core/api-client";
-import { getPitcherStats } from "./player/pitcher-stats";
-import { getTeamStats } from "./schedule/schedule";
-import { getGameFeed } from "./game/game-feed";
+import { MLBScheduleResponse } from "./core/types";
+import { calculatePitcherDfsProjection } from "./dfs-analysis/aggregate-scoring";
+import { calculateExpectedInnings } from "./dfs-analysis/innings-pitched";
 import { calculatePitcherWinProbability } from "./dfs-analysis/pitcher-win";
 import { calculateExpectedStrikeouts } from "./dfs-analysis/strikeouts";
-import { calculateExpectedInnings } from "./dfs-analysis/innings-pitched";
-import { calculatePitcherDfsProjection } from "./dfs-analysis/aggregate-scoring";
-import { MLBScheduleResponse, GameFeedResponse } from "./core/types";
+import { getGameFeed } from "./game/game-feed";
+import { getPitcherStats } from "./player/pitcher-stats";
+import { getTeamStats } from "./schedule/schedule";
 
 async function testMlbApiAccess() {
   console.log("Testing MLB API Access...\n");
@@ -137,17 +137,22 @@ async function testTeamStats(teamId: number, season = 2023) {
       return { success: false };
     }
 
-    console.log(`Team: ${teamData.name}`);
+    // Get hitting and pitching stats from the TeamStats structure
+    const hittingStats = teamData.hitting;
+    const pitchingStats = teamData.pitching;
+
+    console.log(`Team ID: ${teamId}`);
     console.log("Stats:");
-    console.log(`- Games: ${teamData.stats.gamesPlayed}`);
-    console.log(`- Runs: ${teamData.stats.runsScored}`);
-    console.log(`- Avg: ${teamData.stats.avg}`);
-    console.log(`- ERA: ${teamData.stats.era}`);
+    console.log(`- Games: ${hittingStats.gamesPlayed || 0}`);
+    console.log(`- Runs: ${hittingStats.runs || 0}`);
+    console.log(`- Avg: ${hittingStats.avg || ".000"}`);
+    console.log(`- ERA: ${pitchingStats.era || "0.00"}`);
 
     return {
       success: true,
-      name: teamData.name,
-      stats: teamData.stats,
+      teamId,
+      hitting: hittingStats,
+      pitching: pitchingStats,
     };
   } catch (error) {
     console.error(`Error fetching team stats for team ID ${teamId}:`, error);
@@ -166,8 +171,10 @@ async function testGameFeed(gamePk: string) {
       return { success: false };
     }
 
-    const homeTeam = gameData.gameData.teams?.home?.name ?? "Unknown Home Team";
-    const awayTeam = gameData.gameData.teams?.away?.name ?? "Unknown Away Team";
+    const homeTeam =
+      gameData.gameData.teams?.home?.team?.name ?? "Unknown Home Team";
+    const awayTeam =
+      gameData.gameData.teams?.away?.team?.name ?? "Unknown Away Team";
     const venue = gameData.gameData.venue?.name ?? "Unknown Venue";
     const gameState =
       gameData.gameData.status?.detailedState ?? "Unknown Status";
