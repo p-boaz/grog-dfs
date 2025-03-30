@@ -529,22 +529,34 @@ export async function analyzeBatters(
       }
 
       // Calculate stolen base probability
-      const sbProbability = await calculateStolenBaseProbability(
-        batter.id,
-        (isHome ? gameInfo.lineups.awayCatcher?.id : gameInfo.lineups.homeCatcher?.id) || 0,
-        entry.stats.seasonStats["2025"]
-      );
-      if (sbProbability) {
-        entry.projections.stolenBaseProbability = sbProbability.probability;
+      try {
+        const catcherId = (isHome ? gameInfo.lineups.awayCatcher?.id : gameInfo.lineups.homeCatcher?.id) || 0;
+        const sbProbability = await calculateStolenBaseProbability(
+          batter.id,
+          catcherId,
+          entry.stats.seasonStats["2025"]
+        );
+        if (sbProbability) {
+          entry.projections.stolenBaseProbability = sbProbability.probability;
+        }
+      } catch (error) {
+        console.warn(`Error calculating stolen base probability for ${batter.name} (${batter.id}):`, error);
+        // Default value for stolen base probability
+        entry.projections.stolenBaseProbability = entry.stats.seasonStats["2025"].stolenBases > 0 ? 0.08 : 0.03;
       }
 
       // Calculate historical matchup stats
-      const historicalMatchup = await getHistoricalMatchupStats(
-        batter.id,
-        gameInfo.pitchers[isHome ? "away" : "home"].id
-      );
-      if (historicalMatchup) {
-        entry.matchup.historicalStats = historicalMatchup;
+      try {
+        const historicalMatchup = await getHistoricalMatchupStats(
+          batter.id,
+          gameInfo.pitchers[isHome ? "away" : "home"].id
+        );
+        if (historicalMatchup) {
+          entry.matchup.historicalStats = historicalMatchup;
+        }
+      } catch (error) {
+        console.warn(`Error getting historical matchup for ${batter.name} (${batter.id}) vs pitcher ${gameInfo.pitchers[isHome ? "away" : "home"].id}:`, error);
+        // Keep default values from initialization
       }
 
       // Calculate DFS projection
@@ -1314,48 +1326,91 @@ async function calculateStolenBaseProbability(
     gameState: number;
   };
 }> {
-  // Get season stolen base stats
-  const seasonStats = await getPlayerSeasonStats(batterId);
+  try {
+    // Get season stolen base stats - handle potential nulls/errors
+    let seasonStats = null;
+    try {
+      seasonStats = await getPlayerSeasonStats(batterId);
+    } catch (error) {
+      console.warn(`Error fetching season stolen base stats for player ${batterId}:`, error);
+    }
 
-  // Get career stolen base profile
-  const careerProfile = await getCareerStolenBaseProfile(batterId);
+    // Get career stolen base profile - handle potential nulls/errors
+    let careerProfile = 0;
+    try {
+      careerProfile = await getCareerStolenBaseProfile(batterId);
+    } catch (error) {
+      console.warn(`Error fetching career stolen base profile for player ${batterId}:`, error);
+      // Set a baseline value based on current stats if available
+      if (stats && stats.stolenBases > 0) {
+        careerProfile = 0.3;
+      }
+    }
 
-  // Get catcher stolen base defense
-  const catcherDefense = await getCatcherStolenBaseDefense(catcherId);
+    // Get catcher stolen base defense - handle potential nulls/errors
+    let catcherDefense = 0.5; // Default middle value
+    if (catcherId > 0) {
+      try {
+        catcherDefense = await getCatcherStolenBaseDefense(catcherId);
+      } catch (error) {
+        console.warn(`Error fetching catcher defense metrics for ${catcherId}:`, error);
+      }
+    }
 
-  // Calculate season tendency
-  const seasonTendency = calculateSeasonTendency(seasonStats);
+    // Calculate season tendency
+    const seasonTendency = calculateSeasonTendency(stats);
 
-  // Calculate game state factor
-  const gameState = calculateGameStateFactor(stats);
+    // Calculate game state factor
+    const gameState = calculateGameStateFactor(stats);
 
-  // Calculate final probability
-  const probability = calculateFinalProbability(
-    seasonTendency,
-    careerProfile,
-    catcherDefense,
-    gameState
-  );
-
-  return {
-    probability,
-    factors: {
+    // Calculate final probability
+    const probability = calculateFinalProbability(
       seasonTendency,
       careerProfile,
       catcherDefense,
-      gameState,
-    },
-  };
+      gameState
+    );
+
+    return {
+      probability,
+      factors: {
+        seasonTendency,
+        careerProfile,
+        catcherDefense,
+        gameState,
+      },
+    };
+  } catch (error) {
+    console.error(`Error calculating stolen base probability for player ${batterId}:`, error);
+    
+    // Create a default estimate based on any available data
+    const hasStealHistory = stats && stats.stolenBases > 0;
+    
+    return {
+      probability: hasStealHistory ? 0.08 : 0.02, // 8% chance for players with SB history, 2% for others
+      factors: {
+        seasonTendency: hasStealHistory ? 0.2 : 0,
+        careerProfile: hasStealHistory ? 0.2 : 0,
+        catcherDefense: 0.5,
+        gameState: 0.2,
+      },
+    };
+  }
 }
 
-function calculateSeasonTendency(stats: SeasonStats): number {
+function calculateSeasonTendency(stats: SeasonStats | null): number {
+  if (!stats) return 0;
+  
   const sbRate = stats.sbRate || 0;
-  const successRate =
-    stats.stolenBases / (stats.stolenBases + stats.caughtStealing) || 0;
+  const successRate = stats.stolenBases && (stats.stolenBases + stats.caughtStealing > 0) 
+    ? stats.stolenBases / (stats.stolenBases + stats.caughtStealing) 
+    : 0;
   return sbRate * 0.6 + successRate * 0.4;
 }
 
-function calculateGameStateFactor(stats: SeasonStats): number {
+function calculateGameStateFactor(stats: SeasonStats | null): number {
+  if (!stats) return 0.2; // Default baseline value
+  
   const obp = stats.obp || 0;
   const avg = stats.avg || 0;
   return obp * 0.7 + avg * 0.3;
