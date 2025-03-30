@@ -1,0 +1,3207 @@
+[
+  {
+    "pitcherId": 680730,
+    "name": "Mitchell Parker",
+    "team": "Washington Nationals",
+    "opponent": "Philadelphia Phillies",
+    "gameId": 778526,
+    "venue": "Nationals Park",
+    "stats": {
+      "seasonStats": {
+        "2024": {
+          "gamesPlayed": 29,
+          "gamesStarted": 29,
+          "inningsPitched": 151,
+          "wins": 7,
+          "losses": 10,
+          "era": "4.29",
+          "whip": "1.30",
+          "strikeouts": 133,
+          "walks": 43,
+          "saves": 0,
+          "homeRunsAllowed": 18,
+          "hitBatsmen": 2
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 1.0728476821192052,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 4.291390728476821
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38257588",
+      "salary": 7300,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 12.77
+    }
+  },
+  {
+    "pitcherId": 605400,
+    "name": "Aaron Nola",
+    "team": "Philadelphia Phillies",
+    "opponent": "Washington Nationals",
+    "gameId": 778526,
+    "venue": "Nationals Park",
+    "stats": {
+      "seasonStats": {
+        "2015": {
+          "gamesPlayed": 13,
+          "gamesStarted": 13,
+          "inningsPitched": 77.2,
+          "wins": 6,
+          "losses": 2,
+          "era": "3.59",
+          "whip": "1.20",
+          "strikeouts": 68,
+          "walks": 19,
+          "saves": 0,
+          "homeRunsAllowed": 11,
+          "hitBatsmen": 2
+        },
+        "2016": {
+          "gamesPlayed": 20,
+          "gamesStarted": 20,
+          "inningsPitched": 111,
+          "wins": 6,
+          "losses": 9,
+          "era": "4.78",
+          "whip": "1.31",
+          "strikeouts": 121,
+          "walks": 29,
+          "saves": 0,
+          "homeRunsAllowed": 10,
+          "hitBatsmen": 6
+        },
+        "2017": {
+          "gamesPlayed": 27,
+          "gamesStarted": 27,
+          "inningsPitched": 168,
+          "wins": 12,
+          "losses": 11,
+          "era": "3.54",
+          "whip": "1.21",
+          "strikeouts": 184,
+          "walks": 49,
+          "saves": 0,
+          "homeRunsAllowed": 18,
+          "hitBatsmen": 2
+        },
+        "2018": {
+          "gamesPlayed": 33,
+          "gamesStarted": 33,
+          "inningsPitched": 212.1,
+          "wins": 17,
+          "losses": 6,
+          "era": "2.37",
+          "whip": "0.97",
+          "strikeouts": 224,
+          "walks": 58,
+          "saves": 0,
+          "homeRunsAllowed": 17,
+          "hitBatsmen": 7
+        },
+        "2019": {
+          "gamesPlayed": 34,
+          "gamesStarted": 34,
+          "inningsPitched": 202.1,
+          "wins": 12,
+          "losses": 7,
+          "era": "3.87",
+          "whip": "1.27",
+          "strikeouts": 229,
+          "walks": 80,
+          "saves": 0,
+          "homeRunsAllowed": 27,
+          "hitBatsmen": 11
+        },
+        "2020": {
+          "gamesPlayed": 12,
+          "gamesStarted": 12,
+          "inningsPitched": 71.1,
+          "wins": 5,
+          "losses": 5,
+          "era": "3.28",
+          "whip": "1.08",
+          "strikeouts": 96,
+          "walks": 23,
+          "saves": 0,
+          "homeRunsAllowed": 9,
+          "hitBatsmen": 2
+        },
+        "2021": {
+          "gamesPlayed": 32,
+          "gamesStarted": 32,
+          "inningsPitched": 180.2,
+          "wins": 9,
+          "losses": 9,
+          "era": "4.63",
+          "whip": "1.13",
+          "strikeouts": 223,
+          "walks": 39,
+          "saves": 0,
+          "homeRunsAllowed": 26,
+          "hitBatsmen": 9
+        },
+        "2022": {
+          "gamesPlayed": 32,
+          "gamesStarted": 32,
+          "inningsPitched": 205,
+          "wins": 11,
+          "losses": 13,
+          "era": "3.25",
+          "whip": "0.96",
+          "strikeouts": 235,
+          "walks": 29,
+          "saves": 0,
+          "homeRunsAllowed": 19,
+          "hitBatsmen": 9
+        },
+        "2023": {
+          "gamesPlayed": 32,
+          "gamesStarted": 32,
+          "inningsPitched": 193.2,
+          "wins": 12,
+          "losses": 9,
+          "era": "4.46",
+          "whip": "1.15",
+          "strikeouts": 202,
+          "walks": 45,
+          "saves": 0,
+          "homeRunsAllowed": 32,
+          "hitBatsmen": 1
+        },
+        "2024": {
+          "gamesPlayed": 33,
+          "gamesStarted": 33,
+          "inningsPitched": 199.1,
+          "wins": 14,
+          "losses": 8,
+          "era": "3.57",
+          "whip": "1.20",
+          "strikeouts": 197,
+          "walks": 50,
+          "saves": 0,
+          "homeRunsAllowed": 30,
+          "hitBatsmen": 3
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 1.356102461074837,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 5.424409844299348
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38257577",
+      "salary": 9200,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 18.1
+    }
+  },
+  {
+    "pitcherId": 573186,
+    "name": "Marcus Stroman",
+    "team": "New York Yankees",
+    "opponent": "Milwaukee Brewers",
+    "gameId": 778523,
+    "venue": "Yankee Stadium",
+    "stats": {
+      "seasonStats": {
+        "2014": {
+          "gamesPlayed": 26,
+          "gamesStarted": 20,
+          "inningsPitched": 130.2,
+          "wins": 11,
+          "losses": 6,
+          "era": "3.65",
+          "whip": "1.17",
+          "strikeouts": 111,
+          "walks": 28,
+          "saves": 1,
+          "homeRunsAllowed": 7,
+          "hitBatsmen": 3
+        },
+        "2015": {
+          "gamesPlayed": 4,
+          "gamesStarted": 4,
+          "inningsPitched": 27,
+          "wins": 4,
+          "losses": 0,
+          "era": "1.67",
+          "whip": "0.96",
+          "strikeouts": 18,
+          "walks": 6,
+          "saves": 0,
+          "homeRunsAllowed": 2,
+          "hitBatsmen": 1
+        },
+        "2016": {
+          "gamesPlayed": 32,
+          "gamesStarted": 32,
+          "inningsPitched": 204,
+          "wins": 9,
+          "losses": 10,
+          "era": "4.37",
+          "whip": "1.29",
+          "strikeouts": 166,
+          "walks": 54,
+          "saves": 0,
+          "homeRunsAllowed": 21,
+          "hitBatsmen": 4
+        },
+        "2017": {
+          "gamesPlayed": 33,
+          "gamesStarted": 33,
+          "inningsPitched": 201,
+          "wins": 13,
+          "losses": 9,
+          "era": "3.09",
+          "whip": "1.31",
+          "strikeouts": 164,
+          "walks": 62,
+          "saves": 0,
+          "homeRunsAllowed": 21,
+          "hitBatsmen": 6
+        },
+        "2018": {
+          "gamesPlayed": 19,
+          "gamesStarted": 19,
+          "inningsPitched": 102.1,
+          "wins": 4,
+          "losses": 9,
+          "era": "5.54",
+          "whip": "1.48",
+          "strikeouts": 77,
+          "walks": 36,
+          "saves": 0,
+          "homeRunsAllowed": 9,
+          "hitBatsmen": 2
+        },
+        "2019": {
+          "gamesPlayed": 32,
+          "gamesStarted": 32,
+          "inningsPitched": 184.1,
+          "wins": 10,
+          "losses": 13,
+          "era": "3.22",
+          "whip": "1.31",
+          "strikeouts": 159,
+          "walks": 58,
+          "saves": 0,
+          "homeRunsAllowed": 18,
+          "hitBatsmen": 1
+        },
+        "2021": {
+          "gamesPlayed": 33,
+          "gamesStarted": 33,
+          "inningsPitched": 179,
+          "wins": 10,
+          "losses": 13,
+          "era": "3.02",
+          "whip": "1.15",
+          "strikeouts": 158,
+          "walks": 44,
+          "saves": 0,
+          "homeRunsAllowed": 17,
+          "hitBatsmen": 7
+        },
+        "2022": {
+          "gamesPlayed": 25,
+          "gamesStarted": 25,
+          "inningsPitched": 138.2,
+          "wins": 6,
+          "losses": 7,
+          "era": "3.50",
+          "whip": "1.15",
+          "strikeouts": 119,
+          "walks": 36,
+          "saves": 0,
+          "homeRunsAllowed": 16,
+          "hitBatsmen": 4
+        },
+        "2023": {
+          "gamesPlayed": 27,
+          "gamesStarted": 25,
+          "inningsPitched": 136.2,
+          "wins": 10,
+          "losses": 9,
+          "era": "3.95",
+          "whip": "1.26",
+          "strikeouts": 119,
+          "walks": 52,
+          "saves": 0,
+          "homeRunsAllowed": 9,
+          "hitBatsmen": 3
+        },
+        "2024": {
+          "gamesPlayed": 30,
+          "gamesStarted": 29,
+          "inningsPitched": 154.2,
+          "wins": 10,
+          "losses": 9,
+          "era": "4.31",
+          "whip": "1.47",
+          "strikeouts": 113,
+          "walks": 60,
+          "saves": 1,
+          "homeRunsAllowed": 19,
+          "hitBatsmen": 8
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 1.1089494163424125,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 4.43579766536965
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38257585",
+      "salary": 7600,
+      "positions": [
+        "RP"
+      ],
+      "avgPointsPerGame": 10.75
+    }
+  },
+  {
+    "pitcherId": 650644,
+    "name": "Aaron Civale",
+    "team": "Milwaukee Brewers",
+    "opponent": "New York Yankees",
+    "gameId": 778523,
+    "venue": "Yankee Stadium",
+    "stats": {
+      "seasonStats": {
+        "2019": {
+          "gamesPlayed": 10,
+          "gamesStarted": 10,
+          "inningsPitched": 57.2,
+          "wins": 3,
+          "losses": 4,
+          "era": "2.34",
+          "whip": "1.04",
+          "strikeouts": 46,
+          "walks": 16,
+          "saves": 0,
+          "homeRunsAllowed": 4,
+          "hitBatsmen": 1
+        },
+        "2020": {
+          "gamesPlayed": 12,
+          "gamesStarted": 12,
+          "inningsPitched": 74,
+          "wins": 4,
+          "losses": 6,
+          "era": "4.74",
+          "whip": "1.32",
+          "strikeouts": 69,
+          "walks": 16,
+          "saves": 0,
+          "homeRunsAllowed": 11,
+          "hitBatsmen": 3
+        },
+        "2021": {
+          "gamesPlayed": 21,
+          "gamesStarted": 21,
+          "inningsPitched": 124.1,
+          "wins": 12,
+          "losses": 5,
+          "era": "3.84",
+          "whip": "1.12",
+          "strikeouts": 99,
+          "walks": 31,
+          "saves": 0,
+          "homeRunsAllowed": 23,
+          "hitBatsmen": 4
+        },
+        "2022": {
+          "gamesPlayed": 20,
+          "gamesStarted": 20,
+          "inningsPitched": 97,
+          "wins": 5,
+          "losses": 6,
+          "era": "4.92",
+          "whip": "1.19",
+          "strikeouts": 98,
+          "walks": 22,
+          "saves": 0,
+          "homeRunsAllowed": 14,
+          "hitBatsmen": 7
+        },
+        "2023": {
+          "gamesPlayed": 23,
+          "gamesStarted": 23,
+          "inningsPitched": 122.1,
+          "wins": 7,
+          "losses": 5,
+          "era": "3.46",
+          "whip": "1.16",
+          "strikeouts": 116,
+          "walks": 33,
+          "saves": 0,
+          "homeRunsAllowed": 12,
+          "hitBatsmen": 5
+        },
+        "2024": {
+          "gamesPlayed": 31,
+          "gamesStarted": 31,
+          "inningsPitched": 161,
+          "wins": 8,
+          "losses": 9,
+          "era": "4.36",
+          "whip": "1.30",
+          "strikeouts": 149,
+          "walks": 52,
+          "saves": 0,
+          "homeRunsAllowed": 29,
+          "hitBatsmen": 6
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 1.6211180124223603,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 6.484472049689441
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38257589",
+      "salary": 7200,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 13.02
+    }
+  },
+  {
+    "pitcherId": 605135,
+    "name": "Chris Bassitt",
+    "team": "Toronto Blue Jays",
+    "opponent": "Baltimore Orioles",
+    "gameId": 778525,
+    "venue": "Rogers Centre",
+    "stats": {
+      "seasonStats": {
+        "2014": {
+          "gamesPlayed": 6,
+          "gamesStarted": 5,
+          "inningsPitched": 29.2,
+          "wins": 1,
+          "losses": 1,
+          "era": "3.94",
+          "whip": "1.58",
+          "strikeouts": 21,
+          "walks": 13,
+          "saves": 0,
+          "homeRunsAllowed": 0,
+          "hitBatsmen": 3
+        },
+        "2015": {
+          "gamesPlayed": 18,
+          "gamesStarted": 13,
+          "inningsPitched": 86,
+          "wins": 1,
+          "losses": 8,
+          "era": "3.56",
+          "whip": "1.26",
+          "strikeouts": 64,
+          "walks": 30,
+          "saves": 0,
+          "homeRunsAllowed": 5,
+          "hitBatsmen": 9
+        },
+        "2016": {
+          "gamesPlayed": 5,
+          "gamesStarted": 5,
+          "inningsPitched": 28,
+          "wins": 0,
+          "losses": 2,
+          "era": "6.11",
+          "whip": "1.75",
+          "strikeouts": 23,
+          "walks": 14,
+          "saves": 0,
+          "homeRunsAllowed": 5,
+          "hitBatsmen": 0
+        },
+        "2018": {
+          "gamesPlayed": 11,
+          "gamesStarted": 7,
+          "inningsPitched": 47.2,
+          "wins": 2,
+          "losses": 3,
+          "era": "3.02",
+          "whip": "1.24",
+          "strikeouts": 41,
+          "walks": 19,
+          "saves": 0,
+          "homeRunsAllowed": 4,
+          "hitBatsmen": 4
+        },
+        "2019": {
+          "gamesPlayed": 28,
+          "gamesStarted": 25,
+          "inningsPitched": 144,
+          "wins": 10,
+          "losses": 5,
+          "era": "3.81",
+          "whip": "1.19",
+          "strikeouts": 141,
+          "walks": 47,
+          "saves": 0,
+          "homeRunsAllowed": 21,
+          "hitBatsmen": 13
+        },
+        "2020": {
+          "gamesPlayed": 11,
+          "gamesStarted": 11,
+          "inningsPitched": 63,
+          "wins": 5,
+          "losses": 2,
+          "era": "2.29",
+          "whip": "1.16",
+          "strikeouts": 55,
+          "walks": 17,
+          "saves": 0,
+          "homeRunsAllowed": 6,
+          "hitBatsmen": 2
+        },
+        "2021": {
+          "gamesPlayed": 27,
+          "gamesStarted": 27,
+          "inningsPitched": 157.1,
+          "wins": 12,
+          "losses": 4,
+          "era": "3.15",
+          "whip": "1.06",
+          "strikeouts": 159,
+          "walks": 39,
+          "saves": 0,
+          "homeRunsAllowed": 15,
+          "hitBatsmen": 11
+        },
+        "2022": {
+          "gamesPlayed": 30,
+          "gamesStarted": 30,
+          "inningsPitched": 181.2,
+          "wins": 15,
+          "losses": 9,
+          "era": "3.42",
+          "whip": "1.14",
+          "strikeouts": 167,
+          "walks": 49,
+          "saves": 0,
+          "homeRunsAllowed": 19,
+          "hitBatsmen": 13
+        },
+        "2023": {
+          "gamesPlayed": 33,
+          "gamesStarted": 33,
+          "inningsPitched": 200,
+          "wins": 16,
+          "losses": 8,
+          "era": "3.60",
+          "whip": "1.18",
+          "strikeouts": 186,
+          "walks": 59,
+          "saves": 0,
+          "homeRunsAllowed": 28,
+          "hitBatsmen": 12
+        },
+        "2024": {
+          "gamesPlayed": 31,
+          "gamesStarted": 31,
+          "inningsPitched": 171,
+          "wins": 10,
+          "losses": 14,
+          "era": "4.16",
+          "whip": "1.46",
+          "strikeouts": 168,
+          "walks": 70,
+          "saves": 0,
+          "homeRunsAllowed": 18,
+          "hitBatsmen": 16
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 0.9473684210526315,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 3.7894736842105257
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38257583",
+      "salary": 8000,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 14.3
+    }
+  },
+  {
+    "pitcherId": 608372,
+    "name": "Pitcher 608372",
+    "team": "Baltimore Orioles",
+    "opponent": "Toronto Blue Jays",
+    "gameId": 778525,
+    "venue": "Rogers Centre",
+    "stats": {
+      "seasonStats": {}
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": null,
+      "salary": 0,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 0
+    }
+  },
+  {
+    "pitcherId": 607259,
+    "name": "Nick Martinez",
+    "team": "Cincinnati Reds",
+    "opponent": "San Francisco Giants",
+    "gameId": 778522,
+    "venue": "Great American Ball Park",
+    "stats": {
+      "seasonStats": {
+        "2014": {
+          "gamesPlayed": 29,
+          "gamesStarted": 24,
+          "inningsPitched": 140.1,
+          "wins": 5,
+          "losses": 12,
+          "era": "4.55",
+          "whip": "1.46",
+          "strikeouts": 77,
+          "walks": 55,
+          "saves": 0,
+          "homeRunsAllowed": 18,
+          "hitBatsmen": 3
+        },
+        "2015": {
+          "gamesPlayed": 24,
+          "gamesStarted": 21,
+          "inningsPitched": 125,
+          "wins": 7,
+          "losses": 7,
+          "era": "3.96",
+          "whip": "1.45",
+          "strikeouts": 77,
+          "walks": 46,
+          "saves": 0,
+          "homeRunsAllowed": 16,
+          "hitBatsmen": 13
+        },
+        "2016": {
+          "gamesPlayed": 12,
+          "gamesStarted": 5,
+          "inningsPitched": 38.2,
+          "wins": 2,
+          "losses": 3,
+          "era": "5.59",
+          "whip": "1.66",
+          "strikeouts": 16,
+          "walks": 19,
+          "saves": 0,
+          "homeRunsAllowed": 8,
+          "hitBatsmen": 5
+        },
+        "2017": {
+          "gamesPlayed": 23,
+          "gamesStarted": 18,
+          "inningsPitched": 111.1,
+          "wins": 3,
+          "losses": 8,
+          "era": "5.66",
+          "whip": "1.37",
+          "strikeouts": 67,
+          "walks": 28,
+          "saves": 0,
+          "homeRunsAllowed": 26,
+          "hitBatsmen": 2
+        },
+        "2022": {
+          "gamesPlayed": 47,
+          "gamesStarted": 10,
+          "inningsPitched": 106.1,
+          "wins": 4,
+          "losses": 4,
+          "era": "3.47",
+          "whip": "1.29",
+          "strikeouts": 95,
+          "walks": 41,
+          "saves": 8,
+          "homeRunsAllowed": 15,
+          "hitBatsmen": 4
+        },
+        "2023": {
+          "gamesPlayed": 63,
+          "gamesStarted": 9,
+          "inningsPitched": 110.1,
+          "wins": 6,
+          "losses": 4,
+          "era": "3.43",
+          "whip": "1.26",
+          "strikeouts": 106,
+          "walks": 40,
+          "saves": 1,
+          "homeRunsAllowed": 12,
+          "hitBatsmen": 3
+        },
+        "2024": {
+          "gamesPlayed": 42,
+          "gamesStarted": 16,
+          "inningsPitched": 142.1,
+          "wins": 10,
+          "losses": 7,
+          "era": "3.10",
+          "whip": "1.03",
+          "strikeouts": 116,
+          "walks": 18,
+          "saves": 0,
+          "homeRunsAllowed": 13,
+          "hitBatsmen": 5
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 0.8233638282899367,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 3.293455313159747
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38257595",
+      "salary": 6600,
+      "positions": [
+        "RP"
+      ],
+      "avgPointsPerGame": 9.67
+    }
+  },
+  {
+    "pitcherId": 592662,
+    "name": "Robbie Ray",
+    "team": "San Francisco Giants",
+    "opponent": "Cincinnati Reds",
+    "gameId": 778522,
+    "venue": "Great American Ball Park",
+    "stats": {
+      "seasonStats": {
+        "2014": {
+          "gamesPlayed": 9,
+          "gamesStarted": 6,
+          "inningsPitched": 28.2,
+          "wins": 1,
+          "losses": 4,
+          "era": "8.16",
+          "whip": "1.88",
+          "strikeouts": 19,
+          "walks": 11,
+          "saves": 0,
+          "homeRunsAllowed": 5,
+          "hitBatsmen": 0
+        },
+        "2015": {
+          "gamesPlayed": 23,
+          "gamesStarted": 23,
+          "inningsPitched": 127.2,
+          "wins": 5,
+          "losses": 12,
+          "era": "3.52",
+          "whip": "1.33",
+          "strikeouts": 119,
+          "walks": 49,
+          "saves": 0,
+          "homeRunsAllowed": 9,
+          "hitBatsmen": 8
+        },
+        "2016": {
+          "gamesPlayed": 32,
+          "gamesStarted": 32,
+          "inningsPitched": 174.1,
+          "wins": 8,
+          "losses": 15,
+          "era": "4.90",
+          "whip": "1.47",
+          "strikeouts": 218,
+          "walks": 71,
+          "saves": 0,
+          "homeRunsAllowed": 24,
+          "hitBatsmen": 6
+        },
+        "2017": {
+          "gamesPlayed": 28,
+          "gamesStarted": 28,
+          "inningsPitched": 162,
+          "wins": 15,
+          "losses": 5,
+          "era": "2.89",
+          "whip": "1.15",
+          "strikeouts": 218,
+          "walks": 71,
+          "saves": 0,
+          "homeRunsAllowed": 23,
+          "hitBatsmen": 5
+        },
+        "2018": {
+          "gamesPlayed": 24,
+          "gamesStarted": 24,
+          "inningsPitched": 123.2,
+          "wins": 6,
+          "losses": 2,
+          "era": "3.93",
+          "whip": "1.35",
+          "strikeouts": 165,
+          "walks": 70,
+          "saves": 0,
+          "homeRunsAllowed": 19,
+          "hitBatsmen": 5
+        },
+        "2019": {
+          "gamesPlayed": 33,
+          "gamesStarted": 33,
+          "inningsPitched": 174.1,
+          "wins": 12,
+          "losses": 8,
+          "era": "4.34",
+          "whip": "1.34",
+          "strikeouts": 235,
+          "walks": 84,
+          "saves": 0,
+          "homeRunsAllowed": 30,
+          "hitBatsmen": 5
+        },
+        "2020": {
+          "gamesPlayed": 12,
+          "gamesStarted": 11,
+          "inningsPitched": 51.2,
+          "wins": 2,
+          "losses": 5,
+          "era": "6.62",
+          "whip": "1.90",
+          "strikeouts": 68,
+          "walks": 45,
+          "saves": 0,
+          "homeRunsAllowed": 13,
+          "hitBatsmen": 1
+        },
+        "2021": {
+          "gamesPlayed": 32,
+          "gamesStarted": 32,
+          "inningsPitched": 193.1,
+          "wins": 13,
+          "losses": 7,
+          "era": "2.84",
+          "whip": "1.04",
+          "strikeouts": 248,
+          "walks": 52,
+          "saves": 0,
+          "homeRunsAllowed": 33,
+          "hitBatsmen": 4
+        },
+        "2022": {
+          "gamesPlayed": 32,
+          "gamesStarted": 32,
+          "inningsPitched": 189,
+          "wins": 12,
+          "losses": 12,
+          "era": "3.71",
+          "whip": "1.19",
+          "strikeouts": 212,
+          "walks": 62,
+          "saves": 0,
+          "homeRunsAllowed": 32,
+          "hitBatsmen": 7
+        },
+        "2023": {
+          "gamesPlayed": 1,
+          "gamesStarted": 1,
+          "inningsPitched": 3.1,
+          "wins": 0,
+          "losses": 1,
+          "era": "8.10",
+          "whip": "2.70",
+          "strikeouts": 3,
+          "walks": 5,
+          "saves": 0,
+          "homeRunsAllowed": 0,
+          "hitBatsmen": 0
+        },
+        "2024": {
+          "gamesPlayed": 7,
+          "gamesStarted": 7,
+          "inningsPitched": 30.2,
+          "wins": 3,
+          "losses": 2,
+          "era": "4.70",
+          "whip": "1.14",
+          "strikeouts": 43,
+          "walks": 15,
+          "saves": 0,
+          "homeRunsAllowed": 6,
+          "hitBatsmen": 6
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 1.7880794701986757,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 7.152317880794703
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38257580",
+      "salary": 8500,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 15.77
+    }
+  },
+  {
+    "pitcherId": 671737,
+    "name": "Taj Bradley",
+    "team": "Tampa Bay Rays",
+    "opponent": "Colorado Rockies",
+    "gameId": 778524,
+    "venue": "George M. Steinbrenner Field",
+    "stats": {
+      "seasonStats": {
+        "2023": {
+          "gamesPlayed": 23,
+          "gamesStarted": 21,
+          "inningsPitched": 104.2,
+          "wins": 5,
+          "losses": 8,
+          "era": "5.59",
+          "whip": "1.39",
+          "strikeouts": 129,
+          "walks": 39,
+          "saves": 0,
+          "homeRunsAllowed": 23,
+          "hitBatsmen": 1
+        },
+        "2024": {
+          "gamesPlayed": 25,
+          "gamesStarted": 25,
+          "inningsPitched": 138,
+          "wins": 8,
+          "losses": 11,
+          "era": "4.11",
+          "whip": "1.22",
+          "strikeouts": 154,
+          "walks": 47,
+          "saves": 0,
+          "homeRunsAllowed": 22,
+          "hitBatsmen": 3
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 1.434782608695652,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 5.739130434782609
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38257582",
+      "salary": 8200,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 16.85
+    }
+  },
+  {
+    "pitcherId": 663372,
+    "name": "Ryan Feltner",
+    "team": "Colorado Rockies",
+    "opponent": "Tampa Bay Rays",
+    "gameId": 778524,
+    "venue": "George M. Steinbrenner Field",
+    "stats": {
+      "seasonStats": {
+        "2021": {
+          "gamesPlayed": 2,
+          "gamesStarted": 2,
+          "inningsPitched": 6.1,
+          "wins": 0,
+          "losses": 1,
+          "era": "11.37",
+          "whip": "2.21",
+          "strikeouts": 6,
+          "walks": 5,
+          "saves": 0,
+          "homeRunsAllowed": 3,
+          "hitBatsmen": 1
+        },
+        "2022": {
+          "gamesPlayed": 20,
+          "gamesStarted": 19,
+          "inningsPitched": 97.1,
+          "wins": 4,
+          "losses": 9,
+          "era": "5.83",
+          "whip": "1.41",
+          "strikeouts": 84,
+          "walks": 35,
+          "saves": 0,
+          "homeRunsAllowed": 16,
+          "hitBatsmen": 5
+        },
+        "2023": {
+          "gamesPlayed": 10,
+          "gamesStarted": 10,
+          "inningsPitched": 43.1,
+          "wins": 2,
+          "losses": 4,
+          "era": "5.82",
+          "whip": "1.68",
+          "strikeouts": 38,
+          "walks": 28,
+          "saves": 0,
+          "homeRunsAllowed": 2,
+          "hitBatsmen": 2
+        },
+        "2024": {
+          "gamesPlayed": 30,
+          "gamesStarted": 30,
+          "inningsPitched": 162.1,
+          "wins": 3,
+          "losses": 10,
+          "era": "4.49",
+          "whip": "1.34",
+          "strikeouts": 138,
+          "walks": 52,
+          "saves": 0,
+          "homeRunsAllowed": 20,
+          "hitBatsmen": 7
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 1.1104256631708822,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 4.441702652683529
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38257590",
+      "salary": 7100,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 11.9
+    }
+  },
+  {
+    "pitcherId": 676974,
+    "name": "Max Meyer",
+    "team": "Miami Marlins",
+    "opponent": "Pittsburgh Pirates",
+    "gameId": 778519,
+    "venue": "loanDepot park",
+    "stats": {
+      "seasonStats": {
+        "2022": {
+          "gamesPlayed": 2,
+          "gamesStarted": 2,
+          "inningsPitched": 6,
+          "wins": 0,
+          "losses": 1,
+          "era": "7.50",
+          "whip": "1.50",
+          "strikeouts": 6,
+          "walks": 2,
+          "saves": 0,
+          "homeRunsAllowed": 2,
+          "hitBatsmen": 0
+        },
+        "2024": {
+          "gamesPlayed": 11,
+          "gamesStarted": 11,
+          "inningsPitched": 57,
+          "wins": 3,
+          "losses": 5,
+          "era": "5.68",
+          "whip": "1.42",
+          "strikeouts": 46,
+          "walks": 19,
+          "saves": 0,
+          "homeRunsAllowed": 14,
+          "hitBatsmen": 3
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 2.2105263157894735,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 8.842105263157894
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38257593",
+      "salary": 6800,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 9.75
+    }
+  },
+  {
+    "pitcherId": 571760,
+    "name": "Andrew Heaney",
+    "team": "Pittsburgh Pirates",
+    "opponent": "Miami Marlins",
+    "gameId": 778519,
+    "venue": "loanDepot park",
+    "stats": {
+      "seasonStats": {
+        "2014": {
+          "gamesPlayed": 7,
+          "gamesStarted": 5,
+          "inningsPitched": 29.1,
+          "wins": 0,
+          "losses": 3,
+          "era": "5.83",
+          "whip": "1.33",
+          "strikeouts": 20,
+          "walks": 7,
+          "saves": 0,
+          "homeRunsAllowed": 6,
+          "hitBatsmen": 3
+        },
+        "2015": {
+          "gamesPlayed": 18,
+          "gamesStarted": 18,
+          "inningsPitched": 105.2,
+          "wins": 6,
+          "losses": 4,
+          "era": "3.49",
+          "whip": "1.20",
+          "strikeouts": 78,
+          "walks": 28,
+          "saves": 0,
+          "homeRunsAllowed": 9,
+          "hitBatsmen": 6
+        },
+        "2016": {
+          "gamesPlayed": 1,
+          "gamesStarted": 1,
+          "inningsPitched": 6,
+          "wins": 0,
+          "losses": 1,
+          "era": "6.00",
+          "whip": "1.17",
+          "strikeouts": 7,
+          "walks": 0,
+          "saves": 0,
+          "homeRunsAllowed": 2,
+          "hitBatsmen": 0
+        },
+        "2017": {
+          "gamesPlayed": 5,
+          "gamesStarted": 5,
+          "inningsPitched": 21.2,
+          "wins": 1,
+          "losses": 2,
+          "era": "7.06",
+          "whip": "1.66",
+          "strikeouts": 27,
+          "walks": 9,
+          "saves": 0,
+          "homeRunsAllowed": 12,
+          "hitBatsmen": 0
+        },
+        "2018": {
+          "gamesPlayed": 30,
+          "gamesStarted": 30,
+          "inningsPitched": 180,
+          "wins": 9,
+          "losses": 10,
+          "era": "4.15",
+          "whip": "1.20",
+          "strikeouts": 180,
+          "walks": 45,
+          "saves": 0,
+          "homeRunsAllowed": 27,
+          "hitBatsmen": 8
+        },
+        "2019": {
+          "gamesPlayed": 18,
+          "gamesStarted": 18,
+          "inningsPitched": 95.1,
+          "wins": 4,
+          "losses": 6,
+          "era": "4.91",
+          "whip": "1.29",
+          "strikeouts": 118,
+          "walks": 30,
+          "saves": 0,
+          "homeRunsAllowed": 20,
+          "hitBatsmen": 7
+        },
+        "2020": {
+          "gamesPlayed": 12,
+          "gamesStarted": 12,
+          "inningsPitched": 66.2,
+          "wins": 4,
+          "losses": 3,
+          "era": "4.46",
+          "whip": "1.23",
+          "strikeouts": 70,
+          "walks": 19,
+          "saves": 0,
+          "homeRunsAllowed": 9,
+          "hitBatsmen": 2
+        },
+        "2021": {
+          "gamesPlayed": 30,
+          "gamesStarted": 23,
+          "inningsPitched": 129.2,
+          "wins": 8,
+          "losses": 9,
+          "era": "5.83",
+          "whip": "1.32",
+          "strikeouts": 150,
+          "walks": 41,
+          "saves": 0,
+          "homeRunsAllowed": 29,
+          "hitBatsmen": 6
+        },
+        "2022": {
+          "gamesPlayed": 16,
+          "gamesStarted": 14,
+          "inningsPitched": 72.2,
+          "wins": 4,
+          "losses": 4,
+          "era": "3.10",
+          "whip": "1.09",
+          "strikeouts": 110,
+          "walks": 19,
+          "saves": 0,
+          "homeRunsAllowed": 14,
+          "hitBatsmen": 9
+        },
+        "2023": {
+          "gamesPlayed": 34,
+          "gamesStarted": 28,
+          "inningsPitched": 147.1,
+          "wins": 10,
+          "losses": 6,
+          "era": "4.15",
+          "whip": "1.38",
+          "strikeouts": 151,
+          "walks": 60,
+          "saves": 0,
+          "homeRunsAllowed": 23,
+          "hitBatsmen": 10
+        },
+        "2024": {
+          "gamesPlayed": 32,
+          "gamesStarted": 31,
+          "inningsPitched": 160,
+          "wins": 5,
+          "losses": 14,
+          "era": "4.28",
+          "whip": "1.25",
+          "strikeouts": 159,
+          "walks": 41,
+          "saves": 0,
+          "homeRunsAllowed": 23,
+          "hitBatsmen": 12
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 1.29375,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 5.175
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38257586",
+      "salary": 7500,
+      "positions": [
+        "RP"
+      ],
+      "avgPointsPerGame": 13.09
+    }
+  },
+  {
+    "pitcherId": 608379,
+    "name": "Michael Wacha",
+    "team": "Kansas City Royals",
+    "opponent": "Cleveland Guardians",
+    "gameId": 778510,
+    "venue": "Kauffman Stadium",
+    "stats": {
+      "seasonStats": {
+        "2013": {
+          "gamesPlayed": 15,
+          "gamesStarted": 9,
+          "inningsPitched": 64.2,
+          "wins": 4,
+          "losses": 1,
+          "era": "2.78",
+          "whip": "1.10",
+          "strikeouts": 65,
+          "walks": 19,
+          "saves": 0,
+          "homeRunsAllowed": 5,
+          "hitBatsmen": 0
+        },
+        "2014": {
+          "gamesPlayed": 19,
+          "gamesStarted": 19,
+          "inningsPitched": 107,
+          "wins": 5,
+          "losses": 6,
+          "era": "3.20",
+          "whip": "1.20",
+          "strikeouts": 94,
+          "walks": 33,
+          "saves": 0,
+          "homeRunsAllowed": 6,
+          "hitBatsmen": 5
+        },
+        "2015": {
+          "gamesPlayed": 30,
+          "gamesStarted": 30,
+          "inningsPitched": 181.1,
+          "wins": 17,
+          "losses": 7,
+          "era": "3.38",
+          "whip": "1.21",
+          "strikeouts": 153,
+          "walks": 58,
+          "saves": 0,
+          "homeRunsAllowed": 19,
+          "hitBatsmen": 6
+        },
+        "2016": {
+          "gamesPlayed": 27,
+          "gamesStarted": 24,
+          "inningsPitched": 138,
+          "wins": 7,
+          "losses": 7,
+          "era": "5.09",
+          "whip": "1.48",
+          "strikeouts": 114,
+          "walks": 45,
+          "saves": 0,
+          "homeRunsAllowed": 15,
+          "hitBatsmen": 1
+        },
+        "2017": {
+          "gamesPlayed": 30,
+          "gamesStarted": 30,
+          "inningsPitched": 165.2,
+          "wins": 12,
+          "losses": 9,
+          "era": "4.13",
+          "whip": "1.36",
+          "strikeouts": 158,
+          "walks": 55,
+          "saves": 0,
+          "homeRunsAllowed": 17,
+          "hitBatsmen": 3
+        },
+        "2018": {
+          "gamesPlayed": 15,
+          "gamesStarted": 15,
+          "inningsPitched": 84.1,
+          "wins": 8,
+          "losses": 2,
+          "era": "3.20",
+          "whip": "1.23",
+          "strikeouts": 71,
+          "walks": 36,
+          "saves": 0,
+          "homeRunsAllowed": 9,
+          "hitBatsmen": 2
+        },
+        "2019": {
+          "gamesPlayed": 29,
+          "gamesStarted": 24,
+          "inningsPitched": 126.2,
+          "wins": 6,
+          "losses": 7,
+          "era": "4.76",
+          "whip": "1.56",
+          "strikeouts": 104,
+          "walks": 55,
+          "saves": 0,
+          "homeRunsAllowed": 26,
+          "hitBatsmen": 3
+        },
+        "2020": {
+          "gamesPlayed": 8,
+          "gamesStarted": 7,
+          "inningsPitched": 34,
+          "wins": 1,
+          "losses": 4,
+          "era": "6.62",
+          "whip": "1.56",
+          "strikeouts": 37,
+          "walks": 7,
+          "saves": 0,
+          "homeRunsAllowed": 9,
+          "hitBatsmen": 2
+        },
+        "2021": {
+          "gamesPlayed": 29,
+          "gamesStarted": 23,
+          "inningsPitched": 124.2,
+          "wins": 3,
+          "losses": 5,
+          "era": "5.05",
+          "whip": "1.31",
+          "strikeouts": 121,
+          "walks": 31,
+          "saves": 0,
+          "homeRunsAllowed": 23,
+          "hitBatsmen": 4
+        },
+        "2022": {
+          "gamesPlayed": 23,
+          "gamesStarted": 23,
+          "inningsPitched": 127.1,
+          "wins": 11,
+          "losses": 2,
+          "era": "3.32",
+          "whip": "1.12",
+          "strikeouts": 104,
+          "walks": 31,
+          "saves": 0,
+          "homeRunsAllowed": 18,
+          "hitBatsmen": 4
+        },
+        "2023": {
+          "gamesPlayed": 24,
+          "gamesStarted": 24,
+          "inningsPitched": 134.1,
+          "wins": 14,
+          "losses": 4,
+          "era": "3.22",
+          "whip": "1.16",
+          "strikeouts": 124,
+          "walks": 43,
+          "saves": 0,
+          "homeRunsAllowed": 15,
+          "hitBatsmen": 3
+        },
+        "2024": {
+          "gamesPlayed": 29,
+          "gamesStarted": 29,
+          "inningsPitched": 166.2,
+          "wins": 13,
+          "losses": 8,
+          "era": "3.35",
+          "whip": "1.19",
+          "strikeouts": 145,
+          "walks": 45,
+          "saves": 0,
+          "homeRunsAllowed": 17,
+          "hitBatsmen": 5
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 0.9205776173285198,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 3.6823104693140793
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38257584",
+      "salary": 7800,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 15.54
+    }
+  },
+  {
+    "pitcherId": 676440,
+    "name": "Tanner Bibee",
+    "team": "Cleveland Guardians",
+    "opponent": "Kansas City Royals",
+    "gameId": 778510,
+    "venue": "Kauffman Stadium",
+    "stats": {
+      "seasonStats": {
+        "2023": {
+          "gamesPlayed": 25,
+          "gamesStarted": 25,
+          "inningsPitched": 142,
+          "wins": 10,
+          "losses": 4,
+          "era": "2.98",
+          "whip": "1.18",
+          "strikeouts": 141,
+          "walks": 45,
+          "saves": 0,
+          "homeRunsAllowed": 13,
+          "hitBatsmen": 5
+        },
+        "2024": {
+          "gamesPlayed": 31,
+          "gamesStarted": 31,
+          "inningsPitched": 173.2,
+          "wins": 12,
+          "losses": 8,
+          "era": "3.47",
+          "whip": "1.12",
+          "strikeouts": 187,
+          "walks": 44,
+          "saves": 0,
+          "homeRunsAllowed": 22,
+          "hitBatsmen": 8
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 1.143187066974596,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 4.572748267898384
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38257579",
+      "salary": 8700,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 17.06
+    }
+  },
+  {
+    "pitcherId": 663436,
+    "name": "Davis Martin",
+    "team": "Chicago White Sox",
+    "opponent": "Los Angeles Angels",
+    "gameId": 778527,
+    "venue": "Rate Field",
+    "stats": {
+      "seasonStats": {
+        "2022": {
+          "gamesPlayed": 14,
+          "gamesStarted": 9,
+          "inningsPitched": 63.1,
+          "wins": 3,
+          "losses": 6,
+          "era": "4.83",
+          "whip": "1.29",
+          "strikeouts": 48,
+          "walks": 19,
+          "saves": 0,
+          "homeRunsAllowed": 8,
+          "hitBatsmen": 3
+        },
+        "2024": {
+          "gamesPlayed": 11,
+          "gamesStarted": 10,
+          "inningsPitched": 50,
+          "wins": 0,
+          "losses": 5,
+          "era": "4.32",
+          "whip": "1.46",
+          "strikeouts": 47,
+          "walks": 23,
+          "saves": 0,
+          "homeRunsAllowed": 5,
+          "hitBatsmen": 5
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 0.9,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 3.5999999999999996
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38257594",
+      "salary": 6700,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 10.16
+    }
+  },
+  {
+    "pitcherId": 686799,
+    "name": "Jack Kochanowicz",
+    "team": "Los Angeles Angels",
+    "opponent": "Chicago White Sox",
+    "gameId": 778527,
+    "venue": "Rate Field",
+    "stats": {
+      "seasonStats": {
+        "2024": {
+          "gamesPlayed": 11,
+          "gamesStarted": 11,
+          "inningsPitched": 65.1,
+          "wins": 2,
+          "losses": 6,
+          "era": "3.99",
+          "whip": "1.19",
+          "strikeouts": 25,
+          "walks": 10,
+          "saves": 0,
+          "homeRunsAllowed": 7,
+          "hitBatsmen": 8
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 0.9677419354838711,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 3.8709677419354844
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38257596",
+      "salary": 6500,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 8.67
+    }
+  },
+  {
+    "pitcherId": 669467,
+    "name": "Andre Pallante",
+    "team": "St. Louis Cardinals",
+    "opponent": "Minnesota Twins",
+    "gameId": 778517,
+    "venue": "Busch Stadium",
+    "stats": {
+      "seasonStats": {
+        "2022": {
+          "gamesPlayed": 47,
+          "gamesStarted": 10,
+          "inningsPitched": 108,
+          "wins": 6,
+          "losses": 5,
+          "era": "3.17",
+          "whip": "1.42",
+          "strikeouts": 73,
+          "walks": 40,
+          "saves": 0,
+          "homeRunsAllowed": 9,
+          "hitBatsmen": 1
+        },
+        "2023": {
+          "gamesPlayed": 62,
+          "gamesStarted": 0,
+          "inningsPitched": 68,
+          "wins": 4,
+          "losses": 1,
+          "era": "4.76",
+          "whip": "1.56",
+          "strikeouts": 43,
+          "walks": 30,
+          "saves": 0,
+          "homeRunsAllowed": 6,
+          "hitBatsmen": 3
+        },
+        "2024": {
+          "gamesPlayed": 29,
+          "gamesStarted": 20,
+          "inningsPitched": 121.1,
+          "wins": 8,
+          "losses": 8,
+          "era": "3.78",
+          "whip": "1.30",
+          "strikeouts": 94,
+          "walks": 48,
+          "saves": 0,
+          "homeRunsAllowed": 8,
+          "hitBatsmen": 2
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 0.5945499587118084,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 2.3781998348472335
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38257592",
+      "salary": 6900,
+      "positions": [
+        "RP"
+      ],
+      "avgPointsPerGame": 10.17
+    }
+  },
+  {
+    "pitcherId": 641927,
+    "name": "Bailey Ober",
+    "team": "Minnesota Twins",
+    "opponent": "St. Louis Cardinals",
+    "gameId": 778517,
+    "venue": "Busch Stadium",
+    "stats": {
+      "seasonStats": {
+        "2021": {
+          "gamesPlayed": 20,
+          "gamesStarted": 20,
+          "inningsPitched": 92.1,
+          "wins": 3,
+          "losses": 3,
+          "era": "4.19",
+          "whip": "1.20",
+          "strikeouts": 96,
+          "walks": 19,
+          "saves": 0,
+          "homeRunsAllowed": 20,
+          "hitBatsmen": 1
+        },
+        "2022": {
+          "gamesPlayed": 11,
+          "gamesStarted": 11,
+          "inningsPitched": 56,
+          "wins": 2,
+          "losses": 3,
+          "era": "3.21",
+          "whip": "1.05",
+          "strikeouts": 51,
+          "walks": 11,
+          "saves": 0,
+          "homeRunsAllowed": 4,
+          "hitBatsmen": 2
+        },
+        "2023": {
+          "gamesPlayed": 26,
+          "gamesStarted": 26,
+          "inningsPitched": 144.1,
+          "wins": 8,
+          "losses": 6,
+          "era": "3.43",
+          "whip": "1.07",
+          "strikeouts": 146,
+          "walks": 29,
+          "saves": 0,
+          "homeRunsAllowed": 22,
+          "hitBatsmen": 7
+        },
+        "2024": {
+          "gamesPlayed": 31,
+          "gamesStarted": 31,
+          "inningsPitched": 178.2,
+          "wins": 12,
+          "losses": 9,
+          "era": "3.98",
+          "whip": "1.00",
+          "strikeouts": 191,
+          "walks": 43,
+          "saves": 0,
+          "homeRunsAllowed": 27,
+          "hitBatsmen": 6
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 1.3636363636363638,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 5.454545454545455
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38257581",
+      "salary": 8300,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 18.24
+    }
+  },
+  {
+    "pitcherId": 594798,
+    "name": "Jacob deGrom",
+    "team": "Texas Rangers",
+    "opponent": "Boston Red Sox",
+    "gameId": 778516,
+    "venue": "Globe Life Field",
+    "stats": {
+      "seasonStats": {
+        "2014": {
+          "gamesPlayed": 22,
+          "gamesStarted": 22,
+          "inningsPitched": 140.1,
+          "wins": 9,
+          "losses": 6,
+          "era": "2.69",
+          "whip": "1.14",
+          "strikeouts": 144,
+          "walks": 43,
+          "saves": 0,
+          "homeRunsAllowed": 7,
+          "hitBatsmen": 1
+        },
+        "2015": {
+          "gamesPlayed": 30,
+          "gamesStarted": 30,
+          "inningsPitched": 191,
+          "wins": 14,
+          "losses": 8,
+          "era": "2.54",
+          "whip": "0.98",
+          "strikeouts": 205,
+          "walks": 38,
+          "saves": 0,
+          "homeRunsAllowed": 16,
+          "hitBatsmen": 2
+        },
+        "2016": {
+          "gamesPlayed": 24,
+          "gamesStarted": 24,
+          "inningsPitched": 148,
+          "wins": 7,
+          "losses": 8,
+          "era": "3.04",
+          "whip": "1.20",
+          "strikeouts": 143,
+          "walks": 36,
+          "saves": 0,
+          "homeRunsAllowed": 15,
+          "hitBatsmen": 3
+        },
+        "2017": {
+          "gamesPlayed": 31,
+          "gamesStarted": 31,
+          "inningsPitched": 201.1,
+          "wins": 15,
+          "losses": 10,
+          "era": "3.53",
+          "whip": "1.19",
+          "strikeouts": 239,
+          "walks": 59,
+          "saves": 0,
+          "homeRunsAllowed": 28,
+          "hitBatsmen": 2
+        },
+        "2018": {
+          "gamesPlayed": 32,
+          "gamesStarted": 32,
+          "inningsPitched": 217,
+          "wins": 10,
+          "losses": 9,
+          "era": "1.70",
+          "whip": "0.91",
+          "strikeouts": 269,
+          "walks": 46,
+          "saves": 0,
+          "homeRunsAllowed": 10,
+          "hitBatsmen": 5
+        },
+        "2019": {
+          "gamesPlayed": 32,
+          "gamesStarted": 32,
+          "inningsPitched": 204,
+          "wins": 11,
+          "losses": 8,
+          "era": "2.43",
+          "whip": "0.97",
+          "strikeouts": 255,
+          "walks": 44,
+          "saves": 0,
+          "homeRunsAllowed": 19,
+          "hitBatsmen": 7
+        },
+        "2020": {
+          "gamesPlayed": 12,
+          "gamesStarted": 12,
+          "inningsPitched": 68,
+          "wins": 4,
+          "losses": 2,
+          "era": "2.38",
+          "whip": "0.96",
+          "strikeouts": 104,
+          "walks": 18,
+          "saves": 0,
+          "homeRunsAllowed": 7,
+          "hitBatsmen": 0
+        },
+        "2021": {
+          "gamesPlayed": 15,
+          "gamesStarted": 15,
+          "inningsPitched": 92,
+          "wins": 7,
+          "losses": 2,
+          "era": "1.08",
+          "whip": "0.55",
+          "strikeouts": 146,
+          "walks": 11,
+          "saves": 0,
+          "homeRunsAllowed": 6,
+          "hitBatsmen": 1
+        },
+        "2022": {
+          "gamesPlayed": 11,
+          "gamesStarted": 11,
+          "inningsPitched": 64.1,
+          "wins": 5,
+          "losses": 4,
+          "era": "3.08",
+          "whip": "0.75",
+          "strikeouts": 102,
+          "walks": 8,
+          "saves": 0,
+          "homeRunsAllowed": 9,
+          "hitBatsmen": 0
+        },
+        "2023": {
+          "gamesPlayed": 6,
+          "gamesStarted": 6,
+          "inningsPitched": 30.1,
+          "wins": 2,
+          "losses": 0,
+          "era": "2.67",
+          "whip": "0.76",
+          "strikeouts": 45,
+          "walks": 4,
+          "saves": 0,
+          "homeRunsAllowed": 2,
+          "hitBatsmen": 0
+        },
+        "2024": {
+          "gamesPlayed": 3,
+          "gamesStarted": 3,
+          "inningsPitched": 10.2,
+          "wins": 0,
+          "losses": 0,
+          "era": "1.69",
+          "whip": "1.13",
+          "strikeouts": 14,
+          "walks": 1,
+          "saves": 0,
+          "homeRunsAllowed": 1,
+          "hitBatsmen": 1
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 0.8823529411764707,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 3.5294117647058827
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38257578",
+      "salary": 9000,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 13.4
+    }
+  },
+  {
+    "pitcherId": 690916,
+    "name": "Richard Fitts",
+    "team": "Boston Red Sox",
+    "opponent": "Texas Rangers",
+    "gameId": 778516,
+    "venue": "Globe Life Field",
+    "stats": {
+      "seasonStats": {
+        "2024": {
+          "gamesPlayed": 4,
+          "gamesStarted": 4,
+          "inningsPitched": 20.2,
+          "wins": 0,
+          "losses": 1,
+          "era": "1.74",
+          "whip": "1.26",
+          "strikeouts": 9,
+          "walks": 7,
+          "saves": 0,
+          "homeRunsAllowed": 0,
+          "hitBatsmen": 0
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 0.44554455445544555,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 1.782178217821782
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38257591",
+      "salary": 7000,
+      "positions": [
+        "RP"
+      ],
+      "avgPointsPerGame": 10.22
+    }
+  },
+  {
+    "pitcherId": 593958,
+    "name": "Eduardo Rodriguez",
+    "team": "Arizona Diamondbacks",
+    "opponent": "Chicago Cubs",
+    "gameId": 778515,
+    "venue": "Chase Field",
+    "stats": {
+      "seasonStats": {
+        "2015": {
+          "gamesPlayed": 21,
+          "gamesStarted": 21,
+          "inningsPitched": 121.2,
+          "wins": 10,
+          "losses": 6,
+          "era": "3.85",
+          "whip": "1.29",
+          "strikeouts": 98,
+          "walks": 37,
+          "saves": 0,
+          "homeRunsAllowed": 13,
+          "hitBatsmen": 4
+        },
+        "2016": {
+          "gamesPlayed": 20,
+          "gamesStarted": 20,
+          "inningsPitched": 107,
+          "wins": 3,
+          "losses": 7,
+          "era": "4.71",
+          "whip": "1.30",
+          "strikeouts": 100,
+          "walks": 40,
+          "saves": 0,
+          "homeRunsAllowed": 16,
+          "hitBatsmen": 3
+        },
+        "2017": {
+          "gamesPlayed": 25,
+          "gamesStarted": 24,
+          "inningsPitched": 137.1,
+          "wins": 6,
+          "losses": 7,
+          "era": "4.19",
+          "whip": "1.28",
+          "strikeouts": 150,
+          "walks": 50,
+          "saves": 0,
+          "homeRunsAllowed": 19,
+          "hitBatsmen": 5
+        },
+        "2018": {
+          "gamesPlayed": 27,
+          "gamesStarted": 23,
+          "inningsPitched": 129.2,
+          "wins": 13,
+          "losses": 5,
+          "era": "3.82",
+          "whip": "1.26",
+          "strikeouts": 146,
+          "walks": 45,
+          "saves": 0,
+          "homeRunsAllowed": 16,
+          "hitBatsmen": 4
+        },
+        "2019": {
+          "gamesPlayed": 34,
+          "gamesStarted": 34,
+          "inningsPitched": 203.1,
+          "wins": 19,
+          "losses": 6,
+          "era": "3.81",
+          "whip": "1.33",
+          "strikeouts": 213,
+          "walks": 75,
+          "saves": 0,
+          "homeRunsAllowed": 24,
+          "hitBatsmen": 7
+        },
+        "2021": {
+          "gamesPlayed": 32,
+          "gamesStarted": 31,
+          "inningsPitched": 157.2,
+          "wins": 13,
+          "losses": 8,
+          "era": "4.74",
+          "whip": "1.39",
+          "strikeouts": 185,
+          "walks": 47,
+          "saves": 0,
+          "homeRunsAllowed": 19,
+          "hitBatsmen": 2
+        },
+        "2022": {
+          "gamesPlayed": 17,
+          "gamesStarted": 17,
+          "inningsPitched": 91,
+          "wins": 5,
+          "losses": 5,
+          "era": "4.05",
+          "whip": "1.33",
+          "strikeouts": 72,
+          "walks": 34,
+          "saves": 0,
+          "homeRunsAllowed": 12,
+          "hitBatsmen": 2
+        },
+        "2023": {
+          "gamesPlayed": 26,
+          "gamesStarted": 26,
+          "inningsPitched": 152.2,
+          "wins": 13,
+          "losses": 9,
+          "era": "3.30",
+          "whip": "1.15",
+          "strikeouts": 143,
+          "walks": 48,
+          "saves": 0,
+          "homeRunsAllowed": 15,
+          "hitBatsmen": 3
+        },
+        "2024": {
+          "gamesPlayed": 10,
+          "gamesStarted": 10,
+          "inningsPitched": 50,
+          "wins": 3,
+          "losses": 4,
+          "era": "5.04",
+          "whip": "1.50",
+          "strikeouts": 47,
+          "walks": 19,
+          "saves": 0,
+          "homeRunsAllowed": 8,
+          "hitBatsmen": 1
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 1.44,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 5.76
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": null,
+      "salary": 0,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 0
+    }
+  },
+  {
+    "pitcherId": 571510,
+    "name": "Matthew Boyd",
+    "team": "Chicago Cubs",
+    "opponent": "Arizona Diamondbacks",
+    "gameId": 778515,
+    "venue": "Chase Field",
+    "stats": {
+      "seasonStats": {
+        "2015": {
+          "gamesPlayed": 13,
+          "gamesStarted": 12,
+          "inningsPitched": 57.1,
+          "wins": 1,
+          "losses": 6,
+          "era": "7.53",
+          "whip": "1.59",
+          "strikeouts": 43,
+          "walks": 20,
+          "saves": 0,
+          "homeRunsAllowed": 17,
+          "hitBatsmen": 1
+        },
+        "2016": {
+          "gamesPlayed": 20,
+          "gamesStarted": 18,
+          "inningsPitched": 97.1,
+          "wins": 6,
+          "losses": 5,
+          "era": "4.53",
+          "whip": "1.29",
+          "strikeouts": 82,
+          "walks": 29,
+          "saves": 0,
+          "homeRunsAllowed": 17,
+          "hitBatsmen": 4
+        },
+        "2017": {
+          "gamesPlayed": 26,
+          "gamesStarted": 25,
+          "inningsPitched": 135,
+          "wins": 6,
+          "losses": 11,
+          "era": "5.27",
+          "whip": "1.56",
+          "strikeouts": 110,
+          "walks": 53,
+          "saves": 0,
+          "homeRunsAllowed": 18,
+          "hitBatsmen": 3
+        },
+        "2018": {
+          "gamesPlayed": 31,
+          "gamesStarted": 31,
+          "inningsPitched": 170.1,
+          "wins": 9,
+          "losses": 13,
+          "era": "4.39",
+          "whip": "1.16",
+          "strikeouts": 159,
+          "walks": 51,
+          "saves": 0,
+          "homeRunsAllowed": 27,
+          "hitBatsmen": 11
+        },
+        "2019": {
+          "gamesPlayed": 32,
+          "gamesStarted": 32,
+          "inningsPitched": 185.1,
+          "wins": 9,
+          "losses": 12,
+          "era": "4.56",
+          "whip": "1.23",
+          "strikeouts": 238,
+          "walks": 50,
+          "saves": 0,
+          "homeRunsAllowed": 39,
+          "hitBatsmen": 8
+        },
+        "2020": {
+          "gamesPlayed": 12,
+          "gamesStarted": 12,
+          "inningsPitched": 60.1,
+          "wins": 3,
+          "losses": 7,
+          "era": "6.71",
+          "whip": "1.48",
+          "strikeouts": 60,
+          "walks": 22,
+          "saves": 0,
+          "homeRunsAllowed": 15,
+          "hitBatsmen": 5
+        },
+        "2021": {
+          "gamesPlayed": 15,
+          "gamesStarted": 15,
+          "inningsPitched": 78.2,
+          "wins": 3,
+          "losses": 8,
+          "era": "3.89",
+          "whip": "1.27",
+          "strikeouts": 67,
+          "walks": 23,
+          "saves": 0,
+          "homeRunsAllowed": 9,
+          "hitBatsmen": 7
+        },
+        "2022": {
+          "gamesPlayed": 10,
+          "gamesStarted": 0,
+          "inningsPitched": 13.1,
+          "wins": 2,
+          "losses": 0,
+          "era": "1.35",
+          "whip": "0.98",
+          "strikeouts": 13,
+          "walks": 8,
+          "saves": 0,
+          "homeRunsAllowed": 0,
+          "hitBatsmen": 1
+        },
+        "2023": {
+          "gamesPlayed": 15,
+          "gamesStarted": 15,
+          "inningsPitched": 71,
+          "wins": 5,
+          "losses": 5,
+          "era": "5.45",
+          "whip": "1.32",
+          "strikeouts": 73,
+          "walks": 25,
+          "saves": 0,
+          "homeRunsAllowed": 11,
+          "hitBatsmen": 2
+        },
+        "2024": {
+          "gamesPlayed": 8,
+          "gamesStarted": 8,
+          "inningsPitched": 39.2,
+          "wins": 2,
+          "losses": 2,
+          "era": "2.72",
+          "whip": "1.13",
+          "strikeouts": 46,
+          "walks": 13,
+          "saves": 0,
+          "homeRunsAllowed": 4,
+          "hitBatsmen": 2
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 0.9183673469387754,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 3.6734693877551017
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": null,
+      "salary": 0,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 0
+    }
+  },
+  {
+    "pitcherId": 693433,
+    "name": "Bryan Woo",
+    "team": "Seattle Mariners",
+    "opponent": "Athletics",
+    "gameId": 778513,
+    "venue": "T-Mobile Park",
+    "stats": {
+      "seasonStats": {
+        "2023": {
+          "gamesPlayed": 18,
+          "gamesStarted": 18,
+          "inningsPitched": 87.2,
+          "wins": 4,
+          "losses": 5,
+          "era": "4.21",
+          "whip": "1.21",
+          "strikeouts": 93,
+          "walks": 31,
+          "saves": 0,
+          "homeRunsAllowed": 13,
+          "hitBatsmen": 7
+        },
+        "2024": {
+          "gamesPlayed": 22,
+          "gamesStarted": 22,
+          "inningsPitched": 121.1,
+          "wins": 9,
+          "losses": 3,
+          "era": "2.89",
+          "whip": "0.90",
+          "strikeouts": 101,
+          "walks": 13,
+          "saves": 0,
+          "homeRunsAllowed": 14,
+          "hitBatsmen": 3
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 1.0404624277456649,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 4.1618497109826595
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": null,
+      "salary": 0,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 0
+    }
+  },
+  {
+    "pitcherId": 676664,
+    "name": "JP Sears",
+    "team": "Athletics",
+    "opponent": "Seattle Mariners",
+    "gameId": 778513,
+    "venue": "T-Mobile Park",
+    "stats": {
+      "seasonStats": {
+        "2022": {
+          "gamesPlayed": 17,
+          "gamesStarted": 11,
+          "inningsPitched": 70,
+          "wins": 6,
+          "losses": 3,
+          "era": "3.86",
+          "whip": "1.29",
+          "strikeouts": 51,
+          "walks": 23,
+          "saves": 0,
+          "homeRunsAllowed": 8,
+          "hitBatsmen": 2
+        },
+        "2023": {
+          "gamesPlayed": 32,
+          "gamesStarted": 32,
+          "inningsPitched": 172.1,
+          "wins": 5,
+          "losses": 14,
+          "era": "4.54",
+          "whip": "1.26",
+          "strikeouts": 161,
+          "walks": 53,
+          "saves": 0,
+          "homeRunsAllowed": 34,
+          "hitBatsmen": 16
+        },
+        "2024": {
+          "gamesPlayed": 32,
+          "gamesStarted": 32,
+          "inningsPitched": 180.2,
+          "wins": 11,
+          "losses": 13,
+          "era": "4.38",
+          "whip": "1.22",
+          "strikeouts": 137,
+          "walks": 49,
+          "saves": 0,
+          "homeRunsAllowed": 28,
+          "hitBatsmen": 14
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 1.3984461709211988,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 5.593784683684795
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": null,
+      "salary": 0,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 0
+    }
+  },
+  {
+    "pitcherId": 601713,
+    "name": "Nick Pivetta",
+    "team": "San Diego Padres",
+    "opponent": "Atlanta Braves",
+    "gameId": 778514,
+    "venue": "Petco Park",
+    "stats": {
+      "seasonStats": {
+        "2017": {
+          "gamesPlayed": 26,
+          "gamesStarted": 26,
+          "inningsPitched": 133,
+          "wins": 8,
+          "losses": 10,
+          "era": "6.02",
+          "whip": "1.51",
+          "strikeouts": 140,
+          "walks": 57,
+          "saves": 0,
+          "homeRunsAllowed": 25,
+          "hitBatsmen": 4
+        },
+        "2018": {
+          "gamesPlayed": 33,
+          "gamesStarted": 32,
+          "inningsPitched": 164,
+          "wins": 7,
+          "losses": 14,
+          "era": "4.77",
+          "whip": "1.30",
+          "strikeouts": 188,
+          "walks": 51,
+          "saves": 0,
+          "homeRunsAllowed": 24,
+          "hitBatsmen": 5
+        },
+        "2019": {
+          "gamesPlayed": 30,
+          "gamesStarted": 13,
+          "inningsPitched": 93.2,
+          "wins": 4,
+          "losses": 6,
+          "era": "5.38",
+          "whip": "1.52",
+          "strikeouts": 89,
+          "walks": 39,
+          "saves": 1,
+          "homeRunsAllowed": 20,
+          "hitBatsmen": 4
+        },
+        "2020": {
+          "gamesPlayed": 5,
+          "gamesStarted": 2,
+          "inningsPitched": 15.2,
+          "wins": 2,
+          "losses": 0,
+          "era": "6.89",
+          "whip": "1.53",
+          "strikeouts": 17,
+          "walks": 6,
+          "saves": 0,
+          "homeRunsAllowed": 4,
+          "hitBatsmen": 1
+        },
+        "2021": {
+          "gamesPlayed": 31,
+          "gamesStarted": 30,
+          "inningsPitched": 155,
+          "wins": 9,
+          "losses": 8,
+          "era": "4.53",
+          "whip": "1.30",
+          "strikeouts": 175,
+          "walks": 65,
+          "saves": 1,
+          "homeRunsAllowed": 24,
+          "hitBatsmen": 5
+        },
+        "2022": {
+          "gamesPlayed": 33,
+          "gamesStarted": 33,
+          "inningsPitched": 179.2,
+          "wins": 10,
+          "losses": 12,
+          "era": "4.56",
+          "whip": "1.38",
+          "strikeouts": 175,
+          "walks": 73,
+          "saves": 0,
+          "homeRunsAllowed": 27,
+          "hitBatsmen": 5
+        },
+        "2023": {
+          "gamesPlayed": 38,
+          "gamesStarted": 16,
+          "inningsPitched": 142.2,
+          "wins": 10,
+          "losses": 9,
+          "era": "4.04",
+          "whip": "1.12",
+          "strikeouts": 183,
+          "walks": 50,
+          "saves": 1,
+          "homeRunsAllowed": 23,
+          "hitBatsmen": 6
+        },
+        "2024": {
+          "gamesPlayed": 27,
+          "gamesStarted": 26,
+          "inningsPitched": 145.2,
+          "wins": 6,
+          "losses": 12,
+          "era": "4.14",
+          "whip": "1.13",
+          "strikeouts": 172,
+          "walks": 36,
+          "saves": 0,
+          "homeRunsAllowed": 28,
+          "hitBatsmen": 1
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 1.7355371900826446,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 6.9421487603305785
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": null,
+      "salary": 0,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 0
+    }
+  },
+  {
+    "pitcherId": 700363,
+    "name": "AJ Smith-Shawver",
+    "team": "Atlanta Braves",
+    "opponent": "San Diego Padres",
+    "gameId": 778514,
+    "venue": "Petco Park",
+    "stats": {
+      "seasonStats": {
+        "2023": {
+          "gamesPlayed": 6,
+          "gamesStarted": 5,
+          "inningsPitched": 25.1,
+          "wins": 1,
+          "losses": 0,
+          "era": "4.26",
+          "whip": "1.11",
+          "strikeouts": 20,
+          "walks": 11,
+          "saves": 0,
+          "homeRunsAllowed": 7,
+          "hitBatsmen": 1
+        },
+        "2024": {
+          "gamesPlayed": 1,
+          "gamesStarted": 1,
+          "inningsPitched": 4.1,
+          "wins": 0,
+          "losses": 0,
+          "era": "0.00",
+          "whip": "1.15",
+          "strikeouts": 4,
+          "walks": 2,
+          "saves": 0,
+          "homeRunsAllowed": 0,
+          "hitBatsmen": 0
+        }
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 0,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 1
+      }
+    },
+    "projections": {
+      "winProbability": 45,
+      "expectedStrikeouts": 4.166666666666667,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 3.8135000000000012,
+        "upside": 4.576200000000001,
+        "floor": 3.050800000000001
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": null,
+      "salary": 0,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 0
+    }
+  }
+]

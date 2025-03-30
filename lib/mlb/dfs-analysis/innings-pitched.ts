@@ -47,16 +47,22 @@ export async function getPitcherInningsStats(
 
     // Calculate average innings per start
     const avgInningsPerStart =
-      gamesStarted > 0 ? inningsPitched / gamesStarted : 0;
+      typeof gamesStarted === "number" && gamesStarted > 0
+        ? typeof inningsPitched === "number"
+          ? inningsPitched / gamesStarted
+          : 0
+        : 0;
 
     // Calculate estimated quality starts (6+ IP, 3 or fewer ER)
     // Higher quality pitchers tend to have more quality starts - derive from ERA
     let qualityStartPct = 0.5; // Default to league average
-    if (stats.era < 3.0) {
+    const eraValue = typeof stats.era === "number" ? stats.era : 4.5;
+
+    if (eraValue < 3.0) {
       qualityStartPct = 0.65; // Elite pitchers
-    } else if (stats.era < 3.75) {
+    } else if (eraValue < 3.75) {
       qualityStartPct = 0.55; // Good pitchers
-    } else if (stats.era > 5.0) {
+    } else if (eraValue > 5.0) {
       qualityStartPct = 0.35; // Struggling pitchers
     }
 
@@ -72,8 +78,14 @@ export async function getPitcherInningsStats(
 
     // Calculate pitch efficiency (pitches per inning)
     // Lower is better - derived from walks and strikeouts
-    const walkRate = stats.walks / inningsPitched;
-    const strikeoutRate = stats.strikeouts / inningsPitched;
+    const walksValue = typeof stats.walks === "number" ? stats.walks : 0;
+    const strikeoutsValue =
+      typeof stats.strikeouts === "number" ? stats.strikeouts : 0;
+    const inningsPitchedValue =
+      typeof inningsPitched === "number" ? inningsPitched : 1;
+
+    const walkRate = walksValue / inningsPitchedValue;
+    const strikeoutRate = strikeoutsValue / inningsPitchedValue;
     const pitchEfficiency = 15 + walkRate * 6 + strikeoutRate * 2;
 
     // Calculate early hook rate (less than 5 innings)
@@ -122,8 +134,8 @@ export async function getPitcherInningsStats(
     return {
       name: pitcherData.fullName,
       teamName: pitcherData.currentTeam,
-      gamesStarted,
-      inningsPitched,
+      gamesStarted: typeof gamesStarted === "number" ? gamesStarted : 0,
+      inningsPitched: typeof inningsPitched === "number" ? inningsPitched : 0,
       avgInningsPerStart,
       qualityStartPercentage: qualityStartPct,
       completionRate,
@@ -163,7 +175,12 @@ export async function getTeamHookTendencies(
 
     // Extract relevant stats
     // Note: This is simplified as we don't have complete team pitching strategy data
-    const stats = teamData.stats;
+    const stats =
+      teamData && typeof teamData === "object" && teamData !== null
+        ? "stats" in teamData
+          ? teamData.stats
+          : { era: 4.0 }
+        : { era: 4.0 };
 
     // Approximate starter innings per game (league average ~5.5)
     // This is simplified - ideally we'd have actual data on starter vs. reliever innings
@@ -171,14 +188,27 @@ export async function getTeamHookTendencies(
 
     // Quick hook rating (1-10 scale)
     // Without specific data, use team ERA as a proxy - teams with higher ERA tend to pull starters quicker
-    const quickHookRating = 5 + (stats.era - 4.0) * 1.5;
+    const era =
+      typeof stats === "object" &&
+      stats !== null &&
+      "era" in stats &&
+      typeof stats.era === "number"
+        ? stats.era
+        : 4.0;
+    const quickHookRating = 5 + (era - 4.0) * 1.5;
 
     // Bullpen usage rating (1-10 scale)
     // Similar proxy using team ERA for now
     const bullpenUsageRating = quickHookRating;
 
     return {
-      teamName: teamData.name,
+      teamName:
+        teamData &&
+        typeof teamData === "object" &&
+        teamData !== null &&
+        "name" in teamData
+          ? String(teamData.name)
+          : undefined,
       quickHookRating: Math.max(1, Math.min(10, quickHookRating)),
       bullpenUsageRating: Math.max(1, Math.min(10, bullpenUsageRating)),
       starterInningsPerGame,
@@ -430,10 +460,19 @@ export async function calculateCompleteGamePotential(
     }
 
     // Adjust based on pitcher quality (ERA)
-    if (pitcherData.seasonStats.era < 3.0) {
+    const pitcherEra =
+      pitcherData &&
+      pitcherData.seasonStats &&
+      typeof pitcherData.seasonStats.era === "object"
+        ? parseFloat(pitcherData.seasonStats.era.toString())
+        : typeof pitcherData.seasonStats.era === "number"
+        ? pitcherData.seasonStats.era
+        : 4.5;
+
+    if (pitcherEra < 3.0) {
       shutoutProb *= 2.5; // Elite pitchers more likely for shutouts
       noHitterProb *= 3;
-    } else if (pitcherData.seasonStats.era > 4.5) {
+    } else if (pitcherEra > 4.5) {
       shutoutProb *= 0.3; // Poor pitchers less likely for shutouts
       noHitterProb *= 0.2;
     }

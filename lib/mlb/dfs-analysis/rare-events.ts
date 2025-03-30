@@ -79,7 +79,21 @@ export async function calculateRareEventPotential(
       : null;
 
     // Calculate base probabilities
-    const stats = pitcherStats.seasonStats;
+    const currentSeason = season.toString();
+    const stats = pitcherStats.seasonStats[currentSeason] || {
+      gamesPlayed: 0,
+      gamesStarted: 0,
+      inningsPitched: 0,
+      wins: 0,
+      losses: 0,
+      era: 4.5, // League average ERA
+      whip: 1.3, // League average WHIP
+      strikeouts: 0,
+      walks: 0,
+      saves: 0,
+      hitBatsmen: 0,
+    };
+
     const inningsPitched = stats.inningsPitched || 0;
     const era = stats.era || 4.5; // League average ERA
     const whip = stats.whip || 1.3; // League average WHIP

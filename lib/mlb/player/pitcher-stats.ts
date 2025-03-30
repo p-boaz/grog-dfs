@@ -1,4 +1,4 @@
-import { withCache, DEFAULT_CACHE_TTL, markAsApiSource } from "../cache";
+import { DEFAULT_CACHE_TTL, markAsApiSource, withCache } from "../cache";
 import { makeMLBApiRequest } from "../core/api-client";
 
 interface PitcherStats {
@@ -23,6 +23,22 @@ interface PitcherStats {
       hitBatsmen: number;
     };
   };
+  careerStats: Array<{
+    season: string;
+    team: string;
+    gamesPlayed: number;
+    gamesStarted: number;
+    inningsPitched: number;
+    wins: number;
+    losses: number;
+    era: number;
+    whip: number;
+    strikeouts: number;
+    walks: number;
+    saves: number;
+    homeRunsAllowed?: number;
+    hitBatsmen: number;
+  }>;
   sourceTimestamp?: Date;
 }
 
@@ -138,6 +154,7 @@ async function fetchPitcherStats(params: {
       primaryPosition: "P",
       pitchHand: "",
       seasonStats: {},
+      careerStats: [],
       sourceTimestamp: new Date(),
     });
   } catch (error) {
@@ -152,6 +169,7 @@ async function fetchPitcherStats(params: {
       primaryPosition: "P",
       pitchHand: "",
       seasonStats: {},
+      careerStats: [],
       sourceTimestamp: new Date(),
     });
   }
@@ -198,21 +216,28 @@ function transformPitcherStats(data: any): PitcherStats {
     // Calculate HR allowed based on available stats
     const estimateHRAllowed = (stats: any) => {
       if (stats.homeRuns !== undefined) return stats.homeRuns;
+      if (stats.hr !== undefined) return stats.hr;
+
+      // If HR not directly available, estimate from other stats
+      // Using a very rough estimation method
       const ip = parseFloat(stats.inningsPitched || "0");
-      const era = stats.era || 4.5;
-      return Math.round((era / 9) * (ip / 9));
+      if (ip <= 0) return 0;
+
+      // MLB average HR/9 is roughly 1.25-1.4
+      const hrPer9Estimate = 1.3;
+      return Math.round((ip / 9) * hrPer9Estimate);
     };
 
     seasonStats[season] = {
       gamesPlayed: stat.gamesPlayed || 0,
       gamesStarted: stat.gamesStarted || 0,
-      inningsPitched: parseFloat(stat.inningsPitched || "0"),
+      inningsPitched: stat.inningsPitched || 0,
       wins: stat.wins || 0,
       losses: stat.losses || 0,
       era: stat.era || 0,
       whip: stat.whip || 0,
-      strikeouts: stat.strikeOuts || stat.strikeouts || 0,
-      walks: stat.baseOnBalls || 0,
+      strikeouts: stat.strikeouts || 0,
+      walks: stat.baseOnBalls || stat.walks || 0,
       saves: stat.saves || 0,
       homeRunsAllowed: estimateHRAllowed(stat),
       hitBatsmen: stat.hitBatsmen || 0,
@@ -226,6 +251,26 @@ function transformPitcherStats(data: any): PitcherStats {
     primaryPosition: data.people[0].primaryPosition?.abbreviation || "P",
     pitchHand: data.people[0].pitchHand?.code || "",
     seasonStats,
+    careerStats: yearByYearPitchingStats.map((year: any) => {
+      const season = year.season;
+      const stat = year.stat || {};
+      return {
+        season,
+        team: year.team?.name || "",
+        gamesPlayed: stat.gamesPlayed || 0,
+        gamesStarted: stat.gamesStarted || 0,
+        inningsPitched: stat.inningsPitched || 0,
+        wins: stat.wins || 0,
+        losses: stat.losses || 0,
+        era: stat.era || 0,
+        whip: stat.whip || 0,
+        strikeouts: stat.strikeouts || 0,
+        walks: stat.walks || 0,
+        saves: stat.saves || 0,
+        homeRunsAllowed: estimateHRAllowed(stat),
+        hitBatsmen: stat.hitBatsmen || 0,
+      };
+    }),
     sourceTimestamp: new Date(),
   };
 }

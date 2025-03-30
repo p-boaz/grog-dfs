@@ -13,12 +13,12 @@ export async function GET(request: Request) {
     const battersPath = path.join(
       process.cwd(),
       "data",
-      `mlb-batters-${date}.json`
+      `${date}-batters.json`
     );
     const pitchersPath = path.join(
       process.cwd(),
       "data",
-      `mlb-pitchers-${date}.json`
+      `${date}-pitchers.json`
     );
 
     // Check if files exist

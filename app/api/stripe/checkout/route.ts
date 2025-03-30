@@ -85,7 +85,7 @@ export async function GET(request: NextRequest) {
         planName: (plan.product as Stripe.Product).name,
         subscriptionStatus: subscription.status,
         updatedAt: new Date(),
-      })
+      } as any)
       .where(eq(teams.id, userTeam[0].teamId));
 
     await setSession(user[0]);

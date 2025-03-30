@@ -384,7 +384,7 @@ export async function getPitcherHomeRunVulnerability(
 
     // Rough estimate: ~10-15% of earned runs come from HRs
     // Average MLB HR/9 is around 1.2-1.3
-    const estimatedHrPer9 = (era / 4.5) * 1.25;
+    const estimatedHrPer9 = (parseFloat(stats.era.toString()) / 4.5) * 1.25;
     const homeRunsAllowed = Math.round((estimatedHrPer9 * ip) / 9);
 
     // Calculate vulnerability on 0-10 scale where 5 is average
@@ -392,7 +392,8 @@ export async function getPitcherHomeRunVulnerability(
     const vulnerability = 5 * (estimatedHrPer9 / 1.25);
 
     return {
-      gamesStarted: stats.gamesPlayed || 0,
+      gamesStarted:
+        typeof stats.gamesPlayed === "number" ? stats.gamesPlayed : 0,
       inningsPitched: ip,
       homeRunsAllowed,
       hrPer9: estimatedHrPer9,

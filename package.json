@@ -10,7 +10,8 @@
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit --watch",
+    "dev:with-types": "concurrently \"pnpm dev\" \"pnpm typecheck\""
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.3",

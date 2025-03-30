@@ -831,8 +831,15 @@ export async function getAdvancedMatchupAnalysis(params: {
         pitcherStats.seasonStats.era !== undefined &&
         pitcherStats.seasonStats.whip !== undefined
       ) {
-        const recentERA = pitcherStats.seasonStats.era;
-        const recentWHIP = pitcherStats.seasonStats.whip;
+        // Get the current season
+        const currentSeason = new Date().getFullYear().toString();
+        const currentSeasonStats = pitcherStats.seasonStats[currentSeason] || {
+          era: 4.5,
+          whip: 1.3,
+        };
+
+        const recentERA = currentSeasonStats.era;
+        const recentWHIP = currentSeasonStats.whip;
 
         if (recentERA < 3.0 && recentWHIP < 1.1) {
           factors.recentForm -= 5; // Pitcher in great form (advantage to pitcher)

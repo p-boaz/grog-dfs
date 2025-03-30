@@ -1,4 +1,4 @@
-import { withCache, DEFAULT_CACHE_TTL, markAsApiSource } from "../cache";
+import { DEFAULT_CACHE_TTL, markAsApiSource, withCache } from "../cache";
 import { makeMLBApiRequest } from "../core/api-client";
 
 interface BatterStats {
@@ -26,6 +26,10 @@ interface BatterStats {
     walks: number;
     hitByPitches: number;
     sacrificeFlies: number;
+    doubles: number;
+    triples: number;
+    runs: number;
+    plateAppearances?: number;
   };
   careerStats: Array<{
     season: string;
@@ -92,6 +96,12 @@ export interface BatterSeasonStats {
   last30wOBA?: number;
   strikeouts: number;
   walks: number;
+  doubles: number;
+  triples: number;
+  hitByPitches: number;
+  sacrificeFlies: number;
+  runs: number;
+  plateAppearances?: number;
 }
 
 /**
@@ -171,6 +181,10 @@ async function fetchBatterStats(params: {
         walks: 0,
         hitByPitches: 0,
         sacrificeFlies: 0,
+        doubles: 0,
+        triples: 0,
+        runs: 0,
+        plateAppearances: 0,
       },
       careerStats: [],
       sourceTimestamp: new Date(),
@@ -199,6 +213,10 @@ async function fetchBatterStats(params: {
         walks: 0,
         hitByPitches: 0,
         sacrificeFlies: 0,
+        doubles: 0,
+        triples: 0,
+        runs: 0,
+        plateAppearances: 0,
       },
       careerStats: [],
       sourceTimestamp: new Date(),
@@ -254,10 +272,14 @@ function transformBatterStats(data: any, requestedSeason: number): BatterStats {
       ops: seasonHittingStats.ops || 0,
       stolenBases: seasonHittingStats.stolenBases || 0,
       caughtStealing: seasonHittingStats.caughtStealing || 0,
-      strikeouts: seasonHittingStats.strikeOuts || 0,
-      walks: seasonHittingStats.baseOnBalls || 0,
-      hitByPitches: seasonHittingStats.hitByPitches || 0,
-      sacrificeFlies: seasonHittingStats.sacrificeFlies || 0,
+      strikeouts: seasonHittingStats.strikeouts || 0,
+      walks: seasonHittingStats.walks || 0,
+      hitByPitches: seasonHittingStats.hitByPitch || 0,
+      sacrificeFlies: seasonHittingStats.sacFlies || 0,
+      doubles: seasonHittingStats.doubles || 0,
+      triples: seasonHittingStats.triples || 0,
+      runs: seasonHittingStats.runs || 0,
+      plateAppearances: seasonHittingStats.plateAppearances || 0,
     },
     careerStats: yearByYearHittingStats.map((year: any) => ({
       season: year.season,

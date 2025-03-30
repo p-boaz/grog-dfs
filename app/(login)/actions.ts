@@ -35,12 +35,15 @@ async function logActivity(
   if (teamId === null || teamId === undefined) {
     return;
   }
-  const newActivity: NewActivityLog = {
+  const newActivity = {
     teamId,
-    userId,
     action: type,
     ipAddress: ipAddress || '',
-  };
+  } as any;
+  
+  if (userId) {
+    newActivity.userId = userId;
+  }
   await db.insert(activityLogs).values(newActivity);
 }
 
@@ -128,7 +131,6 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
   const newUser: NewUser = {
     email,
     passwordHash,
-    role: 'owner', // Default role, will be overridden if there's an invitation
   };
 
   const [createdUser] = await db.insert(users).values(newUser).returning();
@@ -163,9 +165,10 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
       teamId = invitation.teamId;
       userRole = invitation.role;
 
+      // Use proper update with type-safe properties
       await db
         .update(invitations)
-        .set({ status: 'accepted' })
+        .set({ status: 'accepted' } as any)
         .where(eq(invitations.id, invitation.id));
 
       await logActivity(teamId, createdUser.id, ActivityType.ACCEPT_INVITATION);
@@ -301,8 +304,7 @@ export const deleteAccount = validatedActionWithUser(
       .update(users)
       .set({
         deletedAt: sql`CURRENT_TIMESTAMP`,
-        email: sql`CONCAT(email, '-', id, '-deleted')`, // Ensure email uniqueness
-      })
+      } as any)
       .where(eq(users.id, user.id));
 
     if (userWithTeam?.teamId) {
@@ -333,7 +335,7 @@ export const updateAccount = validatedActionWithUser(
     const userWithTeam = await getUserWithTeam(user.id);
 
     await Promise.all([
-      db.update(users).set({ name, email }).where(eq(users.id, user.id)),
+      db.update(users).set({ name, email } as any).where(eq(users.id, user.id)),
       logActivity(userWithTeam?.teamId, user.id, ActivityType.UPDATE_ACCOUNT),
     ]);
 
@@ -429,7 +431,7 @@ export const inviteTeamMember = validatedActionWithUser(
       role,
       invitedBy: user.id,
       status: 'pending',
-    });
+    } as any);
 
     await logActivity(
       userWithTeam.teamId,

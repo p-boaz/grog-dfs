@@ -3,10 +3,9 @@
  * Both walks and hit-by-pitch are worth +2 points in DraftKings
  */
 
-import { withCache, DEFAULT_CACHE_TTL, markAsApiSource } from "../cache";
-import { getBatterStats, getBatterSplits } from "../player/batter-stats";
-import { getPitcherStats } from "../player/pitcher-stats";
+import { getBatterSplits, getBatterStats } from "../player/batter-stats";
 import { analyzeHitterMatchup } from "../player/matchups";
+import { getPitcherStats } from "../player/pitcher-stats";
 
 // Points awarded in DraftKings for these categories
 export const WALK_POINTS = 2;
@@ -182,7 +181,7 @@ export async function getCareerPlateDisciplineProfile(
 
       const seasonYear = parseInt(season.season);
       const walks = season.walks || 0;
-      const hbp = season.hitByPitch || 0;
+      const hbp = season.hitByPitches || 0;
       const plateAppearances =
         season.plateAppearances ||
         season.atBats + walks + hbp + (season.sacrificeFlies || 0);
@@ -348,7 +347,20 @@ export async function getPitcherControlProfile(
       return null;
     }
 
-    const stats = pitcherData.seasonStats;
+    const currentSeason = season.toString();
+    const stats = pitcherData.seasonStats[currentSeason] || {
+      gamesPlayed: 0,
+      gamesStarted: 0,
+      inningsPitched: 0,
+      wins: 0,
+      losses: 0,
+      era: 0,
+      whip: 0,
+      strikeouts: 0,
+      walks: 0,
+      saves: 0,
+      hitBatsmen: 0,
+    };
 
     // If no innings pitched, return null
     if (

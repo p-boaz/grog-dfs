@@ -3,10 +3,10 @@
  * Each run and RBI is worth +2 points in DraftKings
  */
 
-import { getBatterStats, getBatterSplits } from "../player/batter-stats";
-import { getPitcherStats } from "../player/pitcher-stats";
-import { getGameEnvironmentData, getBallparkFactors } from "../index";
 import { getProbableLineups } from "../game/lineups";
+import { getBallparkFactors } from "../index";
+import { getBatterStats } from "../player/batter-stats";
+import { getPitcherStats } from "../player/pitcher-stats";
 import { getTeamStats } from "../schedule/schedule";
 
 // Points awarded in DraftKings for runs and RBIs
@@ -17,21 +17,21 @@ export const RBI_POINTS = 2;
 // These are the relative weights for converting batting lineup position to run/RBI expectations
 // Leadoff hitters score more runs, middle-order hitters get more RBIs
 export const LINEUP_RUN_WEIGHTS = {
-  1: 1.4,  // Leadoff hitters score the most runs
+  1: 1.4, // Leadoff hitters score the most runs
   2: 1.3,
-  3: 1.2, 
+  3: 1.2,
   4: 1.1,
   5: 1.0,
   6: 0.9,
   7: 0.8,
   8: 0.7,
-  9: 0.6,  // 9-hole typically scores fewest runs
+  9: 0.6, // 9-hole typically scores fewest runs
 };
 
 export const LINEUP_RBI_WEIGHTS = {
-  1: 0.7,  // Leadoff hitters get fewer RBIs
+  1: 0.7, // Leadoff hitters get fewer RBIs
   2: 0.9,
-  3: 1.4,  // 3-4-5 hitters get the most RBIs
+  3: 1.4, // 3-4-5 hitters get the most RBIs
   4: 1.5,
   5: 1.3,
   6: 1.1,
@@ -95,13 +95,15 @@ export async function getPlayerRunProductionStats(
     }
 
     // Calculate plate appearances (rough estimate if not provided)
-    const plateAppearances = 
-      batting.plateAppearances || 
-      (batting.atBats + (batting.walks || 0) + (batting.hitByPitch || 0));
+    const plateAppearances =
+      batting.plateAppearances ||
+      batting.atBats + (batting.walks || 0) + (batting.hitByPitches || 0);
 
     // Calculate rate stats
-    const runsPerGame = batting.gamesPlayed > 0 ? (batting.runs || 0) / batting.gamesPlayed : 0;
-    const rbiPerGame = batting.gamesPlayed > 0 ? (batting.rbi || 0) / batting.gamesPlayed : 0;
+    const runsPerGame =
+      batting.gamesPlayed > 0 ? (batting.runs || 0) / batting.gamesPlayed : 0;
+    const rbiPerGame =
+      batting.gamesPlayed > 0 ? (batting.rbi || 0) / batting.gamesPlayed : 0;
 
     return {
       runs: batting.runs || 0,
@@ -117,7 +119,7 @@ export async function getPlayerRunProductionStats(
       runningSpeed: 50, // Default average running speed
       battedBallProfile: {
         flyBallPct: 0.35, // Default values
-        lineDrivePct: 0.20,
+        lineDrivePct: 0.2,
         groundBallPct: 0.45,
         hardHitPct: 0.35,
       },
@@ -167,8 +169,8 @@ export async function getCareerRunProductionProfile(playerId: number): Promise<{
     let bestSeasonRBI = 0;
 
     // Track recent seasons for trend analysis (last 3 seasons)
-    const recentSeasons: Array<{ 
-      season: string; 
+    const recentSeasons: Array<{
+      season: string;
       runsPerGame: number;
       rbiPerGame: number;
     }> = [];
@@ -216,9 +218,11 @@ export async function getCareerRunProductionProfile(playerId: number): Promise<{
         // Track season-to-season variation
         if (previousRunsPerGame !== null && previousRBIPerGame !== null) {
           // Calculate change from previous season
-          const runChange = Math.abs(runsPerGame - previousRunsPerGame) / previousRunsPerGame;
-          const rbiChange = Math.abs(rbiPerGame - previousRBIPerGame) / previousRBIPerGame;
-          
+          const runChange =
+            Math.abs(runsPerGame - previousRunsPerGame) / previousRunsPerGame;
+          const rbiChange =
+            Math.abs(rbiPerGame - previousRBIPerGame) / previousRBIPerGame;
+
           // Average the changes
           const avgChange = (runChange + rbiChange) / 2;
           seasonVariations.push(avgChange);
@@ -242,8 +246,10 @@ export async function getCareerRunProductionProfile(playerId: number): Promise<{
       recentSeasons.sort((a, b) => parseInt(b.season) - parseInt(a.season));
 
       // Calculate combined run production metric
-      const currentProduction = recentSeasons[0].runsPerGame + recentSeasons[0].rbiPerGame;
-      const previousProduction = recentSeasons[1].runsPerGame + recentSeasons[1].rbiPerGame;
+      const currentProduction =
+        recentSeasons[0].runsPerGame + recentSeasons[0].rbiPerGame;
+      const previousProduction =
+        recentSeasons[1].runsPerGame + recentSeasons[1].rbiPerGame;
 
       // Compare most recent to previous
       if (currentProduction > previousProduction * 1.15) {
@@ -257,7 +263,9 @@ export async function getCareerRunProductionProfile(playerId: number): Promise<{
     // Average all the season-to-season variations
     let seasonToSeasonVariance = 0.3; // Default medium variance
     if (seasonVariations.length > 0) {
-      const avgVariation = seasonVariations.reduce((sum, val) => sum + val, 0) / seasonVariations.length;
+      const avgVariation =
+        seasonVariations.reduce((sum, val) => sum + val, 0) /
+        seasonVariations.length;
       // Convert to 0-1 scale where 0 is completely consistent
       seasonToSeasonVariance = Math.min(1, avgVariation);
     }
@@ -307,7 +315,7 @@ export async function getTeamOffensiveContext(
     }
 
     const stats = teamData.stats;
-    
+
     // Calculate key metrics
     const gamesPlayed = stats.gamesPlayed || 162; // Default to full season if not available
     const runsPerGame = stats.runsScored / gamesPlayed;
@@ -315,19 +323,19 @@ export async function getTeamOffensiveContext(
     // MLB average runs per game is ~4.5
     // Convert to 0-100 scale where 50 is league average
     const teamOffensiveRating = 50 * (runsPerGame / 4.5);
-    
+
     // Estimate lineup strength based on offensive metrics
     // In a real implementation, this would analyze the actual lineup
     const overallStrength = teamOffensiveRating;
-    
+
     // For simplicity, estimate top/bottom lineup strength
     // In reality, this would use actual player stats from each lineup position
     const topOfOrder = overallStrength * 1.1; // Top of order typically stronger
     const bottomOfOrder = overallStrength * 0.9; // Bottom of order typically weaker
-    
+
     // Estimate runners on base frequency using OBP
     // League average OBP is ~.320
-    const teamOBP = parseFloat(stats.obp.toString()) || 0.320;
+    const teamOBP = parseFloat(stats.obp.toString()) || 0.32;
     const runnersOnBaseFrequency = teamOBP + 0.05; // Adjust upward for baserunners from errors, etc.
 
     return {
@@ -352,9 +360,7 @@ export async function getTeamOffensiveContext(
 /**
  * Get ballpark run factors
  */
-export async function getBallparkRunFactor(
-  venueId: number
-): Promise<{
+export async function getBallparkRunFactor(venueId: number): Promise<{
   overall: number;
   runFactor: number;
   rbiFactor: number;
@@ -394,7 +400,7 @@ export async function getLineupContext(
   gameId: string
 ): Promise<{
   lineupPosition: number | null;
-  battingOrder: string | null; // "top" | "middle" | "bottom" 
+  battingOrder: string | null; // "top" | "middle" | "bottom"
   hittersBehind: number; // Number of hitters behind in lineup
   hittersAhead: number; // Number of hitters ahead in lineup
   expectedRunOpportunities: number; // Estimated times runner will be on base ahead of batter
@@ -409,14 +415,14 @@ export async function getLineupContext(
     if (!lineupData) {
       return null;
     }
-    
+
     // Find player in either home or away lineup
     const homeLineup = lineupData.homeBatters || [];
     const awayLineup = lineupData.awayBatters || [];
-    
+
     let position = null;
     let isHome = false;
-    
+
     // Check home lineup
     for (let i = 0; i < homeLineup.length; i++) {
       if (homeLineup[i].id === playerId) {
@@ -425,7 +431,7 @@ export async function getLineupContext(
         break;
       }
     }
-    
+
     // Check away lineup if not found in home
     if (position === null) {
       for (let i = 0; i < awayLineup.length; i++) {
@@ -435,12 +441,12 @@ export async function getLineupContext(
         }
       }
     }
-    
+
     // If player not found in either lineup, return null
     if (position === null) {
       return null;
     }
-    
+
     // Determine batting order section
     let battingOrder: string;
     if (position <= 3) {
@@ -450,22 +456,24 @@ export async function getLineupContext(
     } else {
       battingOrder = "bottom";
     }
-    
+
     // Calculate hitters ahead and behind
     // Assuming 9 hitters in lineup
     const lineupSize = 9;
     const hittersAhead = position - 1;
     const hittersBehind = lineupSize - position;
-    
+
     // Estimate opportunities based on position
     // These would be more sophisticated in a real implementation
-    const lineupRuns = LINEUP_RUN_WEIGHTS[position as keyof typeof LINEUP_RUN_WEIGHTS] || 1.0;
-    const lineupRBIs = LINEUP_RBI_WEIGHTS[position as keyof typeof LINEUP_RBI_WEIGHTS] || 1.0;
-    
+    const lineupRuns =
+      LINEUP_RUN_WEIGHTS[position as keyof typeof LINEUP_RUN_WEIGHTS] || 1.0;
+    const lineupRBIs =
+      LINEUP_RBI_WEIGHTS[position as keyof typeof LINEUP_RBI_WEIGHTS] || 1.0;
+
     // Base opportunities - these would be calibrated in a real system
     const baseRunOpportunities = 0.9; // Times per game player will have scoring opportunity
     const baseRbiOpportunities = 1.1; // Times per game player will have RBI opportunity
-    
+
     // Adjust by lineup weights
     const expectedRunOpportunities = baseRunOpportunities * lineupRuns;
     const expectedRbiOpportunities = baseRbiOpportunities * lineupRBIs;
@@ -511,37 +519,42 @@ export async function getPitcherRunAllowance(
       season,
     });
 
-    // Verify player is a pitcher
-    if (!pitcherData || pitcherData.primaryPosition !== "P") {
+    if (!pitcherData) {
       return null;
     }
 
-    const stats = pitcherData.seasonStats;
+    // Get the stats for the specific season
+    const currentSeason = season.toString();
+    const stats = pitcherData.seasonStats[currentSeason] || {
+      gamesPlayed: 0,
+      gamesStarted: 0,
+      inningsPitched: 0,
+      wins: 0,
+      losses: 0,
+      era: 4.5, // MLB average ERA
+      whip: 1.3, // League average WHIP
+      strikeouts: 0,
+      walks: 0,
+      saves: 0,
+      hitBatsmen: 0,
+    };
 
-    // If no innings pitched, return null
-    if (
-      !stats.inningsPitched ||
-      parseFloat(stats.inningsPitched.toString()) === 0
-    ) {
-      return null;
-    }
-
-    // Extract needed values
+    // Parse numeric values with safeguards
     const ip = parseFloat(stats.inningsPitched.toString());
     const era = parseFloat(stats.era.toString()) || 4.5; // MLB average if not available
     const whip = parseFloat(stats.whip.toString()) || 1.3; // MLB average if not available
-    
+
     // Estimate earned runs and total runs
     const earnedRuns = Math.round((era * ip) / 9);
     const runsAllowed = Math.round(earnedRuns * 1.1); // ~10% of runs are unearned
-    
+
     // Calculate runs per 9 innings
     const runsPer9 = (runsAllowed / ip) * 9;
-    
+
     // Calculate opportunity rate from WHIP
     // WHIP correlates with runners getting on base (opportunities for runs)
     const runScoringOpportunityRate = whip * 0.25; // Estimated rate of runners in scoring position
-    
+
     // Calculate run allowance rating on 0-10 scale where 5 is average
     // 4.5 ERA is approximately average
     const runAllowanceRating = 5 * (era / 4.5);
@@ -589,7 +602,7 @@ export async function calculateExpectedRuns(
   try {
     // Gather all required data in parallel
     const [
-      playerStats, 
+      playerStats,
       careerProfile,
       lineupContext,
       pitcherData,
@@ -601,81 +614,87 @@ export async function calculateExpectedRuns(
       getLineupContext(batterId, gameId).catch(() => null),
       getPitcherRunAllowance(opposingPitcherId).catch(() => null),
       // Get player data to find the team
-      getBatterStats({ batterId }).then(data => {
-        // Use batter data to get team id
-        const teamId = data?.currentTeam?.id;
-        if (!teamId) return null;
-        return getTeamOffensiveContext(teamId).catch(() => null);
-      }).catch(() => null),
+      getBatterStats({ batterId })
+        .then((data) => {
+          // Use batter data to get team id
+          const teamId = data?.currentTeam?.id;
+          if (!teamId) return null;
+          return getTeamOffensiveContext(teamId).catch(() => null);
+        })
+        .catch(() => null),
       // Get pitcher data to find the venue
-      getPitcherStats({ pitcherId: opposingPitcherId }).then(data => {
-        // Use pitcher data to get venue id
-        const venueId = data?.currentTeam?.venueId;
-        if (!venueId) return null;
-        return getBallparkRunFactor(venueId).catch(() => null);
-      }).catch(() => null),
+      getPitcherStats({ pitcherId: opposingPitcherId })
+        .then((data) => {
+          // Use pitcher data to get venue id
+          const venueId = data?.currentTeam?.venueId;
+          if (!venueId) return null;
+          return getBallparkRunFactor(venueId).catch(() => null);
+        })
+        .catch(() => null),
     ]);
 
     // Baseline runs per game from player's season stats or MLB average
     let baselineRunsPerGame = playerStats?.runsPerGame || 0.5; // Default to MLB average
-    
+
     // If we have career data, blend with current season for more stability
     if (careerProfile && careerProfile.careerRunsPerGame) {
       // Weight current season more heavily, but include career data
-      baselineRunsPerGame = (baselineRunsPerGame * 2 + careerProfile.careerRunsPerGame) / 3;
+      baselineRunsPerGame =
+        (baselineRunsPerGame * 2 + careerProfile.careerRunsPerGame) / 3;
     }
-    
+
     // Apply lineup position factor
     let lineupFactor = 1.0;
     if (lineupContext && lineupContext.lineupPosition) {
       // Get the factor from our lookup table
       const position = lineupContext.lineupPosition;
-      lineupFactor = LINEUP_RUN_WEIGHTS[position as keyof typeof LINEUP_RUN_WEIGHTS] || 1.0;
+      lineupFactor =
+        LINEUP_RUN_WEIGHTS[position as keyof typeof LINEUP_RUN_WEIGHTS] || 1.0;
     }
-    
+
     // Apply team offense factor
     let teamFactor = 1.0;
     if (teamContext) {
       // Better offensive teams create more run opportunities for all batters
       teamFactor = teamContext.teamOffensiveRating / 50; // 50 is average
     }
-    
+
     // Apply pitcher factor
     let pitcherFactor = 1.0;
     if (pitcherData) {
       // Inverse of pitcher quality: worse pitchers allow more runs
       pitcherFactor = pitcherData.runAllowanceRating / 5; // 5 is average
     }
-    
+
     // Apply ballpark factor
     let ballparkFactor = 1.0;
     if (ballparkData) {
       ballparkFactor = ballparkData.runFactor;
     }
-    
+
     // Apply game context factor (like weather, divisional game, etc)
     // This would be more sophisticated in a real implementation
     const gameContextFactor = 1.0;
-    
+
     // Calculate final expected runs
-    const expectedRuns = 
-      baselineRunsPerGame * 
-      lineupFactor * 
-      teamFactor * 
-      pitcherFactor * 
+    const expectedRuns =
+      baselineRunsPerGame *
+      lineupFactor *
+      teamFactor *
+      pitcherFactor *
       ballparkFactor *
       gameContextFactor;
-    
+
     // Calculate confidence score
     let confidence = 70; // Start with baseline confidence
-    
+
     // Adjust confidence based on data quality and player consistency
     if (lineupContext?.lineupPosition) confidence += 10;
     if (careerProfile?.seasonToSeasonVariance) {
       // More consistent players get higher confidence
       confidence += (1 - careerProfile.seasonToSeasonVariance) * 10;
     }
-    
+
     // Return the projection
     return {
       expectedRuns,
@@ -694,7 +713,7 @@ export async function calculateExpectedRuns(
       `Error calculating expected runs for player ${batterId}:`,
       error
     );
-    
+
     // Return conservative default values
     return {
       expectedRuns: 0.5, // MLB average
@@ -735,7 +754,7 @@ export async function calculateExpectedRBIs(
   try {
     // Gather all required data in parallel
     const [
-      playerStats, 
+      playerStats,
       careerProfile,
       lineupContext,
       pitcherData,
@@ -747,90 +766,96 @@ export async function calculateExpectedRBIs(
       getLineupContext(batterId, gameId).catch(() => null),
       getPitcherRunAllowance(opposingPitcherId).catch(() => null),
       // Get player data to find the team
-      getBatterStats({ batterId }).then(data => {
-        // Use batter data to get team id
-        const teamId = data?.currentTeam?.id;
-        if (!teamId) return null;
-        return getTeamOffensiveContext(teamId).catch(() => null);
-      }).catch(() => null),
+      getBatterStats({ batterId })
+        .then((data) => {
+          // Use batter data to get team id
+          const teamId = data?.currentTeam?.id;
+          if (!teamId) return null;
+          return getTeamOffensiveContext(teamId).catch(() => null);
+        })
+        .catch(() => null),
       // Get pitcher data to find the venue
-      getPitcherStats({ pitcherId: opposingPitcherId }).then(data => {
-        // Use pitcher data to get venue id
-        const venueId = data?.currentTeam?.venueId;
-        if (!venueId) return null;
-        return getBallparkRunFactor(venueId).catch(() => null);
-      }).catch(() => null),
+      getPitcherStats({ pitcherId: opposingPitcherId })
+        .then((data) => {
+          // Use pitcher data to get venue id
+          const venueId = data?.currentTeam?.venueId;
+          if (!venueId) return null;
+          return getBallparkRunFactor(venueId).catch(() => null);
+        })
+        .catch(() => null),
     ]);
 
     // Baseline RBIs per game from player's season stats or MLB average
     let baselineRBIsPerGame = playerStats?.rbiPerGame || 0.5; // Default to MLB average
-    
+
     // If we have career data, blend with current season for more stability
     if (careerProfile && careerProfile.careerRBIPerGame) {
       // Weight current season more heavily, but include career data
-      baselineRBIsPerGame = (baselineRBIsPerGame * 2 + careerProfile.careerRBIPerGame) / 3;
+      baselineRBIsPerGame =
+        (baselineRBIsPerGame * 2 + careerProfile.careerRBIPerGame) / 3;
     }
-    
+
     // Apply lineup position factor
     let lineupFactor = 1.0;
     if (lineupContext && lineupContext.lineupPosition) {
       // Get the factor from our lookup table
       const position = lineupContext.lineupPosition;
-      lineupFactor = LINEUP_RBI_WEIGHTS[position as keyof typeof LINEUP_RBI_WEIGHTS] || 1.0;
+      lineupFactor =
+        LINEUP_RBI_WEIGHTS[position as keyof typeof LINEUP_RBI_WEIGHTS] || 1.0;
     }
-    
+
     // Apply team offense factor
     let teamFactor = 1.0;
     if (teamContext) {
       // Better offensive teams get more runners on base for RBI opportunities
       teamFactor = teamContext.teamOffensiveRating / 50; // 50 is average
     }
-    
+
     // Apply pitcher factor
     let pitcherFactor = 1.0;
     if (pitcherData) {
       // Inverse of pitcher quality: worse pitchers allow more runs
       pitcherFactor = pitcherData.runAllowanceRating / 5; // 5 is average
     }
-    
+
     // Apply ballpark factor
     let ballparkFactor = 1.0;
     if (ballparkData) {
       ballparkFactor = ballparkData.rbiFactor;
     }
-    
+
     // Apply batting skill factor (for RBIs, power and average with RISP are key)
     let battingSkillFactor = 1.0;
     if (playerStats) {
       // Calculate from player's stats
       // Higher slugging % players deliver more RBIs
-      battingSkillFactor = (playerStats.sluggingPct / 0.400) * 0.7 + 0.3;
+      battingSkillFactor = (playerStats.sluggingPct / 0.4) * 0.7 + 0.3;
     }
-    
+
     // Apply game context factor (like weather, divisional game, etc)
     // This would be more sophisticated in a real implementation
     const gameContextFactor = 1.0;
-    
+
     // Calculate final expected RBIs
-    const expectedRBIs = 
-      baselineRBIsPerGame * 
-      lineupFactor * 
-      teamFactor * 
-      pitcherFactor * 
+    const expectedRBIs =
+      baselineRBIsPerGame *
+      lineupFactor *
+      teamFactor *
+      pitcherFactor *
       ballparkFactor *
       battingSkillFactor *
       gameContextFactor;
-    
+
     // Calculate confidence score
     let confidence = 70; // Start with baseline confidence
-    
+
     // Adjust confidence based on data quality and player consistency
     if (lineupContext?.lineupPosition) confidence += 10;
     if (careerProfile?.seasonToSeasonVariance) {
       // More consistent players get higher confidence
       confidence += (1 - careerProfile.seasonToSeasonVariance) * 10;
     }
-    
+
     // Return the projection
     return {
       expectedRBIs,
@@ -850,7 +875,7 @@ export async function calculateExpectedRBIs(
       `Error calculating expected RBIs for player ${batterId}:`,
       error
     );
-    
+
     // Return conservative default values
     return {
       expectedRBIs: 0.5, // MLB average
@@ -899,20 +924,20 @@ export async function calculateRunProductionProjection(
       calculateExpectedRuns(batterId, gameId, opposingPitcherId, isHome),
       calculateExpectedRBIs(batterId, gameId, opposingPitcherId, isHome),
     ]);
-    
+
     // Calculate expected points (2 points per run and RBI)
     const runPoints = runsProjection.expectedRuns * RUN_POINTS;
     const rbiPoints = rbisProjection.expectedRBIs * RBI_POINTS;
-    
+
     // Calculate total expected points
     const totalPoints = runPoints + rbiPoints;
-    
+
     // Use weighted average of confidences based on point contribution
-    const totalConfidence = 
-      (runsProjection.confidenceScore * runPoints + 
-       rbisProjection.confidenceScore * rbiPoints) / 
+    const totalConfidence =
+      (runsProjection.confidenceScore * runPoints +
+        rbisProjection.confidenceScore * rbiPoints) /
       Math.max(0.001, totalPoints);
-      
+
     return {
       runs: {
         expected: runsProjection.expectedRuns,
@@ -935,7 +960,7 @@ export async function calculateRunProductionProjection(
       `Error calculating run production projection for player ${batterId}:`,
       error
     );
-    
+
     // Return conservative default values
     return {
       runs: {

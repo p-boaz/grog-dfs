@@ -55,7 +55,20 @@ export async function getPitcherStrikeoutStats(
     const pitchMixData = await getPitcherPitchMix({ pitcherId });
 
     // Extract pitching stats
-    const stats = pitcherData.seasonStats;
+    const season = new Date().getFullYear().toString();
+    const stats = pitcherData.seasonStats[season] || {
+      gamesPlayed: 0,
+      gamesStarted: 0,
+      inningsPitched: 0,
+      wins: 0,
+      losses: 0,
+      era: 0,
+      whip: 0,
+      strikeouts: 0,
+      walks: 0,
+      saves: 0,
+      hitBatsmen: 0,
+    };
 
     // Calculate strikeout rate - strikeouts per 9 innings
     const strikeoutRate =

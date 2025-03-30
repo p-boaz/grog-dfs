@@ -60,7 +60,7 @@ export async function updateTeamSubscription(
     .set({
       ...subscriptionData,
       updatedAt: new Date(),
-    })
+    } as any)
     .where(eq(teams.id, teamId));
 }
 

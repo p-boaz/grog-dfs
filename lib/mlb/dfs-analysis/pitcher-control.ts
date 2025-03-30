@@ -6,12 +6,12 @@
  * - Hit Batsman: -0.6 Pts
  */
 
-import { getPitcherStats, getPitcherPitchMix } from "../player/pitcher-stats";
 import {
-  getBatterStats,
   getBatterPlateDiscipline,
+  getBatterStats,
 } from "../player/batter-stats";
 import { analyzeHitterMatchup } from "../player/matchups";
+import { getPitcherPitchMix, getPitcherStats } from "../player/pitcher-stats";
 
 // Negative points in DraftKings for these categories
 export const HIT_AGAINST_POINTS = -0.6;
@@ -61,10 +61,10 @@ export async function getPitcherControlStats(
     }
 
     // Extract needed values
-    const stats = pitcherData.seasonStats;
-    const ip = parseFloat(stats.inningsPitched.toString());
-    const walks = stats.walks || 0;
-    const strikeouts = stats.strikeouts || 0;
+    const stats = pitcherData.seasonStats[season.toString()] || {};
+    const ip = parseFloat(stats.inningsPitched?.toString() || "0");
+    const walks = Number(stats.walks || 0);
+    const strikeouts = Number(stats.strikeouts || 0);
     const hits = 0; // Need to calculate or retrieve from more detailed stats
 
     // Try to get more detailed pitch mix data which includes control metrics
@@ -78,7 +78,7 @@ export async function getPitcherControlStats(
     const hbpPerNine = 0; // Need to extract from more detailed stats
 
     // Calculate WHIP (Walks + Hits per Inning Pitched)
-    const whip = stats.whip || 0;
+    const whip = Number(stats.whip || 0);
 
     // Calculate K/BB ratio
     const strikeoutToWalkRatio = walks > 0 ? strikeouts / walks : strikeouts;
@@ -559,8 +559,14 @@ export async function getBatterControlFactors(batterId: number): Promise<{
     }
 
     // Try to get plate discipline data if available
-    const disciplineData = await getBatterPlateDiscipline(batterId).catch(
-      () => null
+    const disciplineData = await getBatterPlateDiscipline({ batterId }).catch(
+      (error) => {
+        console.error(
+          `Error getting batter discipline for ${batterId}:`,
+          error
+        );
+        return null;
+      }
     );
 
     // Calculate walk rate and strikeout rate

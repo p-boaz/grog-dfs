@@ -445,7 +445,7 @@ export async function analyzeBatters(
           avgPointsPerGame: batter.avgPointsPerGame,
         },
       };
-      
+
       // Get the batter information and opposing pitcher for analysis
       const batterInfo: BatterInfo = {
         id: batter.id,
@@ -456,8 +456,9 @@ export async function analyzeBatters(
         opposingPitcher: {
           id: game.pitchers?.[isHome ? "away" : "home"]?.id || 0,
           name: game.pitchers?.[isHome ? "away" : "home"]?.fullName || "",
-          throwsHand: game.pitchers?.[isHome ? "away" : "home"]?.throwsHand || "R",
-        }
+          throwsHand:
+            game.pitchers?.[isHome ? "away" : "home"]?.throwsHand || "R",
+        },
       };
 
       // Get game information for analysis
@@ -469,8 +470,12 @@ export async function analyzeBatters(
         environment: game.environment,
         ballpark: game.ballpark,
         lineups: {
-          homeCatcher: game.lineups?.home?.find(player => player.position === "C"),
-          awayCatcher: game.lineups?.away?.find(player => player.position === "C"),
+          homeCatcher: game.lineups?.home
+            ? { id: 0 } // Placeholder with default value
+            : undefined,
+          awayCatcher: game.lineups?.away
+            ? { id: 0 } // Placeholder with default value
+            : undefined,
         },
         pitchers: {
           away: {
@@ -479,11 +484,11 @@ export async function analyzeBatters(
             throwsHand: game.pitchers?.away?.throwsHand || "R",
           },
           home: {
-            id: game.pitchers?.home?.id || 0, 
+            id: game.pitchers?.home?.id || 0,
             name: game.pitchers?.home?.fullName || "",
             throwsHand: game.pitchers?.home?.throwsHand || "R",
-          }
-        }
+          },
+        },
       };
 
       // Calculate quality metrics
@@ -525,12 +530,16 @@ export async function analyzeBatters(
         gameInfo.pitchers[isHome ? "away" : "home"].id
       );
       if (hrProbability) {
-        entry.projections.homeRunProbability = hrProbability.gameHrProbability || 0.05;
+        entry.projections.homeRunProbability =
+          hrProbability.gameHrProbability || 0.05;
       }
 
       // Calculate stolen base probability
       try {
-        const catcherId = (isHome ? gameInfo.lineups.awayCatcher?.id : gameInfo.lineups.homeCatcher?.id) || 0;
+        const catcherId =
+          (isHome
+            ? gameInfo.lineups.awayCatcher?.id
+            : gameInfo.lineups.homeCatcher?.id) || 0;
         const sbProbability = await calculateStolenBaseProbability(
           batter.id,
           catcherId,
@@ -540,9 +549,13 @@ export async function analyzeBatters(
           entry.projections.stolenBaseProbability = sbProbability.probability;
         }
       } catch (error) {
-        console.warn(`Error calculating stolen base probability for ${batter.name} (${batter.id}):`, error);
+        console.warn(
+          `Error calculating stolen base probability for ${batter.name} (${batter.id}):`,
+          error
+        );
         // Default value for stolen base probability
-        entry.projections.stolenBaseProbability = entry.stats.seasonStats["2025"].stolenBases > 0 ? 0.08 : 0.03;
+        entry.projections.stolenBaseProbability =
+          entry.stats.seasonStats["2025"].stolenBases > 0 ? 0.08 : 0.03;
       }
 
       // Calculate historical matchup stats
@@ -555,7 +568,12 @@ export async function analyzeBatters(
           entry.matchup.historicalStats = historicalMatchup;
         }
       } catch (error) {
-        console.warn(`Error getting historical matchup for ${batter.name} (${batter.id}) vs pitcher ${gameInfo.pitchers[isHome ? "away" : "home"].id}:`, error);
+        console.warn(
+          `Error getting historical matchup for ${batter.name} (${
+            batter.id
+          }) vs pitcher ${gameInfo.pitchers[isHome ? "away" : "home"].id}:`,
+          error
+        );
         // Keep default values from initialization
       }
 
@@ -581,11 +599,12 @@ export async function analyzeBatters(
       }));
 
       // Calculate expected points
-      const hitPoints = hitProjections ? 
-        hitProjections.byType.singles.points +
-        hitProjections.byType.doubles.points +
-        hitProjections.byType.triples.points +
-        hitProjections.byType.homeRuns.points : 3.0;
+      const hitPoints = hitProjections
+        ? hitProjections.byType.singles.points +
+          hitProjections.byType.doubles.points +
+          hitProjections.byType.triples.points +
+          hitProjections.byType.homeRuns.points
+        : 3.0;
 
       const hrPoints = entry.projections.homeRunProbability * 10;
       const sbPoints = entry.projections.stolenBaseProbability * 5;
@@ -593,7 +612,8 @@ export async function analyzeBatters(
       const rbiPoints = runProductionProj.rbis.expected * 2;
       const walkPoints = disciplineProj.walks.expected * 2;
 
-      const totalPoints = hitPoints + hrPoints + sbPoints + runPoints + rbiPoints + walkPoints;
+      const totalPoints =
+        hitPoints + hrPoints + sbPoints + runPoints + rbiPoints + walkPoints;
 
       entry.projections.dfsProjection = {
         expectedPoints: totalPoints,
@@ -601,9 +621,15 @@ export async function analyzeBatters(
         floor: totalPoints * 0.5,
         breakdown: {
           hits: hitProjections ? hitProjections.total : 0.7,
-          singles: hitProjections ? hitProjections.byType.singles.expected : 0.5,
-          doubles: hitProjections ? hitProjections.byType.doubles.expected : 0.15,
-          triples: hitProjections ? hitProjections.byType.triples.expected : 0.05,
+          singles: hitProjections
+            ? hitProjections.byType.singles.expected
+            : 0.5,
+          doubles: hitProjections
+            ? hitProjections.byType.doubles.expected
+            : 0.15,
+          triples: hitProjections
+            ? hitProjections.byType.triples.expected
+            : 0.05,
           homeRuns: entry.projections.homeRunProbability,
           runs: runProductionProj.runs.expected,
           rbi: runProductionProj.rbis.expected,
@@ -973,7 +999,7 @@ const analyzeBatter = async (
     const qualityMetrics = await calculateQualityMetrics(
       currentStats,
       prevStats,
-      careerStats
+      careerStats as any
     );
 
     // Get historical matchup stats
@@ -993,11 +1019,11 @@ const analyzeBatter = async (
 
     // Calculate home run probability
     const hrProbability = await estimateHomeRunProbability(
-      currentStats.seasonStats,
-      game.environment,
-      game.ballpark,
+      batter.id,
+      game.gameId.toString(),
+      game.venue.id,
       batter.isHome,
-      game.pitchers.away
+      game.pitchers.away.id
     );
 
     // Calculate stolen base probability
@@ -1332,15 +1358,25 @@ async function calculateStolenBaseProbability(
     try {
       seasonStats = await getPlayerSeasonStats(batterId);
     } catch (error) {
-      console.warn(`Error fetching season stolen base stats for player ${batterId}:`, error);
+      console.warn(
+        `Error fetching season stolen base stats for player ${batterId}:`,
+        error
+      );
     }
 
     // Get career stolen base profile - handle potential nulls/errors
     let careerProfile = 0;
     try {
-      careerProfile = await getCareerStolenBaseProfile(batterId);
+      const profileData = await getCareerStolenBaseProfile(batterId);
+      careerProfile =
+        profileData && typeof profileData === "object"
+          ? profileData.careerRate || 0
+          : 0;
     } catch (error) {
-      console.warn(`Error fetching career stolen base profile for player ${batterId}:`, error);
+      console.warn(
+        `Error fetching career stolen base profile for player ${batterId}:`,
+        error
+      );
       // Set a baseline value based on current stats if available
       if (stats && stats.stolenBases > 0) {
         careerProfile = 0.3;
@@ -1351,9 +1387,16 @@ async function calculateStolenBaseProbability(
     let catcherDefense = 0.5; // Default middle value
     if (catcherId > 0) {
       try {
-        catcherDefense = await getCatcherStolenBaseDefense(catcherId);
+        const defenseData = await getCatcherStolenBaseDefense(catcherId);
+        catcherDefense =
+          defenseData && typeof defenseData === "object"
+            ? defenseData.defensiveRating || 0.5
+            : 0.5;
       } catch (error) {
-        console.warn(`Error fetching catcher defense metrics for ${catcherId}:`, error);
+        console.warn(
+          `Error fetching catcher defense metrics for ${catcherId}:`,
+          error
+        );
       }
     }
 
@@ -1381,11 +1424,14 @@ async function calculateStolenBaseProbability(
       },
     };
   } catch (error) {
-    console.error(`Error calculating stolen base probability for player ${batterId}:`, error);
-    
+    console.error(
+      `Error calculating stolen base probability for player ${batterId}:`,
+      error
+    );
+
     // Create a default estimate based on any available data
     const hasStealHistory = stats && stats.stolenBases > 0;
-    
+
     return {
       probability: hasStealHistory ? 0.08 : 0.02, // 8% chance for players with SB history, 2% for others
       factors: {
@@ -1400,17 +1446,18 @@ async function calculateStolenBaseProbability(
 
 function calculateSeasonTendency(stats: SeasonStats | null): number {
   if (!stats) return 0;
-  
+
   const sbRate = stats.sbRate || 0;
-  const successRate = stats.stolenBases && (stats.stolenBases + stats.caughtStealing > 0) 
-    ? stats.stolenBases / (stats.stolenBases + stats.caughtStealing) 
-    : 0;
+  const successRate =
+    stats.stolenBases && stats.stolenBases + stats.caughtStealing > 0
+      ? stats.stolenBases / (stats.stolenBases + stats.caughtStealing)
+      : 0;
   return sbRate * 0.6 + successRate * 0.4;
 }
 
 function calculateGameStateFactor(stats: SeasonStats | null): number {
   if (!stats) return 0.2; // Default baseline value
-  
+
   const obp = stats.obp || 0;
   const avg = stats.avg || 0;
   return obp * 0.7 + avg * 0.3;
@@ -1678,15 +1725,22 @@ async function getHistoricalMatchupStats(
   try {
     // For now, just use the MLB API directly
     // In a real app, this would use a proper API endpoint
-    const response = await fetch(`https://statsapi.mlb.com/api/v1/people/${batterId}/stats?stats=vsPlayer&opposingPlayerId=${pitcherId}&group=hitting&sportId=1`);
+    const response = await fetch(
+      `https://statsapi.mlb.com/api/v1/people/${batterId}/stats?stats=vsPlayer&opposingPlayerId=${pitcherId}&group=hitting&sportId=1`
+    );
     if (!response.ok) {
       throw new Error("Failed to fetch matchup data");
     }
-    
+
     const data = await response.json();
-    
+
     // Parse the response
-    if (data.stats && data.stats.length > 0 && data.stats[0].splits && data.stats[0].splits.length > 0) {
+    if (
+      data.stats &&
+      data.stats.length > 0 &&
+      data.stats[0].splits &&
+      data.stats[0].splits.length > 0
+    ) {
       const stats = data.stats[0].splits[0].stat;
       return {
         atBats: stats.atBats || 0,
@@ -1696,7 +1750,13 @@ async function getHistoricalMatchupStats(
         ops: stats.ops || 0,
       };
     } else {
-      console.log("Unexpected data shape for player request to /people/" + batterId + "/stats?stats=vsPlayer&opposingPlayerId=" + pitcherId + "&group=hitting&sportId=1");
+      console.log(
+        "Unexpected data shape for player request to /people/" +
+          batterId +
+          "/stats?stats=vsPlayer&opposingPlayerId=" +
+          pitcherId +
+          "&group=hitting&sportId=1"
+      );
       return {
         atBats: 0,
         hits: 0,

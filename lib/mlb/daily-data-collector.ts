@@ -9,18 +9,11 @@ import { getProbableLineups } from "../mlb/game/lineups";
 import { getGameEnvironmentData } from "../mlb/weather/weather";
 import { analyzeStartingPitchers } from "./dfs-analysis/starting-pitcher-analysis";
 import { analyzeBatters } from "./dfs-analysis/batter-analysis";
-import type { ProbableLineup } from "./core/types";
 import { format } from "date-fns";
-import type {
-  MLBScheduleResponse,
-  MLBGame,
-  DailyMLBData,
-  TeamStats,
-} from "./core/types";
+import type { DailyMLBData } from "./core/types";
 import { getDKSalaries } from "./draftkings/salaries";
 import { populateMlbIds } from "./draftkings/player-mapping";
 import { saveToJsonFile } from "./core/file-utils";
-import { normalizePlayerName } from "../utils";
 
 // Constants for placeholder values
 const PLACEHOLDER = {
@@ -284,7 +277,7 @@ export async function collectDailyDFSData(
     );
 
     // Save pitcher analysis
-    const pitcherOutputPath = `mlb-pitchers-${targetDate}.json`;
+    const pitcherOutputPath = `${targetDate}-pitchers.json`;
     await saveToJsonFile(pitcherOutputPath, pitcherAnalysis);
     console.log(
       `\nSaved pitcher analysis to ${pitcherOutputPath} (${pitcherAnalysis.length} entries)`
@@ -344,7 +337,7 @@ export async function collectDailyDFSData(
     populateMlbIds(mlbGames);
 
     // Save raw data
-    await saveToJsonFile(`mlb-data-${targetDate}.json`, data);
+    await saveToJsonFile(`${targetDate}-data.json`, data);
 
     // Analyze batters
     console.log("\nStarting batter analysis...");
@@ -384,7 +377,7 @@ export async function collectDailyDFSData(
       `Matched ${matchedBatters} out of ${batterAnalysis.length} batters with DraftKings data`
     );
 
-    await saveToJsonFile(`mlb-batters-${targetDate}.json`, batterAnalysis);
+    await saveToJsonFile(`${targetDate}-batters.json`, batterAnalysis);
 
     // Update count
     data.count = batterAnalysis.length;

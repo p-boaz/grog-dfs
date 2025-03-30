@@ -62,7 +62,19 @@ export async function getPitcherWinStats(
     }
 
     // Extract pitching stats
-    const stats = pitcherData.seasonStats;
+    const stats = pitcherData.seasonStats[season.toString()] || {
+      gamesPlayed: 0,
+      gamesStarted: 0,
+      inningsPitched: 0,
+      wins: 0,
+      losses: 0,
+      era: 0,
+      whip: 0,
+      strikeouts: 0,
+      walks: 0,
+      saves: 0,
+      hitBatsmen: 0,
+    };
 
     // Calculate quality starts (estimated)
     let estimatedQualityStarts = 0;

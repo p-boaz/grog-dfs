@@ -10,6 +10,7 @@ export const DEFAULT_CACHE_TTL = {
   player: 6 * 60 * 60 * 1000, // 6 hours
   game: 5 * 60 * 1000,   // 5 minutes
   lineups: 15 * 60 * 1000, // 15 minutes
+  venue: 7 * 24 * 60 * 60 * 1000, // 7 days
   default: 60 * 60 * 1000  // 1 hour
 };
 

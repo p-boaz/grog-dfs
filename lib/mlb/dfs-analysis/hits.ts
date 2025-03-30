@@ -131,13 +131,34 @@ export async function getPlayerHitStats(
     // Skip pitchers unless they have significant batting stats
     if (
       playerData.primaryPosition === "P" &&
-      (playerData.seasonStats as BatterSeasonStats).atBats < 20
+      playerData.seasonStats &&
+      typeof playerData.seasonStats === "object" &&
+      "atBats" in playerData.seasonStats &&
+      playerData.seasonStats.atBats < 20
     ) {
       return null;
     }
 
     // Extract season batting stats
-    const batting = playerData.seasonStats as BatterSeasonStats;
+    const batting =
+      playerData.seasonStats && typeof playerData.seasonStats === "object"
+        ? playerData.seasonStats
+        : {
+            gamesPlayed: 0,
+            atBats: 0,
+            hits: 0,
+            homeRuns: 0,
+            doubles: 0,
+            triples: 0,
+            avg: 0,
+            obp: 0,
+            slg: 0,
+            strikeouts: 0,
+            rbi: 0,
+            ops: 0,
+            stolenBases: 0,
+            caughtStealing: 0,
+          };
 
     // If we don't have the stats we need, return null
     if (!batting || !batting.gamesPlayed || !batting.atBats) {
@@ -524,7 +545,7 @@ export async function getPitcherHitVulnerability(
     const ip = parseFloat(stats.inningsPitched.toString());
     const whip = parseFloat(stats.whip?.toString() || "1.3");
     const walks = stats.walks || Math.round((ip * 3.5) / 9); // Estimate walks if not available
-    const hitsAllowed = Math.round(whip * ip - walks);
+    const hitsAllowed = Math.round(Number(whip) * Number(ip) - Number(walks));
     const hitsPer9 = (hitsAllowed / ip) * 9;
 
     // Calculate BABIP (Batting Average on Balls In Play allowed)

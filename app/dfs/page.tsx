@@ -13,6 +13,7 @@ import { FileUpload } from "@/components/ui/file-upload";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DFSBattersView } from "@/components/dfs/DFSBattersView";
 import { DFSPitchersView } from "@/components/dfs/DFSPitchersView";
+import { DailyGamesView } from "@/components/dfs/DailyGamesView";
 import { useToast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CalendarIcon } from "lucide-react";
@@ -140,6 +141,16 @@ export default function DFSPage() {
               />
             </div>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Daily Games Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle>MLB Games for {displayDate}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <DailyGamesView date={formattedDate} />
         </CardContent>
       </Card>
 
