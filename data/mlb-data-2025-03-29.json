@@ -222,7 +222,7 @@
           }
         ],
         "confirmed": true,
-        "sourceTimestamp": "2025-03-29T23:21:53.018Z",
+        "sourceTimestamp": "2025-03-30T03:57:28.554Z",
         "__isApiSource": true
       },
       "pitchers": {
@@ -244,7 +244,7 @@
         "venueId": 3313,
         "venueName": "Yankee Stadium",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T23:21:52.837Z",
+        "sourceTimestamp": "2025-03-30T03:57:28.360Z",
         "__isApiSource": true
       },
       "teamStats": {
@@ -658,7 +658,7 @@
           }
         ],
         "confirmed": true,
-        "sourceTimestamp": "2025-03-29T23:21:53.033Z",
+        "sourceTimestamp": "2025-03-30T03:57:28.631Z",
         "__isApiSource": true
       },
       "pitchers": {
@@ -680,7 +680,7 @@
         "venueId": 3313,
         "venueName": "Yankee Stadium",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T23:21:52.837Z",
+        "sourceTimestamp": "2025-03-30T03:57:28.360Z",
         "__isApiSource": true
       },
       "teamStats": {
@@ -1094,7 +1094,7 @@
           }
         ],
         "confirmed": true,
-        "sourceTimestamp": "2025-03-29T23:21:53.048Z",
+        "sourceTimestamp": "2025-03-30T03:57:28.709Z",
         "__isApiSource": true
       },
       "pitchers": {
@@ -1116,7 +1116,7 @@
         "venueId": 3313,
         "venueName": "Yankee Stadium",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T23:21:52.837Z",
+        "sourceTimestamp": "2025-03-30T03:57:28.360Z",
         "__isApiSource": true
       },
       "teamStats": {
@@ -1550,7 +1550,7 @@
           }
         ],
         "confirmed": true,
-        "sourceTimestamp": "2025-03-29T23:21:53.065Z",
+        "sourceTimestamp": "2025-03-30T03:57:28.801Z",
         "__isApiSource": true
       },
       "pitchers": {
@@ -1572,7 +1572,7 @@
         "venueId": 3313,
         "venueName": "Yankee Stadium",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T23:21:52.837Z",
+        "sourceTimestamp": "2025-03-30T03:57:28.360Z",
         "__isApiSource": true
       },
       "teamStats": {
@@ -1790,9 +1790,9 @@
       "gameTime": "2025-03-29T20:05:00Z",
       "status": {
         "abstractGameState": "Final",
-        "codedGameState": "O",
-        "detailedState": "Game Over",
-        "statusCode": "O",
+        "codedGameState": "F",
+        "detailedState": "Final",
+        "statusCode": "F",
         "startTimeTBD": false,
         "abstractGameCode": "F"
       },
@@ -2001,7 +2001,7 @@
           }
         ],
         "confirmed": true,
-        "sourceTimestamp": "2025-03-29T23:21:53.192Z",
+        "sourceTimestamp": "2025-03-30T03:57:28.882Z",
         "__isApiSource": true
       },
       "pitchers": {
@@ -2023,7 +2023,7 @@
         "venueId": 3313,
         "venueName": "Yankee Stadium",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T23:21:52.837Z",
+        "sourceTimestamp": "2025-03-30T03:57:28.360Z",
         "__isApiSource": true
       },
       "teamStats": {
@@ -2437,7 +2437,7 @@
           }
         ],
         "confirmed": true,
-        "sourceTimestamp": "2025-03-29T23:21:53.209Z",
+        "sourceTimestamp": "2025-03-30T03:57:28.958Z",
         "__isApiSource": true
       },
       "pitchers": {
@@ -2459,7 +2459,7 @@
         "venueId": 3313,
         "venueName": "Yankee Stadium",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T23:21:52.837Z",
+        "sourceTimestamp": "2025-03-30T03:57:28.360Z",
         "__isApiSource": true
       },
       "teamStats": {
@@ -2863,7 +2863,7 @@
           }
         ],
         "confirmed": true,
-        "sourceTimestamp": "2025-03-29T23:21:53.224Z",
+        "sourceTimestamp": "2025-03-30T03:57:29.038Z",
         "__isApiSource": true
       },
       "pitchers": {
@@ -2885,7 +2885,7 @@
         "venueId": 3313,
         "venueName": "Yankee Stadium",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T23:21:52.837Z",
+        "sourceTimestamp": "2025-03-30T03:57:28.360Z",
         "__isApiSource": true
       },
       "teamStats": {
@@ -3304,7 +3304,7 @@
           }
         ],
         "confirmed": true,
-        "sourceTimestamp": "2025-03-29T23:21:53.240Z",
+        "sourceTimestamp": "2025-03-30T03:57:29.115Z",
         "__isApiSource": true
       },
       "pitchers": {
@@ -3326,7 +3326,7 @@
         "venueId": 3313,
         "venueName": "Yankee Stadium",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T23:21:52.837Z",
+        "sourceTimestamp": "2025-03-30T03:57:28.360Z",
         "__isApiSource": true
       },
       "teamStats": {
@@ -3543,12 +3543,12 @@
       "gameId": 778539,
       "gameTime": "2025-03-29T20:10:00Z",
       "status": {
-        "abstractGameState": "Live",
-        "codedGameState": "I",
-        "detailedState": "In Progress",
-        "statusCode": "I",
+        "abstractGameState": "Final",
+        "codedGameState": "F",
+        "detailedState": "Final",
+        "statusCode": "F",
         "startTimeTBD": false,
-        "abstractGameCode": "L"
+        "abstractGameCode": "F"
       },
       "homeTeam": {
         "id": 146,
@@ -3568,7 +3568,7 @@
           668804,
           665833,
           663698,
-          669261,
+          665839,
           663647,
           682848,
           624428,
@@ -3599,7 +3599,7 @@
           {
             "id": 502054,
             "fullName": "Tommy Pham",
-            "position": "LF"
+            "position": "RF"
           },
           {
             "id": 668804,
@@ -3622,6 +3622,11 @@
             "position": "RF"
           },
           {
+            "id": 665839,
+            "fullName": "Enmanuel Valdez",
+            "position": "2B"
+          },
+          {
             "id": 663647,
             "fullName": "Ke'Bryan Hayes",
             "position": "3B"
@@ -3639,7 +3644,7 @@
           {
             "id": 624428,
             "fullName": "Adam Frazier",
-            "position": "2B"
+            "position": "LF"
           },
           {
             "id": 643396,
@@ -3669,6 +3674,11 @@
           {
             "id": 666214,
             "fullName": "Joey Wentz",
+            "position": "P"
+          },
+          {
+            "id": 641835,
+            "fullName": "Tim Mayza",
             "position": "P"
           }
         ],
@@ -3757,10 +3767,15 @@
             "id": 669199,
             "fullName": "Lake Bachar",
             "position": "P"
+          },
+          {
+            "id": 666277,
+            "fullName": "George Soriano",
+            "position": "P"
           }
         ],
         "confirmed": true,
-        "sourceTimestamp": "2025-03-29T23:21:53.258Z",
+        "sourceTimestamp": "2025-03-30T03:57:29.203Z",
         "__isApiSource": true
       },
       "pitchers": {
@@ -3782,7 +3797,7 @@
         "venueId": 3313,
         "venueName": "Yankee Stadium",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T23:21:52.837Z",
+        "sourceTimestamp": "2025-03-30T03:57:28.360Z",
         "__isApiSource": true
       },
       "teamStats": {
@@ -3999,12 +4014,12 @@
       "gameId": 778531,
       "gameTime": "2025-03-29T23:05:00Z",
       "status": {
-        "abstractGameState": "Live",
-        "codedGameState": "I",
-        "detailedState": "In Progress",
-        "statusCode": "I",
+        "abstractGameState": "Final",
+        "codedGameState": "F",
+        "detailedState": "Final",
+        "statusCode": "F",
         "startTimeTBD": false,
-        "abstractGameCode": "L"
+        "abstractGameCode": "F"
       },
       "homeTeam": {
         "id": 140,
@@ -4025,10 +4040,10 @@
           608324,
           671213,
           596115,
-          677800,
+          663853,
           692225,
-          666152,
-          665966
+          657136,
+          678882
         ],
         "home": [
           543760,
@@ -4037,7 +4052,7 @@
           592626,
           666969,
           669394,
-          669701,
+          677649,
           641680,
           665750
         ],
@@ -4045,7 +4060,7 @@
           {
             "id": 680776,
             "fullName": "Jarren Duran",
-            "position": "CF"
+            "position": "RF"
           },
           {
             "id": 646240,
@@ -4073,6 +4088,11 @@
             "position": "RF"
           },
           {
+            "id": 663853,
+            "fullName": "Romy Gonzalez",
+            "position": "2B"
+          },
+          {
             "id": 692225,
             "fullName": "Kristian Campbell",
             "position": "LF"
@@ -4083,13 +4103,38 @@
             "position": "2B"
           },
           {
+            "id": 657136,
+            "fullName": "Connor Wong",
+            "position": "C"
+          },
+          {
             "id": 665966,
             "fullName": "Carlos Narváez",
             "position": "C"
           },
           {
+            "id": 678882,
+            "fullName": "Ceddanne Rafaela",
+            "position": "CF"
+          },
+          {
             "id": 621111,
             "fullName": "Walker Buehler",
+            "position": "P"
+          },
+          {
+            "id": 458677,
+            "fullName": "Justin Wilson",
+            "position": "P"
+          },
+          {
+            "id": 677161,
+            "fullName": "Zack Kelly",
+            "position": "P"
+          },
+          {
+            "id": 669711,
+            "fullName": "Greg Weissert",
             "position": "P"
           }
         ],
@@ -4130,6 +4175,11 @@
             "position": "3B"
           },
           {
+            "id": 677649,
+            "fullName": "Ezequiel Duran",
+            "position": "3B"
+          },
+          {
             "id": 641680,
             "fullName": "Jonah Heim",
             "position": "C"
@@ -4143,10 +4193,35 @@
             "id": 641816,
             "fullName": "Tyler Mahle",
             "position": "P"
+          },
+          {
+            "id": 657097,
+            "fullName": "Jacob Webb",
+            "position": "P"
+          },
+          {
+            "id": 571948,
+            "fullName": "Hoby Milner",
+            "position": "P"
+          },
+          {
+            "id": 642520,
+            "fullName": "Gerson Garabito",
+            "position": "P"
+          },
+          {
+            "id": 676395,
+            "fullName": "Robert Garcia",
+            "position": "P"
+          },
+          {
+            "id": 455119,
+            "fullName": "Chris Martin",
+            "position": "P"
           }
         ],
         "confirmed": true,
-        "sourceTimestamp": "2025-03-29T23:21:53.324Z",
+        "sourceTimestamp": "2025-03-30T03:57:29.300Z",
         "__isApiSource": true
       },
       "pitchers": {
@@ -4168,7 +4243,7 @@
         "venueId": 3313,
         "venueName": "Yankee Stadium",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T23:21:52.837Z",
+        "sourceTimestamp": "2025-03-30T03:57:28.360Z",
         "__isApiSource": true
       },
       "teamStats": {
@@ -4385,12 +4460,12 @@
       "gameId": 778530,
       "gameTime": "2025-03-29T23:15:00Z",
       "status": {
-        "abstractGameState": "Live",
-        "codedGameState": "I",
-        "detailedState": "In Progress",
-        "statusCode": "I",
+        "abstractGameState": "Final",
+        "codedGameState": "F",
+        "detailedState": "Final",
+        "statusCode": "F",
         "startTimeTBD": false,
-        "abstractGameCode": "L"
+        "abstractGameCode": "F"
       },
       "homeTeam": {
         "id": 117,
@@ -4411,19 +4486,19 @@
           624413,
           607043,
           668901,
-          608385,
-          620443,
-          683146,
+          516782,
+          682668,
+          663584,
           642350
         ],
         "home": [
-          514888,
+          663898,
           670623,
           670541,
           572233,
           665161,
           605170,
-          701305,
+          676694,
           643289,
           676801
         ],
@@ -4459,14 +4534,29 @@
             "position": "DH"
           },
           {
+            "id": 516782,
+            "fullName": "Starling Marte",
+            "position": "DH"
+          },
+          {
             "id": 620443,
             "fullName": "Luis Torrens",
             "position": "C"
           },
           {
+            "id": 682668,
+            "fullName": "Luisangel Acuña",
+            "position": "2B"
+          },
+          {
             "id": 683146,
             "fullName": "Brett Baty",
             "position": "2B"
+          },
+          {
+            "id": 663584,
+            "fullName": "Hayden Senger",
+            "position": "C"
           },
           {
             "id": 642350,
@@ -4477,6 +4567,16 @@
             "id": 656288,
             "fullName": "Griffin Canning",
             "position": "P"
+          },
+          {
+            "id": 676130,
+            "fullName": "José Buttó",
+            "position": "P"
+          },
+          {
+            "id": 668820,
+            "fullName": "Max Kranick",
+            "position": "P"
           }
         ],
         "homeBatters": [
@@ -4484,6 +4584,11 @@
             "id": 514888,
             "fullName": "Jose Altuve",
             "position": "LF"
+          },
+          {
+            "id": 663898,
+            "fullName": "Brendan Rodgers",
+            "position": "2B"
           },
           {
             "id": 670623,
@@ -4516,23 +4621,43 @@
             "position": "RF"
           },
           {
+            "id": 676694,
+            "fullName": "Jake Meyers",
+            "position": "CF"
+          },
+          {
             "id": 643289,
             "fullName": "Mauricio Dubón",
-            "position": "2B"
+            "position": "LF"
           },
           {
             "id": 676801,
             "fullName": "Chas McCormick",
-            "position": "CF"
+            "position": "RF"
           },
           {
             "id": 681293,
             "fullName": "Spencer Arrighetti",
             "position": "P"
+          },
+          {
+            "id": 687911,
+            "fullName": "Bryan King",
+            "position": "P"
+          },
+          {
+            "id": 650556,
+            "fullName": "Bryan Abreu",
+            "position": "P"
+          },
+          {
+            "id": 623352,
+            "fullName": "Josh Hader",
+            "position": "P"
           }
         ],
         "confirmed": true,
-        "sourceTimestamp": "2025-03-29T23:21:53.335Z",
+        "sourceTimestamp": "2025-03-30T03:57:29.380Z",
         "__isApiSource": true
       },
       "pitchers": {
@@ -4554,7 +4679,7 @@
         "venueId": 3313,
         "venueName": "Yankee Stadium",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T23:21:52.837Z",
+        "sourceTimestamp": "2025-03-30T03:57:28.360Z",
         "__isApiSource": true
       },
       "teamStats": {
@@ -4771,12 +4896,12 @@
       "gameId": 778520,
       "gameTime": "2025-03-29T23:15:00Z",
       "status": {
-        "abstractGameState": "Live",
-        "codedGameState": "I",
-        "detailedState": "In Progress",
-        "statusCode": "I",
+        "abstractGameState": "Final",
+        "codedGameState": "F",
+        "detailedState": "Final",
+        "statusCode": "F",
         "startTimeTBD": false,
-        "abstractGameCode": "L"
+        "abstractGameCode": "F"
       },
       "homeTeam": {
         "id": 135,
@@ -4795,21 +4920,21 @@
           595777,
           663586,
           621566,
-          542303,
+          642201,
           645277,
           671739,
           686948,
           606115,
-          672284
+          650559
         ],
         "home": [
           665487,
           650333,
-          592518,
+          578428,
           701538,
           630105,
           593428,
-          657757,
+          493329,
           518792,
           455117
         ],
@@ -4833,6 +4958,11 @@
             "id": 542303,
             "fullName": "Marcell Ozuna",
             "position": "DH"
+          },
+          {
+            "id": 642201,
+            "fullName": "Eli White",
+            "position": "PR"
           },
           {
             "id": 645277,
@@ -4860,8 +4990,28 @@
             "position": "RF"
           },
           {
+            "id": 650559,
+            "fullName": "Bryan De La Cruz",
+            "position": "RF"
+          },
+          {
             "id": 680885,
             "fullName": "Spencer Schwellenbach",
+            "position": "P"
+          },
+          {
+            "id": 607481,
+            "fullName": "Aaron Bummer",
+            "position": "P"
+          },
+          {
+            "id": 678226,
+            "fullName": "Daysbel Hernández",
+            "position": "P"
+          },
+          {
+            "id": 660853,
+            "fullName": "Enyel De Los Santos",
             "position": "P"
           }
         ],
@@ -4879,6 +5029,11 @@
           {
             "id": 592518,
             "fullName": "Manny Machado",
+            "position": "3B"
+          },
+          {
+            "id": 578428,
+            "fullName": "Jose Iglesias",
             "position": "3B"
           },
           {
@@ -4902,6 +5057,11 @@
             "position": "DH"
           },
           {
+            "id": 493329,
+            "fullName": "Yuli Gurriel",
+            "position": "DH"
+          },
+          {
             "id": 518792,
             "fullName": "Jason Heyward",
             "position": "LF"
@@ -4915,10 +5075,25 @@
             "id": 681190,
             "fullName": "Randy Vásquez",
             "position": "P"
+          },
+          {
+            "id": 593974,
+            "fullName": "Wandy Peralta",
+            "position": "P"
+          },
+          {
+            "id": 689690,
+            "fullName": "Alek Jacob",
+            "position": "P"
+          },
+          {
+            "id": 670970,
+            "fullName": "Adrian Morejon",
+            "position": "P"
           }
         ],
         "confirmed": true,
-        "sourceTimestamp": "2025-03-29T23:21:53.349Z",
+        "sourceTimestamp": "2025-03-30T03:57:29.458Z",
         "__isApiSource": true
       },
       "pitchers": {
@@ -4940,7 +5115,7 @@
         "venueId": 3313,
         "venueName": "Yankee Stadium",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T23:21:52.837Z",
+        "sourceTimestamp": "2025-03-30T03:57:28.360Z",
         "__isApiSource": true
       },
       "teamStats": {
@@ -5157,12 +5332,12 @@
       "gameId": 778532,
       "gameTime": "2025-03-30T00:10:00Z",
       "status": {
-        "abstractGameState": "Preview",
-        "codedGameState": "P",
-        "detailedState": "Pre-Game",
-        "statusCode": "P",
+        "abstractGameState": "Final",
+        "codedGameState": "F",
+        "detailedState": "Final",
+        "statusCode": "F",
         "startTimeTBD": false,
-        "abstractGameCode": "P"
+        "abstractGameCode": "F"
       },
       "homeTeam": {
         "id": 109,
@@ -5185,17 +5360,17 @@
           621020,
           691718,
           665804,
-          669398,
+          807713,
           542932
         ],
         "home": [
           606466,
           682998,
           666971,
-          545341,
+          656976,
           647304,
           553993,
-          672515,
+          641658,
           664983,
           672695
         ],
@@ -5241,6 +5416,11 @@
             "position": "3B"
           },
           {
+            "id": 807713,
+            "fullName": "Matt Shaw",
+            "position": "3B"
+          },
+          {
             "id": 542932,
             "fullName": "Jon Berti",
             "position": "2B"
@@ -5248,6 +5428,16 @@
           {
             "id": 684007,
             "fullName": "Shota Imanaga",
+            "position": "P"
+          },
+          {
+            "id": 687863,
+            "fullName": "Porter Hodge",
+            "position": "P"
+          },
+          {
+            "id": 519151,
+            "fullName": "Ryan Pressly",
             "position": "P"
           }
         ],
@@ -5273,6 +5463,11 @@
             "position": "DH"
           },
           {
+            "id": 656976,
+            "fullName": "Pavin Smith",
+            "position": "DH"
+          },
+          {
             "id": 647304,
             "fullName": "Josh Naylor",
             "position": "1B"
@@ -5288,6 +5483,11 @@
             "position": "C"
           },
           {
+            "id": 641658,
+            "fullName": "Garrett Hampson",
+            "position": "PR"
+          },
+          {
             "id": 664983,
             "fullName": "Jake McCarthy",
             "position": "CF"
@@ -5301,10 +5501,25 @@
             "id": 694297,
             "fullName": "Brandon Pfaadt",
             "position": "P"
+          },
+          {
+            "id": 656222,
+            "fullName": "Jalen Beeks",
+            "position": "P"
+          },
+          {
+            "id": 686826,
+            "fullName": "Bryce Jarvis",
+            "position": "P"
+          },
+          {
+            "id": 679885,
+            "fullName": "Justin Martinez",
+            "position": "P"
           }
         ],
         "confirmed": true,
-        "sourceTimestamp": "2025-03-29T23:21:53.407Z",
+        "sourceTimestamp": "2025-03-30T03:57:29.537Z",
         "__isApiSource": true
       },
       "pitchers": {
@@ -5326,7 +5541,7 @@
         "venueId": 3313,
         "venueName": "Yankee Stadium",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T23:21:52.837Z",
+        "sourceTimestamp": "2025-03-30T03:57:28.360Z",
         "__isApiSource": true
       },
       "teamStats": {
@@ -5543,12 +5758,12 @@
       "gameId": 778533,
       "gameTime": "2025-03-30T01:10:00Z",
       "status": {
-        "abstractGameState": "Preview",
-        "codedGameState": "P",
-        "detailedState": "Pre-Game",
-        "statusCode": "P",
+        "abstractGameState": "Final",
+        "codedGameState": "O",
+        "detailedState": "Game Over",
+        "statusCode": "O",
         "startTimeTBD": false,
-        "abstractGameCode": "P"
+        "abstractGameCode": "F"
       },
       "homeTeam": {
         "id": 119,
@@ -5572,7 +5787,7 @@
           622534,
           700242,
           668670,
-          668952
+          693307
         ],
         "home": [
           660271,
@@ -5632,8 +5847,23 @@
             "position": "CF"
           },
           {
+            "id": 693307,
+            "fullName": "Dillon Dingler",
+            "position": "PH"
+          },
+          {
             "id": 681857,
             "fullName": "Reese Olson",
+            "position": "P"
+          },
+          {
+            "id": 676428,
+            "fullName": "Brant Hurter",
+            "position": "P"
+          },
+          {
+            "id": 628317,
+            "fullName": "Kenta Maeda",
             "position": "P"
           }
         ],
@@ -5687,10 +5917,40 @@
             "id": 808963,
             "fullName": "Roki Sasaki",
             "position": "P"
+          },
+          {
+            "id": 676263,
+            "fullName": "Jack Dreyer",
+            "position": "P"
+          },
+          {
+            "id": 676508,
+            "fullName": "Ben Casparius",
+            "position": "P"
+          },
+          {
+            "id": 607455,
+            "fullName": "Anthony Banda",
+            "position": "P"
+          },
+          {
+            "id": 472610,
+            "fullName": "Luis García",
+            "position": "P"
+          },
+          {
+            "id": 489446,
+            "fullName": "Kirby Yates",
+            "position": "P"
+          },
+          {
+            "id": 595014,
+            "fullName": "Blake Treinen",
+            "position": "P"
           }
         ],
         "confirmed": true,
-        "sourceTimestamp": "2025-03-29T23:21:53.418Z",
+        "sourceTimestamp": "2025-03-30T03:57:29.597Z",
         "__isApiSource": true
       },
       "pitchers": {
@@ -5712,7 +5972,7 @@
         "venueId": 3313,
         "venueName": "Yankee Stadium",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T23:21:52.837Z",
+        "sourceTimestamp": "2025-03-30T03:57:28.360Z",
         "__isApiSource": true
       },
       "teamStats": {
@@ -5929,12 +6189,12 @@
       "gameId": 778521,
       "gameTime": "2025-03-30T01:40:00Z",
       "status": {
-        "abstractGameState": "Preview",
-        "codedGameState": "P",
-        "detailedState": "Pre-Game",
-        "statusCode": "P",
+        "abstractGameState": "Live",
+        "codedGameState": "I",
+        "detailedState": "In Progress",
+        "statusCode": "I",
         "startTimeTBD": false,
-        "abstractGameCode": "P"
+        "abstractGameCode": "L"
       },
       "homeTeam": {
         "id": 136,
@@ -5965,9 +6225,9 @@
           677594,
           663728,
           668227,
-          670042,
+          641598,
           593871,
-          642133,
+          664238,
           669208,
           641487
         ],
@@ -6021,6 +6281,16 @@
             "id": 674370,
             "fullName": "Osvaldo Bido",
             "position": "P"
+          },
+          {
+            "id": 663687,
+            "fullName": "Hogan Harris",
+            "position": "P"
+          },
+          {
+            "id": 668716,
+            "fullName": "Noah Murdock",
+            "position": "P"
           }
         ],
         "homeBatters": [
@@ -6050,6 +6320,11 @@
             "position": "DH"
           },
           {
+            "id": 641598,
+            "fullName": "Mitch Garver",
+            "position": "DH"
+          },
+          {
             "id": 593871,
             "fullName": "Jorge Polanco",
             "position": "3B"
@@ -6057,6 +6332,11 @@
           {
             "id": 642133,
             "fullName": "Rowdy Tellez",
+            "position": "1B"
+          },
+          {
+            "id": 664238,
+            "fullName": "Dylan Moore",
             "position": "1B"
           },
           {
@@ -6073,10 +6353,20 @@
             "id": 682243,
             "fullName": "Bryce Miller",
             "position": "P"
+          },
+          {
+            "id": 676092,
+            "fullName": "Collin Snider",
+            "position": "P"
+          },
+          {
+            "id": 642100,
+            "fullName": "Gabe Speier",
+            "position": "P"
           }
         ],
         "confirmed": true,
-        "sourceTimestamp": "2025-03-29T23:21:53.484Z",
+        "sourceTimestamp": "2025-03-30T03:57:29.705Z",
         "__isApiSource": true
       },
       "pitchers": {
@@ -6098,7 +6388,7 @@
         "venueId": 3313,
         "venueName": "Yankee Stadium",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-29T23:21:52.837Z",
+        "sourceTimestamp": "2025-03-30T03:57:28.360Z",
         "__isApiSource": true
       },
       "teamStats": {
@@ -6313,7 +6603,7 @@
     }
   ],
   "count": 0,
-  "collectTimestamp": "2025-03-29T23:21:52.799Z",
+  "collectTimestamp": "2025-03-30T03:57:28.298Z",
   "seasons": [
     "2024",
     "2025"

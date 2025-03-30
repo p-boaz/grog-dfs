@@ -16,8 +16,36 @@ import { useDFSData } from "@/lib/hooks/useDFSData";
 interface BatterData {
   batterId: number;
   name: string;
+  position: string;
   team: string;
   opponent: string;
+  opposingPitcher: {
+    id: number;
+    name: string;
+    throwsHand: string;
+  };
+  gameId: number;
+  venue: string;
+  stats: {
+    seasonStats: {
+      [year: string]: {
+        gamesPlayed: number;
+        atBats: number;
+        hits: number;
+        runs: number;
+        doubles: number;
+        triples: number;
+        homeRuns: number;
+        rbi: number;
+        avg: string;
+        obp: string;
+        slg: string;
+        ops: string;
+        stolenBases: number;
+        caughtStealing: number;
+      };
+    };
+  };
   projections: {
     dfsProjection: {
       expectedPoints: number;
@@ -40,6 +68,20 @@ interface BatterData {
   };
 }
 
+interface EnvironmentInfoProps {
+  environment: {
+    temperature: number;
+    windSpeed: number;
+    windDirection: string;
+    isOutdoor: boolean;
+  };
+  ballparkFactors: {
+    overall: number;
+    homeRuns: number;
+    runs?: number;
+  };
+}
+
 interface BattersResponse {
   date: string;
   analysisTimestamp: string;
@@ -52,8 +94,12 @@ interface DFSData {
   date: string;
 }
 
-export function DFSBattersView() {
-  const { data, loading, error } = useDFSData();
+interface DFSBattersViewProps {
+  date: string;
+}
+
+export function DFSBattersView({ date }: DFSBattersViewProps) {
+  const { data, loading, error } = useDFSData(date);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -193,7 +239,9 @@ export function DFSBattersView() {
             <TableHeader>
               <TableRow>
                 <TableHead>Name</TableHead>
+                <TableHead>Pos</TableHead>
                 <TableHead>Matchup</TableHead>
+                <TableHead>2025 Stats</TableHead>
                 <TableHead>Proj. Points</TableHead>
                 <TableHead>Floor</TableHead>
                 <TableHead>Upside</TableHead>
@@ -211,7 +259,30 @@ export function DFSBattersView() {
                       <Badge>{batter.team}</Badge>
                     </div>
                   </TableCell>
-                  <TableCell>vs {batter.opponent}</TableCell>
+                  <TableCell>{batter.position}</TableCell>
+                  <TableCell>
+                    <div>vs {batter.opponent}</div>
+                    <div className="text-sm text-muted-foreground">
+                      vs {batter.opposingPitcher.name} (
+                      {batter.opposingPitcher.throwsHand})
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="text-sm">
+                      <div>
+                        AVG: {batter.stats.seasonStats["2025"]?.avg || "N/A"}
+                      </div>
+                      <div>
+                        OBP: {batter.stats.seasonStats["2025"]?.obp || "N/A"}
+                      </div>
+                      <div>
+                        SLG: {batter.stats.seasonStats["2025"]?.slg || "N/A"}
+                      </div>
+                      <div>
+                        OPS: {batter.stats.seasonStats["2025"]?.ops || "N/A"}
+                      </div>
+                    </div>
+                  </TableCell>
                   <TableCell>
                     {batter.projections.dfsProjection.expectedPoints.toFixed(2)}
                   </TableCell>
@@ -231,15 +302,10 @@ export function DFSBattersView() {
                     %
                   </TableCell>
                   <TableCell>
-                    <div className="text-sm">
-                      <div>{batter.environment.temperature}°F</div>
-                      {batter.environment.isOutdoor && (
-                        <div>
-                          {batter.environment.windSpeed} mph{" "}
-                          {batter.environment.windDirection}
-                        </div>
-                      )}
-                    </div>
+                    <EnvironmentInfo
+                      environment={batter.environment}
+                      ballparkFactors={batter.ballparkFactors}
+                    />
                   </TableCell>
                 </TableRow>
               ))}

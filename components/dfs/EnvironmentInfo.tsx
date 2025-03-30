@@ -1,21 +1,18 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Wind, Thermometer } from "lucide-react";
 
-interface EnvironmentProps {
-  temperature: number;
-  windSpeed: number;
-  windDirection: string;
-  isOutdoor: boolean;
+interface EnvironmentInfoProps {
+  environment: {
+    temperature: number;
+    windSpeed: number;
+    windDirection: string;
+    isOutdoor: boolean;
+  };
   ballparkFactors: {
     overall: number;
     homeRuns: number;
     runs?: number;
   };
-}
-
-interface EnvironmentInfoProps {
-  environment: EnvironmentProps;
-  ballparkFactors: EnvironmentProps["ballparkFactors"];
 }
 
 export function EnvironmentInfo({

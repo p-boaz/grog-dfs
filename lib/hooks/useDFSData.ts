@@ -3,8 +3,36 @@ import { useState, useEffect } from "react";
 interface BatterData {
   batterId: number;
   name: string;
+  position: string;
   team: string;
   opponent: string;
+  opposingPitcher: {
+    id: number;
+    name: string;
+    throwsHand: string;
+  };
+  gameId: number;
+  venue: string;
+  stats: {
+    seasonStats: {
+      [year: string]: {
+        gamesPlayed: number;
+        atBats: number;
+        hits: number;
+        runs: number;
+        doubles: number;
+        triples: number;
+        homeRuns: number;
+        rbi: number;
+        avg: string;
+        obp: string;
+        slg: string;
+        ops: string;
+        stolenBases: number;
+        caughtStealing: number;
+      };
+    };
+  };
   projections: {
     dfsProjection: {
       expectedPoints: number;
@@ -32,10 +60,35 @@ interface PitcherData {
   name: string;
   team: string;
   opponent: string;
+  gameId: number;
+  venue: string;
+  stats: {
+    seasonStats: {
+      [year: string]: {
+        gamesPlayed: number;
+        gamesStarted: number;
+        inningsPitched: number;
+        wins: number;
+        losses: number;
+        era: string;
+        whip: string;
+        strikeouts: number;
+        walks: number;
+        saves: number;
+        homeRunsAllowed: number;
+        hitBatsmen: number;
+      };
+    };
+  };
   projections: {
     winProbability: number;
     expectedStrikeouts: number;
     expectedInnings: number;
+    dfsProjection: {
+      expectedPoints: number;
+      upside: number;
+      floor: number;
+    };
   };
   environment: {
     temperature: number;
@@ -67,7 +120,7 @@ interface DFSData {
   date: string;
 }
 
-export function useDFSData() {
+export function useDFSData(date?: string) {
   const [data, setData] = useState<DFSData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -76,10 +129,36 @@ export function useDFSData() {
     async function fetchData() {
       try {
         setLoading(true);
-        const response = await fetch("/api/dfs");
-        if (!response.ok) throw new Error("Failed to fetch data");
+        const url = date ? `/api/dfs?date=${date}` : "/api/dfs";
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || "Failed to fetch data");
+        }
+
         const jsonData = await response.json();
-        setData(jsonData);
+
+        // Ensure the data structure matches our interface
+        const formattedData: DFSData = {
+          batters: {
+            date: jsonData.batters.date,
+            analysisTimestamp: jsonData.batters.analysisTimestamp,
+            batters: Array.isArray(jsonData.batters.batters)
+              ? jsonData.batters.batters
+              : [],
+          },
+          pitchers: {
+            date: jsonData.pitchers.date,
+            analysisTimestamp: jsonData.pitchers.analysisTimestamp,
+            pitchers: Array.isArray(jsonData.pitchers.pitchers)
+              ? jsonData.pitchers.pitchers
+              : [],
+          },
+          date: jsonData.date,
+        };
+
+        setData(formattedData);
       } catch (err) {
         setError(err instanceof Error ? err.message : "An error occurred");
       } finally {
@@ -88,7 +167,7 @@ export function useDFSData() {
     }
 
     fetchData();
-  }, []);
+  }, [date]); // Re-fetch when date changes
 
   return { data, loading, error };
 }

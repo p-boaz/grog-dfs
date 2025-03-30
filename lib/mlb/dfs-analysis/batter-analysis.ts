@@ -3,7 +3,7 @@
 import { getBatterStats } from "../player/batter-stats";
 import { estimateHomeRunProbability } from "./home-runs";
 import { calculatePitcherDfsProjection } from "./aggregate-scoring";
-import { getTeamAbbrev } from "../../utils";
+import { getTeamAbbrev } from "../core/team-mapping";
 import { findPlayerByNameFuzzy } from "../draftkings/player-mapping";
 import {
   getPlayerSeasonStats,
@@ -26,7 +26,6 @@ import {
 } from "./run-production";
 import { calculatePlateDisciplineProjection } from "./plate-discipline";
 import { DailyMLBData } from "../core/types";
-import { getTeamAbbrev } from "../core/team-mapping";
 import playerMapping from "../draftkings/player-mapping.json";
 
 interface BatterAnalysis {
@@ -278,9 +277,9 @@ export async function analyzeBatters(
 
   // Create maps for easy lookup by team
   const battersByTeam = new Map<string, DKPlayer[]>();
-  
+
   // Group batters by team
-  validBatters.forEach(batter => {
+  validBatters.forEach((batter) => {
     if (batter.team) {
       const team = batter.team.toUpperCase();
       if (!battersByTeam.has(team)) {
@@ -289,19 +288,23 @@ export async function analyzeBatters(
       battersByTeam.get(team)?.push(batter);
     }
   });
-  
+
   // Process each game
   for (const game of games) {
     // Get standardized team abbreviations
     const homeTeamAbbrev = getTeamAbbrev(game.homeTeam.name).toUpperCase();
     const awayTeamAbbrev = getTeamAbbrev(game.awayTeam.name).toUpperCase();
-    
+
     // Get batters for this game
     const gameHomeBatters = battersByTeam.get(homeTeamAbbrev) || [];
     const gameAwayBatters = battersByTeam.get(awayTeamAbbrev) || [];
-    
-    console.log(`Processing game: ${game.awayTeam.name} @ ${game.homeTeam.name}`);
-    console.log(`Found ${gameHomeBatters.length} home batters and ${gameAwayBatters.length} away batters`);
+
+    console.log(
+      `Processing game: ${game.awayTeam.name} @ ${game.homeTeam.name}`
+    );
+    console.log(
+      `Found ${gameHomeBatters.length} home batters and ${gameAwayBatters.length} away batters`
+    );
 
     // Process each batter
     for (const batter of [...gameHomeBatters, ...gameAwayBatters]) {

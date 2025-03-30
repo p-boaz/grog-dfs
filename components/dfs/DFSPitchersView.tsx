@@ -13,35 +13,12 @@ import { Badge } from "@/components/ui/badge";
 import { EnvironmentInfo } from "./EnvironmentInfo";
 import { useDFSData } from "@/lib/hooks/useDFSData";
 
-interface PitcherData {
-  pitcherId: number;
-  name: string;
-  team: string;
-  opponent: string;
-  projections: {
-    winProbability: number;
-    expectedStrikeouts: number;
-    expectedInnings: number;
-    dfsProjection: {
-      expectedPoints: number;
-      upside: number;
-      floor: number;
-    };
-  };
-  environment: {
-    temperature: number;
-    windSpeed: number;
-    windDirection: string;
-    isOutdoor: boolean;
-  };
-  ballparkFactors: {
-    overall: number;
-    homeRuns: number;
-  };
+interface DFSPitchersViewProps {
+  date: string;
 }
 
-export function DFSPitchersView() {
-  const { data, loading, error } = useDFSData();
+export function DFSPitchersView({ date }: DFSPitchersViewProps) {
+  const { data, loading, error } = useDFSData(date);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -67,9 +44,13 @@ export function DFSPitchersView() {
               <TableRow>
                 <TableHead>Name</TableHead>
                 <TableHead>Team</TableHead>
+                <TableHead>Opponent</TableHead>
+                <TableHead>2025 Stats</TableHead>
                 <TableHead>Win Prob</TableHead>
                 <TableHead>Expected Ks</TableHead>
                 <TableHead>Expected IP</TableHead>
+                <TableHead>Proj. Points</TableHead>
+                <TableHead>Environment</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -79,6 +60,26 @@ export function DFSPitchersView() {
                   <TableCell>
                     <Badge>{pitcher.team}</Badge>
                   </TableCell>
+                  <TableCell>{pitcher.opponent}</TableCell>
+                  <TableCell>
+                    <div className="text-sm">
+                      <div>
+                        ERA: {pitcher.stats.seasonStats["2025"]?.era || "N/A"}
+                      </div>
+                      <div>
+                        WHIP: {pitcher.stats.seasonStats["2025"]?.whip || "N/A"}
+                      </div>
+                      <div>
+                        W-L: {pitcher.stats.seasonStats["2025"]?.wins || 0}-
+                        {pitcher.stats.seasonStats["2025"]?.losses || 0}
+                      </div>
+                      <div>
+                        K/BB:{" "}
+                        {(pitcher.stats.seasonStats["2025"]?.strikeouts || 0) /
+                          (pitcher.stats.seasonStats["2025"]?.walks || 1)}
+                      </div>
+                    </div>
+                  </TableCell>
                   <TableCell>
                     {pitcher.projections.winProbability.toFixed(1)}%
                   </TableCell>
@@ -87,6 +88,30 @@ export function DFSPitchersView() {
                   </TableCell>
                   <TableCell>
                     {pitcher.projections.expectedInnings.toFixed(1)}
+                  </TableCell>
+                  <TableCell>
+                    <div className="text-sm">
+                      <div>
+                        Proj:{" "}
+                        {pitcher.projections.dfsProjection.expectedPoints.toFixed(
+                          2
+                        )}
+                      </div>
+                      <div>
+                        Floor:{" "}
+                        {pitcher.projections.dfsProjection.floor.toFixed(2)}
+                      </div>
+                      <div>
+                        Upside:{" "}
+                        {pitcher.projections.dfsProjection.upside.toFixed(2)}
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <EnvironmentInfo
+                      environment={pitcher.environment}
+                      ballparkFactors={pitcher.ballparkFactors}
+                    />
                   </TableCell>
                 </TableRow>
               ))}
