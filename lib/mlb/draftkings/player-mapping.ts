@@ -32,6 +32,7 @@ let playerMapping: PlayerMapping[] = [];
 /**
  * Normalizes a player name for matching purposes
  * - Converts to lowercase
+ * - Handles accented characters (é -> e, í -> i, etc.)
  * - Removes punctuation and special characters
  * - Handles "Last, First" format
  * - Removes suffixes (Jr, Sr, III, etc)
@@ -51,6 +52,9 @@ export function normalizePlayerName(name: string): string {
     const parts = normalized.split(",").map((p) => p.trim());
     normalized = `${parts[1]} ${parts[0]}`;
   }
+
+  // Replace accented characters with their non-accented equivalents
+  normalized = normalized.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
   // Remove punctuation and special characters
   normalized = normalized.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()'"]/g, "");
@@ -191,6 +195,9 @@ export function findBestNameMatch(
 function normalizePlayerNameForMapping(name: string): string {
   return name
     .toLowerCase()
+    // Replace accented characters with their non-accented equivalents
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
     .replace(/\s+jr\.?$/, "") // Remove Jr/Jr.
     .replace(/\s+sr\.?$/, "") // Remove Sr/Sr.
     .replace(/\s+iii$/, "") // Remove III

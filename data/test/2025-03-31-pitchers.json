@@ -30,13 +30,13 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 23,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 0.8135000000000013,
+        "upside": 0.9762000000000015,
+        "floor": 0.6508000000000012
       }
     },
     "environment": {
@@ -89,13 +89,13 @@
       }
     },
     "projections": {
-      "winProbability": 22,
+      "winProbability": 20,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 0.6135000000000012,
+        "upside": 0.7362000000000014,
+        "floor": 0.49080000000000096
       }
     },
     "environment": {

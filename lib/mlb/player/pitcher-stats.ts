@@ -25,8 +25,9 @@ async function fetchPitcherStats(params: {
         `API request to /people/${pitcherId}?hydrate=stats (season=${currentSeason})`
       );
       const response = await makeMLBApiRequest<any>(
-        `/people/${pitcherId}?hydrate=stats(group=[pitching],type=[yearByYear],season=${currentSeason}),team`
+        `/people/${pitcherId}?hydrate=stats(group=[pitching],type=[yearByYear],season=${currentSeason}),currentTeam,team`
       );
+      console.log("API Response:", JSON.stringify(response.people[0], null, 2));
       console.timeEnd(
         `API request to /people/${pitcherId}?hydrate=stats (season=${currentSeason})`
       );
@@ -71,7 +72,7 @@ async function fetchPitcherStats(params: {
         `API request to /people/${pitcherId}?hydrate=stats (season=${previousSeason})`
       );
       const response = await makeMLBApiRequest<any>(
-        `/people/${pitcherId}?hydrate=stats(group=[pitching],type=[yearByYear],season=${previousSeason}),team&_=${Date.now()}`
+        `/people/${pitcherId}?hydrate=stats(group=[pitching],type=[yearByYear],season=${previousSeason}),currentTeam,team&_=${Date.now()}`
       );
       console.timeEnd(
         `API request to /people/${pitcherId}?hydrate=stats (season=${previousSeason})`
@@ -219,7 +220,10 @@ function transformPitcherStats(data: any): PitcherStats {
     id: data.people[0].id,
     fullName: data.people[0].fullName,
     currentTeam:
-      data.people[0].team?.name || data.people[0].currentTeam?.name || "",
+      data.people[0].currentTeam?.name ||
+      data.people[0].team?.name ||
+      data.people[0].teams?.[0]?.team?.name ||
+      "",
     primaryPosition: data.people[0].primaryPosition?.abbreviation || "P",
     pitchHand: data.people[0].pitchHand?.code || "",
     seasonStats,

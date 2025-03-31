@@ -431,17 +431,7 @@ export async function collectDailyDFSData(
   }
 }
 
-/**
- * Run the daily data collection process
- * @param maxGames Optional number to limit the games processed (for testing)
- * @param outputDir Optional subdirectory within data/ to save the output files
- * @param shouldExit Whether to exit the process after completion
- */
-export async function runDailyDataCollection(
-  maxGames?: number,
-  outputDir?: string,
-  shouldExit: boolean = false
-): Promise<DailyMLBData> {
-  const today = format(new Date(), "yyyy-MM-dd");
-  return collectDailyDFSData(today, maxGames, outputDir, shouldExit);
-}
+// This function has been removed since collectDailyDFSData can be called directly
+// with a specific date or today's date.
+// If needed, call collectDailyDFSData(format(new Date(), "yyyy-MM-dd"), maxGames, outputDir, shouldExit)
+// to achieve the same result as the previous runDailyDataCollection function.

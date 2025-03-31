@@ -1,14 +1,36 @@
 /**
- * Specialized functions for combining all category-specific projections 
+ * Specialized functions for combining all category-specific projections
  * into comprehensive DFS point projections
  */
 
-import { calculatePitcherWinProbability } from "./pitcher-win";
-import { calculateExpectedStrikeouts } from "./strikeouts";
-import { calculateExpectedInnings } from "./innings-pitched";
-import { calculateRareEventPotential } from "./rare-events";
 import { getPitcherHomeRunVulnerability } from "../player/pitcher-stats";
-import { PitcherDFSPoints, PlayerProjection } from "../types/analysis/scoring";
+import { calculateExpectedInnings } from "./innings-pitched";
+import { calculatePitcherWinProbability } from "./pitcher-win";
+import { calculateRareEventPotential } from "./rare-events";
+import { calculateExpectedStrikeouts } from "./strikeouts";
+
+/**
+ * Helper function to find which team a pitcher is on in a game
+ * @param gameFeedData Game feed data from MLB API
+ * @param pitcherId MLB Player ID for the pitcher
+ * @returns Team ID for the pitcher's team, or undefined if not found
+ */
+function findPitcherTeamId(gameFeedData: any, pitcherId: number): number | undefined {
+  if (!gameFeedData?.gameData?.players) {
+    return undefined;
+  }
+  
+  // Find the pitcher in the players dictionary
+  const pitcherKey = `ID${pitcherId}`;
+  const pitcher = gameFeedData.gameData.players[pitcherKey];
+  
+  if (!pitcher) {
+    return undefined;
+  }
+  
+  // Get the pitcher's current team ID
+  return pitcher.currentTeam?.id;
+}
 
 /**
  * Calculate comprehensive DFS points projection for a pitcher
@@ -16,7 +38,8 @@ import { PitcherDFSPoints, PlayerProjection } from "../types/analysis/scoring";
 export async function calculatePitcherDfsProjection(
   pitcherId: number,
   gamePk: string,
-  season: number = new Date().getFullYear()
+  season: number = new Date().getFullYear(),
+  opposingTeamId?: number
 ): Promise<{
   pitcher: {
     id: number;
@@ -55,95 +78,138 @@ export async function calculatePitcherDfsProjection(
 }> {
   try {
     // Collect all category-specific projections in parallel
+    // First, try to get the game feed to determine the opposing team
+    // Import what we need without creating circular dependencies
+    const { makeMLBApiRequest } = await import("../core/api-client");
+    
+    let opposingTeamID = opposingTeamId;
+    
+    if (!opposingTeamID) {
+      try {
+        // Get the game feed to extract team info
+        const gameFeedData = await makeMLBApiRequest<any>(
+          `/game/${gamePk}/feed/live`
+        );
+        
+        // Get home and away team IDs
+        const homeTeamId = gameFeedData?.gameData?.teams?.home?.team?.id;
+        const awayTeamId = gameFeedData?.gameData?.teams?.away?.team?.id;
+        
+        // Get the pitcher's team ID from the game data
+        const pitcherTeamId = findPitcherTeamId(gameFeedData, pitcherId);
+        
+        // Determine opposing team (the team the pitcher is not on)
+        opposingTeamID = pitcherTeamId === homeTeamId ? awayTeamId : homeTeamId;
+        
+        if (!opposingTeamID) {
+          console.warn(`Could not determine opposing team ID for game ${gamePk}, using season value as fallback`);
+          opposingTeamID = season; // Safe fallback - use the year
+        }
+      } catch (error) {
+        console.warn(`Error getting game feed data for game ${gamePk}, using season value as fallback:`, error);
+        opposingTeamID = season; // Safe fallback - use the year
+      }
+    }
+    
     const [
-      winProjection, 
-      strikeoutProjection, 
-      inningsProjection, 
+      winProjection,
+      strikeoutProjection,
+      inningsProjection,
       rareEventsProjection,
-      hrVulnerability
+      hrVulnerability,
     ] = await Promise.all([
       calculatePitcherWinProbability(pitcherId, gamePk, season),
-      calculateExpectedStrikeouts(pitcherId, parseInt(gamePk), gamePk),
+      calculateExpectedStrikeouts(pitcherId, opposingTeamID, gamePk),
       calculateExpectedInnings(pitcherId, gamePk, season),
       calculateRareEventPotential(pitcherId, gamePk, season),
-      getPitcherHomeRunVulnerability(pitcherId, season)
+      getPitcherHomeRunVulnerability(pitcherId, season),
     ]);
-    
+
     // Extract pitcher name and team from any available projection
-    const name = winProjection.pitcherFactors ? 
-      (strikeoutProjection.expectedStrikeouts > 0 ? strikeoutProjection.factors.pitcherBaseline : 0) : "";
-    const team = "";  // Would extract from pitcher data
-    
+    const name = winProjection.pitcherFactors
+      ? strikeoutProjection.expectedStrikeouts > 0
+        ? strikeoutProjection.factors.pitcherBaseline
+        : 0
+      : "";
+    const team = ""; // Would extract from pitcher data
+
     // Calculate expected earned runs
     // Use HR vulnerability and innings to estimate ER
-    const hrVulnerabilityFactor = hrVulnerability ? hrVulnerability.homeRunVulnerability / 5 : 1;
+    const hrVulnerabilityFactor = hrVulnerability
+      ? hrVulnerability.homeRunVulnerability / 5
+      : 1;
     const projectedInnings = inningsProjection.expectedInnings;
-    const baseEraEstimate = 4.0;  // League average
+    const baseEraEstimate = 4.0; // League average
     const adjustedEra = baseEraEstimate * hrVulnerabilityFactor;
     const projectedEarnedRuns = (projectedInnings / 9) * adjustedEra;
-    
+
     // Calculate negative points (-2 per ER, -0.6 per hit, walk, HBP)
     // Simple estimate: 1 hit per inning + 0.3 walks/HBP per inning, plus earned runs
-    const projectedHits = projectedInnings;  // Estimate 1 hit per inning
-    const projectedWalksHbp = projectedInnings * 0.3;  // Estimate 0.3 walks/HBP per inning
-    
-    const negativePoints = 
-      (projectedEarnedRuns * -2) + 
-      (projectedHits * -0.6) + 
-      (projectedWalksHbp * -0.6);
-    
+    const projectedHits = projectedInnings; // Estimate 1 hit per inning
+    const projectedWalksHbp = projectedInnings * 0.3; // Estimate 0.3 walks/HBP per inning
+
+    const negativePoints =
+      projectedEarnedRuns * -2 +
+      projectedHits * -0.6 +
+      projectedWalksHbp * -0.6;
+
     // Calculate positive points
-    const inningsPoints = projectedInnings * 2.25;  // 2.25 pts per inning
-    const strikeoutPoints = strikeoutProjection && strikeoutProjection.expectedDfsPoints ? strikeoutProjection.expectedDfsPoints : 0;  // 2 pts per K
-    const winPoints = winProjection.overallWinProbability / 100 * 4;  // 4 pts for win
+    const inningsPoints = projectedInnings * 2.25; // 2.25 pts per inning
+    const strikeoutPoints =
+      strikeoutProjection && strikeoutProjection.expectedDfsPoints
+        ? strikeoutProjection.expectedDfsPoints
+        : 0; // 2 pts per K
+    const winPoints = (winProjection.overallWinProbability / 100) * 4; // 4 pts for win
     const rareEventPoints = rareEventsProjection.expectedRareEventPoints;
-    
+
     // Calculate total points
-    const totalPoints = 
-      inningsPoints + 
-      strikeoutPoints + 
-      winPoints + 
-      rareEventPoints + 
+    const totalPoints =
+      inningsPoints +
+      strikeoutPoints +
+      winPoints +
+      rareEventPoints +
       negativePoints;
-    
+
     // Calculate upside (90th percentile)
     const upsidePoints = totalPoints * 1.2;
-    
+
     // Calculate floor (10th percentile)
     const floorPoints = totalPoints * 0.75;
-    
+
     // Calculate baseline (50th percentile)
     const baselinePoints = totalPoints;
-    
+
     // Calculate overall confidence
     // Weight by importance of each category to DFS scoring
     const confidenceWeights = {
       innings: 0.35,
       strikeouts: 0.3,
       win: 0.25,
-      rareEvents: 0.1
+      rareEvents: 0.1,
     };
-    
-    const overallConfidence = 
-      (inningsProjection.confidence * confidenceWeights.innings) +
-      (strikeoutProjection.confidence * confidenceWeights.strikeouts) +
-      (winProjection.confidenceScore * confidenceWeights.win) +
-      (rareEventsProjection.confidenceScore * confidenceWeights.rareEvents);
-    
+
+    const overallConfidence =
+      inningsProjection.confidence * confidenceWeights.innings +
+      strikeoutProjection.confidence * confidenceWeights.strikeouts +
+      winProjection.confidenceScore * confidenceWeights.win +
+      rareEventsProjection.confidenceScore * confidenceWeights.rareEvents;
+
     // Calculate pitcher quality rating (1-10 scale)
     const qualityComponents = [
       strikeoutProjection.factors.pitcherBaseline,
       inningsProjection.factors.pitcherDurability,
-      10 - (hrVulnerability ? hrVulnerability.homeRunVulnerability : 5) // Invert HR vulnerability
+      10 - (hrVulnerability ? hrVulnerability.homeRunVulnerability : 5), // Invert HR vulnerability
     ];
-    
-    const qualityRating = qualityComponents.reduce((sum, rating) => sum + rating, 0) / qualityComponents.length;
-    
+
+    const qualityRating =
+      qualityComponents.reduce((sum, rating) => sum + rating, 0) /
+      qualityComponents.length;
+
     return {
       pitcher: {
         id: pitcherId,
         name: name as string | undefined,
-        team
+        team,
       },
       points: {
         total: Math.max(0, Math.round(totalPoints * 10) / 10), // Round to 1 decimal and floor at 0
@@ -155,15 +221,16 @@ export async function calculatePitcherDfsProjection(
           strikeouts: Math.round(strikeoutPoints * 10) / 10,
           win: Math.round(winPoints * 10) / 10,
           rareEvents: Math.round(rareEventPoints * 10) / 10,
-          negative: Math.round(negativePoints * 10) / 10
-        }
+          negative: Math.round(negativePoints * 10) / 10,
+        },
       },
       stats: {
         projectedInnings: Math.round(projectedInnings * 10) / 10,
-        projectedStrikeouts: Math.round(strikeoutProjection.expectedStrikeouts * 10) / 10,
+        projectedStrikeouts:
+          Math.round(strikeoutProjection.expectedStrikeouts * 10) / 10,
         winProbability: winProjection.overallWinProbability,
         projectedEarnedRuns: Math.round(projectedEarnedRuns * 10) / 10,
-        quality: Math.round(qualityRating * 10) / 10
+        quality: Math.round(qualityRating * 10) / 10,
       },
       confidence: {
         overall: Math.round(overallConfidence),
@@ -171,17 +238,20 @@ export async function calculatePitcherDfsProjection(
           innings: inningsProjection.confidence,
           strikeouts: strikeoutProjection.confidence,
           win: winProjection.confidenceScore,
-          rareEvents: rareEventsProjection.confidenceScore
-        }
-      }
+          rareEvents: rareEventsProjection.confidenceScore,
+        },
+      },
     };
   } catch (error) {
-    console.error(`Error calculating pitcher DFS projection for ID ${pitcherId}:`, error);
-    
+    console.error(
+      `Error calculating pitcher DFS projection for ID ${pitcherId}:`,
+      error
+    );
+
     // Return default values with low confidence
     return {
       pitcher: {
-        id: pitcherId
+        id: pitcherId,
       },
       points: {
         total: 15,
@@ -193,15 +263,15 @@ export async function calculatePitcherDfsProjection(
           strikeouts: 8, // 4 Ks
           win: 2, // 50% win probability
           rareEvents: 0,
-          negative: -6 // 3 ER
-        }
+          negative: -6, // 3 ER
+        },
       },
       stats: {
         projectedInnings: 5,
         projectedStrikeouts: 4,
         winProbability: 50,
         projectedEarnedRuns: 3,
-        quality: 5
+        quality: 5,
       },
       confidence: {
         overall: 30,
@@ -209,9 +279,9 @@ export async function calculatePitcherDfsProjection(
           innings: 30,
           strikeouts: 30,
           win: 30,
-          rareEvents: 30
-        }
-      }
+          rareEvents: 30,
+        },
+      },
     };
   }
 }
@@ -242,7 +312,7 @@ export async function rankPitcherProjections(
   try {
     // Default pitcher salary if not provided (can be replaced with actual data)
     const defaultSalary = 8000;
-    
+
     // Generate projections for all pitchers
     const projectionPromises = pitcherIds.map(async (pitcherId) => {
       try {
@@ -250,9 +320,13 @@ export async function rankPitcherProjections(
         if (!gamePk) {
           throw new Error(`No game PK provided for pitcher ${pitcherId}`);
         }
-        
-        const projection = await calculatePitcherDfsProjection(pitcherId, gamePk, season);
-        
+
+        const projection = await calculatePitcherDfsProjection(
+          pitcherId,
+          gamePk,
+          season
+        );
+
         return {
           pitcher: projection.pitcher,
           points: projection.points.total,
@@ -264,9 +338,11 @@ export async function rankPitcherProjections(
         return null;
       }
     });
-    
+
     // Wait for all projections to complete
-    const projections = (await Promise.all(projectionPromises)).filter(p => p !== null) as Array<{
+    const projections = (await Promise.all(projectionPromises)).filter(
+      (p) => p !== null
+    ) as Array<{
       pitcher: {
         id: number;
         name?: string;
@@ -276,42 +352,43 @@ export async function rankPitcherProjections(
       confidence: number;
       salary: number;
     }>;
-    
+
     // Sort projections by points (descending)
     projections.sort((a, b) => b.points - a.points);
-    
+
     // Calculate value (points per $1000)
     const rankings = projections.map((proj, index) => ({
       rank: index + 1,
       pitcher: proj.pitcher,
       points: proj.points,
       value: (proj.points / proj.salary) * 1000,
-      salary: proj.salary
+      salary: proj.salary,
     }));
-    
+
     // Calculate average projection
     const totalPoints = projections.reduce((sum, proj) => sum + proj.points, 0);
-    const averageProjection = projections.length > 0 ? totalPoints / projections.length : 0;
-    
+    const averageProjection =
+      projections.length > 0 ? totalPoints / projections.length : 0;
+
     // Set tier thresholds
     const topTierThreshold = averageProjection * 1.25;
     const midTierThreshold = averageProjection * 0.9;
-    
+
     return {
       rankings,
       averageProjection: Math.round(averageProjection * 10) / 10,
       topTierThreshold: Math.round(topTierThreshold * 10) / 10,
-      midTierThreshold: Math.round(midTierThreshold * 10) / 10
+      midTierThreshold: Math.round(midTierThreshold * 10) / 10,
     };
   } catch (error) {
     console.error(`Error ranking pitcher projections:`, error);
-    
+
     // Return empty rankings
     return {
       rankings: [],
       averageProjection: 15,
       topTierThreshold: 20,
-      midTierThreshold: 12
+      midTierThreshold: 12,
     };
   }
 }

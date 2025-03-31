@@ -201,8 +201,8 @@ async function analyzePitcher({
     try {
       const winProb = await calculatePitcherWinProbability(
         pitcherId,
-        isHome ? game.awayTeam.id : game.homeTeam.id,
-        game.gameId.toString()
+        game.gameId.toString(),
+        2025
       );
       projections.winProbability = winProb.overallWinProbability;
     } catch (error) {
@@ -229,8 +229,8 @@ async function analyzePitcher({
     try {
       const expectedIPData = await calculateExpectedInnings(
         pitcherId,
-        isHome ? game.awayTeam.id : game.homeTeam.id,
-        game.gameId.toString()
+        game.gameId.toString(),
+        2025
       );
       projections.expectedInnings = expectedIPData.expectedInnings;
     } catch (error) {
@@ -241,11 +241,12 @@ async function analyzePitcher({
     }
 
     try {
-      // Get standard DFS projection
+      // Get standard DFS projection with opposing team ID
       const dfsProjData = await calculatePitcherDfsProjection(
         pitcherId,
-        isHome ? game.awayTeam.id : game.homeTeam.id,
-        game.gameId.toString()
+        game.gameId.toString(),
+        2025,
+        isHome ? game.awayTeam.id : game.homeTeam.id
       );
 
       // Get control projection (hits/walks/HBP allowed)
@@ -261,8 +262,8 @@ async function analyzePitcher({
       // Get rare events projection
       const rareEventsProj = await calculateRareEventPotential(
         pitcherId,
-        isHome ? game.awayTeam.id : game.homeTeam.id,
-        game.gameId.toString()
+        game.gameId.toString(),
+        2025
       ).catch(() => ({
         expectedRareEventPoints: 0.05,
         confidenceScore: 20,
