@@ -1,6 +1,6 @@
 import { markAsApiSource } from "../cache";
 import { makeMLBApiRequest } from "../core/api-client";
-import type { BallparkFactors, MLBScheduleResponse } from "../core/types";
+import type { BallparkFactors, MLBScheduleResponse } from "../types/core";
 
 /**
  * Get MLB schedule for a given date

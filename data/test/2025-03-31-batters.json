@@ -68,11 +68,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 4,
-        "hits": 1,
-        "avg": ".250",
+        "atBats": 0,
+        "hits": 0,
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".500"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -102,17 +119,6 @@
           "walks": 0.6301575393848462
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -251,11 +257,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 4,
-        "hits": 1,
-        "avg": ".250",
+        "atBats": 0,
+        "hits": 0,
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".500"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -285,17 +308,6 @@
           "walks": 0.6301575393848462
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -438,7 +450,24 @@
         "hits": 0,
         "avg": 0,
         "homeRuns": 0,
-        "ops": 0
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -468,17 +497,6 @@
           "walks": null
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -617,11 +635,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 4,
-        "hits": 1,
-        "avg": ".250",
+        "atBats": 0,
+        "hits": 0,
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".500"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -651,17 +686,6 @@
           "walks": 0.6301575393848462
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -800,11 +824,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 4,
-        "hits": 1,
-        "avg": ".250",
+        "atBats": 0,
+        "hits": 0,
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".500"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -834,17 +875,6 @@
           "walks": 0.6301575393848462
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -983,11 +1013,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 2,
-        "hits": 1,
-        "avg": ".500",
+        "atBats": 0,
+        "hits": 0,
+        "avg": 0,
         "homeRuns": 0,
-        "ops": "1.000"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -1017,17 +1064,6 @@
           "walks": null
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -1166,11 +1202,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 2,
-        "hits": 1,
-        "avg": ".500",
+        "atBats": 0,
+        "hits": 0,
+        "avg": 0,
         "homeRuns": 0,
-        "ops": "1.000"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -1200,17 +1253,6 @@
           "walks": 0.6301575393848462
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -1353,7 +1395,24 @@
         "hits": 0,
         "avg": 0,
         "homeRuns": 0,
-        "ops": 0
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -1383,17 +1442,6 @@
           "walks": 0.6301575393848462
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -1532,11 +1580,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 11,
-        "hits": 4,
-        "avg": ".364",
+        "atBats": 0,
+        "hits": 0,
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".781"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -1566,17 +1631,6 @@
           "walks": null
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -1715,11 +1769,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 2,
-        "hits": 1,
-        "avg": ".500",
+        "atBats": 0,
+        "hits": 0,
+        "avg": 0,
         "homeRuns": 0,
-        "ops": "1.000"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -1749,17 +1820,6 @@
           "walks": 0.6301575393848462
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -1898,11 +1958,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 2,
-        "hits": 1,
-        "avg": ".500",
+        "atBats": 0,
+        "hits": 0,
+        "avg": 0,
         "homeRuns": 0,
-        "ops": "1.000"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -1932,17 +2009,6 @@
           "walks": 0.6301575393848462
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -2081,11 +2147,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 4,
-        "hits": 1,
-        "avg": ".250",
+        "atBats": 0,
+        "hits": 0,
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".500"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -2115,17 +2198,6 @@
           "walks": 0.6301575393848462
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -2264,11 +2336,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 4,
-        "hits": 1,
-        "avg": ".250",
+        "atBats": 0,
+        "hits": 0,
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".500"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -2298,17 +2387,6 @@
           "walks": 0.6301575393848462
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -2447,11 +2525,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 4,
-        "hits": 1,
-        "avg": ".250",
+        "atBats": 0,
+        "hits": 0,
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".500"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -2481,17 +2576,6 @@
           "walks": 0.6301575393848462
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -2634,7 +2718,24 @@
         "hits": 0,
         "avg": 0,
         "homeRuns": 0,
-        "ops": 0
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -2664,17 +2765,6 @@
           "walks": 0.6301575393848462
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -2813,11 +2903,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 6,
+        "atBats": 0,
         "hits": 0,
-        "avg": ".000",
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".000"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -2847,17 +2954,6 @@
           "walks": null
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -2996,11 +3092,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 3,
+        "atBats": 0,
         "hits": 0,
-        "avg": ".000",
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".000"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -3030,17 +3143,6 @@
           "walks": null
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -3179,11 +3281,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 4,
-        "hits": 1,
-        "avg": ".250",
+        "atBats": 0,
+        "hits": 0,
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".650"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -3213,17 +3332,6 @@
           "walks": null
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -3362,11 +3470,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 9,
-        "hits": 2,
-        "avg": ".222",
+        "atBats": 0,
+        "hits": 0,
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".444"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -3396,17 +3521,6 @@
           "walks": 0.24418604651162795
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -3545,11 +3659,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 2,
+        "atBats": 0,
         "hits": 0,
-        "avg": ".000",
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".250"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -3579,17 +3710,6 @@
           "walks": null
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -3728,11 +3848,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 9,
-        "hits": 2,
-        "avg": ".222",
+        "atBats": 0,
+        "hits": 0,
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".444"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -3762,17 +3899,6 @@
           "walks": 0.24418604651162795
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -3911,11 +4037,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 4,
+        "atBats": 0,
         "hits": 0,
-        "avg": ".000",
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".000"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -3945,17 +4088,6 @@
           "walks": 0.24418604651162795
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -4094,11 +4226,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 9,
-        "hits": 2,
-        "avg": ".222",
+        "atBats": 0,
+        "hits": 0,
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".444"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -4128,17 +4277,6 @@
           "walks": 0.24418604651162795
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -4277,11 +4415,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 4,
+        "atBats": 0,
         "hits": 0,
-        "avg": ".000",
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".000"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -4311,17 +4466,6 @@
           "walks": 0.24418604651162795
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -4460,11 +4604,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 9,
-        "hits": 2,
-        "avg": ".222",
+        "atBats": 0,
+        "hits": 0,
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".444"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -4494,17 +4655,6 @@
           "walks": 0.24418604651162795
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -4647,7 +4797,24 @@
         "hits": 0,
         "avg": 0,
         "homeRuns": 0,
-        "ops": 0
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -4677,17 +4844,6 @@
           "walks": 0.24418604651162795
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -4830,7 +4986,24 @@
         "hits": 0,
         "avg": 0,
         "homeRuns": 0,
-        "ops": 0
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -4860,17 +5033,6 @@
           "walks": null
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -5009,11 +5171,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 4,
+        "atBats": 0,
         "hits": 0,
-        "avg": ".000",
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".000"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -5043,17 +5222,6 @@
           "walks": 0.24418604651162795
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -5192,11 +5360,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 4,
+        "atBats": 0,
         "hits": 0,
-        "avg": ".000",
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".000"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -5226,17 +5411,6 @@
           "walks": 0.24418604651162795
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -5375,11 +5549,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 4,
+        "atBats": 0,
         "hits": 0,
-        "avg": ".000",
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".000"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -5409,17 +5600,6 @@
           "walks": 0.24418604651162795
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -5558,11 +5738,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 4,
+        "atBats": 0,
         "hits": 0,
-        "avg": ".000",
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".000"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -5592,17 +5789,6 @@
           "walks": 0.24418604651162795
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -5741,11 +5927,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 4,
+        "atBats": 0,
         "hits": 0,
-        "avg": ".000",
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".000"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -5775,17 +5978,6 @@
           "walks": 0.24418604651162795
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {
@@ -5924,11 +6116,28 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 9,
-        "hits": 2,
-        "avg": ".222",
+        "atBats": 0,
+        "hits": 0,
+        "avg": 0,
         "homeRuns": 0,
-        "ops": ".444"
+        "ops": 0,
+        "careerVsType": {
+          "atBats": 0,
+          "avg": 0,
+          "ops": 0
+        },
+        "recentForm": {
+          "last10": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          },
+          "last30": {
+            "atBats": 0,
+            "avg": 0,
+            "ops": 0
+          }
+        }
       }
     },
     "projections": {
@@ -5958,17 +6167,6 @@
           "walks": 0.24418604651162795
         }
       }
-    },
-    "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "",
-      "isOutdoor": true
-    },
-    "ballparkFactors": {
-      "overall": 1,
-      "homeRuns": 1,
-      "runs": 1
     },
     "factors": {
       "weather": {

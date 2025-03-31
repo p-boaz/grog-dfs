@@ -7,57 +7,57 @@
  */
 
 // Core types and client
-export * from "./core/types";
 export {
-  makeMLBApiRequest,
-  RATE_LIMIT,
   API_VERSION,
+  makeMLBApiRequest,
   MLB_API_BASE,
   MLB_API_HEADERS,
+  RATE_LIMIT,
 } from "./core/api-client";
+export * from "./types/core";
 
 // Schedule module
 export {
-  getSchedule,
   findGameByTeams,
+  getSchedule,
   getTeamRoster,
   getTeamStats,
 } from "./schedule/schedule";
 
 // Weather module
 export {
-  getGameWeatherData,
-  getGameEnvironmentData,
   getBallparkFactors,
   getDetailedWeatherInfo,
+  getGameEnvironmentData,
+  getGameWeatherData,
 } from "./weather/weather";
 
 // Batter module
 export {
-  getBatterStats,
   getBatterInfo,
   getBatterPlateDiscipline,
+  getBatterStats,
 } from "./player/batter-stats";
 
 // Pitcher module
 export {
-  getPitcherStats,
-  getPitcherInfo,
-  getPitcherPitchMix,
   getPitcherBatterMatchup,
   getPitcherHomeRunVulnerability,
+  getPitcherInfo,
+  getPitcherPitchMix,
+  getPitcherStats,
 } from "./player/pitcher-stats";
 
 // Stolen base module
 export {
-  getPlayerSeasonStats,
   getCareerStolenBaseProfile,
   getCatcherStolenBaseDefense,
+  getPlayerSeasonStats,
 } from "./dfs-analysis/stolen-bases";
 // Game module
 export {
-  getGameFeed,
   getGameContent,
+  getGameFeed,
   getGameStatus,
   refreshGameData,
 } from "./game/game-feed";
@@ -66,12 +66,12 @@ export { getProbableLineups } from "./game/lineups";
 
 // Cache utilities
 export {
-  withCache,
-  invalidateCache,
-  DEFAULT_CACHE_TTL,
-  markAsApiSource,
-  isApiSource,
   clearCache,
+  DEFAULT_CACHE_TTL,
+  invalidateCache,
+  isApiSource,
+  markAsApiSource,
+  withCache,
 } from "./cache";
 
 // Do not export test utilities in production code

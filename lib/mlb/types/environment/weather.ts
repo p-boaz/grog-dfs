@@ -72,6 +72,21 @@ export interface GameEnvironmentData {
 }
 
 /**
+ * Basic environment information for game analysis
+ * 
+ * @property temperature - Temperature in Fahrenheit
+ * @property windSpeed - Wind speed in mph
+ * @property windDirection - Wind direction
+ * @property isOutdoor - Whether the game is outdoors
+ */
+export interface Environment {
+  temperature: number;
+  windSpeed: number;
+  windDirection: string;
+  isOutdoor: boolean;
+}
+
+/**
  * Weather impact analysis for baseball performance
  * 
  * @property overall - Overall impact rating
@@ -93,4 +108,33 @@ export interface WeatherImpactAnalysis {
     humidity: number; // -10 to +10 scale where 0 is neutral
     altitude: number; // -10 to +10 scale where 0 is neutral
   };
+}
+
+/**
+ * Weather forecast information
+ * 
+ * @property date - Date of the forecast
+ * @property hourly - Hourly forecast data
+ * @property daily - Daily forecast summary
+ * @property source - Weather data source
+ * @property sourceTimestamp - When the data was retrieved
+ */
+export interface WeatherForecast {
+  date: Date;
+  hourly: Array<{
+    time: Date;
+    temperature: number;
+    condition: string;
+    windSpeed: number;
+    windDirection: string;
+    precipitation: number;
+  }>;
+  daily: {
+    highTemp: number;
+    lowTemp: number;
+    precipitationChance: number;
+    conditions: string;
+  };
+  source: string;
+  sourceTimestamp: Date;
 }

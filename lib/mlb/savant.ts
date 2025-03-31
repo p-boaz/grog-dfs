@@ -1,4 +1,3 @@
-import { z } from "zod";
 import {
   BatterStatcastData,
   ControlMetricsSchema,
@@ -11,7 +10,8 @@ import {
   PitchUsageSchema,
   ResultMetricsSchema,
   TeamStatcastData,
-} from "../types/statcast";
+} from "@/lib/mlb/types/statcast";
+import { z } from "zod";
 
 // Use simple import for built-in fetch
 

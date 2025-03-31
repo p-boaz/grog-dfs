@@ -195,17 +195,21 @@ export interface RunProductionAnalysis {
 }
 
 /**
- * Comprehensive batter analysis for DFS
+ * Comprehensive batter analysis for DFS as used in the implementation
  * 
  * @property batterId - MLB player ID
  * @property name - Player's full name
  * @property team - Team abbreviation
  * @property opponent - Opponent team name
+ * @property opposingPitcher - Details about opposing pitcher
  * @property gameId - MLB game ID
  * @property position - Primary position
- * @property stats - Season and recent statistics
+ * @property venue - Venue name
+ * @property stats - Season and statistics by year
  * @property matchup - Matchup data with probable pitcher
  * @property projections - DFS projections
+ * @property lineupPosition - Position in batting order
+ * @property factors - Environmental factors
  * @property draftKings - DraftKings data
  */
 export interface BatterAnalysis {
@@ -213,83 +217,106 @@ export interface BatterAnalysis {
   name: string;
   team: string;
   opponent: string;
-  gameId: number;
+  opposingPitcher: {
+    id: number;
+    name: string;
+    throwsHand: string;
+  };
   position: string;
-  handedness: string;
+  gameId: number;
+  venue: string;
   stats: {
-    season: {
-      avg: number | null;
-      obp: number | null;
-      slg: number | null;
-      ops: number | null;
-      homeRuns: number | null;
-      rbi: number | null;
-      runs: number | null;
-      stolenBases: number | null;
+    seasonStats: {
+      "2024": SeasonStats;
+      "2025": SeasonStats;
     };
-    vsPitcherHand: {
-      avg: number | null;
-      obp: number | null;
-      slg: number | null;
-      ops: number | null;
-    };
-    recent: {
-      last7Days?: {
-        avg: number | null;
-        ops: number | null;
-      };
-      last15Days?: {
-        avg: number | null;
-        ops: number | null;
-      };
-    };
+    quality: BatterQualityMetrics;
   };
   matchup: {
-    pitcher: {
-      id: number;
-      name: string;
-      handedness: string;
-      era: number | null;
-      whip: number | null;
-    };
-    ballpark: {
-      name: string;
-      factor: number;
-    };
-    weather: {
-      temperature: number | null;
-      windSpeed: number | null;
-      windDirection: string;
+    advantageScore: number;
+    platoonAdvantage: boolean;
+    historicalStats: {
+      atBats: number;
+      hits: number;
+      avg: number;
+      homeRuns: number;
+      ops: number;
     };
   };
   projections: {
-    expectedPoints: number;
-    upside: number;
-    floor: number;
-    breakdown: {
-      hits: number;
-      extraBaseHits: number;
+    homeRunProbability: number;
+    stolenBaseProbability: number;
+    expectedHits: {
+      total: number;
+      singles: number;
+      doubles: number;
+      triples: number;
       homeRuns: number;
-      rbis: number;
-      runs: number;
-      walks: number;
-      stolenBases: number;
+      confidence: number;
     };
-    confidence: number; // 0-100
+    dfsProjection: {
+      expectedPoints: number;
+      upside: number;
+      floor: number;
+      breakdown: {
+        hits: number;
+        singles: number;
+        doubles: number;
+        triples: number;
+        homeRuns: number;
+        runs: number;
+        rbi: number;
+        stolenBases: number;
+        walks: number;
+      };
+    };
   };
-  draftKings: DraftKingsInfo;
+  lineupPosition?: number;
+  factors: {
+    weather: {
+      temperature: number;
+      windSpeed: number;
+      windDirection: string;
+      isOutdoor: boolean;
+      temperatureFactor: number;
+      windFactor: number;
+      overallFactor: number;
+      byHitType: {
+        singles: number;
+        doubles: number;
+        triples: number;
+        homeRuns: number;
+      };
+    };
+    ballpark: {
+      overall: number;
+      singles: number;
+      doubles: number;
+      triples: number;
+      homeRuns: number;
+      runs: number;
+    };
+    platoon: boolean;
+    career: any;
+  };
+  draftKings: {
+    draftKingsId: number | null;
+    salary: number | null;
+    positions: string[];
+    avgPointsPerGame: number;
+  };
 }
 
 /**
  * Batter quality metrics
  */
 export interface BatterQualityMetrics {
-  battedBallQuality: number; // 0-1 scale
-  power: number; // 0-1 scale 
-  contactRate: number; // 0-1 scale
-  plateApproach: number; // 0-1 scale
-  speed: number; // 0-1 scale
-  consistency: number; // 0-100 scale
+  battedBallQuality?: number; // 0-1 scale
+  power?: number; // 0-1 scale 
+  contactRate?: number; // 0-1 scale
+  plateApproach?: number; // 0-1 scale
+  speed?: number; // 0-1 scale
+  consistency?: number; // 0-100 scale
 }
 
 /**
@@ -304,6 +331,8 @@ export interface HitProjection {
   hitByPitch: number;
   stolenBases: number;
   expectedPoints: number;
+  total?: number;
+  confidence?: number;
 }
 
 /**
@@ -314,59 +343,43 @@ export interface BatterProjections {
   upside: HitProjection;
   floor: HitProjection;
   confidence: number; // 0-100
+  homeRunProbability?: number;
+  stolenBaseProbability?: number;
 }
 
 /**
- * Detailed hit projections by category
+ * Detailed hit projection for all hit types 
+ */
+export interface DetailedHitProjection {
+  expectedHits: number;
+  byType: {
+    singles: { expected: number; points: number };
+    doubles: { expected: number; points: number };
+    triples: { expected: number; points: number };
+    homeRuns: { expected: number; points: number };
+  };
+  confidence: number;
+  totalHitPoints?: number; // Used in hits.ts
+  atBats?: number; // Used in hits.ts
+  [key: string]: any; // Allow additional properties for hits.ts
+}
+
+/**
+ * Detailed hit projections by category including factors
  */
 export interface DetailedHitProjections {
-  singles: {
-    expected: number;
-    upside: number;
-    floor: number;
-    confidence: number; // 0-100
+  total: number;
+  byType: {
+    singles: { expected: number; points: number };
+    doubles: { expected: number; points: number };
+    triples: { expected: number; points: number };
+    homeRuns: { expected: number; points: number };
   };
-  doubles: {
-    expected: number;
-    upside: number;
-    floor: number;
-    confidence: number; // 0-100
-  };
-  triples: {
-    expected: number;
-    upside: number;
-    floor: number;
-    confidence: number; // 0-100
-  };
-  homeRuns: {
-    expected: number;
-    upside: number;
-    floor: number;
-    confidence: number; // 0-100
-  };
-  walks: {
-    expected: number;
-    upside: number;
-    floor: number;
-    confidence: number; // 0-100
-  };
-  runs: {
-    expected: number;
-    upside: number;
-    floor: number;
-    confidence: number; // 0-100
-  };
-  rbis: {
-    expected: number;
-    upside: number;
-    floor: number;
-    confidence: number; // 0-100
-  };
-  stolenBases: {
-    expected: number;
-    upside: number;
-    floor: number;
-    confidence: number; // 0-100
+  confidence: number;
+  factors: {
+    weather: any;
+    ballpark: any;
+    career: any;
   };
 }
 
@@ -427,4 +440,115 @@ export interface PitcherRunAllowance {
   earnedRunAverage: number;
   baseRunners: number; // Average per inning
   scoringInningPercentage: number;
+}
+
+/**
+ * Statistical projections for a batter
+ * 
+ * @property runs - Projected runs scored
+ * @property rbi - Projected RBIs
+ * @property expectedPoints - Expected DFS points
+ * @property hitProjections - Detailed hit projections by type
+ * @property upside - Ceiling projection for points
+ * @property floor - Floor projection for points
+ */
+export interface Projections {
+  runs: number;
+  rbi: number;
+  expectedPoints: number;
+  hitProjections: {
+    total: number;
+    singles: number;
+    doubles: number;
+    triples: number;
+    homeRuns: number;
+    confidence: number;
+  };
+  upside: number;
+  floor: number;
+}
+
+/**
+ * @deprecated Use BatterSeasonStats from '../player/batter'
+ * 
+ * This interface is maintained only for backward compatibility.
+ * All new code should use BatterSeasonStats from '../player/batter'.
+ * This will be removed in a future version.
+ */
+import { BatterSeasonStats } from '../player/batter';
+export type SeasonStats = BatterSeasonStats;
+
+/**
+ * Batter game information
+ */
+export interface BatterInfo {
+  id: number;
+  name?: string;
+  position: string;
+  lineupPosition: number;
+  isHome: boolean;
+  opposingPitcher: {
+    id: number;
+    name: string;
+    throwsHand: string;
+  };
+}
+
+/**
+ * Game data information
+ */
+export interface GameInfo {
+  gameId: number;
+  venue: {
+    id: number;
+    name: string;
+  };
+  homeTeam: {
+    name: string;
+  };
+  awayTeam: {
+    name: string;
+  };
+  environment?: {
+    temperature: number;
+    windSpeed: number;
+    windDirection: string;
+    isOutdoor: boolean;
+  };
+  ballpark?: {
+    overall: number;
+    types: {
+      homeRuns: number;
+      runs: number;
+    };
+  };
+  lineups: {
+    homeCatcher?: { id: number };
+    awayCatcher?: { id: number };
+  };
+  pitchers: {
+    away: {
+      id: number;
+      name: string;
+      throwsHand: string;
+    };
+    home: {
+      id: number;
+      name: string;
+      throwsHand: string;
+    };
+  };
+}
+
+/**
+ * DraftKings player information
+ */
+export interface DKPlayer {
+  id: number;
+  name: string;
+  position: string;
+  salary: number;
+  avgPointsPerGame: number;
+  team?: string;
+  lineupPosition?: number;
 }

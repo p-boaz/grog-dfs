@@ -1,6 +1,5 @@
 import { DEFAULT_CACHE_TTL, markAsApiSource, withCache } from "../cache";
 import { makeMLBApiRequest } from "../core/api-client";
-import { PlayerStats as ImportedPlayerStats } from "../core/types";
 import {
   AdvancedMatchupAnalysis,
   HitterMatchupAnalysis,
@@ -13,19 +12,6 @@ import {
 import { StatcastPitch } from "../types/statcast";
 import { getBatterStats } from "./batter-stats";
 import { getPitcherStats } from "./pitcher-stats";
-
-type PlayerStats = Pick<ImportedPlayerStats, "fullName" | "seasonStats"> & {
-  pitchHand?: string;
-  batSide?: string;
-};
-
-// Helper function to convert number to decimal string
-const toDecimalString = (num: number): string => num.toString();
-
-/**
- * Helper function to convert numbers to decimal strings for database storage
- */
-const toDbDecimal = (value: number): string => value.toString();
 
 /**
  * Fetch historical matchup data between a pitcher and batter

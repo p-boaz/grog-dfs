@@ -207,7 +207,7 @@
           }
         ],
         "confirmed": true,
-        "sourceTimestamp": "2025-03-31T21:17:43.343Z",
+        "sourceTimestamp": "2025-03-31T22:09:38.050Z",
         "__isApiSource": true
       },
       "pitchers": {
@@ -229,7 +229,7 @@
         "venueId": 4,
         "venueName": "Rate Field",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-31T21:17:43.073Z",
+        "sourceTimestamp": "2025-03-31T22:09:37.733Z",
         "__isApiSource": true
       },
       "teamStats": {
@@ -307,7 +307,7 @@
             "gamesPitched": 4,
             "completeGames": 0,
             "shutouts": 1,
-            "strikes": 346,
+            "strikes": 345,
             "strikePercentage": ".610",
             "hitBatsmen": 3,
             "balks": 0,
@@ -446,7 +446,7 @@
     }
   ],
   "count": 33,
-  "collectTimestamp": "2025-03-31T21:17:42.987Z",
+  "collectTimestamp": "2025-03-31T22:09:37.646Z",
   "seasons": [
     "2024",
     "2025"

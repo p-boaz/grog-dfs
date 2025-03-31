@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { GameCard } from "./GameCard";
 import { Card, CardContent } from "@/components/ui/card";
-import { MLBScheduleResponse } from "@/lib/mlb/core/types";
+import { MLBScheduleResponse } from "@/lib/mlb/types/core";
+import { useEffect, useState } from "react";
+import { GameCard } from "./GameCard";
 
 interface DailyGamesViewProps {
   date: string;

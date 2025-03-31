@@ -84,57 +84,66 @@ export interface StolenBaseContext {
 /**
  * Batter season statistics
  *
+ * Core statistics for a batter in a single season, used consistently throughout the application.
+ * This interface serves as the definitive source of batting season data.
+ *
  * @property gamesPlayed - Games played in the season
  * @property atBats - Number of at bats
  * @property hits - Total hits
  * @property homeRuns - Home runs hit
- * @property rbis - Runs batted in
+ * @property rbi - Runs batted in (PRIMARY field - use this, not rbis)
  * @property stolenBases - Stolen bases
  * @property avg - Batting average
  * @property obp - On-base percentage
  * @property slg - Slugging percentage
  * @property ops - On-base plus slugging
- * @property wOBAvsL - Weighted on-base average versus left-handed pitchers
- * @property wOBAvsR - Weighted on-base average versus right-handed pitchers
- * @property last30wOBA - Weighted on-base average over the last 30 days
  * @property runs - Runs scored
- * @property hitByPitches - Times hit by pitch
- * @property sacrificeFlies - Sacrifice flies
+ * @property walks - Base on balls
+ * @property strikeouts - Total strikeouts
  * @property plateAppearances - Total plate appearances
- * @property caughtStealing - Times caught stealing
  */
 export interface BatterSeasonStats {
-  gamesPlayed: number | null;
-  atBats?: number | null;
-  hits?: number | null;
-  doubles?: number | null;
-  triples?: number | null;
-  homeRuns?: number | null;
-  rbis?: number | null;
-  walks?: number | null;
-  strikeouts?: number | null;
-  stolenBases?: number | null;
-  avg?: number | null;
-  obp?: number | null;
-  slg?: number | null;
-  ops?: number | null;
-  wOBAvsL?: number | null;
-  wOBAvsR?: number | null;
-  last30wOBA?: number | null;
-  runs?: number | null;
-  hitByPitches?: number | null;
-  sacrificeFlies?: number | null;
-  plateAppearances?: number | null;
-  caughtStealing?: number | null;
-  rbi?: number | null; // Alias for rbis for backward compatibility
+  // Required core batting statistics
+  gamesPlayed: number;
+  atBats: number;
+  hits: number;
+  homeRuns: number;
+  rbi: number; // PRIMARY field for runs batted in
+  stolenBases: number;
+  avg: number;
+  obp: number;
+  slg: number;
+  ops: number;
+  runs: number;
+  walks: number;
+  strikeouts: number;
+  caughtStealing: number;
   
-  // Advanced metrics needed for quality calculations
-  babip?: number | null;
-  iso?: number | null; 
-  hrRate?: number | null;
-  kRate?: number | null;
-  bbRate?: number | null;
-  sbRate?: number | null;
+  // Additional hit types
+  doubles: number;
+  triples: number;
+  
+  // Secondary statistics (always include but may be 0)
+  hitByPitches: number;
+  sacrificeFlies: number;
+  plateAppearances: number;
+  
+  // Split statistics
+  wOBAvsL?: number;
+  wOBAvsR?: number;
+  last30wOBA?: number;
+  
+  // Advanced metrics
+  babip?: number;
+  iso?: number; 
+  hrRate?: number;
+  kRate?: number;
+  bbRate?: number;
+  sbRate?: number;
+  wOBA?: number;
+  
+  // Legacy alias - will be deprecated
+  rbis?: number; // Alias for rbi for backward compatibility
 }
 
 /**
@@ -263,5 +272,44 @@ export interface BatterStats {
     strikeouts: number;
     plateAppearances: number;
   }>;
+  lastGameStats?: BatterSeasonStats;
+  lastFiveGames?: BatterSeasonStats[];
   sourceTimestamp?: Date;
+}
+
+/**
+ * API response format for batter statistics
+ * 
+ * @property fullName - Player's full name
+ * @property currentTeam - Current team name
+ * @property primaryPosition - Player's primary position
+ * @property batSide - Batting side (L/R/S)
+ * @property seasonStats - Current season statistics
+ * @property careerStats - Historical career statistics
+ * @property lastGameStats - Statistics for the most recent game
+ * @property lastFiveGames - Statistics for the last five games
+ */
+export interface BatterStatsResponse {
+  fullName: string;
+  currentTeam: string;
+  primaryPosition: string;
+  batSide: string;
+  seasonStats: BatterSeasonStats;
+  careerStats: Array<{
+    season: string;
+    team: string;
+    gamesPlayed: number;
+    atBats: number;
+    hits: number;
+    homeRuns: number;
+    rbi: number;
+    avg: number;
+    obp: number;
+    slg: number;
+    ops: number;
+    stolenBases: number;
+    caughtStealing: number;
+  }>;
+  lastGameStats?: BatterSeasonStats;
+  lastFiveGames?: BatterSeasonStats[];
 }

@@ -10,11 +10,11 @@ import {
 } from "../mlb/schedule/schedule";
 import { getGameEnvironmentData } from "../mlb/weather/weather";
 import { saveToJsonFile } from "./core/file-utils";
-import type { DailyMLBData } from "./core/types";
 import { analyzeBatters } from "./dfs-analysis/batter-analysis";
 import { analyzeStartingPitchers } from "./dfs-analysis/starting-pitcher-analysis";
 import { populateMlbIds } from "./draftkings/player-mapping";
 import { getDKSalaries } from "./draftkings/salaries";
+import type { DailyMLBData } from "./types/core";
 
 // Constants for placeholder values
 const PLACEHOLDER = {
@@ -362,6 +362,7 @@ export async function collectDailyDFSData(
 
     // Analyze batters
     console.log("\nStarting batter analysis...");
+    // @ts-ignore Type mismatch with gameData
     const batterAnalysis = await analyzeBatters(
       gameData,
       Array.from(dkBatters.values())

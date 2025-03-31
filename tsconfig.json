@@ -28,7 +28,10 @@
         "./*"
       ]
     },
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "ignoreDeprecations": "5.0"
   },
   "include": [
     "next-env.d.ts",

@@ -1,197 +1,286 @@
-# Common Typecheck Errors and Solutions
+[3:31:36 PM] File change detected. Starting incremental compilation...
 
-This document catalogs common TypeScript errors you might encounter in this codebase and provides guidance on how to solve them.
+lib/mlb/daily-data-collector.ts:366:7 - error TS2345: Argument of type '{ gameId: number; gameTime: string; status: { abstractGameState?: string; detailedState?: string; statusCode?: string; }; homeTeam: { id: number; name: string; }; awayTeam: { id: number; name: string; }; venue: { ...; }; ... 4 more ...; ballpark: { ...; }; }[]' is not assignable to parameter of type 'string'.
 
-## 1. Type Inconsistencies and Missing Type Definitions
+366 gameData,
+~~~~~~~~
 
-### Problem: Function name mismatch in imports
+lib/mlb/dfs-analysis/batter-analysis.ts:12:10 - error TS2724: '"./stolen-bases"' has no exported member named 'estimateStolenBaseProbability'. Did you mean 'calculateStolenBaseProbability'?
 
-```typescript
-// Error example:
-error TS2724: '"./run-production"' has no exported member named 'calculateRunProductionProjection'.
-Did you mean 'calculateRunProductionPoints'?
-```
+12 import { estimateStolenBaseProbability } from "./stolen-bases";
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Solution:**
-- Always check that imported function names match the exported function names exactly
-- If you rename a function, use search tools to find all references and update them
-- Consider using barrel files (index.ts) to centralize exports for stable API
+lib/mlb/dfs-analysis/stolen-bases.ts:276:23
+276 export async function calculateStolenBaseProbability(
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+'calculateStolenBaseProbability' is declared here.
 
-### Problem: Module path errors
+lib/mlb/dfs-analysis/batter-analysis.ts:13:10 - error TS2724: '"./run-production"' has no exported member named 'calculateRunProduction'. Did you mean 'calculateRunProductionPoints'?
 
-```typescript
-// Error example:
-error TS2307: Cannot find module '../types/analysis/ballpark-factors'
-```
+13 import { calculateRunProduction } from "./run-production";
+~~~~~~~~~~~~~~~~~~~~~~
 
-**Solution:**
-- Verify the file path exists and is correct
-- Check for typos in the import path
-- Consult `/lib/mlb/types/index.ts` for the correct path
-- Use centralized imports from index files where possible
+lib/mlb/dfs-analysis/run-production.ts:906:23
+906 export async function calculateRunProductionPoints(
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+'calculateRunProductionPoints' is declared here.
 
-### Problem: Missing properties in type definitions
+lib/mlb/dfs-analysis/batter-analysis.ts:15:10 - error TS2724: '"./hits"' has no exported member named 'calculateHitProjections'. Did you mean 'calculateHitProjection'?
 
-```typescript
-// Error example:
-error TS2353: Object literal may only specify known properties, and 'singles' does not exist in type 'BallparkHitFactor'.
-```
+15 import { calculateHitProjections } from "./hits";
+~~~~~~~~~~~~~~~~~~~~~~~
 
-**Solution:**
-- Reference the interface definition to confirm required properties
-- Add missing properties to the interface if needed
-- Use property spreading (`...object`) to handle extra properties
-- Consider using Partial<Type> for partial implementations
+lib/mlb/dfs-analysis/hits.ts:738:23
+738 export async function calculateHitProjection(
+~~~~~~~~~~~~~~~~~~~~~~
+'calculateHitProjection' is declared here.
 
-## 2. Interface Conflicts and Type Mismatches
+lib/mlb/dfs-analysis/batter-analysis.ts:17:36 - error TS2307: Cannot find module '../environment' or its corresponding type declarations.
 
-### Problem: Properties don't exist on types
+17 import { getBallparkFactors } from "../environment";
+~~~~~~~~~~~~~~~~
 
-```typescript
-// Error example:
-error TS2339: Property 'onBasePct' does not exist on type 'TeamStats'.
-```
+lib/mlb/dfs-analysis/batter-analysis.ts:20:10 - error TS2305: Module '"../player/matchups"' has no exported member 'getMatchupData'.
 
-**Solution:**
-- Check the property naming convention in the interface definition
-- Use appropriate mapping or transformation to match property names
-- Consider adding type adapters for legacy APIs
-- Access properties safely with optional chaining and defaults:
-  ```typescript
-  const onBasePercentage = (teamStats?.hitting?.obp as number) || 0.33;
-  ```
+20 import { getMatchupData } from "../player/matchups";
+~~~~~~~~~~~~~~
 
-### Problem: Function parameter count mismatches
+lib/mlb/dfs-analysis/batter-analysis.ts:21:10 - error TS2459: Module '"./starting-pitcher-analysis"' declares 'calculatePitcherDfsProjection' locally, but it is not exported.
 
-```typescript
-// Error example:
-error TS2554: Expected 1 arguments, but got 2.
-```
+21 import { calculatePitcherDfsProjection } from "./starting-pitcher-analysis";
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Solution:**
-- Review function signatures carefully
-- Check API documentation for expected parameters
-- Consolidate parameters into objects for more flexible APIs
-- Consider using optional parameters with defaults
+lib/mlb/dfs-analysis/starting-pitcher-analysis.ts:5:10
+5 import { calculatePitcherDfsProjection } from "./aggregate-scoring";
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+'calculatePitcherDfsProjection' is declared here.
 
-### Problem: Undefined interface name
+lib/mlb/dfs-analysis/batter-analysis.ts:35:10 - error TS2305: Module '"../draftkings/player-mapping"' has no exported member 'mapBatterToPlayer'.
 
-```typescript
-// Error example:
-error TS2552: Cannot find name 'RunProductionPoints'.
-```
+35 import { mapBatterToPlayer } from "../draftkings/player-mapping";
+~~~~~~~~~~~~~~~~~
 
-**Solution:**
-- Import the missing interface from the appropriate module
-- Define the interface if it doesn't exist yet
-- Check for typos in interface names
-- Ensure the interface is properly exported from its module
+lib/mlb/dfs-analysis/batter-analysis.ts:49:47 - error TS2345: Argument of type 'string' is not assignable to parameter of type '{ gamePk: string; }'.
 
-## 3. Complex Type Issues
+49 const game = await getGameEnvironmentData(gameId);
+~~~~~~
 
-### Problem: Object property restrictions
+lib/mlb/dfs-analysis/batter-analysis.ts:59:54 - error TS2345: Argument of type 'GameEnvironmentData' is not assignable to parameter of type 'GameInfo'.
+Type 'GameEnvironmentData' is missing the following properties from type 'GameInfo': gameId, venue, homeTeam, awayTeam, and 2 more.
 
-```typescript
-// Error example:
-Object literal may only specify known properties, and 'sprintSpeed' does not exist in type 'PlayerSBSeasonStats'.
-```
+59 const analysis = await analyzeBatter(batter, game);
+~~~~
 
-**Solution:**
-- Add the missing property to the interface definition
-- Make the property optional in the interface
-- Consider using index signatures for flexible objects
-- Use type assertions cautiously when necessary
+lib/mlb/dfs-analysis/batter-analysis.ts:63:55 - error TS2345: Argument of type 'GameEnvironmentData' is not assignable to parameter of type 'GameInfo'.
+Type 'GameEnvironmentData' is missing the following properties from type 'GameInfo': gameId, venue, homeTeam, awayTeam, and 2 more.
 
-### Problem: Interface implementation is incomplete
+63 results.push(getDefaultBatterAnalysis(batter, game));
+~~~~
 
-```typescript
-// Error example:
-Type is missing the following properties: batterProfile, pitcherHold, gameContext, sprintSpeed
-```
+lib/mlb/dfs-analysis/batter-analysis.ts:205:42 - error TS2339: Property 'singles' does not exist on type '{ homeRuns: number; runs: number; }'.
 
-**Solution:**
-- Implement all required properties from the interface
-- Consider creating factory functions that ensure complete objects
-- Use interface composition to separate core from extended properties
-- Add default values for all required properties:
-  ```typescript
-  factors: {
-    batterSpeed: 5.0,
-    batterTendency: 5.0,
-    catcherDefense: 5.0,
-    pitcherHoldRate: 5.0,
-    gameScriptFactor: 5.0,
-    batterProfile: 5.0, // Add missing properties
-    pitcherHold: 5.0,
-    gameContext: 5.0,
-    sprintSpeed: 27.0
-  }
-  ```
+205 singles: game.ballpark?.types?.singles || 1.0,
+~~~~~~~
 
-### Problem: Missing required properties in arrays
+lib/mlb/dfs-analysis/batter-analysis.ts:206:42 - error TS2339: Property 'doubles' does not exist on type '{ homeRuns: number; runs: number; }'.
 
-```typescript
-// Error example:
-Type '{ ... }[]' is not assignable to type 'PitcherCareerStatsSeason[]'.
-Property 'hits' is missing in type '{ ... }' but required in type 'PitcherCareerStatsSeason'.
-```
+206 doubles: game.ballpark?.types?.doubles || 1.0,
+~~~~~~~
 
-**Solution:**
-- Map array items to include all required properties
-- Add default values for missing properties
-- Consider making problematic properties optional
-- Transform data before returning:
-  ```typescript
-  careerStats: careerStats.map(stat => ({
-    ...stat,
-    hits: 0 // Add required property with default value
-  }))
-  ```
+lib/mlb/dfs-analysis/batter-analysis.ts:207:42 - error TS2339: Property 'triples' does not exist on type '{ homeRuns: number; runs: number; }'.
 
-## 4. Import and Export Conflicts
+207 triples: game.ballpark?.types?.triples || 1.0,
+~~~~~~~
 
-### Problem: Name conflicts in imports
+lib/mlb/dfs-analysis/batter-analysis.ts:299:9 - error TS2345: Argument of type '{ overall: number; types: { homeRuns: number; runs: number; }; }' is not assignable to parameter of type 'number'.
 
-```typescript
-// Error example:
-error TS2440: Import declaration conflicts with local declaration of 'TeamStats'.
-```
+299 game.ballpark,
+~~~~~~~~~~~~~
 
-**Solution:**
-- Use named imports with aliases:
-  ```typescript
-  import { TeamStats as CoreTeamStats } from "./core";
-  ```
-- Create wrapper interfaces that extend the conflicting types
-- Use namespaces to isolate conflicting types
-- Refactor to eliminate the duplicate type definitions
+lib/mlb/dfs-analysis/batter-analysis.ts:333:9 - error TS2345: Argument of type '{ overall: number; types: { homeRuns: number; runs: number; }; }' is not assignable to parameter of type 'BallparkFactors'.
+Property 'handedness' is missing in type '{ overall: number; types: { homeRuns: number; runs: number; }; }' but required in type 'BallparkFactors'.
 
-### Problem: Re-export ambiguity
+333 game.ballpark,
+~~~~~~~~~~~~~
 
-```typescript
-// Error example:
-error TS2308: Module './core' has already exported a member named 'TeamStats'. 
-Consider explicitly re-exporting to resolve the ambiguity.
-```
+lib/mlb/types/environment/ballpark.ts:19:3
+19 handedness: {
+~~~~~~~~~~
+'handedness' is declared here.
 
-**Solution:**
-- Explicitly re-export types with unique names:
-  ```typescript
-  export { TeamStats as GameTeamStats } from './game';
-  ```
-- Selectively re-export specific types rather than using wildcard exports
-- Create wrapper interfaces for conflicting types
-- Use explicit named imports instead of relying on wildcard re-exports
+lib/mlb/dfs-analysis/batter-analysis.ts:355:31 - error TS2339: Property 'temperature' does not exist on type '{ batterPower: number; pitcherVulnerability: number; ballparkFactor: number; weatherFactor: number; recentForm: number; } & { batterProfile: number; pitcherVulnerability: number; ballpark: number; weather: number; platoonAdvantage: number; }'.
 
-## Best Practices to Prevent TypeScript Errors
+355 hrProbability.factors.temperature || 1.0;
+~~~~~~~~~~~
 
-1. **Define clear interface contracts** with all required properties
-2. **Use consistent naming conventions** across related interfaces
-3. **Add factory functions** for complex object creation
-4. **Include JSDoc documentation** for all interfaces and properties
-5. **Use type guards** to safely handle type unions
-6. **Implement runtime validation** for external data
-7. **Review dependencies** before changing interfaces
-8. **Set up automated typecheck** in your workflow
-9. **Consider using type composition** rather than inheritance
-10. **Use exhaustive testing** to catch type errors early
+lib/mlb/dfs-analysis/batter-analysis.ts:356:64 - error TS2339: Property 'wind' does not exist on type '{ batterPower: number; pitcherVulnerability: number; ballparkFactor: number; weatherFactor: number; recentForm: number; } & { batterProfile: number; pitcherVulnerability: number; ballpark: number; weather: number; platoonAdvantage: number; }'.
+
+356 entry.factors.weather.windFactor = hrProbability.factors.wind || 1.0;
+~~~~
+
+lib/mlb/dfs-analysis/batter-analysis.ts:358:31 - error TS2339: Property 'weatherOverall' does not exist on type '{ batterPower: number; pitcherVulnerability: number; ballparkFactor: number; weatherFactor: number; recentForm: number; } & { batterProfile: number; pitcherVulnerability: number; ballpark: number; weather: number; platoonAdvantage: number; }'.
+
+358 hrProbability.factors.weatherOverall || 1.0;
+~~~~~~~~~~~~~~
+
+lib/mlb/dfs-analysis/batter-analysis.ts:751:41 - error TS2339: Property 'singles' does not exist on type '{ homeRuns: number; runs: number; }'.
+
+751 singles: game?.ballpark?.types?.singles || 1.0,
+~~~~~~~
+
+lib/mlb/dfs-analysis/batter-analysis.ts:752:41 - error TS2339: Property 'doubles' does not exist on type '{ homeRuns: number; runs: number; }'.
+
+752 doubles: game?.ballpark?.types?.doubles || 1.0,
+~~~~~~~
+
+lib/mlb/dfs-analysis/batter-analysis.ts:753:41 - error TS2339: Property 'triples' does not exist on type '{ homeRuns: number; runs: number; }'.
+
+753 triples: game?.ballpark?.types?.triples || 1.0,
+~~~~~~~
+
+lib/mlb/dfs-analysis/hits.ts:13:3 - error TS2305: Module '"../types/analysis/hits"' has no exported member 'DetailedHitProjection'.
+
+13 DetailedHitProjection,
+~~~~~~~~~~~~~~~~~~~~~
+
+lib/mlb/dfs-analysis/hits.ts:146:7 - error TS2353: Object literal may only specify known properties, and 'battingAverage' does not exist in type 'PlayerHitStats'.
+
+146 battingAverage: batting.avg || 0,
+~~~~~~~~~~~~~~
+
+lib/mlb/dfs-analysis/hits.ts:277:7 - error TS2561: Object literal may only specify known properties, but 'careerHits' does not exist in type 'CareerHitProfile'. Did you mean to write 'careerIso'?
+
+277 careerHits,
+~~~~~~~~~~
+
+lib/mlb/dfs-analysis/hits.ts:322:7 - error TS2353: Object literal may only specify known properties, and 'overall' does not exist in type 'BallparkHitFactor'.
+
+322 overall: factors.overall,
+~~~~~~~
+
+lib/mlb/dfs-analysis/hits.ts:402:7 - error TS2353: Object literal may only specify known properties, and 'windSpeed' does not exist in type 'WeatherHitImpact'.
+
+402 windSpeed,
+~~~~~~~~~
+
+lib/mlb/dfs-analysis/hits.ts:480:7 - error TS2353: Object literal may only specify known properties, and 'gamesStarted' does not exist in type 'PitcherHitVulnerability'.
+
+480 gamesStarted:
+~~~~~~~~~~~~
+
+lib/mlb/dfs-analysis/hits.ts:551:7 - error TS2353: Object literal may only specify known properties, and 'singles' does not exist in type 'MatchupHitStats'.
+
+551 singles,
+~~~~~~~
+
+lib/mlb/dfs-analysis/hits.ts:597:7 - error TS2739: Type '{ ops: number; battingAverage: number; onBasePercentage: number; sluggingPct: number; atBats: number; }' is missing the following properties from type '{ avg: number; ops: number; wOBA: number; }': avg, wOBA
+
+597 vsLeft: {
+~~~~~~
+
+lib/mlb/types/analysis/hits.ts:84:3
+84 vsLeft: {
+~~~~~~
+The expected type comes from property 'vsLeft' which is declared here on type 'BatterPlatoonSplits'
+
+lib/mlb/dfs-analysis/hits.ts:601:7 - error TS2739: Type '{ ops: number; battingAverage: number; onBasePercentage: number; sluggingPct: number; atBats: number; }' is missing the following properties from type '{ avg: number; ops: number; wOBA: number; }': avg, wOBA
+
+601 vsRight: {
+~~~~~~~
+
+lib/mlb/types/analysis/hits.ts:89:3
+89 vsRight: {
+~~~~~~~
+The expected type comes from property 'vsRight' which is declared here on type 'BatterPlatoonSplits'
+
+lib/mlb/dfs-analysis/hits.ts:661:37 - error TS2339: Property 'battingAverage' does not exist on type 'PlayerHitStats'.
+
+661 let baselineBA = playerHitStats.battingAverage;
+~~~~~~~~~~~~~~
+
+lib/mlb/dfs-analysis/hits.ts:702:47 - error TS2339: Property 'singleRate' does not exist on type 'PlayerHitStats'.
+
+702 const adjustedSingleRate = playerHitStats.singleRate \* adjustedBA;
+~~~~~~~~~~
+
+lib/mlb/dfs-analysis/hits.ts:703:47 - error TS2339: Property 'doubleRate' does not exist on type 'PlayerHitStats'.
+
+703 const adjustedDoubleRate = playerHitStats.doubleRate \* adjustedBA;
+~~~~~~~~~~
+
+lib/mlb/dfs-analysis/hits.ts:704:47 - error TS2339: Property 'tripleRate' does not exist on type 'PlayerHitStats'.
+
+704 const adjustedTripleRate = playerHitStats.tripleRate \* adjustedBA;
+~~~~~~~~~~
+
+lib/mlb/dfs-analysis/hits.ts:709:7 - error TS2353: Object literal may only specify known properties, and 'expectedBA' does not exist in type 'HitTypeRates'.
+
+709 expectedBA: adjustedBA,
+~~~~~~~~~~
+
+lib/mlb/dfs-analysis/hits.ts:788:38 - error TS2339: Property 'hitTypeRates' does not exist on type 'HitTypeRates'.
+
+788 const expectedSingles = hitRates.hitTypeRates.single \* atBats;
+~~~~~~~~~~~~
+
+lib/mlb/dfs-analysis/hits.ts:789:38 - error TS2339: Property 'hitTypeRates' does not exist on type 'HitTypeRates'.
+
+789 const expectedDoubles = hitRates.hitTypeRates.double \* atBats;
+~~~~~~~~~~~~
+
+lib/mlb/dfs-analysis/hits.ts:790:38 - error TS2339: Property 'hitTypeRates' does not exist on type 'HitTypeRates'.
+
+790 const expectedTriples = hitRates.hitTypeRates.triple \* atBats;
+~~~~~~~~~~~~
+
+lib/mlb/dfs-analysis/hits.ts:791:39 - error TS2339: Property 'hitTypeRates' does not exist on type 'HitTypeRates'.
+
+791 const expectedHomeRuns = hitRates.hitTypeRates.homeRun \* atBats;
+~~~~~~~~~~~~
+
+lib/mlb/dfs-analysis/hits.ts:811:30 - error TS2339: Property 'factors' does not exist on type 'HitTypeRates'.
+
+811 const factors = hitRates.factors;
+~~~~~~~
+
+lib/mlb/types/index.ts:98:3 - error TS2305: Module '"./statcast"' has no exported member 'PitchData'.
+
+98 PitchData,
+~~~~~~~~~
+
+lib/mlb/types/index.ts:99:3 - error TS2724: '"./statcast"' has no exported member named 'StatcastEventData'. Did you mean 'StatcastData'?
+
+99 StatcastEventData,
+~~~~~~~~~~~~~~~~~
+
+lib/mlb/types/index.ts:100:3 - error TS2305: Module '"./statcast"' has no exported member 'PitchOutcomes'.
+
+100 PitchOutcomes,
+~~~~~~~~~~~~~
+
+lib/mlb/types/index.ts:102:3 - error TS2305: Module '"./statcast"' has no exported member 'ControlMetrics'.
+
+102 ControlMetrics,
+~~~~~~~~~~~~~~
+
+lib/mlb/types/index.ts:103:3 - error TS2305: Module '"./statcast"' has no exported member 'MovementMetrics'.
+
+103 MovementMetrics,
+~~~~~~~~~~~~~~~
+
+lib/mlb/types/index.ts:104:3 - error TS2305: Module '"./statcast"' has no exported member 'ResultMetrics'.
+
+104 ResultMetrics,
+~~~~~~~~~~~~~
+
+lib/mlb/types/index.ts:110:3 - error TS2305: Module '"./validation"' has no exported member 'ValidationError'.
+
+110 ValidationError,
+~~~~~~~~~~~~~~~
+
+lib/mlb/types/index.ts:111:3 - error TS2305: Module '"./validation"' has no exported member 'ValidationResult'.
+
+111 ValidationResult
+~~~~~~~~~~~~~~~~
+
+[3:31:37 PM] Found 49 errors. Watching for file changes.
