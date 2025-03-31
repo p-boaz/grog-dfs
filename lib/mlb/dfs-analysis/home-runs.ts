@@ -451,7 +451,7 @@ export async function estimateHomeRunProbability(
   pitcherId: number,
   ballparkId: number,
   isHome: boolean,
-  weatherConditions?: {
+  weatherConditions?: number | {
     temperature?: number;
     windSpeed?: number;
     windDirection?: string;
@@ -553,19 +553,19 @@ export async function estimateHomeRunProbability(
     }
 
     // Adjust for weather if available and outdoors
-    if (gameEnvironment && gameEnvironment.isOutdoor) {
+    if (gameEnvironment && typeof gameEnvironment !== 'number' && gameEnvironment.isOutdoor) {
       // Temperature effect on HR
-      if (gameEnvironment.temperature) {
-        if (gameEnvironment.temperature > 85) weatherFactor += 0.2;
-        else if (gameEnvironment.temperature > 75) weatherFactor += 0.1;
-        else if (gameEnvironment.temperature < 50) weatherFactor -= 0.1;
-        else if (gameEnvironment.temperature < 40) weatherFactor -= 0.2;
+      if (typeof gameEnvironment !== 'number' && gameEnvironment.temperature) {
+        if (typeof gameEnvironment !== 'number' && gameEnvironment.temperature > 85) weatherFactor += 0.2;
+        else if (typeof gameEnvironment !== 'number' && gameEnvironment.temperature > 75) weatherFactor += 0.1;
+        else if (typeof gameEnvironment !== 'number' && gameEnvironment.temperature < 50) weatherFactor -= 0.1;
+        else if (typeof gameEnvironment !== 'number' && gameEnvironment.temperature < 40) weatherFactor -= 0.2;
       }
 
       // Wind effect
-      if (gameEnvironment.windSpeed && gameEnvironment.windDirection) {
-        const windSpeed = gameEnvironment.windSpeed;
-        const windDir = gameEnvironment.windDirection.toLowerCase();
+      if (typeof gameEnvironment !== 'number' && gameEnvironment.windSpeed && gameEnvironment.windDirection) {
+        const windSpeed = typeof gameEnvironment !== 'number' ? gameEnvironment.windSpeed : 0;
+        const windDir = typeof gameEnvironment !== 'number' && gameEnvironment.windDirection ? gameEnvironment.windDirection.toLowerCase() : '';
 
         if (windSpeed > 10) {
           if (windDir.includes("out") || windDir.includes("center")) {

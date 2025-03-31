@@ -517,14 +517,14 @@ export async function analyzeBatters(
       // Calculate home run probability
       const hrProbability = await estimateHomeRunProbability(
         batter.id,
-        game.gameId.toString(),
+        parseInt(game.gameId.toString()),
         game.venue.id,
         isHome,
         gameInfo.pitchers[isHome ? "away" : "home"].id
       );
       if (hrProbability) {
         entry.projections.homeRunProbability =
-          hrProbability.gameHrProbability || 0.05;
+          hrProbability.probability || 0.05;
       }
 
       // Calculate stolen base probability
@@ -1013,7 +1013,7 @@ const analyzeBatter = async (
     // Calculate home run probability
     const hrProbability = await estimateHomeRunProbability(
       batter.id,
-      game.gameId.toString(),
+      parseInt(game.gameId.toString()),
       game.venue.id,
       batter.isHome,
       game.pitchers.away.id
@@ -1050,7 +1050,7 @@ const analyzeBatter = async (
     // Calculate expected points
     const expectedPoints = estimateBatterPoints(
       currentStats.seasonStats,
-      hrProbability.gameHrProbability,
+      hrProbability.probability,
       sbProbability.probability,
       pitcherProj,
       batter.lineupPosition,
@@ -1090,7 +1090,7 @@ const analyzeBatter = async (
         historicalStats: historicalMatchup,
       },
       projections: {
-        homeRunProbability: hrProbability.gameHrProbability,
+        homeRunProbability: hrProbability.probability,
         stolenBaseProbability: sbProbability.probability,
         expectedHits: {
           total: hitProjections.total,

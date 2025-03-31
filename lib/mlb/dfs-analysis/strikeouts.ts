@@ -252,7 +252,7 @@ export async function calculateExpectedStrikeouts(
     ballpark: number;
     weather: number;
   };
-  expectedDkPoints: number; // DK points from Ks (2 points per K)
+  expectedDfsPoints: number; // DK points from Ks (2 points per K)
 }> {
   try {
     // Get pitcher current team
@@ -350,8 +350,8 @@ export async function calculateExpectedStrikeouts(
     // Ensure confidence is within 1-10 range
     confidence = Math.max(1, Math.min(10, confidence));
 
-    // Calculate expected DK points (2 points per K)
-    const expectedDkPoints = expectedStrikeouts * 2;
+    // Calculate expected DFS points (2 points per K)
+    const expectedDfsPoints = expectedStrikeouts * 2;
 
     return {
       expectedStrikeouts,
@@ -365,7 +365,7 @@ export async function calculateExpectedStrikeouts(
         ballpark: environmentFactor,
         weather: environmentFactor,
       },
-      expectedDkPoints,
+      expectedDfsPoints,
     };
   } catch (error) {
     console.error(
@@ -386,7 +386,7 @@ export async function calculateExpectedStrikeouts(
         ballpark: 1.0,
         weather: 1.0,
       },
-      expectedDkPoints: 10.0, // 5 Ks * 2 points
+      expectedDfsPoints: 10.0, // 5 Ks * 2 points
     };
   }
 }

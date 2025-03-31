@@ -62,7 +62,7 @@ export async function calculatePitcherDfsProjection(
       hrVulnerability
     ] = await Promise.all([
       calculatePitcherWinProbability(pitcherId, gamePk, season),
-      calculateExpectedStrikeouts(pitcherId, gamePk, season),
+      calculateExpectedStrikeouts(pitcherId, parseInt(gamePk), season.toString()),
       calculateExpectedInnings(pitcherId, gamePk, season),
       calculateRareEventPotential(pitcherId, gamePk, season),
       getPitcherHomeRunVulnerability(pitcherId, season)
@@ -70,7 +70,7 @@ export async function calculatePitcherDfsProjection(
     
     // Extract pitcher name and team from any available projection
     const name = winProjection.pitcherFactors ? 
-      (strikeoutProjection.expectedStrikeouts > 0 ? strikeoutProjection.factors.pitcherSkill : 0) : "";
+      (strikeoutProjection.expectedStrikeouts > 0 ? strikeoutProjection.factors.pitcherBaseline : 0) : "";
     const team = "";  // Would extract from pitcher data
     
     // Calculate expected earned runs
@@ -93,7 +93,7 @@ export async function calculatePitcherDfsProjection(
     
     // Calculate positive points
     const inningsPoints = projectedInnings * 2.25;  // 2.25 pts per inning
-    const strikeoutPoints = strikeoutProjection.expectedDfsPoints;  // 2 pts per K
+    const strikeoutPoints = strikeoutProjection && strikeoutProjection.expectedDfsPoints ? strikeoutProjection.expectedDfsPoints : 0;  // 2 pts per K
     const winPoints = winProjection.overallWinProbability / 100 * 4;  // 4 pts for win
     const rareEventPoints = rareEventsProjection.expectedRareEventPoints;
     
@@ -125,13 +125,13 @@ export async function calculatePitcherDfsProjection(
     
     const overallConfidence = 
       (inningsProjection.confidenceScore * confidenceWeights.innings) +
-      (strikeoutProjection.confidenceScore * confidenceWeights.strikeouts) +
+      (strikeoutProjection.confidence * confidenceWeights.strikeouts) +
       (winProjection.confidenceScore * confidenceWeights.win) +
       (rareEventsProjection.confidenceScore * confidenceWeights.rareEvents);
     
     // Calculate pitcher quality rating (1-10 scale)
     const qualityComponents = [
-      strikeoutProjection.factors.pitcherSkill,
+      strikeoutProjection.factors.pitcherBaseline,
       inningsProjection.factors.pitcherDurability,
       10 - (hrVulnerability ? hrVulnerability.homeRunVulnerability : 5) // Invert HR vulnerability
     ];
@@ -168,7 +168,7 @@ export async function calculatePitcherDfsProjection(
         overall: Math.round(overallConfidence),
         categoryScores: {
           innings: inningsProjection.confidenceScore,
-          strikeouts: strikeoutProjection.confidenceScore,
+          strikeouts: strikeoutProjection.confidence,
           win: winProjection.confidenceScore,
           rareEvents: rareEventsProjection.confidenceScore
         }
