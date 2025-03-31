@@ -3,12 +3,11 @@
  * Each run and RBI is worth +2 points in DraftKings
  */
 
+import { getGameFeed } from "../game/game-feed";
 import { getBallparkFactors } from "../index";
 import { getBatterStats } from "../player/batter-stats";
 import { getPitcherStats } from "../player/pitcher-stats";
 import { getTeamStats } from "../schedule/schedule";
-import { getGameFeed } from "../game/game-feed";
-import { BallparkFactors } from "../types/environment/ballpark";
 import { RunProductionStats } from "../types/analysis/batter";
 import { BallparkHitFactor } from "../types/analysis/events";
 import {
@@ -20,6 +19,7 @@ import {
   RunProductionPoints,
   TeamOffensiveContext,
 } from "../types/analysis/run-production";
+import { BallparkFactors } from "../types/environment/ballpark";
 import { MLBGame } from "../types/game";
 
 // Points awarded in DraftKings for runs and RBIs
@@ -374,7 +374,7 @@ export async function getBallparkRunFactor(
     homeRuns: factors.types.homeRuns,
     runFactor: factors.types.runs,
     overall: factors.overall,
-    rbiFactor: factors.types.runs // Using run factor for RBIs
+    rbiFactor: factors.types.runs, // Using run factor for RBIs
   };
 }
 
@@ -390,14 +390,26 @@ export function getLineupContext(
     // Get the lineup data
     const lineup = gameData.lineups;
     if (!lineup) {
-      throw new Error("No lineup data available");
+      console.warn("No lineup data available, using default values");
+      return getDefaultLineupContext(position);
+    }
+
+    // Get team stats from game data
+    const team = isHome ? gameData.teams?.home : gameData.teams?.away;
+    if (!team || !team.team.id) {
+      console.warn(
+        `No team data available for ${
+          isHome ? "home" : "away"
+        } team, using default values`
+      );
+      return getDefaultLineupContext(position);
     }
 
     // Calculate expected opportunities based on lineup position
     const baseRunOpportunities = BASE_RUN_OPPORTUNITIES[position] || 1.0;
     const baseRbiOpportunities = BASE_RBI_OPPORTUNITIES[position] || 1.0;
 
-    // Get team stats from game data
+    // Get team stats
     const teamStats = isHome
       ? gameData.teamStats?.home
       : gameData.teamStats?.away;
@@ -406,7 +418,8 @@ export function getLineupContext(
     // Calculate expected opportunities
     const runsPerGame = (teamStats?.hitting?.runs as number) || 0;
     const gamesPlayed = (teamStats?.hitting?.gamesPlayed as number) || 162;
-    const lineupRuns = runsPerGame > 0 && gamesPlayed > 0 ? runsPerGame / gamesPlayed : 4.5; // League average if no stats
+    const lineupRuns =
+      runsPerGame > 0 && gamesPlayed > 0 ? runsPerGame / gamesPlayed : 4.5; // League average if no stats
     const rbis = (teamStats?.hitting?.rbi as number) || 0;
     const lineupRBIs = rbis > 0 && gamesPlayed > 0 ? rbis / gamesPlayed : 4.3; // League average if no stats
     const expectedRunOpportunities = baseRunOpportunities * lineupRuns;
@@ -421,17 +434,23 @@ export function getLineupContext(
       runScoringOpportunities: expectedRunOpportunities,
     };
   } catch (error) {
-    console.error("Error getting lineup context:", error);
-    // Return default values
-    return {
-      position,
-      isTopOfOrder: position <= 3,
-      isBottomOfOrder: position >= 7,
-      runnersOnBaseFrequency: 0.33, // League average
-      rbiOpportunities: 4.0,
-      runScoringOpportunities: 4.0,
-    };
+    console.warn("Error getting lineup context:", error);
+    return getDefaultLineupContext(position);
   }
+}
+
+/**
+ * Get default lineup context values when data is unavailable
+ */
+function getDefaultLineupContext(position: number): LineupContext {
+  return {
+    position,
+    isTopOfOrder: position <= 3,
+    isBottomOfOrder: position >= 7,
+    runnersOnBaseFrequency: 0.33, // League average
+    rbiOpportunities: 4.0,
+    runScoringOpportunities: 4.0,
+  };
 }
 
 /**
@@ -540,8 +559,9 @@ export async function calculateExpectedRuns(
       getBatterStats({ batterId }).catch(() => null),
       getBallparkFactors({
         venueId: gameData.venue.id,
-        season: new Date().getFullYear().toString()
-      }).then(factors => getBallparkRunFactor(factors))
+        season: new Date().getFullYear().toString(),
+      })
+        .then((factors) => getBallparkRunFactor(factors))
         .catch(() => null),
     ]);
 
@@ -680,7 +700,7 @@ function getOpposingPitcherId(gameData: MLBGame, isHome: boolean): number {
 async function getGameData(gamePk: string): Promise<MLBGame> {
   try {
     const gameFeed = await getGameFeed({ gamePk });
-    
+
     // Transform the API response to our MLBGame structure
     return {
       gamePk: parseInt(gamePk),
@@ -765,8 +785,9 @@ export async function calculateExpectedRBIs(
       getBatterStats({ batterId }).catch(() => null),
       getBallparkFactors({
         venueId: gameData.venue.id,
-        season: new Date().getFullYear().toString()
-      }).then(factors => getBallparkRunFactor(factors))
+        season: new Date().getFullYear().toString(),
+      })
+        .then((factors) => getBallparkRunFactor(factors))
         .catch(() => null),
     ]);
 
@@ -892,7 +913,7 @@ export async function calculateRunProductionPoints(
     // Get both runs and RBIs projections
     // Fetch game data based on gamePk
     const gameData = await getGameData(gamePk);
-    
+
     // Get both runs and RBIs projections
     const [runsProjection, rbisProjection] = await Promise.all([
       calculateExpectedRuns(batterId, gameData, isHome),

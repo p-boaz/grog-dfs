@@ -4,7 +4,13 @@ import {
 } from "../lib/mlb/core/file-utils";
 import { collectDailyDFSData } from "../lib/mlb/daily-data-collector";
 
-// Self-executing async function
+/**
+ * Main data collection script that processes all MLB games for the day
+ * This script will:
+ * - Collect data for all scheduled games
+ * - Save results to the default data directory
+ * - Keep the process running after completion
+ */
 (async () => {
   const { stream, logPath } = createLogStream(
     "test-output-detailed.log",
@@ -13,14 +19,12 @@ import { collectDailyDFSData } from "../lib/mlb/daily-data-collector";
   const restoreConsole = captureConsoleOutput(stream);
 
   try {
-    const data = await collectDailyDFSData("2025-03-31", 1, "test", false);
-    console.log("\n--- Test Summary ---\n");
-    console.log("Game details:", JSON.stringify(data.games[0], null, 2));
-    console.log("\nLineups:", JSON.stringify(data.games[0].lineups, null, 2));
-    console.log("\nPitchers:", JSON.stringify(data.games[0].pitchers, null, 2));
-    console.log(
-      "\nEnvironment:",
-      JSON.stringify(data.games[0].environment, null, 2)
+    // Call with default parameters to process all games for today
+    await collectDailyDFSData(
+      undefined, // date: undefined = use today's date
+      undefined, // maxGames: undefined = process all games
+      undefined, // outputDir: undefined = use default directory
+      false // shouldExit: false = keep process running
     );
   } catch (error) {
     console.error(error);

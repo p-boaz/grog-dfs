@@ -20,30 +20,30 @@
         "homeRunsAllowed": null
       },
       "homeRunVulnerability": {
-        "gamesStarted": 26,
-        "inningsPitched": "135.0",
-        "homeRunsAllowed": 22,
-        "hrPer9": 1.4666666666666668,
+        "gamesStarted": 1,
+        "inningsPitched": "5.0",
+        "homeRunsAllowed": 0,
+        "hrPer9": 0,
         "flyBallPct": 0.35,
         "hrPerFlyBall": 0.12,
-        "homeRunVulnerability": 5.866666666666667
+        "homeRunVulnerability": 1
       }
     },
     "projections": {
-      "winProbability": 23,
-      "expectedStrikeouts": 1,
+      "winProbability": 26,
+      "expectedStrikeouts": 0,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.8135000000000013,
-        "upside": 0.9762000000000015,
-        "floor": 0.6508000000000012
+        "expectedPoints": 12.910656249999999,
+        "upside": 15.492787499999999,
+        "floor": 10.328524999999999
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 39,
+      "windSpeed": 12,
+      "windDirection": "Out To CF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
@@ -79,30 +79,30 @@
         "homeRunsAllowed": null
       },
       "homeRunVulnerability": {
-        "gamesStarted": 17,
-        "inningsPitched": "88.1",
-        "homeRunsAllowed": 14,
-        "hrPer9": 1.4301929625425656,
+        "gamesStarted": 1,
+        "inningsPitched": "3.1",
+        "homeRunsAllowed": 3,
+        "hrPer9": 8.709677419354838,
         "flyBallPct": 0.35,
         "hrPerFlyBall": 0.12,
-        "homeRunVulnerability": 5.720771850170262
+        "homeRunVulnerability": 10
       }
     },
     "projections": {
       "winProbability": 20,
-      "expectedStrikeouts": 1,
+      "expectedStrikeouts": 0,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.6135000000000012,
-        "upside": 0.7362000000000014,
-        "floor": 0.49080000000000096
+        "expectedPoints": 5.0435,
+        "upside": 6.0522,
+        "floor": 4.0348
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 39,
+      "windSpeed": 12,
+      "windDirection": "Out To CF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,

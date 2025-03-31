@@ -2751,3 +2751,47 @@ function parseSearchCsvData(
     return null;
   }
 }
+
+/**
+ * Fetch pitcher data from Baseball Savant
+ */
+export async function getPitcherData(
+  pitcherId: number,
+  season = new Date().getFullYear()
+): Promise<PitcherStatcastData> {
+  try {
+    // Fetch basic pitcher data and pitch arsenal data in parallel
+    const [basicData, arsenalData, pitchTypesData] = await Promise.all([
+      fetchBasicPitcherData(pitcherId, season),
+      fetchPitchArsenalData(pitcherId, season),
+      fetchPitchTypes(pitcherId, season),
+    ]);
+
+    // Construct the complete pitcher data
+    return constructPitcherDataFromArsenal(
+      arsenalData,
+      basicData,
+      pitcherId,
+      pitchTypesData
+    );
+  } catch (error) {
+    console.error(
+      `[savant] Error fetching pitcher data for ${pitcherId}: ${getErrorMessage(
+        error
+      )}`
+    );
+    return getDefaultPitcherData(pitcherId);
+  }
+}
+
+/**
+ * Fetch basic pitcher data from Baseball Savant
+ */
+async function fetchBasicPitcherData(
+  pitcherId: number,
+  season: number
+): Promise<any> {
+  // Implementation of basic data fetching
+  // This would typically query Baseball Savant's API endpoints
+  throw new Error("Basic pitcher data fetching not implemented");
+}
