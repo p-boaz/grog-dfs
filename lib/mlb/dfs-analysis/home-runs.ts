@@ -2,9 +2,13 @@
  * Specialized functions for analyzing home run potential and predictions
  */
 
-import { getBatterStats } from "../player/batter-stats";
-import { getPitcherStats } from "../player/pitcher-stats";
-import { getGameEnvironmentData, getBallparkFactors } from "../index";
+import { getBallparkFactors, getGameEnvironmentData } from "../index";
+import {
+  estimateBarrelRate,
+  estimateExitVelocity,
+  getEnhancedBatterData,
+} from "../services/batter-data-service";
+import { getEnhancedPitcherData } from "../services/pitcher-data-service";
 
 /**
  * Get player's season stats with focus on home run metrics
@@ -27,13 +31,14 @@ export async function getPlayerHomeRunStats(
   flyBallRate?: number;
   hrPerFlyBall?: number;
   pullPct?: number;
+  barrelRate?: number;
+  exitVelocity?: number;
+  sweetSpotPct?: number;
+  hardHitPct?: number;
 } | null> {
   try {
-    // Fetch full player stats
-    const playerData = await getBatterStats({
-      batterId: playerId,
-      season,
-    });
+    // Fetch enhanced player data including Statcast metrics
+    const playerData = await getEnhancedBatterData(playerId, season);
 
     // Skip pitchers unless they have significant batting stats
     if (
@@ -63,6 +68,19 @@ export async function getPlayerHomeRunStats(
     // Calculate isolated power (SLG - AVG)
     const iso = batting.slg - batting.avg;
 
+    // Get quality metrics from Statcast or estimate if not available
+    const barrelRate =
+      playerData.qualityMetrics?.barrelRate || estimateBarrelRate(batting);
+    const exitVelocity =
+      playerData.qualityMetrics?.exitVelocity || estimateExitVelocity(batting);
+    const sweetSpotPct = playerData.qualityMetrics?.sweetSpotRate;
+    const hardHitPct = playerData.qualityMetrics?.hardHitRate;
+
+    // Default fly ball rate if not available (can be estimated from statcast in a real implementation)
+    const flyBallRate = 0.35; // Default value
+    const hrPerFlyBall = homeRunRate / flyBallRate; // Estimated
+    const pullPct = 0.4; // Default value
+
     return {
       battingAverage: batting.avg || 0,
       homeRuns: batting.homeRuns || 0,
@@ -71,10 +89,13 @@ export async function getPlayerHomeRunStats(
       homeRunRate,
       sluggingPct: batting.slg || 0,
       iso,
-      // These would come from Statcast data in a real implementation
-      flyBallRate: 0.35, // Default value
-      hrPerFlyBall: homeRunRate / 0.35, // Estimated
-      pullPct: 0.4, // Default value
+      flyBallRate,
+      hrPerFlyBall,
+      pullPct,
+      barrelRate,
+      exitVelocity,
+      sweetSpotPct,
+      hardHitPct,
     };
   } catch (error) {
     console.error(
@@ -104,10 +125,8 @@ export async function getCareerHomeRunProfile(playerId: number): Promise<{
   };
 } | null> {
   try {
-    // Get player stats with historical data
-    const playerData = await getBatterStats({
-      batterId: playerId,
-    });
+    // Get enhanced player data with Statcast metrics
+    const playerData = await getEnhancedBatterData(playerId);
 
     if (
       !playerData ||
@@ -340,70 +359,83 @@ export async function getWeatherHomeRunImpact(gamePk: string): Promise<{
 }
 
 /**
- * Get pitcher's vulnerability to home runs
+ * Get pitcher's susceptibility to home runs
  */
 export async function getPitcherHomeRunVulnerability(
   pitcherId: number,
   season = new Date().getFullYear()
 ): Promise<{
-  gamesStarted: number;
-  inningsPitched: number;
   homeRunsAllowed: number;
+  inningsPitched: number;
   hrPer9: number;
   flyBallPct?: number;
   hrPerFlyBall?: number;
-  homeRunVulnerability: number; // 0-10 scale where 5 is average
+  vsLHB?: number;
+  vsRHB?: number;
+  parkFactor?: number;
+  homeRunVulnerability: number; // 1-10 scale
+  hardHitPercent?: number;
+  barrelRate?: number;
 } | null> {
   try {
-    // Get pitcher stats
-    const pitcherData = await getPitcherStats({
-      pitcherId,
-      season,
-    });
+    // Fetch enhanced pitcher data including Statcast metrics
+    const pitcherData = await getEnhancedPitcherData(pitcherId, season);
 
-    // Verify player is a pitcher
-    if (!pitcherData || pitcherData.primaryPosition !== "P") {
+    if (!pitcherData) {
       return null;
     }
 
     const stats = pitcherData.seasonStats;
+    const homeRunsAllowed = stats.homeRunsAllowed || 0;
+    const inningsPitched = stats.inningsPitched || 0;
 
-    // If no innings pitched, return null
-    if (
-      !stats.inningsPitched ||
-      parseFloat(stats.inningsPitched.toString()) === 0
-    ) {
-      return null;
+    // Calculate HR/9
+    const hrPer9 =
+      inningsPitched > 0 ? (homeRunsAllowed / inningsPitched) * 9 : 0;
+
+    // Get advanced metrics from Statcast if available
+    const hardHitPercent = pitcherData.resultMetrics?.hardHitPercent;
+    const barrelRate = pitcherData.resultMetrics?.barrelRate;
+
+    // League average HR/9 is ~1.3
+    // Scale from 1-10 where 5 is average
+    // Higher number means more vulnerable to HRs
+    let vulnerability = 5;
+
+    if (inningsPitched >= 20) {
+      // Adjust based on HR/9
+      if (hrPer9 > 2.0) vulnerability += 3;
+      else if (hrPer9 > 1.6) vulnerability += 2;
+      else if (hrPer9 > 1.3) vulnerability += 1;
+      else if (hrPer9 < 1.0) vulnerability -= 1;
+      else if (hrPer9 < 0.7) vulnerability -= 2;
+      else if (hrPer9 < 0.4) vulnerability -= 3;
     }
 
-    // Extract HR allowed (not directly provided in the basic stats)
-    // In a real implementation, this would use actual HR allowed data
-    // Approximating using typical MLB ratios
-    const ip = parseFloat(stats.inningsPitched.toString());
-    const era = stats.era || 4.5;
+    // Adjust further based on Statcast metrics if available
+    if (hardHitPercent !== undefined) {
+      // League average hard hit % ~38%
+      if (hardHitPercent > 45) vulnerability += 1;
+      else if (hardHitPercent < 30) vulnerability -= 1;
+    }
 
-    // Rough estimate: ~10-15% of earned runs come from HRs
-    // Average MLB HR/9 is around 1.2-1.3
-    const estimatedHrPer9 = (parseFloat(stats.era.toString()) / 4.5) * 1.25;
-    const homeRunsAllowed = Math.round((estimatedHrPer9 * ip) / 9);
-
-    // Calculate vulnerability on 0-10 scale where 5 is average
-    // 1.25 HR/9 is approximately average
-    const vulnerability = 5 * (estimatedHrPer9 / 1.25);
+    // Ensure result is within 1-10 scale
+    vulnerability = Math.max(1, Math.min(10, vulnerability));
 
     return {
-      gamesStarted:
-        typeof stats.gamesPlayed === "number" ? stats.gamesPlayed : 0,
-      inningsPitched: ip,
       homeRunsAllowed,
-      hrPer9: estimatedHrPer9,
+      inningsPitched,
+      hrPer9,
       flyBallPct: 0.35, // Default value
-      hrPerFlyBall: 0.12, // Default value
-      homeRunVulnerability: Math.max(1, Math.min(10, vulnerability)),
+      hrPerFlyBall:
+        inningsPitched > 0 ? homeRunsAllowed / (inningsPitched * 0.35) : 0, // Estimated
+      homeRunVulnerability: vulnerability,
+      hardHitPercent,
+      barrelRate,
     };
   } catch (error) {
     console.error(
-      `Error fetching pitcher home run vulnerability for player ${pitcherId}:`,
+      `Error fetching home run vulnerability for pitcher ${pitcherId}:`,
       error
     );
     return null;
@@ -411,131 +443,194 @@ export async function getPitcherHomeRunVulnerability(
 }
 
 /**
- * Estimate home run probability for a player in a specific game
- * This function integrates all the individual components to create a comprehensive projection
+ * Estimate home run probability for a batter against a specific pitcher
+ * with park and weather factors
  */
 export async function estimateHomeRunProbability(
-  playerId: number,
-  gameId: string,
-  venueId: number,
+  batterId: number,
+  pitcherId: number,
+  ballparkId: number,
   isHome: boolean,
-  opposingPitcherId: number,
-  season = new Date().getFullYear()
+  weatherConditions?: {
+    temperature?: number;
+    windSpeed?: number;
+    windDirection?: string;
+    isOutdoor?: boolean;
+  }
 ): Promise<{
-  baseHrRate: number;
-  adjustedHrRate: number;
-  gameHrProbability: number;
-  expectedHrValue: number; // DK points value (HR = 10 points)
+  probability: number; // 0-1 scale
+  confidence: number; // 1-10 scale
   factors: {
-    playerBaseline: number;
-    playerTrend: number;
-    ballpark: number;
-    weather: number;
-    pitcher: number;
-    homeAway: number;
+    batterProfile: number; // Weight: how much batter metrics influenced the result
+    pitcherVulnerability: number; // Weight: how much pitcher metrics influenced the result
+    ballpark: number; // Weight: how much park factors influenced the result
+    weather: number; // Weight: how much weather influenced the result
+    platoonAdvantage: number; // Weight: how much handedness matchup influenced the result
   };
+  expectedValue: number; // Expected fantasy points from HRs
 }> {
   try {
-    // Get all relevant data in parallel
-    const [
-      seasonStats,
-      careerProfile,
-      ballparkFactor,
-      weatherImpact,
-      pitcherVulnerability,
-    ] = await Promise.all([
-      getPlayerHomeRunStats(playerId, season).catch(() => null),
-      getCareerHomeRunProfile(playerId).catch(() => null),
-      getBallparkHomeRunFactor(venueId).catch(() => null),
-      getWeatherHomeRunImpact(gameId).catch(() => null),
-      getPitcherHomeRunVulnerability(opposingPitcherId, season).catch(
-        () => null
-      ),
+    // Fetch all data in parallel
+    const [batterStats, pitcherVuln, batterProfile] = await Promise.all([
+      getPlayerHomeRunStats(batterId),
+      getPitcherHomeRunVulnerability(pitcherId),
+      getCareerHomeRunProfile(batterId),
     ]);
 
-    // Default values if any data source fails
-    const hrRate = seasonStats?.homeRunRate || 0.025; // Default to MLB average (~25 HR per 1000 AB)
-    const careerHrRate = careerProfile?.careerHrPerAB || hrRate;
+    // Get ballpark and environment data
+    const ballparkFactors = await getBallparkFactors({
+      venueId: ballparkId,
+      season: new Date().getFullYear().toString(),
+    });
 
-    // Base values - this is our starting point
-    const baseHrRate = (hrRate + careerHrRate) / 2;
+    // Get environment data if not provided
+    const gameEnvironment =
+      weatherConditions ||
+      (await getGameEnvironmentData({
+        venueId: ballparkId,
+        date: new Date().toISOString().split("T")[0],
+      }));
 
-    // Calculate factor adjustments
-    const playerTrendFactor = careerProfile
-      ? careerProfile.recentTrend === "increasing"
-        ? 1.1
-        : careerProfile.recentTrend === "decreasing"
-        ? 0.9
-        : 1.0
-      : 1.0;
+    // Base probability from player's HR rate
+    // Typical MLB average is ~3% per plate appearance
+    let baseProbability = 0.03;
 
-    const parkFactor = ballparkFactor?.homeRunFactor || 1.0;
+    // Factors with default neutral values
+    let batterFactor = 1.0;
+    let pitcherFactor = 1.0;
+    let parkFactor = 1.0;
+    let weatherFactor = 1.0;
+    let platoonFactor = 1.0;
 
-    const weatherFactor = weatherImpact?.overallFactor || 1.0;
+    // Factor weights (sum to 1.0)
+    const weights = {
+      batterProfile: 0.4,
+      pitcherVulnerability: 0.25,
+      ballpark: 0.2,
+      weather: 0.1,
+      platoonAdvantage: 0.05,
+    };
 
-    const pitcherFactor = pitcherVulnerability
-      ? pitcherVulnerability.homeRunVulnerability / 5.0
-      : 1.0;
+    let confidence = 5; // Default mid-level confidence
 
-    const homeAwayFactor = isHome
-      ? careerProfile?.homeVsAway.homeFieldAdvantage || 1.15
-      : 1.0 / (careerProfile?.homeVsAway.homeFieldAdvantage || 1.15);
+    // Adjust based on batter stats
+    if (batterStats) {
+      // Use barrel rate from Statcast as key predictor if available
+      if (batterStats.barrelRate) {
+        // League average barrel rate is ~6-7%
+        batterFactor = batterStats.barrelRate / 0.065;
+        confidence += 1; // Increase confidence with Statcast data
+      } else {
+        // Fallback to HR rate
+        batterFactor =
+          batterStats.homeRunRate > 0 ? batterStats.homeRunRate / 0.03 : 1.0;
+      }
 
-    // Combine all factors
-    const combinedFactor =
-      playerTrendFactor *
-      parkFactor *
-      weatherFactor *
-      pitcherFactor *
-      homeAwayFactor;
+      // Adjust for hard hit % if available
+      if (batterStats.hardHitPct) {
+        batterFactor *= (batterStats.hardHitPct / 38) * 0.5 + 0.5; // Weighted adjustment
+      }
 
-    // Calculate adjusted HR rate (per at-bat)
-    // Apply a dampening factor to avoid extreme values
-    const rawAdjustedRate = baseHrRate * combinedFactor;
-    const adjustedHrRate = (rawAdjustedRate + baseHrRate) / 2;
+      // Use raw HR rate as base probability if available
+      if (batterStats.homeRunRate > 0) {
+        baseProbability = batterStats.homeRunRate;
+      }
+    }
 
-    // Calculate game HR probability
-    // Average player gets ~4 at-bats per game
-    const atBatsPerGame = 4;
-    const gameHrProbability = 1 - Math.pow(1 - adjustedHrRate, atBatsPerGame);
+    // Adjust based on pitcher vulnerability
+    if (pitcherVuln) {
+      // Higher vulnerability means more HR probability
+      pitcherFactor = pitcherVuln.homeRunVulnerability / 5.0;
 
-    // Calculate expected DFS points value (Home Run = 10 points in DK)
-    const expectedHrValue = gameHrProbability * 10;
+      // If Statcast hard hit % is available, incorporate that
+      if (pitcherVuln.hardHitPercent) {
+        pitcherFactor *= (pitcherVuln.hardHitPercent / 38) * 0.3 + 0.7; // Weighted adjustment
+      }
+    }
+
+    // Adjust for ballpark
+    if (ballparkFactors && ballparkFactors.homeRuns) {
+      parkFactor = ballparkFactors.homeRuns;
+    }
+
+    // Adjust for weather if available and outdoors
+    if (gameEnvironment && gameEnvironment.isOutdoor) {
+      // Temperature effect on HR
+      if (gameEnvironment.temperature) {
+        if (gameEnvironment.temperature > 85) weatherFactor += 0.2;
+        else if (gameEnvironment.temperature > 75) weatherFactor += 0.1;
+        else if (gameEnvironment.temperature < 50) weatherFactor -= 0.1;
+        else if (gameEnvironment.temperature < 40) weatherFactor -= 0.2;
+      }
+
+      // Wind effect
+      if (gameEnvironment.windSpeed && gameEnvironment.windDirection) {
+        const windSpeed = gameEnvironment.windSpeed;
+        const windDir = gameEnvironment.windDirection.toLowerCase();
+
+        if (windSpeed > 10) {
+          if (windDir.includes("out") || windDir.includes("center")) {
+            weatherFactor += 0.2; // Out to center field
+          } else if (windDir.includes("in")) {
+            weatherFactor -= 0.2; // Blowing in
+          }
+        }
+      }
+    }
+
+    // Adjust for home/away (if batter career profile available)
+    if (batterProfile) {
+      if (isHome) {
+        // Use home vs. away factor from profile
+        platoonFactor = batterProfile.homeVsAway.homeFieldAdvantage;
+      }
+    }
+
+    // Calculate weighted probability
+    const finalProbability =
+      baseProbability *
+      (batterFactor * weights.batterProfile +
+        pitcherFactor * weights.pitcherVulnerability +
+        parkFactor * weights.ballpark +
+        weatherFactor * weights.weather +
+        platoonFactor * weights.platoonAdvantage);
+
+    // Cap probability at reasonable levels
+    const cappedProbability = Math.max(0.001, Math.min(0.3, finalProbability));
+
+    // Expected fantasy points (DK gives 10 pts per HR)
+    const expectedValue = cappedProbability * 10;
 
     return {
-      baseHrRate,
-      adjustedHrRate,
-      gameHrProbability,
-      expectedHrValue,
+      probability: cappedProbability,
+      confidence,
       factors: {
-        playerBaseline: baseHrRate,
-        playerTrend: playerTrendFactor,
+        batterProfile: batterFactor,
+        pitcherVulnerability: pitcherFactor,
         ballpark: parkFactor,
         weather: weatherFactor,
-        pitcher: pitcherFactor,
-        homeAway: homeAwayFactor,
+        platoonAdvantage: platoonFactor,
       },
+      expectedValue,
     };
   } catch (error) {
     console.error(
-      `Error estimating home run probability for player ${playerId}:`,
+      `Error estimating home run probability for batter ${batterId} vs pitcher ${pitcherId}:`,
       error
     );
 
-    // Return conservative default values if calculation fails
+    // Return conservative default values
     return {
-      baseHrRate: 0.025,
-      adjustedHrRate: 0.025,
-      gameHrProbability: 0.1,
-      expectedHrValue: 1.0,
+      probability: 0.03, // League average
+      confidence: 3, // Lower confidence due to error
       factors: {
-        playerBaseline: 1.0,
-        playerTrend: 1.0,
+        batterProfile: 1.0,
+        pitcherVulnerability: 1.0,
         ballpark: 1.0,
         weather: 1.0,
-        pitcher: 1.0,
-        homeAway: 1.0,
+        platoonAdvantage: 1.0,
       },
+      expectedValue: 0.3, // 0.03 * 10
     };
   }
 }

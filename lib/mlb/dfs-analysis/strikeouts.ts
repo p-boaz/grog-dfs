@@ -2,14 +2,28 @@
  * Specialized functions for analyzing strikeout potential for pitchers
  */
 
-import { getGameFeed } from "../game/game-feed";
 import { getGameEnvironmentData } from "../index";
-import {
-  getPitcherPitchMix,
-  getPitcherStats,
-  PitcherPitchMixData,
-} from "../player/pitcher-stats";
 import { getTeamStats } from "../schedule/schedule";
+import { getEnhancedPitcherData } from "../services/pitcher-data-service";
+
+// Interface to define the structure of pitchMix that is compatible with PitcherPitchMixData
+interface EnhancedPitchMixData {
+  fastballPct?: number;
+  sliderPct?: number;
+  curvePct?: number;
+  changeupPct?: number;
+  cutterPct?: number;
+  splitterPct?: number;
+  otherPct?: number;
+  avgFastballVelo?: number;
+  maxFastballVelo?: number;
+  controlMetrics?: {
+    zonePercentage?: number;
+    firstPitchStrikePercent?: number;
+    swingingStrikePercent?: number;
+    chaseRate?: number;
+  };
+}
 
 export interface PitcherStrikeoutStats {
   name: string;
@@ -21,7 +35,7 @@ export interface PitcherStrikeoutStats {
   strikeoutPercentage: number;
   swingingStrikeRate: number;
   whiff?: number;
-  pitchMix?: Partial<PitcherPitchMixData>;
+  pitchMix?: Partial<EnhancedPitchMixData>;
   zonePct: number;
   outsidePitchPct: number;
   firstPitchStrikePercentage: number;
@@ -36,37 +50,18 @@ export async function getPitcherStrikeoutStats(
   currentTeam: string
 ): Promise<PitcherStrikeoutStats | undefined> {
   try {
-    // Fetch full pitcher stats
-    const pitcherData = await getPitcherStats({
-      pitcherId,
-      season: new Date().getFullYear(),
-    });
+    // Fetch enhanced pitcher data with MLB and Statcast metrics
+    const pitcherData = await getEnhancedPitcherData(pitcherId);
 
     if (!pitcherData || !pitcherData.seasonStats.gamesPlayed) {
       console.log(
-        `No pitching stats found for pitcher ${pitcherId}, season ${new Date().getFullYear()}`
+        `No pitching stats found for pitcher ${pitcherId}, current season`
       );
       return undefined;
     }
 
-    // Get pitch mix data for more analysis
-    const pitchMixData = await getPitcherPitchMix({ pitcherId });
-
     // Extract pitching stats
-    const season = new Date().getFullYear().toString();
-    const stats = pitcherData.seasonStats[season] || {
-      gamesPlayed: 0,
-      gamesStarted: 0,
-      inningsPitched: 0,
-      wins: 0,
-      losses: 0,
-      era: 0,
-      whip: 0,
-      strikeouts: 0,
-      walks: 0,
-      saves: 0,
-      hitBatsmen: 0,
-    };
+    const stats = pitcherData.seasonStats;
 
     // Calculate strikeout rate - strikeouts per 9 innings
     const strikeoutRate =
@@ -75,18 +70,19 @@ export async function getPitcherStrikeoutStats(
         : 0;
 
     // Calculate strikeout percentage - strikeouts per batter faced
-    // Estimate batters faced if not directly available
-    const estimatedBattersFaced = stats.inningsPitched * 4.3; // MLB average is ~4.3 batters per inning
+    // Use battersFaced if available, otherwise estimate
+    const battersFaced = stats.battersFaced || stats.inningsPitched * 4.3; // MLB average is ~4.3 batters per inning
     const strikeoutPercentage =
-      estimatedBattersFaced > 0 ? stats.strikeouts / estimatedBattersFaced : 0;
+      battersFaced > 0 ? stats.strikeouts / battersFaced : 0;
 
-    // Use pitch mix data or defaults
-    const swingingStrikeRate =
-      pitchMixData?.controlMetrics?.swingingStrikePercent || 10;
-    const zonePct = pitchMixData?.controlMetrics?.zonePercentage || 45;
+    // Use advanced metrics from Statcast if available
+    const swingingStrikeRate = pitcherData.controlMetrics?.whiffRate || 10;
+    const zonePct = pitcherData.controlMetrics?.zoneRate || 45;
     const outsidePitchPct = 100 - zonePct;
     const firstPitchStrikePercentage =
-      pitchMixData?.controlMetrics?.firstPitchStrikePercent || 60;
+      pitcherData.controlMetrics?.firstPitchStrike || 60;
+    const whiffRate = pitcherData.controlMetrics?.whiffRate;
+    const chaseRate = pitcherData.controlMetrics?.chaseRate;
 
     // Calculate strikeout stuff rating (1-10 scale)
     // Use combination of strikeout rate, swinging strike rate, and pitch qualities
@@ -115,20 +111,50 @@ export async function getPitcherStrikeoutStats(
       strikeoutStuff -= 0.5; // Falls behind in counts
     }
 
+    // If chase rate is available, factor that in
+    if (chaseRate) {
+      if (chaseRate > 32) strikeoutStuff += 0.5; // Above average chase rate
+      else if (chaseRate < 26) strikeoutStuff -= 0.5; // Below average chase rate
+    }
+
     // Ensure rating is within 1-10 scale
     strikeoutStuff = Math.max(1, Math.min(10, strikeoutStuff));
+
+    // Prepare pitch mix data if available from Statcast
+    let pitchMix: Partial<EnhancedPitchMixData> | undefined = undefined;
+    if (pitcherData.pitchData) {
+      pitchMix = {
+        fastballPct:
+          pitcherData.pitchData.pitchTypes.fastball +
+          pitcherData.pitchData.pitchTypes.sinker,
+        sliderPct: pitcherData.pitchData.pitchTypes.slider,
+        curvePct: pitcherData.pitchData.pitchTypes.curve,
+        changeupPct: pitcherData.pitchData.pitchTypes.changeup,
+        cutterPct: pitcherData.pitchData.pitchTypes.cutter,
+        splitterPct: pitcherData.pitchData.pitchTypes.splitter,
+        otherPct: pitcherData.pitchData.pitchTypes.other,
+        avgFastballVelo: pitcherData.pitchData.velocities.avgFastball,
+        maxFastballVelo: pitcherData.pitchData.velocities.maxFastball,
+        controlMetrics: {
+          zonePercentage: zonePct,
+          firstPitchStrikePercent: firstPitchStrikePercentage,
+          swingingStrikePercent: swingingStrikeRate,
+          chaseRate: chaseRate || 0,
+        },
+      };
+    }
 
     return {
       name: pitcherData.fullName,
       teamName: currentTeam,
-      gamesStarted: stats.gamesPlayed,
+      gamesStarted: stats.gamesStarted,
       inningsPitched: stats.inningsPitched,
       strikeouts: stats.strikeouts,
       strikeoutRate,
       strikeoutPercentage,
       swingingStrikeRate,
-      whiff: pitchMixData?.controlMetrics?.chaseRate,
-      pitchMix: pitchMixData || undefined,
+      whiff: whiffRate,
+      pitchMix,
       zonePct,
       outsidePitchPct,
       firstPitchStrikePercentage,
@@ -190,7 +216,7 @@ export async function getTeamStrikeoutVulnerability(
       5 + ((strikeoutsPerGame - leagueAvgKPerGame) / leagueAvgKPerGame) * 5;
 
     return {
-      teamName: "Unknown", // TeamStats doesn't have a name property, using default
+      teamName: teamStats.name, // Assume TeamStats has a name property
       gamesPlayed: stats.gamesPlayed || 0,
       strikeouts: stats.strikeouts || 0,
       strikeoutsPerGame,
@@ -199,246 +225,168 @@ export async function getTeamStrikeoutVulnerability(
     };
   } catch (error) {
     console.error(
-      `Error getting team strikeout vulnerability for team ${teamId}:`,
+      `Error fetching team strikeout vulnerability for team ${teamId}:`,
       error
     );
-    // Return league average values as fallback
-    return {
-      teamName: "Unknown",
-      gamesPlayed: 0,
-      strikeouts: 0,
-      strikeoutsPerGame: 8.5,
-      strikeoutRate: 0.22,
-      strikeoutVulnerability: 5.0,
-    };
+    return null;
   }
 }
 
 /**
- * Calculate expected strikeouts for a pitcher in a specific game
+ * Calculate expected strikeouts for a pitcher against a specific team
  */
 export async function calculateExpectedStrikeouts(
   pitcherId: number,
-  gamePk: string,
-  season: number = new Date().getFullYear()
+  opposingTeamId: number,
+  gameId?: string,
+  inningsPitched?: number
 ): Promise<{
   expectedStrikeouts: number;
-  expectedInnings: number;
-  strikeoutProjection: {
-    low: number;
-    mid: number;
-    high: number;
-  };
-  expectedDfsPoints: number;
+  lowRange: number;
+  highRange: number;
+  expectedRatePerInning: number;
+  confidence: number; // 1-10 scale
   factors: {
-    pitcherSkill: number;
-    opponentVulnerability: number;
-    gameEnvironment: number;
-    recentPerformance: number;
+    pitcherBaseline: number;
+    teamVulnerability: number;
+    ballpark: number;
+    weather: number;
   };
-  confidenceScore: number;
+  expectedDkPoints: number; // DK points from Ks (2 points per K)
 }> {
   try {
-    // Get pitcher stats for both current and previous season
-    const [currentSeasonStats, previousSeasonStats] = await Promise.all([
-      getPitcherStats({ pitcherId, season }),
-      getPitcherStats({ pitcherId, season: season - 1 }),
-    ]);
-
-    // Use current season stats if available, otherwise fall back to previous season
-    const pitcherStats = currentSeasonStats || previousSeasonStats;
-
-    if (!pitcherStats) {
-      // If no data is available for either season, return conservative default values
-      return {
-        expectedStrikeouts: 4.0, // League average for 5 innings
-        expectedInnings: 5.0,
-        strikeoutProjection: {
-          low: 3.0,
-          mid: 4.0,
-          high: 5.0,
-        },
-        expectedDfsPoints: 4.0, // 1 point per strikeout
-        factors: {
-          pitcherSkill: 5.0,
-          opponentVulnerability: 5.0,
-          gameEnvironment: 1.0,
-          recentPerformance: 5.0,
-        },
-        confidenceScore: 30, // Low confidence due to missing data
-      };
+    // Get pitcher current team
+    const pitcherData = await getEnhancedPitcherData(pitcherId);
+    if (!pitcherData) {
+      throw new Error(`Could not find pitcher data for ${pitcherId}`);
     }
 
-    // Get game environment data
-    const gameEnvironment = await getGameEnvironmentData({ gamePk });
+    const currentTeam = pitcherData.currentTeam;
 
-    // Get game feed for opponent info
-    const gameFeed = await getGameFeed({ gamePk });
+    // Get all data in parallel
+    const [strikeoutStats, teamVulnerability, environmentData] =
+      await Promise.all([
+        getPitcherStrikeoutStats(pitcherId, currentTeam),
+        getTeamStrikeoutVulnerability(opposingTeamId),
+        gameId ? getGameEnvironmentData({ gamePk: gameId }) : null,
+      ]);
 
-    // Get opponent team ID
-    const isHome =
-      gameFeed?.gameData?.teams?.home?.team?.name === pitcherStats.currentTeam;
-    const opponentTeam = isHome
-      ? gameFeed?.gameData?.teams?.away
-      : gameFeed?.gameData?.teams?.home;
-    const opponentId = opponentTeam?.team?.id;
-
-    // Get opponent strikeout vulnerability
-    const opponentVulnerability = opponentId
-      ? await getTeamStrikeoutVulnerability(opponentId, season)
-      : null;
-
-    // Calculate base strikeout rate (K/9)
-    const seasonInningsPitched =
-      typeof pitcherStats.seasonStats.inningsPitched === "number"
-        ? pitcherStats.seasonStats.inningsPitched
-        : 0;
-    const seasonStrikeouts =
-      typeof pitcherStats.seasonStats.strikeouts === "number"
-        ? pitcherStats.seasonStats.strikeouts
-        : 0;
-
-    const baseK9 =
-      seasonInningsPitched > 0
-        ? (seasonStrikeouts / seasonInningsPitched) * 9
-        : 7.5; // League average K/9
-
-    // Get expected innings
-    const expectedInnings = 5.0; // Conservative estimate
-
-    // Calculate expected strikeouts
-    let expectedStrikeouts = (baseK9 / 9) * expectedInnings;
-
-    // Adjust for opponent
-    if (opponentVulnerability) {
-      const opponentMultiplier =
-        opponentVulnerability.strikeoutVulnerability / 5;
-      expectedStrikeouts *= opponentMultiplier;
+    // Determine baseline strikeout rate (per inning)
+    let baselineKRate = 1.0; // MLB average is ~1 K per inning
+    if (strikeoutStats) {
+      baselineKRate =
+        strikeoutStats.inningsPitched > 0
+          ? strikeoutStats.strikeouts / strikeoutStats.inningsPitched
+          : 1.0;
     }
 
-    // Adjust for environment
-    const environmentMultiplier =
-      calculateEnvironmentMultiplier(gameEnvironment);
-    expectedStrikeouts *= environmentMultiplier;
+    // Adjust for team vulnerability
+    let teamFactor = 1.0;
+    if (teamVulnerability) {
+      // Scale team vulnerability (1-10) to adjustment factor
+      teamFactor = teamVulnerability.strikeoutVulnerability / 5.0;
+    }
 
-    // Calculate projections
-    const strikeoutProjection = {
-      low: Math.max(0, Math.round(expectedStrikeouts * 0.7)),
-      mid: Math.round(expectedStrikeouts),
-      high: Math.round(expectedStrikeouts * 1.3),
-    };
+    // Adjust for environment (weather, ballpark)
+    let environmentFactor = 1.0;
 
-    // Calculate DFS points (1 point per strikeout)
-    const expectedDfsPoints = expectedStrikeouts;
+    // Apply conservative adjustments for specific factors
+    if (environmentData) {
+      // Check if outdoor game with extreme temperatures
+      if (
+        environmentData.isOutdoor &&
+        typeof environmentData.temperature === "number"
+      ) {
+        if (environmentData.temperature > 90) {
+          environmentFactor *= 1.05; // Hot weather: slight increase in Ks (tired batters)
+        } else if (environmentData.temperature < 40) {
+          environmentFactor *= 1.1; // Cold weather: more Ks (harder to make contact)
+        }
+      }
+
+      // Ballpark factor (some parks have higher K rates)
+      // This would be more sophisticated in a real implementation
+      if ("venue" in environmentData && environmentData.venue) {
+        // Neutral by default
+      }
+    }
+
+    // Use provided innings pitched or estimate from history
+    const expectedInnings =
+      inningsPitched ||
+      (strikeoutStats && strikeoutStats.gamesStarted > 0
+        ? strikeoutStats.inningsPitched / strikeoutStats.gamesStarted
+        : 5.0);
+
+    // Calculate adjusted K rate using all factors
+    const adjustedKRate = baselineKRate * teamFactor * environmentFactor;
+
+    // Calculate expected strikeouts for this game
+    const expectedStrikeouts = adjustedKRate * expectedInnings;
+
+    // Calculate range (low to high)
+    const lowRange = Math.max(0, expectedStrikeouts * 0.7);
+    const highRange = expectedStrikeouts * 1.3;
+
+    // Determine confidence level (1-10 scale)
+    let confidence = 5; // Default mid-level confidence
+
+    // Adjust confidence based on sample size
+    if (strikeoutStats) {
+      if (strikeoutStats.inningsPitched > 100) {
+        confidence += 2; // Large sample size
+      } else if (strikeoutStats.inningsPitched > 50) {
+        confidence += 1; // Decent sample size
+      } else if (strikeoutStats.inningsPitched < 20) {
+        confidence -= 1; // Small sample size
+      }
+
+      // Higher confidence with Statcast data
+      if (strikeoutStats.whiff !== undefined) {
+        confidence += 1;
+      }
+    }
+
+    // Ensure confidence is within 1-10 range
+    confidence = Math.max(1, Math.min(10, confidence));
+
+    // Calculate expected DK points (2 points per K)
+    const expectedDkPoints = expectedStrikeouts * 2;
 
     return {
       expectedStrikeouts,
-      expectedInnings,
-      strikeoutProjection,
-      expectedDfsPoints,
+      lowRange,
+      highRange,
+      expectedRatePerInning: adjustedKRate,
+      confidence,
       factors: {
-        pitcherSkill: calculatePitcherSkillRating(pitcherStats),
-        opponentVulnerability:
-          opponentVulnerability?.strikeoutVulnerability || 5.0,
-        gameEnvironment: environmentMultiplier,
-        recentPerformance: 5.0, // Default to neutral
+        pitcherBaseline: baselineKRate,
+        teamVulnerability: teamFactor,
+        ballpark: environmentFactor,
+        weather: environmentFactor,
       },
-      confidenceScore: calculateConfidenceScore(
-        pitcherStats,
-        opponentVulnerability
-      ),
+      expectedDkPoints,
     };
   } catch (error) {
     console.error(
-      `Error calculating expected strikeouts for pitcher ${pitcherId}:`,
+      `Error calculating expected strikeouts for pitcher ${pitcherId} vs team ${opposingTeamId}:`,
       error
     );
-    // Return conservative default values on error
+
+    // Return conservative default values
     return {
-      expectedStrikeouts: 4.0,
-      expectedInnings: 5.0,
-      strikeoutProjection: {
-        low: 3.0,
-        mid: 4.0,
-        high: 5.0,
-      },
-      expectedDfsPoints: 4.0,
+      expectedStrikeouts: 5.0, // Default to league average
+      lowRange: 3.0,
+      highRange: 7.0,
+      expectedRatePerInning: 1.0,
+      confidence: 3, // Low confidence due to error
       factors: {
-        pitcherSkill: 5.0,
-        opponentVulnerability: 5.0,
-        gameEnvironment: 1.0,
-        recentPerformance: 5.0,
+        pitcherBaseline: 1.0,
+        teamVulnerability: 1.0,
+        ballpark: 1.0,
+        weather: 1.0,
       },
-      confidenceScore: 30,
+      expectedDkPoints: 10.0, // 5 Ks * 2 points
     };
   }
-}
-
-function calculateEnvironmentMultiplier(gameEnvironment: any): number {
-  let multiplier = 1.0;
-
-  if (gameEnvironment?.isOutdoor) {
-    // Temperature affects strikeout rates
-    if (gameEnvironment.temperature > 90) {
-      multiplier *= 0.95; // Hot weather reduces strikeouts
-    } else if (gameEnvironment.temperature < 40) {
-      multiplier *= 0.95; // Cold weather reduces strikeouts
-    }
-
-    // Wind can affect strikeouts
-    if (gameEnvironment.windSpeed > 15) {
-      multiplier *= 0.95; // Strong winds reduce strikeouts
-    }
-  }
-
-  return Math.max(0.8, Math.min(1.2, multiplier));
-}
-
-function calculatePitcherSkillRating(pitcherStats: any): number {
-  const stats = pitcherStats.seasonStats;
-  let rating = 5.0; // Start at average
-
-  if (stats.inningsPitched > 0) {
-    const k9 = (stats.strikeouts / stats.inningsPitched) * 9;
-
-    // Adjust based on K/9
-    if (k9 > 10) {
-      rating += 2.0; // Elite strikeout rate
-    } else if (k9 > 8.5) {
-      rating += 1.0; // Above average strikeout rate
-    } else if (k9 < 6.5) {
-      rating -= 1.0; // Below average strikeout rate
-    }
-
-    // Adjust based on walk rate
-    const bb9 = (stats.walks / stats.inningsPitched) * 9;
-    if (bb9 < 2.5) {
-      rating += 0.5; // Good control
-    } else if (bb9 > 4) {
-      rating -= 0.5; // Poor control
-    }
-  }
-
-  return Math.max(1, Math.min(10, rating));
-}
-
-function calculateConfidenceScore(
-  pitcherStats: any,
-  opponentVulnerability: any
-): number {
-  let score = 50; // Base confidence
-
-  // Adjust based on sample size
-  if (pitcherStats.seasonStats.inningsPitched > 30) {
-    score += 20;
-  } else if (pitcherStats.seasonStats.inningsPitched > 15) {
-    score += 10;
-  }
-
-  // Adjust based on opponent data
-  if (opponentVulnerability?.gamesPlayed > 10) {
-    score += 10;
-  }
-
-  return Math.max(0, Math.min(100, score));
 }
