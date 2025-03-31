@@ -111,13 +111,13 @@ export async function collectDailyDFSData(
           home: [],
         },
         pitchers: {
-          away: game.teams.away.probablePitcher
+          away: game.teams.away.probablePitcher?.id
             ? {
                 id: game.teams.away.probablePitcher.id,
                 fullName: game.teams.away.probablePitcher.fullName,
               }
             : undefined,
-          home: game.teams.home.probablePitcher
+          home: game.teams.home.probablePitcher?.id
             ? {
                 id: game.teams.home.probablePitcher.id,
                 fullName: game.teams.home.probablePitcher.fullName,
@@ -261,7 +261,12 @@ export async function collectDailyDFSData(
 
     // Analyze starting pitchers
     console.log("\nStarting pitcher analysis...");
-    const pitcherAnalysis = await analyzeStartingPitchers(data.games);
+    const validGames = data.games.filter(
+      (game) =>
+        (game.pitchers.home?.id && game.pitchers.home.id > 0) ||
+        (game.pitchers.away?.id && game.pitchers.away.id > 0)
+    );
+    const pitcherAnalysis = await analyzeStartingPitchers(validGames);
 
     // Add DraftKings data to pitcher analysis
     let matchedPitchers = 0;

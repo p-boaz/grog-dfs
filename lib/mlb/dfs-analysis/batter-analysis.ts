@@ -1,9 +1,11 @@
 // batter-analysis.ts
 
+import { makeMLBApiRequest } from "../core/api-client";
 import { getTeamAbbrev } from "../core/team-mapping";
 import { DailyMLBData } from "../core/types";
 import { findPlayerByNameFuzzy } from "../draftkings/player-mapping";
 import { getBatterStats } from "../player/batter-stats";
+import { getPitcherStats } from "../player/pitcher-stats";
 import { DetailedHitProjection } from "../types/analysis";
 import { calculatePitcherDfsProjection } from "./aggregate-scoring";
 import {
@@ -81,21 +83,31 @@ interface BatterAnalysis {
       };
     };
   };
-  environment: {
-    temperature: number;
-    windSpeed: number;
-    windDirection: string;
-    isOutdoor: boolean;
-  };
-  ballparkFactors: {
-    overall: number;
-    homeRuns: number;
-    runs: number;
-  };
   lineupPosition?: number;
   factors: {
-    weather: any;
-    ballpark: any;
+    weather: {
+      temperature: number;
+      windSpeed: number;
+      windDirection: string;
+      isOutdoor: boolean;
+      temperatureFactor: number;
+      windFactor: number;
+      overallFactor: number;
+      byHitType: {
+        singles: number;
+        doubles: number;
+        triples: number;
+        homeRuns: number;
+      };
+    };
+    ballpark: {
+      overall: number;
+      singles: number;
+      doubles: number;
+      triples: number;
+      homeRuns: number;
+      runs: number;
+    };
     platoon: boolean;
     career: any;
   };
@@ -186,13 +198,13 @@ interface GameInfo {
   awayTeam: {
     name: string;
   };
-  environment: {
+  environment?: {
     temperature: number;
     windSpeed: number;
     windDirection: string;
     isOutdoor: boolean;
   };
-  ballpark: {
+  ballpark?: {
     overall: number;
     types: {
       homeRuns: number;
@@ -297,6 +309,33 @@ export async function analyzeBatters(
 
   // Process each game
   for (const game of games) {
+    // Create factors structure from existing data
+    const gameFactors = {
+      weather: {
+        temperature: game.environment?.temperature || 0,
+        windSpeed: game.environment?.windSpeed || 0,
+        windDirection: game.environment?.windDirection || "",
+        isOutdoor: game.environment?.isOutdoor || true,
+        temperatureFactor: 1,
+        windFactor: 1,
+        overallFactor: 1,
+        byHitType: {
+          singles: 1,
+          doubles: 1,
+          triples: 1,
+          homeRuns: 1,
+        },
+      },
+      ballpark: {
+        overall: game.ballpark?.overall || 1,
+        singles: 1,
+        doubles: 1,
+        triples: 1,
+        homeRuns: game.ballpark?.types?.homeRuns || 1,
+        runs: game.ballpark?.types?.runs || 1,
+      },
+    };
+
     // Get standardized team abbreviations
     const homeTeamAbbrev = getTeamAbbrev(game.homeTeam.name).toUpperCase();
     const awayTeamAbbrev = getTeamAbbrev(game.awayTeam.name).toUpperCase();
@@ -414,21 +453,10 @@ export async function analyzeBatters(
             },
           },
         },
-        environment: game.environment || {
-          temperature: 0,
-          windSpeed: 0,
-          windDirection: "",
-          isOutdoor: true,
-        },
-        ballparkFactors: {
-          overall: game.ballpark.overall,
-          homeRuns: game.ballpark.types.homeRuns,
-          runs: game.ballpark.types.runs,
-        },
         lineupPosition: batter.lineupPosition,
         factors: {
-          weather: null,
-          ballpark: null,
+          weather: gameFactors.weather,
+          ballpark: gameFactors.ballpark,
           platoon: false,
           career: null,
         },
@@ -1118,20 +1146,32 @@ const analyzeBatter = async (
           },
         },
       },
-      environment: game.environment,
-      ballparkFactors: {
-        overall: game.ballpark.overall,
-        homeRuns: game.ballpark.types.homeRuns,
-        runs: game.ballpark.types.runs,
-      },
       lineupPosition: batter.lineupPosition,
       factors: {
-        weather: hitProjections.factors.weather,
-        ballpark: hitProjections.factors.ballpark,
-        platoon: isPlatoonAdvantage(
-          currentStats.batSide,
-          game.pitchers.away.throwsHand
-        ),
+        weather: {
+          temperature: game.environment?.temperature || 0,
+          windSpeed: game.environment?.windSpeed || 0,
+          windDirection: game.environment?.windDirection || "",
+          isOutdoor: game.environment?.isOutdoor || true,
+          temperatureFactor: 1,
+          windFactor: 1,
+          overallFactor: 1,
+          byHitType: {
+            singles: 1,
+            doubles: 1,
+            triples: 1,
+            homeRuns: 1,
+          },
+        },
+        ballpark: {
+          overall: game.ballpark?.overall || 1,
+          singles: 1,
+          doubles: 1,
+          triples: 1,
+          homeRuns: game.ballpark?.types?.homeRuns || 1,
+          runs: game.ballpark?.types?.runs || 1,
+        },
+        platoon: false,
         career: hitProjections.factors.career,
       },
       draftKings: {
@@ -1321,12 +1361,10 @@ export async function analyzeBattersForToday(games: any[]): Promise<void> {
   ${batter.projections.dfsProjection.upside.toFixed(1)})`
     );
     console.log(
-      `   Environment: ${batter.environment.temperature}°F, ${batter.environment.windSpeed}mph 
-  ${batter.environment.windDirection}`
+      `   Environment: ${batter.factors.weather.temperature}°F, ${batter.factors.weather.windSpeed}mph ${batter.factors.weather.windDirection}`
     );
     console.log(
-      `   Ballpark Factors: ${batter.ballparkFactors.overall} overall, 
-  ${batter.ballparkFactors.homeRuns} HR\n`
+      `   Ballpark Factors: ${batter.factors.ballpark.overall} overall, ${batter.factors.ballpark.homeRuns} HR\n`
     );
   });
 }
@@ -1559,6 +1597,8 @@ function getDefaultBatterAnalysis(
     walks: 0,
     strikeouts: 0,
     sacrificeFlies: 0,
+    wOBAvsL: 0,
+    wOBAvsR: 0,
     wOBA: 0,
     iso: 0,
     babip: 0,
@@ -1627,16 +1667,31 @@ function getDefaultBatterAnalysis(
         },
       },
     },
-    environment: game.environment,
-    ballparkFactors: {
-      overall: game.ballpark.overall,
-      homeRuns: game.ballpark.types.homeRuns,
-      runs: game.ballpark.types.runs,
-    },
     lineupPosition: batter.lineupPosition,
     factors: {
-      weather: null,
-      ballpark: null,
+      weather: {
+        temperature: 0,
+        windSpeed: 0,
+        windDirection: "",
+        isOutdoor: true,
+        temperatureFactor: 1,
+        windFactor: 1,
+        overallFactor: 1,
+        byHitType: {
+          singles: 1,
+          doubles: 1,
+          triples: 1,
+          homeRuns: 1,
+        },
+      },
+      ballpark: {
+        overall: 1,
+        singles: 1,
+        doubles: 1,
+        triples: 1,
+        homeRuns: 1,
+        runs: 1,
+      },
       platoon: false,
       career: null,
     },
@@ -1717,50 +1772,124 @@ async function getHistoricalMatchupStats(
   avg: number;
   homeRuns: number;
   ops: number;
+  careerVsType: {
+    atBats: number;
+    avg: number;
+    ops: number;
+  };
+  recentForm: {
+    last10: {
+      atBats: number;
+      avg: number;
+      ops: number;
+    };
+    last30: {
+      atBats: number;
+      avg: number;
+      ops: number;
+    };
+  };
 }> {
   try {
-    // For now, just use the MLB API directly
-    // In a real app, this would use a proper API endpoint
-    const response = await fetch(
-      `https://statsapi.mlb.com/api/v1/people/${batterId}/stats?stats=vsPlayer&opposingPlayerId=${pitcherId}&group=hitting&sportId=1`
+    // Get direct head-to-head matchup data
+    const directMatchupEndpoint = `/people/${batterId}/stats?stats=vsPlayer&opposingPlayerId=${pitcherId}&group=hitting&sportId=1`;
+    const directMatchupData = await makeMLBApiRequest<any>(
+      directMatchupEndpoint,
+      "V1"
     );
-    if (!response.ok) {
-      throw new Error("Failed to fetch matchup data");
-    }
 
-    const data = await response.json();
+    // Get pitcher info to determine handedness
+    const pitcherInfo = await getPitcherStats({ pitcherId });
+    const pitcherHand = pitcherInfo?.pitchHand || "R";
 
-    // Parse the response
+    // Get batter's career stats vs this type of pitcher
+    const vsTypeEndpoint = `/people/${batterId}/stats?stats=vsPitchHand&group=hitting&opposingPitchHand=${pitcherHand}&sportId=1`;
+    const vsTypeData = await makeMLBApiRequest<any>(vsTypeEndpoint, "V1");
+
+    // Get batter's recent performance (last 10 and 30 games)
+    const recentEndpoint = `/people/${batterId}/stats?stats=byDateRange&group=hitting&season=${new Date().getFullYear()}&sportId=1`;
+    const recentData = await makeMLBApiRequest<any>(recentEndpoint, "V1");
+
+    // Parse direct matchup data
+    let directStats = {
+      atBats: 0,
+      hits: 0,
+      avg: 0,
+      homeRuns: 0,
+      ops: 0,
+    };
+
     if (
-      data.stats &&
-      data.stats.length > 0 &&
-      data.stats[0].splits &&
-      data.stats[0].splits.length > 0
+      directMatchupData.stats?.length > 0 &&
+      directMatchupData.stats[0].splits?.length > 0
     ) {
-      const stats = data.stats[0].splits[0].stat;
-      return {
+      const stats = directMatchupData.stats[0].splits[0].stat;
+      directStats = {
         atBats: stats.atBats || 0,
         hits: stats.hits || 0,
         avg: stats.avg || 0,
         homeRuns: stats.homeRuns || 0,
         ops: stats.ops || 0,
       };
-    } else {
-      console.log(
-        "Unexpected data shape for player request to /people/" +
-          batterId +
-          "/stats?stats=vsPlayer&opposingPlayerId=" +
-          pitcherId +
-          "&group=hitting&sportId=1"
-      );
-      return {
-        atBats: 0,
-        hits: 0,
-        avg: 0,
-        homeRuns: 0,
-        ops: 0,
+    }
+
+    // Parse career vs type data
+    let careerVsType = {
+      atBats: 0,
+      avg: 0,
+      ops: 0,
+    };
+
+    if (
+      vsTypeData.stats?.length > 0 &&
+      vsTypeData.stats[0].splits?.length > 0
+    ) {
+      const stats = vsTypeData.stats[0].splits[0].stat;
+      careerVsType = {
+        atBats: stats.atBats || 0,
+        avg: stats.avg || 0,
+        ops: stats.ops || 0,
       };
     }
+
+    // Parse recent performance data
+    let recentForm = {
+      last10: {
+        atBats: 0,
+        avg: 0,
+        ops: 0,
+      },
+      last30: {
+        atBats: 0,
+        avg: 0,
+        ops: 0,
+      },
+    };
+
+    if (
+      recentData.stats?.length > 0 &&
+      recentData.stats[0].splits?.length > 0
+    ) {
+      const stats = recentData.stats[0].splits[0].stat;
+      recentForm = {
+        last10: {
+          atBats: stats.last10AtBats || 0,
+          avg: stats.last10Avg || 0,
+          ops: stats.last10Ops || 0,
+        },
+        last30: {
+          atBats: stats.last30AtBats || 0,
+          avg: stats.last30Avg || 0,
+          ops: stats.last30Ops || 0,
+        },
+      };
+    }
+
+    return {
+      ...directStats,
+      careerVsType,
+      recentForm,
+    };
   } catch (error) {
     console.error("Error fetching historical matchup stats:", error);
     return {
@@ -1769,6 +1898,23 @@ async function getHistoricalMatchupStats(
       avg: 0,
       homeRuns: 0,
       ops: 0,
+      careerVsType: {
+        atBats: 0,
+        avg: 0,
+        ops: 0,
+      },
+      recentForm: {
+        last10: {
+          atBats: 0,
+          avg: 0,
+          ops: 0,
+        },
+        last30: {
+          atBats: 0,
+          avg: 0,
+          ops: 0,
+        },
+      },
     };
   }
 }

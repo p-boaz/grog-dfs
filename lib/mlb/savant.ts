@@ -2783,15 +2783,3 @@ export async function getPitcherData(
     return getDefaultPitcherData(pitcherId);
   }
 }
-
-/**
- * Fetch basic pitcher data from Baseball Savant
- */
-async function fetchBasicPitcherData(
-  pitcherId: number,
-  season: number
-): Promise<any> {
-  // Implementation of basic data fetching
-  // This would typically query Baseball Savant's API endpoints
-  throw new Error("Basic pitcher data fetching not implemented");
-}

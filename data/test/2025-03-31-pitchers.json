@@ -21,7 +21,7 @@
       },
       "homeRunVulnerability": {
         "gamesStarted": 1,
-        "inningsPitched": "5.0",
+        "inningsPitched": "6.0",
         "homeRunsAllowed": 0,
         "hrPer9": 0,
         "flyBallPct": 0.35,
@@ -30,13 +30,13 @@
       }
     },
     "projections": {
-      "winProbability": 26,
+      "winProbability": 80,
       "expectedStrikeouts": 0,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 12.910656249999999,
-        "upside": 15.492787499999999,
-        "floor": 10.328524999999999
+        "expectedPoints": 15.11065625,
+        "upside": 18.1327875,
+        "floor": 12.088525
       }
     },
     "environment": {

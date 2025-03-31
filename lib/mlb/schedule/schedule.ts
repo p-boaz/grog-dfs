@@ -3,28 +3,6 @@ import { makeMLBApiRequest } from "../core/api-client";
 import type { BallparkFactors, MLBScheduleResponse } from "../core/types";
 
 /**
- * Fetch MLB schedule data for a specific date
- * Raw fetch function for caching
- */
-async function fetchSchedule(params: {
-  date: string;
-}): Promise<MLBScheduleResponse> {
-  const { date } = params;
-  const data = await makeMLBApiRequest<MLBScheduleResponse>(
-    `/schedule?sportId=1&date=${date}&hydrate=probablePitcher(note)`,
-    "V1"
-  );
-
-  // Don't throw an error if there are no games, just return the empty schedule
-  // This allows for dates with no scheduled games
-  if (!data.dates?.[0]?.games) {
-    console.log(`No games found for date: ${date}`);
-  }
-
-  return markAsApiSource(data);
-}
-
-/**
  * Get MLB schedule for a given date
  */
 export async function getSchedule(date: string): Promise<MLBScheduleResponse> {
