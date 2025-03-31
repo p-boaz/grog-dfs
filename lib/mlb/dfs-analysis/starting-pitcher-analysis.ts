@@ -201,6 +201,7 @@ async function analyzePitcher({
     try {
       const winProb = await calculatePitcherWinProbability(
         pitcherId,
+        isHome ? game.awayTeam.id : game.homeTeam.id,
         game.gameId.toString()
       );
       projections.winProbability = winProb.overallWinProbability;
@@ -214,6 +215,7 @@ async function analyzePitcher({
     try {
       const expectedKData = await calculateExpectedStrikeouts(
         pitcherId,
+        isHome ? game.awayTeam.id : game.homeTeam.id,
         game.gameId.toString()
       );
       projections.expectedStrikeouts = expectedKData.expectedStrikeouts;
@@ -227,6 +229,7 @@ async function analyzePitcher({
     try {
       const expectedIPData = await calculateExpectedInnings(
         pitcherId,
+        isHome ? game.awayTeam.id : game.homeTeam.id,
         game.gameId.toString()
       );
       projections.expectedInnings = expectedIPData.expectedInnings;
@@ -241,13 +244,16 @@ async function analyzePitcher({
       // Get standard DFS projection
       const dfsProjData = await calculatePitcherDfsProjection(
         pitcherId,
+        isHome ? game.awayTeam.id : game.homeTeam.id,
         game.gameId.toString()
       );
 
       // Get control projection (hits/walks/HBP allowed)
       const controlProj = await calculateControlProjection(
         pitcherId,
-        game.lineups.awayBatters?.map((b) => b.id) || []
+        isHome
+          ? game.lineups?.away?.map((b) => b) || []
+          : game.lineups?.home?.map((b) => b) || []
       ).catch(() => ({
         total: { points: -5.1, expected: 8.55, confidence: 50 },
       }));
@@ -255,6 +261,7 @@ async function analyzePitcher({
       // Get rare events projection
       const rareEventsProj = await calculateRareEventPotential(
         pitcherId,
+        isHome ? game.awayTeam.id : game.homeTeam.id,
         game.gameId.toString()
       ).catch(() => ({
         expectedRareEventPoints: 0.05,
@@ -316,9 +323,9 @@ async function analyzePitcher({
 
     return {
       pitcherId,
-      name: isHome ? game.teams.home.name : game.teams.away.name,
-      team: isHome ? game.teams.home.abbrev : game.teams.away.abbrev,
-      opponent: isHome ? game.teams.away.name : game.teams.home.name,
+      name: isHome ? game.pitchers.home.fullName : game.pitchers.away.fullName,
+      team: isHome ? game.homeTeam.name : game.awayTeam.name,
+      opponent: isHome ? game.awayTeam.name : game.homeTeam.name,
       gameId: game.gameId,
       venue: game.venue.name,
       stats: {
@@ -356,11 +363,17 @@ const getDefaultPitcherAnalysis = (
   game: any
 ): StartingPitcherAnalysis => ({
   pitcherId,
-  name: `Pitcher ${pitcherId}`,
-  team: isHome ? game.homeTeam.name : game.awayTeam.name,
-  opponent: isHome ? game.awayTeam.name : game.homeTeam.name,
+  name: isHome
+    ? game.pitchers?.home?.fullName || `Pitcher ${pitcherId}`
+    : game.pitchers?.away?.fullName || `Pitcher ${pitcherId}`,
+  team: isHome
+    ? game.homeTeam?.name || "Unknown"
+    : game.awayTeam?.name || "Unknown",
+  opponent: isHome
+    ? game.awayTeam?.name || "Unknown"
+    : game.homeTeam?.name || "Unknown",
   gameId: game.gameId,
-  venue: game.venue.name,
+  venue: game.venue?.name || "Unknown",
   stats: {
     seasonStats: {
       gamesPlayed: PLACEHOLDER.NUMERIC,
