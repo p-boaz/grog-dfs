@@ -133,6 +133,15 @@ export async function getTeamStats(
   teamId: number,
   season: number
 ): Promise<TeamStats> {
+  if (!teamId || isNaN(teamId)) {
+    console.error(`Invalid team ID provided: ${teamId}`);
+    return {
+      hitting: {},
+      pitching: {},
+      name: `Unknown Team`,
+    };
+  }
+
   try {
     const response = await makeMLBApiRequest<MLBTeamStatsResponse>(
       `/teams/${teamId}/stats?season=${season}&group=hitting,pitching&sportId=1&stats=season`
@@ -145,9 +154,24 @@ export async function getTeamStats(
 
     const teamName = teamDetails?.teams?.[0]?.name || `Team ${teamId}`;
 
+    // Validate response structure
+    if (
+      !response?.stats?.[0]?.splits?.[0]?.stat ||
+      !response?.stats?.[1]?.splits?.[0]?.stat
+    ) {
+      console.warn(
+        `Invalid stats structure for team ${teamId}, season ${season}`
+      );
+      return {
+        hitting: {},
+        pitching: {},
+        name: teamName,
+      };
+    }
+
     return {
-      hitting: response.stats[0]?.splits[0]?.stat || {},
-      pitching: response.stats[1]?.splits[0]?.stat || {},
+      hitting: response.stats[0].splits[0].stat || {},
+      pitching: response.stats[1].splits[0].stat || {},
       name: teamName,
     };
   } catch (error) {

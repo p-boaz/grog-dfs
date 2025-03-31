@@ -14,7 +14,7 @@ import { WinProbabilityAnalysis } from "../types/analysis/pitcher";
  */
 export async function getPitcherWinStats(
   pitcherId: number,
-  season: number = new Date().getFullYear()
+  season = new Date().getFullYear()
 ): Promise<{
   name?: string;
   teamName?: string;
@@ -37,9 +37,9 @@ export async function getPitcherWinStats(
     // Get current team - skip team lookup if no team data
     const currentTeam = pitcherData.currentTeam;
     let teamWinPct = 0.5; // Default value if we can't get team data
-    let teamId = null;
+    let teamId: number | null = null;
 
-    if (currentTeam) {
+    if (currentTeam && currentTeam.trim() !== "") {
       teamId = await getTeamIdByName(currentTeam);
       if (teamId) {
         try {
@@ -57,9 +57,17 @@ export async function getPitcherWinStats(
             teamWinPct = wins / (wins + losses);
           }
         } catch (error) {
-          console.warn(`Error fetching team stats for ${currentTeam}:`, error);
+          console.warn(
+            `Error fetching team stats for ${currentTeam} (ID: ${teamId}):`,
+            error
+          );
+          // Keep default teamWinPct value
         }
+      } else {
+        console.warn(`Could not find team ID for team name: ${currentTeam}`);
       }
+    } else {
+      console.warn(`No current team found for pitcher ${pitcherId}`);
     }
 
     // Extract pitching stats
@@ -129,53 +137,107 @@ async function getTeamIdByName(teamName: string): Promise<number | null> {
     return null;
   }
 
-  // Direct mapping of team names to IDs
+  // Normalize the input team name
+  const normalizedInput = teamName.toLowerCase().trim();
+
+  // Direct mapping of team names to IDs with variations
   const teamIds: Record<string, number> = {
-    Yankees: 147,
-    "Red Sox": 111,
-    "Blue Jays": 141,
-    Rays: 139,
-    Orioles: 110,
-    "White Sox": 145,
-    Guardians: 114,
-    Tigers: 116,
-    Royals: 118,
-    Twins: 142,
-    Astros: 117,
-    Angels: 108,
-    Athletics: 133,
-    Mariners: 136,
-    Rangers: 140,
-    Braves: 144,
-    Marlins: 146,
-    Mets: 121,
-    Phillies: 143,
-    Nationals: 120,
-    Cubs: 112,
-    Reds: 113,
-    Brewers: 158,
-    Pirates: 134,
-    Cardinals: 138,
-    Diamondbacks: 109,
-    Rockies: 115,
-    Dodgers: 119,
-    Padres: 135,
-    Giants: 137,
+    // AL East
+    "new york yankees": 147,
+    yankees: 147,
+    "boston red sox": 111,
+    "red sox": 111,
+    "toronto blue jays": 141,
+    "blue jays": 141,
+    "tampa bay rays": 139,
+    rays: 139,
+    "baltimore orioles": 110,
+    orioles: 110,
+
+    // AL Central
+    "chicago white sox": 145,
+    "white sox": 145,
+    "cleveland guardians": 114,
+    guardians: 114,
+    "detroit tigers": 116,
+    tigers: 116,
+    "kansas city royals": 118,
+    royals: 118,
+    "minnesota twins": 142,
+    twins: 142,
+
+    // AL West
+    "houston astros": 117,
+    astros: 117,
+    "los angeles angels": 108,
+    angels: 108,
+    "oakland athletics": 133,
+    athletics: 133,
+    "oakland as": 133,
+    "seattle mariners": 136,
+    mariners: 136,
+    "texas rangers": 140,
+    rangers: 140,
+
+    // NL East
+    "atlanta braves": 144,
+    braves: 144,
+    "miami marlins": 146,
+    marlins: 146,
+    "new york mets": 121,
+    mets: 121,
+    "philadelphia phillies": 143,
+    phillies: 143,
+    "washington nationals": 120,
+    nationals: 120,
+    nats: 120,
+
+    // NL Central
+    "chicago cubs": 112,
+    cubs: 112,
+    "cincinnati reds": 113,
+    reds: 113,
+    "milwaukee brewers": 158,
+    brewers: 158,
+    "pittsburgh pirates": 134,
+    pirates: 134,
+    "st. louis cardinals": 138,
+    "saint louis cardinals": 138,
+    cardinals: 138,
+
+    // NL West
+    "arizona diamondbacks": 109,
+    diamondbacks: 109,
+    dbacks: 109,
+    "colorado rockies": 115,
+    rockies: 115,
+    "los angeles dodgers": 119,
+    dodgers: 119,
+    "san diego padres": 135,
+    padres: 135,
+    "san francisco giants": 137,
+    giants: 137,
   };
 
-  // Try to match the team name directly
-  if (teamIds[teamName]) {
-    return teamIds[teamName];
+  // Try direct match with normalized input
+  if (teamIds[normalizedInput]) {
+    return teamIds[normalizedInput];
   }
 
-  // Try to match partial team name
-  for (const [name, id] of Object.entries(teamIds)) {
-    if (teamName.includes(name)) {
-      return id;
-    }
+  // Try to find a partial match
+  const matchingTeam = Object.keys(teamIds).find((name) => {
+    // Check if the normalized input contains the team name
+    // or if the team name contains the normalized input
+    return normalizedInput.includes(name) || name.includes(normalizedInput);
+  });
+
+  if (matchingTeam) {
+    return teamIds[matchingTeam];
   }
 
-  console.warn(`Could not find team ID for team name: ${teamName}`);
+  console.warn(
+    `Could not find team ID for team name: "${teamName}" (normalized: "${normalizedInput}")`
+  );
   return null;
 }
 
@@ -387,24 +449,26 @@ export async function calculatePitcherWinProbability(
   pitcherId: number,
   gamePk: string,
   season: number = new Date().getFullYear()
-): Promise<WinProbabilityAnalysis & {
-  pitcherFactors: {
-    pitcherQuality: number; // 1-10 scale
-    durability: number; // 1-10 scale
-    recentForm: number; // 1-10 scale
-  };
-  teamFactors: {
-    teamQuality: number; // 1-10 scale
-    runSupport: number; // 1-10 scale
-    bullpenStrength: number; // 1-10 scale
-  };
-  gameFactors: {
-    opposingTeam: number; // 1-10 scale (higher means tougher opponent)
-    homeAway: number; // -1 to +1 scale
-    weather: number; // -1 to +1 scale
-  };
-  expectedDfsPoints: number; // Expected DFS points from a win (4 points in DK)
-}> {
+): Promise<
+  WinProbabilityAnalysis & {
+    pitcherFactors: {
+      pitcherQuality: number; // 1-10 scale
+      durability: number; // 1-10 scale
+      recentForm: number; // 1-10 scale
+    };
+    teamFactors: {
+      teamQuality: number; // 1-10 scale
+      runSupport: number; // 1-10 scale
+      bullpenStrength: number; // 1-10 scale
+    };
+    gameFactors: {
+      opposingTeam: number; // 1-10 scale (higher means tougher opponent)
+      homeAway: number; // -1 to +1 scale
+      weather: number; // -1 to +1 scale
+    };
+    expectedDfsPoints: number; // Expected DFS points from a win (4 points in DK)
+  }
+> {
   try {
     // Get pitcher stats
     const pitcherStats = await getPitcherWinStats(pitcherId, season);
@@ -512,11 +576,11 @@ export async function calculatePitcherWinProbability(
       overallWinProbability: winProbabilityPct,
       factorWeights: {
         pitcherSkill: 0.35,
-        teamOffense: 0.20,
-        teamDefense: 0.10,
+        teamOffense: 0.2,
+        teamDefense: 0.1,
         bullpenStrength: 0.15,
-        homeField: 0.10,
-        opposingPitcher: 0.10,
+        homeField: 0.1,
+        opposingPitcher: 0.1,
       },
       factors: {
         pitcherSkill: pitcherQuality,
@@ -527,7 +591,7 @@ export async function calculatePitcherWinProbability(
         opposingPitcher: 10 - opposingTeamRating, // Invert scale
       },
       confidence: confidenceScore,
-      
+
       // Extended properties
       pitcherFactors: {
         pitcherQuality,
@@ -558,11 +622,11 @@ export async function calculatePitcherWinProbability(
       overallWinProbability: 50,
       factorWeights: {
         pitcherSkill: 0.35,
-        teamOffense: 0.20,
-        teamDefense: 0.10,
+        teamOffense: 0.2,
+        teamDefense: 0.1,
         bullpenStrength: 0.15,
-        homeField: 0.10,
-        opposingPitcher: 0.10,
+        homeField: 0.1,
+        opposingPitcher: 0.1,
       },
       factors: {
         pitcherSkill: 5,
@@ -573,7 +637,7 @@ export async function calculatePitcherWinProbability(
         opposingPitcher: 5,
       },
       confidence: 20,
-      
+
       // Extended properties
       pitcherFactors: {
         pitcherQuality: 5,
