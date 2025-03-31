@@ -33,30 +33,31 @@ export async function getPitcherWinStats(
     // Get pitcher stats
     const pitcherData = await getPitcherStats({ pitcherId, season });
 
-    // Get current team
-    const currentTeam = pitcherData.currentTeam || "";
-    const teamId = await getTeamIdByName(currentTeam);
-
-    // Get team win percentage
+    // Get current team - skip team lookup if no team data
+    const currentTeam = pitcherData.currentTeam;
     let teamWinPct = 0.5; // Default value if we can't get team data
+    let teamId = null;
 
-    if (teamId) {
-      try {
-        const teamData = await getTeamStats(teamId, season);
-        // Extract hitting stats which should contain games played
-        const hittingStats = teamData.hitting || {};
-        // Extract pitching stats which should contain wins and losses
-        const pitchingStats = teamData.pitching || {};
+    if (currentTeam) {
+      teamId = await getTeamIdByName(currentTeam);
+      if (teamId) {
+        try {
+          const teamData = await getTeamStats(teamId, season);
+          // Extract hitting stats which should contain games played
+          const hittingStats = teamData.hitting || {};
+          // Extract pitching stats which should contain wins and losses
+          const pitchingStats = teamData.pitching || {};
 
-        const gamesPlayed = hittingStats.gamesPlayed || 0;
-        const wins = pitchingStats.wins || 0;
-        const losses = pitchingStats.losses || 0;
+          const gamesPlayed = hittingStats.gamesPlayed || 0;
+          const wins = pitchingStats.wins || 0;
+          const losses = pitchingStats.losses || 0;
 
-        if (gamesPlayed > 0) {
-          teamWinPct = wins / (wins + losses);
+          if (gamesPlayed > 0) {
+            teamWinPct = wins / (wins + losses);
+          }
+        } catch (error) {
+          console.warn(`Error fetching team stats for ${currentTeam}:`, error);
         }
-      } catch (error) {
-        console.warn(`Error fetching team stats for ${currentTeam}:`, error);
       }
     }
 

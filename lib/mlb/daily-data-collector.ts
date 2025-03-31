@@ -1,6 +1,7 @@
 // daily-data-collector.ts
 
 import { format } from "date-fns";
+import { exit } from "process";
 import { getProbableLineups } from "../mlb/game/lineups";
 import {
   getBallparkFactors,
@@ -30,16 +31,23 @@ const SUPPORTED_SEASONS = ["2024", "2025"];
  * Collect and analyze daily DFS data for MLB games
  * @param date Optional date string in YYYY-MM-DD format. If not provided, uses today's date.
  * @param maxGames Optional number to limit the games processed (for testing)
+ * @param outputDir Optional subdirectory within data/ to save the output files
+ * @param shouldExit Whether to exit the process after completion
  * @returns Promise<DailyMLBData> Daily MLB data including games, stats, and analysis
  */
 export async function collectDailyDFSData(
   date?: string,
-  maxGames?: number
+  maxGames?: number,
+  outputDir?: string,
+  shouldExit: boolean = false
 ): Promise<DailyMLBData> {
   const targetDate = date || format(new Date(), "yyyy-MM-dd");
   console.log(`Starting data collection for ${targetDate}...`);
   if (maxGames) {
     console.log(`Limiting collection to ${maxGames} game(s) for testing`);
+  }
+  if (outputDir) {
+    console.log(`Output will be saved to data/${outputDir}/`);
   }
 
   try {
@@ -289,7 +297,7 @@ export async function collectDailyDFSData(
 
     // Save pitcher analysis
     const pitcherOutputPath = `${targetDate}-pitchers.json`;
-    await saveToJsonFile(pitcherOutputPath, pitcherAnalysis);
+    await saveToJsonFile(pitcherOutputPath, pitcherAnalysis, outputDir);
     console.log(
       `\nSaved pitcher analysis to ${pitcherOutputPath} (${pitcherAnalysis.length} entries)`
     );
@@ -347,9 +355,6 @@ export async function collectDailyDFSData(
     }));
     populateMlbIds(mlbGames);
 
-    // Save raw data
-    await saveToJsonFile(`${targetDate}-data.json`, data);
-
     // Analyze batters
     console.log("\nStarting batter analysis...");
     const batterAnalysis = await analyzeBatters(
@@ -388,10 +393,29 @@ export async function collectDailyDFSData(
       `Matched ${matchedBatters} out of ${batterAnalysis.length} batters with DraftKings data`
     );
 
-    await saveToJsonFile(`${targetDate}-batters.json`, batterAnalysis);
+    await saveToJsonFile(
+      `${targetDate}-batters.json`,
+      batterAnalysis,
+      outputDir
+    );
 
     // Update count
     data.count = batterAnalysis.length;
+
+    // Save all data to JSON files
+    await Promise.all([
+      saveToJsonFile(`${targetDate}-data.json`, data, outputDir),
+      saveToJsonFile(`${targetDate}-pitchers.json`, pitcherAnalysis, outputDir),
+      saveToJsonFile(`${targetDate}-batters.json`, batterAnalysis, outputDir),
+    ]);
+
+    // Clean exit if requested
+    if (shouldExit) {
+      // Give a small delay to ensure all file writes are complete
+      setTimeout(() => {
+        exit(0);
+      }, 100);
+    }
 
     return data;
   } catch (error: unknown) {
@@ -400,27 +424,24 @@ export async function collectDailyDFSData(
     } else {
       console.error("Unknown error collecting daily DFS data");
     }
+    if (shouldExit) {
+      exit(1);
+    }
     throw error;
   }
 }
 
 /**
- * Wrapper function for daily automated data collection
- * Uses today's date and provides simplified interface
- * @param maxGames Optional parameter to limit the number of games processed (for testing)
+ * Run the daily data collection process
+ * @param maxGames Optional number to limit the games processed (for testing)
+ * @param outputDir Optional subdirectory within data/ to save the output files
+ * @param shouldExit Whether to exit the process after completion
  */
 export async function runDailyDataCollection(
-  maxGames?: number
+  maxGames?: number,
+  outputDir?: string,
+  shouldExit: boolean = false
 ): Promise<DailyMLBData> {
-  const today = new Date().toISOString().split("T")[0];
-  console.log(`Starting daily data collection for ${today}...`);
-
-  try {
-    const data = await collectDailyDFSData(today, maxGames);
-    console.log(`Successfully collected data for ${today}`);
-    return data;
-  } catch (error) {
-    console.error(`Failed to collect daily data for ${today}:`, error);
-    throw error;
-  }
+  const today = format(new Date(), "yyyy-MM-dd");
+  return collectDailyDFSData(today, maxGames, outputDir, shouldExit);
 }

@@ -1,0 +1,120 @@
+[
+  {
+    "pitcherId": 527048,
+    "name": "Martín Pérez",
+    "team": "Chicago White Sox",
+    "opponent": "Minnesota Twins",
+    "gameId": 778506,
+    "venue": "Rate Field",
+    "stats": {
+      "seasonStats": {
+        "gamesPlayed": null,
+        "inningsPitched": null,
+        "wins": null,
+        "losses": null,
+        "era": null,
+        "whip": null,
+        "strikeouts": null,
+        "walks": null,
+        "saves": null,
+        "homeRunsAllowed": null
+      },
+      "homeRunVulnerability": {
+        "gamesStarted": 26,
+        "inningsPitched": "135.0",
+        "homeRunsAllowed": 22,
+        "hrPer9": 1.4666666666666668,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 5.866666666666667
+      }
+    },
+    "projections": {
+      "winProbability": 21,
+      "expectedStrikeouts": 1,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 0.7135000000000008,
+        "upside": 0.856200000000001,
+        "floor": 0.5708000000000006
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": null,
+      "salary": 0,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 0
+    }
+  },
+  {
+    "pitcherId": 663978,
+    "name": "Chris Paddack",
+    "team": "Minnesota Twins",
+    "opponent": "Chicago White Sox",
+    "gameId": 778506,
+    "venue": "Rate Field",
+    "stats": {
+      "seasonStats": {
+        "gamesPlayed": null,
+        "inningsPitched": null,
+        "wins": null,
+        "losses": null,
+        "era": null,
+        "whip": null,
+        "strikeouts": null,
+        "walks": null,
+        "saves": null,
+        "homeRunsAllowed": null
+      },
+      "homeRunVulnerability": {
+        "gamesStarted": 17,
+        "inningsPitched": "88.1",
+        "homeRunsAllowed": 14,
+        "hrPer9": 1.4301929625425656,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 5.720771850170262
+      }
+    },
+    "projections": {
+      "winProbability": 22,
+      "expectedStrikeouts": 1,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": 0.7135000000000008,
+        "upside": 0.856200000000001,
+        "floor": 0.5708000000000006
+      }
+    },
+    "environment": {
+      "temperature": 0,
+      "windSpeed": 0,
+      "windDirection": "None",
+      "isOutdoor": false
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": null,
+      "salary": 0,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 0
+    }
+  }
+]
