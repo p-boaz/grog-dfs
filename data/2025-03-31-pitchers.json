@@ -30,28 +30,28 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 24,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 10.9435,
+        "upside": 13.1322,
+        "floor": 8.754800000000001
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
       "homeRuns": 1
     },
     "draftKings": {
-      "draftKingsId": "38258038",
-      "salary": 6000,
+      "draftKingsId": "38263505",
+      "salary": 6500,
       "positions": [
         "RP"
       ],
@@ -89,28 +89,28 @@
       }
     },
     "projections": {
-      "winProbability": 22,
+      "winProbability": 20,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 10.7435,
+        "upside": 12.892199999999999,
+        "floor": 8.5948
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
       "homeRuns": 1
     },
     "draftKings": {
-      "draftKingsId": "38258036",
-      "salary": 6000,
+      "draftKingsId": "38263500",
+      "salary": 8700,
       "positions": [
         "SP"
       ],
@@ -139,20 +139,20 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 20,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 10.7435,
+        "upside": 12.892199999999999,
+        "floor": 8.5948
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
@@ -198,28 +198,28 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 20,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 10.7435,
+        "upside": 12.892199999999999,
+        "floor": 8.5948
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
       "homeRuns": 1
     },
     "draftKings": {
-      "draftKingsId": "38258012",
-      "salary": 6600,
+      "draftKingsId": "38263501",
+      "salary": 7700,
       "positions": [
         "SP"
       ],
@@ -257,28 +257,28 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 31,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 11.2435,
+        "upside": 13.492199999999999,
+        "floor": 8.9948
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
       "homeRuns": 1
     },
     "draftKings": {
-      "draftKingsId": "38257987",
-      "salary": 7000,
+      "draftKingsId": "38263502",
+      "salary": 7500,
       "positions": [
         "SP"
       ],
@@ -316,28 +316,28 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 20,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 10.7435,
+        "upside": 12.892199999999999,
+        "floor": 8.5948
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
       "homeRuns": 1
     },
     "draftKings": {
-      "draftKingsId": "38258125",
-      "salary": 4000,
+      "draftKingsId": "38263504",
+      "salary": 7000,
       "positions": [
         "RP"
       ],
@@ -375,28 +375,28 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 41,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 11.6435,
+        "upside": 13.972199999999999,
+        "floor": 9.3148
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
       "homeRuns": 1
     },
     "draftKings": {
-      "draftKingsId": "38257964",
-      "salary": 7700,
+      "draftKingsId": "38263499",
+      "salary": 9000,
       "positions": [
         "SP"
       ],
@@ -434,28 +434,28 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 20,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 10.7435,
+        "upside": 12.892199999999999,
+        "floor": 8.5948
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
       "homeRuns": 1
     },
     "draftKings": {
-      "draftKingsId": "38258043",
-      "salary": 6000,
+      "draftKingsId": "38263503",
+      "salary": 7200,
       "positions": [
         "SP"
       ],
@@ -493,32 +493,32 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 20,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 10.7435,
+        "upside": 12.892199999999999,
+        "floor": 8.5948
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
       "homeRuns": 1
     },
     "draftKings": {
-      "draftKingsId": "38257976",
-      "salary": 7400,
+      "draftKingsId": null,
+      "salary": 0,
       "positions": [
-        "RP"
+        "SP"
       ],
-      "avgPointsPerGame": 14.9
+      "avgPointsPerGame": 0
     }
   },
   {
@@ -552,32 +552,32 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 34,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 11.3435,
+        "upside": 13.6122,
+        "floor": 9.074800000000002
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
       "homeRuns": 1
     },
     "draftKings": {
-      "draftKingsId": "38257975",
-      "salary": 7400,
+      "draftKingsId": null,
+      "salary": 0,
       "positions": [
         "SP"
       ],
-      "avgPointsPerGame": 10.95
+      "avgPointsPerGame": 0
     }
   },
   {
@@ -611,32 +611,32 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 44,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 11.7435,
+        "upside": 14.092199999999998,
+        "floor": 9.3948
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
       "homeRuns": 1
     },
     "draftKings": {
-      "draftKingsId": "38258025",
-      "salary": 6300,
+      "draftKingsId": null,
+      "salary": 0,
       "positions": [
-        "RP"
+        "SP"
       ],
-      "avgPointsPerGame": 9.66
+      "avgPointsPerGame": 0
     }
   },
   {
@@ -670,20 +670,20 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 20,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 10.7435,
+        "upside": 12.892199999999999,
+        "floor": 8.5948
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
@@ -729,32 +729,32 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 39,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 11.5435,
+        "upside": 13.8522,
+        "floor": 9.2348
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
       "homeRuns": 1
     },
     "draftKings": {
-      "draftKingsId": "38258017",
-      "salary": 6400,
+      "draftKingsId": null,
+      "salary": 0,
       "positions": [
         "SP"
       ],
-      "avgPointsPerGame": 6.12
+      "avgPointsPerGame": 0
     }
   },
   {
@@ -788,32 +788,32 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 20,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 10.7435,
+        "upside": 12.892199999999999,
+        "floor": 8.5948
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
       "homeRuns": 1
     },
     "draftKings": {
-      "draftKingsId": "38258146",
-      "salary": 4000,
+      "draftKingsId": null,
+      "salary": 0,
       "positions": [
-        "RP"
+        "SP"
       ],
-      "avgPointsPerGame": 3.77
+      "avgPointsPerGame": 0
     }
   },
   {
@@ -847,32 +847,32 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 27,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 11.0435,
+        "upside": 13.2522,
+        "floor": 8.8348
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
       "homeRuns": 1
     },
     "draftKings": {
-      "draftKingsId": "38258033",
-      "salary": 6000,
+      "draftKingsId": null,
+      "salary": 0,
       "positions": [
-        "RP"
+        "SP"
       ],
-      "avgPointsPerGame": 11.54
+      "avgPointsPerGame": 0
     }
   },
   {
@@ -906,32 +906,32 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 20,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 10.7435,
+        "upside": 12.892199999999999,
+        "floor": 8.5948
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
       "homeRuns": 1
     },
     "draftKings": {
-      "draftKingsId": "38258008",
-      "salary": 6600,
+      "draftKingsId": null,
+      "salary": 0,
       "positions": [
         "SP"
       ],
-      "avgPointsPerGame": 7.82
+      "avgPointsPerGame": 0
     }
   },
   {
@@ -965,32 +965,32 @@
       }
     },
     "projections": {
-      "winProbability": 22,
+      "winProbability": 62,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 12.4435,
+        "upside": 14.9322,
+        "floor": 9.9548
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
       "homeRuns": 1
     },
     "draftKings": {
-      "draftKingsId": "38258013",
-      "salary": 6500,
+      "draftKingsId": null,
+      "salary": 0,
       "positions": [
         "SP"
       ],
-      "avgPointsPerGame": 10.37
+      "avgPointsPerGame": 0
     }
   },
   {
@@ -1024,32 +1024,32 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 26,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 11.0435,
+        "upside": 13.2522,
+        "floor": 8.8348
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
       "homeRuns": 1
     },
     "draftKings": {
-      "draftKingsId": "38258005",
-      "salary": 6900,
+      "draftKingsId": null,
+      "salary": 0,
       "positions": [
         "SP"
       ],
-      "avgPointsPerGame": 13.96
+      "avgPointsPerGame": 0
     }
   },
   {
@@ -1083,20 +1083,20 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 37,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 11.4435,
+        "upside": 13.7322,
+        "floor": 9.1548
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
@@ -1142,32 +1142,32 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 30,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 11.1435,
+        "upside": 13.3722,
+        "floor": 8.9148
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
       "homeRuns": 1
     },
     "draftKings": {
-      "draftKingsId": "38258044",
-      "salary": 6000,
+      "draftKingsId": null,
+      "salary": 0,
       "positions": [
-        "RP"
+        "SP"
       ],
-      "avgPointsPerGame": 8.76
+      "avgPointsPerGame": 0
     }
   },
   {
@@ -1192,20 +1192,20 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 58,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 12.3435,
+        "upside": 14.8122,
+        "floor": 9.8748
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
@@ -1251,20 +1251,20 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 33,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 11.3435,
+        "upside": 13.6122,
+        "floor": 9.074800000000002
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
@@ -1310,20 +1310,20 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 26,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 11.0435,
+        "upside": 13.2522,
+        "floor": 8.8348
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
@@ -1369,20 +1369,20 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 20,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 10.7435,
+        "upside": 12.892199999999999,
+        "floor": 8.5948
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
@@ -1428,20 +1428,20 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 31,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 11.2435,
+        "upside": 13.492199999999999,
+        "floor": 8.9948
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
@@ -1487,20 +1487,20 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 20,
       "expectedStrikeouts": 0,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": -1.286499999999999,
-        "upside": -1.543799999999999,
-        "floor": -1.0291999999999992
+        "expectedPoints": 12.3435,
+        "upside": 14.8122,
+        "floor": 9.8748
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
@@ -1546,20 +1546,20 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 58,
       "expectedStrikeouts": 1,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": 0.7135000000000008,
-        "upside": 0.856200000000001,
-        "floor": 0.5708000000000006
+        "expectedPoints": 12.3435,
+        "upside": 14.8122,
+        "floor": 9.8748
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
@@ -1605,20 +1605,20 @@
       }
     },
     "projections": {
-      "winProbability": 21,
+      "winProbability": 20,
       "expectedStrikeouts": 0,
       "expectedInnings": 5,
       "dfsProjection": {
-        "expectedPoints": -1.286499999999999,
-        "upside": -1.543799999999999,
-        "floor": -1.0291999999999992
+        "expectedPoints": 12.72584375,
+        "upside": 15.271012499999998,
+        "floor": 10.180675
       }
     },
     "environment": {
-      "temperature": 0,
-      "windSpeed": 0,
-      "windDirection": "None",
-      "isOutdoor": false
+      "temperature": 40,
+      "windSpeed": 12,
+      "windDirection": "Out To RF",
+      "isOutdoor": true
     },
     "ballparkFactors": {
       "overall": 1,
