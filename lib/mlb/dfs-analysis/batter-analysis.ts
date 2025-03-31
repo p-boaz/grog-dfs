@@ -4,6 +4,7 @@ import { getTeamAbbrev } from "../core/team-mapping";
 import { DailyMLBData } from "../core/types";
 import { findPlayerByNameFuzzy } from "../draftkings/player-mapping";
 import { getBatterStats } from "../player/batter-stats";
+import { DetailedHitProjection } from "../types/analysis";
 import { calculatePitcherDfsProjection } from "./aggregate-scoring";
 import {
   calculateHitProjection,
@@ -12,10 +13,9 @@ import {
   getPlayerHitStats,
   getWeatherHitImpact,
 } from "./hits";
-import { DetailedHitProjection } from "../types/analysis";
 import { estimateHomeRunProbability } from "./home-runs";
 import { calculatePlateDisciplineProjection } from "./plate-discipline";
-import { calculateRunProductionProjection } from "./run-production";
+import { calculateRunProductionPoints } from "./run-production";
 import {
   getCareerStolenBaseProfile,
   getCatcherStolenBaseDefense,
@@ -572,7 +572,7 @@ export async function analyzeBatters(
       }
 
       // Calculate DFS projection
-      const runProductionProj = await calculateRunProductionProjection(
+      const runProductionProj = await calculateRunProductionPoints(
         batter.id,
         game.gameId.toString(),
         gameInfo.pitchers[isHome ? "away" : "home"].id,
@@ -1157,7 +1157,7 @@ async function calculateProjections(
 ): Promise<Projections> {
   try {
     // Get run production projection
-    const runProductionProj = await calculateRunProductionProjection(
+    const runProductionProj = await calculateRunProductionPoints(
       batter.id,
       game.gameId.toString(),
       batter.opposingPitcher.id,
@@ -1180,7 +1180,8 @@ async function calculateProjections(
 
     // Calculate estimated DFS points
     const totalPoints =
-      runProductionProj.total.points + disciplineProj.total.points;
+      runProductionProj.total.points +
+      (disciplineProj.walks.expected * 2 + disciplineProj.hbp.expected * 2);
 
     return {
       runs: runProductionProj.runs.expected,

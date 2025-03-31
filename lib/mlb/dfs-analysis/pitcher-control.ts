@@ -13,13 +13,13 @@ import {
 import { analyzeHitterMatchup } from "../player/matchups";
 import { getPitcherPitchMix, getPitcherStats } from "../player/pitcher-stats";
 import {
-  PitcherControlStats,
-  PitcherControlProfile,
+  BatterControlFactors,
   CareerControlProfile,
   ControlMatchupData,
-  BatterControlFactors,
+  ControlProjection,
   ExpectedControlEvents,
-  ControlProjection
+  PitcherControlProfile,
+  PitcherControlStats,
 } from "../types/analysis";
 
 // Negative points in DraftKings for these categories
@@ -240,7 +240,9 @@ export async function getPitcherControlProfile(
 /**
  * Get career control profile and trends for pitcher
  */
-export async function getCareerControlProfile(pitcherId: number): Promise<CareerControlProfile | null> {
+export async function getCareerControlProfile(
+  pitcherId: number
+): Promise<CareerControlProfile | null> {
   try {
     // Get player stats with historical data
     const pitcherData = await getPitcherStats({
@@ -489,7 +491,9 @@ export async function getControlMatchupData(
 /**
  * Get batter's control-related attributes
  */
-export async function getBatterControlFactors(batterId: number): Promise<BatterControlFactors | null> {
+export async function getBatterControlFactors(
+  batterId: number
+): Promise<BatterControlFactors | null> {
   try {
     // Get batter stats
     const batterStats = await getBatterStats({
@@ -744,23 +748,31 @@ export async function calculateControlProjection(
     return {
       hits: {
         expected: projection.expectedHitsAllowed,
+        high: projection.expectedHitsAllowed * 1.3,
+        low: projection.expectedHitsAllowed * 0.7,
+        range: projection.expectedHitsAllowed * 0.6,
         points: hitPoints,
         confidence: projection.confidenceScore,
       },
       walks: {
         expected: projection.expectedWalksAllowed,
+        high: projection.expectedWalksAllowed * 1.3,
+        low: projection.expectedWalksAllowed * 0.7,
+        range: projection.expectedWalksAllowed * 0.6,
         points: walkPoints,
         confidence: projection.confidenceScore,
       },
-      hitsByPitch: {
+      hbp: {
         expected: projection.expectedHbpAllowed,
+        high: projection.expectedHbpAllowed * 1.5,
+        low: projection.expectedHbpAllowed * 0.5,
+        range: projection.expectedHbpAllowed,
         points: hbpPoints,
         confidence: hbpConfidence,
       },
-      total: {
-        expected: totalEvents,
-        points: totalPoints,
-        confidence: projection.confidenceScore,
+      overall: {
+        controlRating: 5.0, // Default to average
+        confidenceScore: projection.confidenceScore,
       },
     };
   } catch (error) {
@@ -773,26 +785,31 @@ export async function calculateControlProjection(
     const defaultControlProjection: ControlProjection = {
       hits: {
         expected: 6.0,
+        high: 7.8,
+        low: 4.2,
+        range: 3.6,
         points: 6.0 * HIT_AGAINST_POINTS,
         confidence: 50,
       },
       walks: {
         expected: 2.25,
+        high: 2.9,
+        low: 1.6,
+        range: 1.3,
         points: 2.25 * WALK_AGAINST_POINTS,
         confidence: 50,
       },
-      hitsByPitch: {
+      hbp: {
         expected: 0.3,
+        high: 0.45,
+        low: 0.15,
+        range: 0.3,
         points: 0.3 * HBP_AGAINST_POINTS,
         confidence: 40,
       },
-      total: {
-        expected: 8.55, // 6.0 + 2.25 + 0.3
-        points:
-          6.0 * HIT_AGAINST_POINTS +
-          2.25 * WALK_AGAINST_POINTS +
-          0.3 * HBP_AGAINST_POINTS,
-        confidence: 50,
+      overall: {
+        controlRating: 5.0,
+        confidenceScore: 50,
       },
     };
     return defaultControlProjection;

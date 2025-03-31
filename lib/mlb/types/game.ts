@@ -4,8 +4,10 @@
  * This file contains game-related type definitions including schedules and feeds.
  */
 
-import { TeamStats } from './core';
-import { BallparkFactors } from './environment/ballpark';
+// Importing from core and re-exporting the same type name causes conflicts
+// Use custom name to avoid TeamStats naming conflict
+import { TeamStats as CoreTeamStats } from "./core";
+import { BallparkFactors } from "./environment/ballpark";
 
 /**
  * Raw weather data from MLB API
@@ -321,6 +323,10 @@ export interface MLBGame {
     windDirection: string;
     isOutdoor: boolean;
   };
+  teamStats?: {
+    home: CoreTeamStats;
+    away: CoreTeamStats;
+  };
 }
 
 /**
@@ -389,4 +395,23 @@ export interface DailyMLBData {
   count: number;
   collectTimestamp: Date;
   seasons: string[];
+}
+
+/**
+ * Team statistics for offensive performance
+ */
+export interface TeamStats {
+  hits: number;
+  walks: number;
+  hitByPitch: number;
+  plateAppearances: number;
+  runsPerGame: number;
+  rbisPerGame: number;
+  sluggingPct: number;
+  onBasePct: number;
+  battingAvg: number;
+  ops: number;
+  woba: number;
+  wrc: number;
+  sourceTimestamp?: Date;
 }

@@ -6,7 +6,7 @@
 
 /**
  * Pitcher's ability to hold runners and control the running game
- * 
+ *
  * @property pickoffMoves - Pickoff move quality (1-10 scale)
  * @property slideStepTime - Time to plate with slide step (seconds)
  * @property timeToPlate - Regular delivery time (seconds)
@@ -23,7 +23,7 @@ export interface PitcherHoldMetrics {
 
 /**
  * Pitcher's performance stats for a specific season
- * 
+ *
  * @property gamesPlayed - Total games played/appeared in
  * @property gamesStarted - Games where pitcher was the starter
  * @property inningsPitched - Total innings pitched
@@ -36,6 +36,7 @@ export interface PitcherHoldMetrics {
  * @property saves - Total saves recorded
  * @property homeRunsAllowed - Home runs allowed
  * @property hitBatsmen - Hit batters
+ * @property hits - Total hits allowed
  */
 export interface PitcherSeasonStats {
   gamesPlayed: number;
@@ -50,6 +51,7 @@ export interface PitcherSeasonStats {
   saves: number;
   homeRunsAllowed?: number;
   hitBatsmen: number;
+  hits: number;
 }
 
 /**
@@ -63,7 +65,7 @@ export interface PitcherCareerStatsSeason extends PitcherSeasonStats {
 
 /**
  * Comprehensive pitcher data including stats by season
- * 
+ *
  * @property id - MLB player ID
  * @property fullName - Pitcher's full name
  * @property currentTeam - Current team name
@@ -88,7 +90,7 @@ export interface PitcherStats {
 
 /**
  * Pitcher's pitch mix data and effectiveness metrics
- * 
+ *
  * @property playerId - MLB player ID
  * @property name - Pitcher's name
  * @property pitches - Percentage usage of each pitch type
@@ -146,7 +148,7 @@ export interface PitcherPitchMixData {
 
 /**
  * Pitcher's home run vulnerability metrics
- * 
+ *
  * @property gamesStarted - Games started
  * @property inningsPitched - Innings pitched
  * @property homeRunsAllowed - Home runs allowed
@@ -167,7 +169,7 @@ export interface PitcherHomeRunVulnerability {
 
 /**
  * Pitcher's expected performance metrics
- * 
+ *
  * @property expectedInnings - Projected innings pitched
  * @property expectedStrikeouts - Projected strikeouts
  * @property winProbability - Probability of recording a win

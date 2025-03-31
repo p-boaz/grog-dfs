@@ -23,6 +23,7 @@ export interface PlayerSBSeasonStats {
   gamesPlayed: number;
   stolenBaseRate: number; // SB per game
   stolenBaseSuccess: number; // Success rate (0-1)
+  sprintSpeed?: number; // Player's sprint speed in ft/sec
 }
 
 /**

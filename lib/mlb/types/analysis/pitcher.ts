@@ -4,12 +4,12 @@
  * This file contains type definitions for pitcher analysis and projections.
  */
 
-import { DraftKingsInfo } from '../draftkings';
-import { PitcherSeasonStats } from '../player/pitcher';
+import { DraftKingsInfo } from "../draftkings";
+import { PitcherSeasonStats } from "../player/pitcher";
 
 /**
  * Comprehensive pitcher analysis for DFS
- * 
+ *
  * @property pitcherId - MLB player ID
  * @property name - Pitcher's full name
  * @property team - Team abbreviation
@@ -63,7 +63,7 @@ export interface StartingPitcherAnalysis {
 
 /**
  * Pitcher win probability analysis
- * 
+ *
  * @property overallWinProbability - Probability of win (0-1)
  * @property factorWeights - Weighting of factors
  * @property factors - Factors affecting win probability
@@ -92,7 +92,7 @@ export interface WinProbabilityAnalysis {
 
 /**
  * Pitcher strikeout projection
- * 
+ *
  * @property expectedStrikeouts - Projected strikeouts
  * @property perInningRate - Strikeouts per inning
  * @property factors - Factors affecting strikeout rate
@@ -116,7 +116,7 @@ export interface StrikeoutProjection {
 
 /**
  * Pitcher innings projection
- * 
+ *
  * @property expectedInnings - Projected innings pitched
  * @property leashLength - How long manager keeps pitcher in (0-10)
  * @property workloadConcerns - Injury/fatigue concerns (0-10)
@@ -136,12 +136,12 @@ export interface InningsProjection {
 }
 
 /**
- * Pitcher control metrics projection
- * 
- * @property walks - Projected walks with range (expected, high, low)
- * @property hits - Projected hits allowed with range (expected, high, low)
- * @property hbp - Projected hit by pitch with range (expected, high, low)
- * @property overall - Overall control rating and confidence
+ * Expected control outcomes for a game
+ *
+ * @property walks - Walk projection details
+ * @property hits - Hit projection details
+ * @property hbp - Hit-by-pitch projection details
+ * @property overall - Overall control projection
  */
 export interface ControlProjection {
   walks: {
@@ -149,18 +149,24 @@ export interface ControlProjection {
     high: number;
     low: number;
     range: number;
+    points?: number;
+    confidence?: number;
   };
   hits: {
     expected: number;
     high: number;
     low: number;
     range: number;
+    points?: number;
+    confidence?: number;
   };
   hbp: {
     expected: number;
     high: number;
     low: number;
     range: number;
+    points?: number;
+    confidence?: number;
   };
   overall: {
     controlRating: number; // 0-10 scale
@@ -170,7 +176,7 @@ export interface ControlProjection {
 
 /**
  * Pitcher's control statistics and metrics
- * 
+ *
  * @property walks - Total walks issued
  * @property hits - Total hits allowed
  * @property hitBatsmen - Total hit batters
@@ -340,38 +346,5 @@ export interface ExpectedControlEvents {
     batterEyeFactor: number;
     batterContactFactor: number;
     matchupFactor: number;
-  };
-}
-
-/**
- * Expected control outcomes for a game
- * 
- * @property walks - Walk projection details
- * @property hits - Hit projection details
- * @property hbp - Hit-by-pitch projection details
- * @property overall - Overall control projection
- */
-export interface ControlProjection {
-  walks: {
-    expected: number;
-    high: number;
-    low: number;
-    range: number;
-  };
-  hits: {
-    expected: number;
-    high: number;
-    low: number;
-    range: number;
-  };
-  hbp: {
-    expected: number;
-    high: number;
-    low: number;
-    range: number;
-  };
-  overall: {
-    controlRating: number; // 0-10 scale
-    confidenceScore: number; // 0-100 scale
   };
 }

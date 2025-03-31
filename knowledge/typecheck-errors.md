@@ -1,171 +1,54 @@
-[2:37:35 AM] File change detected. Starting incremental compilation...
+[9:15:39 AM] File change detected. Starting incremental compilation...
 
-lib/mlb/dfs-analysis/batter-analysis.ts:1183:55 - error TS2339: Property 'total' does not exist on type 'ControlProjection | { walks: { expected: number; points: number; confidence: number; }; hbp: { expected: number; points: number; confidence: number; }; total: { expected: number; points: number; confidence: number; }; }'.
-Property 'total' does not exist on type 'ControlProjection'.
+lib/mlb/dfs-analysis/batter-analysis.ts:18:10 - error TS2724: '"./run-production"' has no exported member named 'calculateRunProductionProjection'. Did you mean 'calculateRunProductionPoints'?
 
-1183 runProductionProj.total.points + disciplineProj.total.points;
-~~~~~
+18 import { calculateRunProductionProjection } from "./run-production";
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-lib/mlb/dfs-analysis/hits.ts:11:3 - error TS2724: '"../types/player"' has no exported member named 'BatterStats'. Did you mean 'BaseStats'?
+lib/mlb/dfs-analysis/run-production.ts:823:23
+823 export async function calculateRunProductionPoints(
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+'calculateRunProductionPoints' is declared here.
 
-11 BatterStats
-~~~~~~~~~~~
+lib/mlb/dfs-analysis/run-production.ts:10:33 - error TS2307: Cannot find module '../types/analysis/ballpark-factors' or its corresponding type declarations.
 
-lib/mlb/dfs-analysis/innings-pitched.ts:481:7 - error TS2741: Property 'confidence' is missing in type '{ expectedRareEventPoints: number; confidenceScore: number; eventProbabilities: { completeGame: number; shutout: number; noHitter: number; qualityStart: number; perfectGame: number; }; riskRewardRating: number; }' but required in type 'RareEventAnalysis'.
+10 import { BallparkFactors } from "../types/analysis/ballpark-factors";
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-481 return {
-~~~~~~
+lib/mlb/dfs-analysis/run-production.ts:369:5 - error TS2353: Object literal may only specify known properties, and 'singles' does not exist in type 'BallparkHitFactor'.
 
-lib/mlb/types/analysis/events.ts:307:3
-307 confidence: number; // Added alias for aggregateScoring.ts compatibility
-~~~~~~~~~~
-'confidence' is declared here.
+369 singles: factors.types.singles,
+~~~~~~~
 
-lib/mlb/dfs-analysis/innings-pitched.ts:580:5 - error TS2741: Property 'confidence' is missing in type '{ expectedRareEventPoints: number; confidenceScore: number; eventProbabilities: { completeGame: number; shutout: number; noHitter: number; qualityStart: number; perfectGame: number; }; riskRewardRating: number; }' but required in type 'RareEventAnalysis'.
+lib/mlb/dfs-analysis/run-production.ts:402:41 - error TS2339: Property 'onBasePct' does not exist on type 'TeamStats'.
 
-580 return {
-~~~~~~
-
-lib/mlb/types/analysis/events.ts:307:3
-307 confidence: number; // Added alias for aggregateScoring.ts compatibility
-~~~~~~~~~~
-'confidence' is declared here.
-
-lib/mlb/dfs-analysis/innings-pitched.ts:599:5 - error TS2741: Property 'confidence' is missing in type '{ expectedRareEventPoints: number; confidenceScore: number; eventProbabilities: { completeGame: number; shutout: number; noHitter: number; qualityStart: number; perfectGame: number; }; riskRewardRating: number; }' but required in type 'RareEventAnalysis'.
-
-599 return {
-~~~~~~
-
-lib/mlb/types/analysis/events.ts:307:3
-307 confidence: number; // Added alias for aggregateScoring.ts compatibility
-~~~~~~~~~~
-'confidence' is declared here.
-
-lib/mlb/dfs-analysis/pitcher-control.ts:747:9 - error TS2353: Object literal may only specify known properties, and 'points' does not exist in type '{ expected: number; high: number; low: number; range: number; }'.
-
-747 points: hitPoints,
-~~~~~~
-
-lib/mlb/types/analysis/pitcher.ts:153:3
-153 hits: {
-~~~~
-The expected type comes from property 'hits' which is declared here on type 'ControlProjection'
-
-lib/mlb/dfs-analysis/pitcher-control.ts:752:9 - error TS2353: Object literal may only specify known properties, and 'points' does not exist in type '{ expected: number; high: number; low: number; range: number; }'.
-
-752 points: walkPoints,
-~~~~~~
-
-lib/mlb/types/analysis/pitcher.ts:147:3
-147 walks: {
-~~~~~
-The expected type comes from property 'walks' which is declared here on type 'ControlProjection'
-
-lib/mlb/dfs-analysis/pitcher-control.ts:776:9 - error TS2353: Object literal may only specify known properties, and 'points' does not exist in type '{ expected: number; high: number; low: number; range: number; }'.
-
-776 points: 6.0 \* HIT_AGAINST_POINTS,
-~~~~~~
-
-lib/mlb/types/analysis/pitcher.ts:153:3
-153 hits: {
-~~~~
-The expected type comes from property 'hits' which is declared here on type 'ControlProjection'
-
-lib/mlb/dfs-analysis/pitcher-control.ts:781:9 - error TS2353: Object literal may only specify known properties, and 'points' does not exist in type '{ expected: number; high: number; low: number; range: number; }'.
-
-781 points: 2.25 \* WALK_AGAINST_POINTS,
-~~~~~~
-
-lib/mlb/types/analysis/pitcher.ts:147:3
-147 walks: {
-~~~~~
-The expected type comes from property 'walks' which is declared here on type 'ControlProjection'
-
-lib/mlb/dfs-analysis/plate-discipline.ts:99:7 - error TS2353: Object literal may only specify known properties, and 'walks' does not exist in type 'BatterPlateDiscipline'.
-
-99 walks: batting.walks || 0,
-~~~~~
-
-lib/mlb/dfs-analysis/plate-discipline.ts:368:24 - error TS2339: Property 'hits' does not exist on type 'PitcherSeasonStats'.
-
-368 const hits = stats.hits || 0; // For use with determineHitsPropensity
-~~~~
-
-lib/mlb/dfs-analysis/plate-discipline.ts:419:5 - error TS2739: Type '{ gamesStarted: number; inningsPitched: number; walks: number; strikeouts: number; hitBatsmen: number; walksPerNine: number; hbpPerNine: number; strikeoutToWalkRatio: number; control: { walkPropensity: "high" | ... 1 more ... | "low"; ... 4 more ...; pitchEfficiency: number; }; controlRating: number; }' is missing the following properties from type 'PitcherControlProfile': hits, hitsPerNine, whip
-
-419 return {
-~~~~~~
-
-lib/mlb/dfs-analysis/rare-events.ts:33:7 - error TS2741: Property 'confidence' is missing in type '{ eventProbabilities: { completeGame: number; qualityStart: number; shutout: number; noHitter: number; perfectGame: number; }; expectedRareEventPoints: number; riskRewardRating: number; confidenceScore: number; }' but required in type 'RareEventAnalysis'.
-
-33 return {
-~~~~~~
-
-lib/mlb/types/analysis/events.ts:307:3
-307 confidence: number; // Added alias for aggregateScoring.ts compatibility
-~~~~~~~~~~
-'confidence' is declared here.
-
-lib/mlb/dfs-analysis/rare-events.ts:173:5 - error TS2741: Property 'confidence' is missing in type '{ eventProbabilities: { completeGame: number; qualityStart: number; shutout: number; noHitter: number; perfectGame: number; }; expectedRareEventPoints: number; riskRewardRating: number; confidenceScore: number; }' but required in type 'RareEventAnalysis'.
-
-173 return {
-~~~~~~
-
-lib/mlb/types/analysis/events.ts:307:3
-307 confidence: number; // Added alias for aggregateScoring.ts compatibility
-~~~~~~~~~~
-'confidence' is declared here.
-
-lib/mlb/dfs-analysis/rare-events.ts:191:5 - error TS2741: Property 'confidence' is missing in type '{ eventProbabilities: { completeGame: number; qualityStart: number; shutout: number; noHitter: number; perfectGame: number; }; expectedRareEventPoints: number; riskRewardRating: number; confidenceScore: number; }' but required in type 'RareEventAnalysis'.
-
-191 return {
-~~~~~~
-
-lib/mlb/types/analysis/events.ts:307:3
-307 confidence: number; // Added alias for aggregateScoring.ts compatibility
-~~~~~~~~~~
-'confidence' is declared here.
-
-lib/mlb/dfs-analysis/run-production.ts:124:80 - error TS2304: Cannot find name 'CareerRunProductionProfile'.
-
-124 export async function getCareerRunProductionProfile(playerId: number): Promise<CareerRunProductionProfile | null> {
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-lib/mlb/dfs-analysis/run-production.ts:274:12 - error TS2304: Cannot find name 'TeamOffensiveContext'.
-
-274 ): Promise<TeamOffensiveContext | null> {
-~~~~~~~~~~~~~~~~~~~~
-
-lib/mlb/dfs-analysis/run-production.ts:345:7 - error TS2353: Object literal may only specify known properties, and 'runFactor' does not exist in type 'BallparkHitFactor'.
-
-345 runFactor: factors.types.runs,
+402 const onBasePercentage = teamStats?.onBasePct || 0.33; // League average OBP if no stats
 ~~~~~~~~~
 
-lib/mlb/dfs-analysis/run-production.ts:363:12 - error TS2304: Cannot find name 'LineupContext'.
+lib/mlb/dfs-analysis/run-production.ts:405:35 - error TS2339: Property 'runsPerGame' does not exist on type 'TeamStats'.
 
-363 ): Promise<LineupContext | null> {
-~~~~~~~~~~~~~
+405 const lineupRuns = teamStats?.runsPerGame || 4.5; // League average if no stats
+~~~~~~~~~~~
 
-lib/mlb/dfs-analysis/run-production.ts:459:12 - error TS2304: Cannot find name 'PitcherRunAllowance'.
+lib/mlb/dfs-analysis/run-production.ts:406:35 - error TS2339: Property 'rbisPerGame' does not exist on type 'TeamStats'.
 
-459 ): Promise<PitcherRunAllowance | null> {
+406 const lineupRBIs = teamStats?.rbisPerGame || 4.3; // League average if no stats
+~~~~~~~~~~~
+
+lib/mlb/dfs-analysis/run-production.ts:539:11 - error TS2554: Expected 1 arguments, but got 2.
+
+539 new Date().getFullYear().toString()
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+lib/mlb/dfs-analysis/run-production.ts:706:11 - error TS2554: Expected 1 arguments, but got 2.
+
+706 new Date().getFullYear().toString()
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+lib/mlb/dfs-analysis/run-production.ts:827:12 - error TS2552: Cannot find name 'RunProductionPoints'. Did you mean 'RunProductionStats'?
+
+827 ): Promise<RunProductionPoints> {
 ~~~~~~~~~~~~~~~~~~~
-
-lib/mlb/dfs-analysis/run-production.ts:535:12 - error TS2304: Cannot find name 'ExpectedRuns'.
-
-535 ): Promise<ExpectedRuns> {
-~~~~~~~~~~~~
-
-lib/mlb/dfs-analysis/run-production.ts:691:12 - error TS2304: Cannot find name 'ExpectedRBIs'.
-
-691 ): Promise<ExpectedRBIs> {
-~~~~~~~~~~~~
-
-lib/mlb/dfs-analysis/starting-pitcher-analysis.ts:283:22 - error TS2339: Property 'total' does not exist on type 'ControlProjection | { total: { points: number; expected: number; confidence: number; }; }'.
-Property 'total' does not exist on type 'ControlProjection'.
-
-283 (controlProj.total.points || 0) +
-~~~~~
 
 lib/mlb/dfs-analysis/stolen-bases.ts:78:7 - error TS2353: Object literal may only specify known properties, and 'sprintSpeed' does not exist in type 'PlayerSBSeasonStats'.
 
@@ -194,29 +77,47 @@ lib/mlb/types/analysis/events.ts:43:3
 ~~~~~~~
 The expected type comes from property 'factors' which is declared here on type 'StolenBaseAnalysis & StolenBaseProbabilityResult'
 
-lib/mlb/player/batter-stats.ts:6:3 - error TS2724: '"../types/player"' has no exported member named 'BatterStats'. Did you mean 'BaseStats'?
+lib/mlb/player/pitcher-stats.ts:230:5 - error TS2322: Type '{ season: any; team: any; gamesPlayed: any; gamesStarted: any; inningsPitched: any; wins: any; losses: any; era: any; whip: any; strikeouts: any; walks: any; saves: any; homeRunsAllowed: number; hitBatsmen: any; }[]' is not assignable to type 'PitcherCareerStatsSeason[]'.
+Property 'hits' is missing in type '{ season: any; team: any; gamesPlayed: any; gamesStarted: any; inningsPitched: any; wins: any; losses: any; era: any; whip: any; strikeouts: any; walks: any; saves: any; homeRunsAllowed: number; hitBatsmen: any; }' but required in type 'PitcherCareerStatsSeason'.
 
-6 BatterStats,
+230 careerStats: yearByYearPitchingStats.map((year: any) => {
 ~~~~~~~~~~~
 
-lib/mlb/types/player/index.ts:12:3 - error TS1205: Re-exporting a type when 'isolatedModules' is enabled requires using 'export type'.
+lib/mlb/types/player/pitcher.ts:54:3
+54 hits: number;
+~~~~
+'hits' is declared here.
+lib/mlb/types/player/pitcher.ts:87:3
+87 careerStats: PitcherCareerStatsSeason[];
+~~~~~~~~~~~
+The expected type comes from property 'careerStats' which is declared here on type 'PitcherStats'
 
-12 MLBBatter,
+lib/mlb/services/pitcher-data-service.ts:193:5 - error TS2322: Type '{ season: string; team: string; gamesPlayed: number; gamesStarted: number; inningsPitched: number; wins: number; losses: number; era: number; whip: number; strikeouts: number; walks: number; saves: number; homeRunsAllowed: number; hitBatsmen: number; }[]' is not assignable to type 'PitcherCareerStatsSeason[]'.
+Property 'hits' is missing in type '{ season: string; team: string; gamesPlayed: number; gamesStarted: number; inningsPitched: number; wins: number; losses: number; era: number; whip: number; strikeouts: number; walks: number; saves: number; homeRunsAllowed: number; hitBatsmen: number; }' but required in type 'PitcherCareerStatsSeason'.
+
+193 careerStats,
+~~~~~~~~~~~
+
+lib/mlb/types/player/pitcher.ts:54:3
+54 hits: number;
+~~~~
+'hits' is declared here.
+lib/mlb/services/pitcher-data-service.ts:34:3
+34 careerStats: PitcherCareerStatsSeason[];
+~~~~~~~~~~~
+The expected type comes from property 'careerStats' which is declared here on type 'EnhancedPitcherData'
+
+lib/mlb/types/game.ts:7:10 - error TS2440: Import declaration conflicts with local declaration of 'TeamStats'.
+
+7 import { TeamStats } from "./core";
 ~~~~~~~~~
 
-lib/mlb/types/player/index.ts:13:3 - error TS1205: Re-exporting a type when 'isolatedModules' is enabled requires using 'export type'.
+lib/mlb/types/index.ts:9:1 - error TS2308: Module './core' has already exported a member named 'TeamStats'. Consider explicitly re-exporting to resolve the ambiguity.
 
-13 BatterSeasonStats,
-~~~~~~~~~~~~~~~~~
+9 export \* from './game';
 
-lib/mlb/types/player/index.ts:14:3 - error TS1205: Re-exporting a type when 'isolatedModules' is enabled requires using 'export type'.
+```
 
-14 BatterPlateDiscipline,
-~~~~~~~~~~~~~~~~~~~~~
+[9:15:40 AM] Found 16 errors. Watching for file changes.
 
-lib/mlb/types/player/index.ts:15:3 - error TS1205: Re-exporting a type when 'isolatedModules' is enabled requires using 'export type'.
-
-15 BatterSplits
-~~~~~~~~~~~~
-
-[2:37:36 AM] Found 31 errors. Watching for file changes.
+```

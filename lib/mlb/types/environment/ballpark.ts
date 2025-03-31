@@ -6,7 +6,7 @@
 
 /**
  * Ballpark factors affecting offensive production
- * 
+ *
  * @property overall - Overall park factor (1.0 is neutral)
  * @property handedness - Handedness-specific factors
  * @property types - Hit type-specific factors
@@ -34,26 +34,28 @@ export interface BallparkFactors {
 
 /**
  * Ballpark hit factor for specific hit types
- * 
+ *
  * @property singles - Factor for singles (1.0 is neutral)
  * @property doubles - Factor for doubles (1.0 is neutral)
  * @property triples - Factor for triples (1.0 is neutral)
  * @property homeRuns - Factor for home runs (1.0 is neutral)
  * @property runFactor - Factor for runs (1.0 is neutral)
+ * @property overall - Overall ballpark factor
+ * @property rbiFactor - Factor specifically for RBIs
  */
 export interface BallparkHitFactor {
   singles: number;
   doubles: number;
   triples: number;
   homeRuns: number;
-  runFactor: number; // Factor for runs (1.0 is neutral)
-  overall?: number; // Overall ballpark factor
-  rbiFactor?: number; // Factor specifically for RBIs
+  runFactor: number;
+  overall: number;
+  rbiFactor: number;
 }
 
 /**
  * Detailed ballpark dimensions
- * 
+ *
  * @property leftField - Left field distance in feet
  * @property leftCenter - Left-center field distance in feet
  * @property center - Center field distance in feet
@@ -78,7 +80,7 @@ export interface BallparkDimensions {
 
 /**
  * Stadium venue information
- * 
+ *
  * @property venueId - MLB venue ID
  * @property name - Stadium name
  * @property city - Stadium city
@@ -96,7 +98,7 @@ export interface MLBVenue {
   city: string;
   state: string;
   hasRoof: boolean;
-  roofType?: 'fixed' | 'retractable' | 'none';
+  roofType?: "fixed" | "retractable" | "none";
   surface: string;
   elevation: number;
   dimensions?: BallparkDimensions;

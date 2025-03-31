@@ -6,7 +6,20 @@
  */
 
 export * from './core';
-export * from './game';
+// Manually re-export from game.ts to avoid conflicts with TeamStats
+export type {
+  MLBGame,
+  GameFeedResponse,
+  GameBoxScoreResponse,
+  GameSchedule,
+  MLBScheduleResponse,
+  PlayerGameStats,
+  GameEnvironmentData,
+  ProbableLineup,
+  DailyMLBData,
+  DetailedWeatherInfo,
+  MLBWeatherData
+} from './game';
 
 // Explicitly re-export to avoid name conflicts
 export type {

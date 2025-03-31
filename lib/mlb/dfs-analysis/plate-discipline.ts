@@ -8,7 +8,11 @@ import { analyzeHitterMatchup } from "../player/matchups";
 import { getPitcherStats } from "../player/pitcher-stats";
 import { getEnhancedBatterData } from "../services/batter-data-service";
 import { getEnhancedPitcherData } from "../services/pitcher-data-service";
-import { BatterControlFactors, ControlMatchupData, ControlProjection, PitcherControlProfile } from "../types/analysis/pitcher";
+import {
+  ControlMatchupData,
+  ControlProjection,
+  PitcherControlProfile,
+} from "../types/analysis/pitcher";
 import { BatterPlateDiscipline } from "../types/player/batter";
 
 // Points awarded in DraftKings for these categories
@@ -96,18 +100,24 @@ export async function getPlayerPlateDisciplineStats(
     }
 
     return {
-      walks: batting.walks || 0,
-      strikeouts: batting.strikeouts || 0,
-      hitByPitch: batting.hitByPitches || 0,
-      plateAppearances,
-      atBats: batting.atBats,
-      games: batting.gamesPlayed,
+      playerId,
+      name: playerData.fullName,
+      discipline: {
+        chaseRate: estimatedDiscipline.chaseRate,
+        contactRate: estimatedDiscipline.contactRate,
+        zoneSwingRate: estimatedDiscipline.zoneSwingRate,
+        whiffRate: estimatedDiscipline.whiffRate,
+        firstPitchSwingRate: estimatedDiscipline.firstPitchSwingRate,
+      },
+      pitchTypePerformance: {
+        vsFastball: 50, // Default values until we have actual data
+        vsBreakingBall: 50,
+        vsOffspeed: 50,
+      },
       walkRate,
-      strikeoutRate,
       hbpRate,
-      bbToK,
-      atBatsPerWalk,
-      discipline: estimatedDiscipline,
+      plateAppearances,
+      sourceTimestamp: new Date(),
     };
   } catch (error) {
     console.error(
@@ -306,11 +316,14 @@ export async function getCareerPlateDisciplineProfile(
  * @param inningsPitched Innings pitched
  * @returns Hit propensity categorization
  */
-function determineHitsPropensity(hits: number, inningsPitched: number): "high" | "medium" | "low" {
+function determineHitsPropensity(
+  hits: number,
+  inningsPitched: number
+): "high" | "medium" | "low" {
   if (!inningsPitched) return "medium";
-  
+
   const hitsPerNine = (hits / inningsPitched) * 9;
-  
+
   if (hitsPerNine >= 9.5) {
     return "high";
   } else if (hitsPerNine >= 7.5) {
@@ -365,7 +378,8 @@ export async function getPitcherControlProfile(
     const walks = stats.walks || 0;
     const strikeouts = stats.strikeouts || 0;
     const hitBatsmen = stats.hitBatsmen || 0;
-    const hits = stats.hits || 0; // For use with determineHitsPropensity
+    const whip = stats.whip || 0;
+    const hits = Math.round(whip * ip - walks); // Calculate hits from WHIP and walks
 
     // Calculate per 9 inning rates
     const walksPerNine = (walks / ip) * 9;
@@ -421,9 +435,12 @@ export async function getPitcherControlProfile(
       inningsPitched: ip,
       walks,
       strikeouts,
+      hits,
       hitBatsmen,
       walksPerNine,
+      hitsPerNine: (hits / ip) * 9,
       hbpPerNine,
+      whip: (walks + hits) / ip,
       strikeoutToWalkRatio,
       control: {
         walkPropensity,
@@ -476,17 +493,19 @@ export async function getMatchupWalkData(
     // Calculate rates
     const walkRate = plateAppearances > 0 ? walks / plateAppearances : 0;
     const hbpRate = plateAppearances > 0 ? hitByPitch / plateAppearances : 0;
-    const strikeoutRate = plateAppearances > 0 ? strikeouts / plateAppearances : 0;
-    
+    const strikeoutRate =
+      plateAppearances > 0 ? strikeouts / plateAppearances : 0;
+
     // Get at-bats and hits
     const atBats = matchup.stats.atBats || 0;
     const hits = matchup.stats.hits || 0;
     const hitRate = atBats > 0 ? hits / atBats : 0;
-    
+
     // Calculate relative rates
     // (matchup rate / batter's baseline rate)
-    const relativeWalkRate = baselineWalkRate > 0 ? walkRate / baselineWalkRate : 1.0;
-    const relativeHitRate = 0.250 / Math.max(0.001, hitRate); // Inverted so higher is better control
+    const relativeWalkRate =
+      baselineWalkRate > 0 ? walkRate / baselineWalkRate : 1.0;
+    const relativeHitRate = 0.25 / Math.max(0.001, hitRate); // Inverted so higher is better control
 
     // Determine sample size
     let sampleSize: "large" | "medium" | "small" | "none" = "none";
@@ -511,7 +530,7 @@ export async function getMatchupWalkData(
       hitRate,
       sampleSize,
       relativeWalkRate,
-      relativeHitRate
+      relativeHitRate,
     };
   } catch (error) {
     console.error(

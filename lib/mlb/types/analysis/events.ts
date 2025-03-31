@@ -149,13 +149,19 @@ export interface CareerHitProfile {
  */
 export interface BallparkHitFactor {
   overall: number;
-  byHitType: {
+  singles: number;
+  doubles: number;
+  triples: number;
+  homeRuns: number;
+  runFactor: number;
+  rbiFactor: number;
+  byHitType?: {
     singles: number;
     doubles: number;
     triples: number;
     homeRuns: number;
   };
-  byHandedness: {
+  byHandedness?: {
     rHB: number;
     lHB: number;
   };

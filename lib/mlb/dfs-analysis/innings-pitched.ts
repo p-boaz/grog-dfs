@@ -481,6 +481,7 @@ export async function calculateCompleteGamePotential(
       return {
         expectedRareEventPoints: 0.02,
         confidenceScore: 30,
+        confidence: 30,
         eventProbabilities: {
           completeGame: 0.5,
           shutout: 0.1,
@@ -580,6 +581,7 @@ export async function calculateCompleteGamePotential(
     return {
       expectedRareEventPoints,
       confidenceScore: Math.round(pitcherMetrics.durabilityRating * 10),
+      confidence: Math.round(pitcherMetrics.durabilityRating * 10),
       eventProbabilities: {
         completeGame: completeGameProbability,
         shutout: shutoutProbability,
@@ -599,6 +601,7 @@ export async function calculateCompleteGamePotential(
     return {
       expectedRareEventPoints: 0.02,
       confidenceScore: 30,
+      confidence: 30,
       eventProbabilities: {
         completeGame: 0.5,
         shutout: 0.1,

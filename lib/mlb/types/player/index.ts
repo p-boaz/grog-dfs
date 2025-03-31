@@ -5,18 +5,19 @@
  */
 
 // Export from common
-export * from './common';
+export * from "./common";
 
 // Export from batter with explicit re-export to avoid name collision
-export {
-  MLBBatter,
-  BatterSeasonStats,
+export type {
   BatterPlateDiscipline,
-  BatterSplits
-} from './batter';
+  BatterSeasonStats,
+  BatterSplits,
+  BatterStats,
+  MLBBatter,
+} from "./batter";
 
 // Export from pitcher
-export * from './pitcher';
+export * from "./pitcher";
 
 // Export from matchups
-export * from './matchups';
+export * from "./matchups";

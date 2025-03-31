@@ -256,7 +256,7 @@ async function analyzePitcher({
           ? game.lineups?.away?.map((b) => b) || []
           : game.lineups?.home?.map((b) => b) || []
       ).catch(() => ({
-        total: { points: -5.1, expected: 8.55, confidence: 50 },
+        overall: { controlRating: 50 },
       }));
 
       // Get rare events projection
@@ -280,7 +280,7 @@ async function analyzePitcher({
       // Combine all projections
       const totalPoints =
         (dfsProjData.points.total || 0) +
-        (controlProj.total.points || 0) +
+        (controlProj.overall?.controlRating || 0) +
         (rareEventsProj.expectedRareEventPoints || 0);
 
       projections.dfsProjection = {

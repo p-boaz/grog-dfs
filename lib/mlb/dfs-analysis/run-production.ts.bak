@@ -17,7 +17,6 @@ import {
   ExpectedRuns,
   LineupContext,
   PitcherRunAllowance,
-  RunProductionPoints,
   TeamOffensiveContext,
 } from "../types/analysis/run-production";
 import { MLBGame } from "../types/game";
@@ -697,8 +696,8 @@ async function getGameData(gamePk: string): Promise<MLBGame> {
             name: gameFeed?.gameData?.teams?.away?.team?.name || "",
           },
           probablePitcher: {
-            id: 0,
-            fullName: "",
+            id: gameFeed?.gameData?.teams?.away?.pitcher?.id || 0,
+            fullName: gameFeed?.gameData?.teams?.away?.pitcher?.fullName || "",
           },
         },
         home: {
@@ -707,8 +706,8 @@ async function getGameData(gamePk: string): Promise<MLBGame> {
             name: gameFeed?.gameData?.teams?.home?.team?.name || "",
           },
           probablePitcher: {
-            id: 0,
-            fullName: "",
+            id: gameFeed?.gameData?.teams?.home?.pitcher?.id || 0,
+            fullName: gameFeed?.gameData?.teams?.home?.pitcher?.fullName || "",
           },
         },
       },
@@ -763,11 +762,12 @@ export async function calculateExpectedRBIs(
         () => null
       ),
       getBatterStats({ batterId }).catch(() => null),
-      getBallparkFactors({
-        venueId: gameData.venue.id,
-        season: new Date().getFullYear().toString()
-      }).then(factors => getBallparkRunFactor(factors))
-        .catch(() => null),
+      getBallparkRunFactor(
+        getBallparkFactors(
+          gameData.venue.id,
+          new Date().getFullYear().toString()
+        )
+      ).catch(() => null),
     ]);
 
     // Baseline RBIs per game from player's season stats or MLB average

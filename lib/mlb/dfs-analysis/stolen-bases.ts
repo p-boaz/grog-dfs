@@ -6,11 +6,14 @@ import { getGameFeed } from "../game/game-feed";
 import { getCatcherDefense } from "../player/defense-stats";
 import { getEnhancedBatterData } from "../services/batter-data-service";
 import { getEnhancedPitcherData } from "../services/pitcher-data-service";
-import { getGameEnvironmentData } from "../weather/weather";
 import { StolenBaseAnalysis } from "../types/analysis/events";
-import { PlayerSBCareerProfile, PlayerSBSeasonStats, StolenBaseContext } from "../types/player/batter";
+import {
+  PlayerSBCareerProfile,
+  PlayerSBSeasonStats,
+} from "../types/player/batter";
 import { CatcherDefenseMetrics } from "../types/player/common";
 import { PitcherHoldMetrics } from "../types/player/pitcher";
+import { getGameEnvironmentData } from "../weather/weather";
 
 /**
  * Result interface for stolen base probability calculations
@@ -90,7 +93,9 @@ export async function getPlayerSeasonStats(
  * Get career stolen base profile based on historical data
  * Useful for identifying players with consistent stealing tendencies
  */
-export async function getCareerStolenBaseProfile(playerId: number): Promise<PlayerSBCareerProfile | null> {
+export async function getCareerStolenBaseProfile(
+  playerId: number
+): Promise<PlayerSBCareerProfile | null> {
   try {
     // Get enhanced player data with career stats
     const enhancedData = await getEnhancedBatterData(playerId);
@@ -509,9 +514,13 @@ export async function calculateStolenBaseProbability(
         catcherDefense: catcherFactor,
         pitcherHoldRate: pitcherFactor,
         gameScriptFactor: contextFactor,
+        batterProfile: batterFactor,
+        pitcherHold: pitcherFactor,
+        gameContext: contextFactor,
+        sprintSpeed: sprintSpeedFactor,
       },
       confidence: finalConfidence,
-      
+
       // Additional properties
       probability: finalProbability,
       expectedValue,
@@ -535,12 +544,16 @@ export async function calculateStolenBaseProbability(
         catcherDefense: 5.0, // Average defense
         pitcherHoldRate: 5.0, // Average hold
         gameScriptFactor: 5.0, // Average game situation
+        batterProfile: 5.0, // Average profile
+        pitcherHold: 5.0, // Average hold
+        gameContext: 5.0, // Average context
+        sprintSpeed: 27.0, // Average sprint speed
       },
       confidence: 3, // Low confidence due to error
-      
+
       // Additional properties
       probability: 0.67, // League average success rate
-      expectedValue: 0.67 * 0.5 * 5 // Average expected points with 50% attempt likelihood
+      expectedValue: 0.67 * 0.5 * 5, // Average expected points with 50% attempt likelihood
     };
   }
 }

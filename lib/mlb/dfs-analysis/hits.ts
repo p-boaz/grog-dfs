@@ -6,24 +6,20 @@
 import { getBallparkFactors, getGameEnvironmentData } from "../index";
 import { getBatterStats } from "../player/batter-stats";
 import { getPitcherStats } from "../player/pitcher-stats";
-import { 
-  BatterSeasonStats, 
-  BatterStats 
-} from "../types/player";
 import {
-  HitType,
-  HIT_TYPE_POINTS,
-  PlayerHitStats,
-  CareerHitProfile,
   BallparkHitFactor,
-  WeatherHitImpact,
-  PitcherHitVulnerability,
-  MatchupHitStats,
   BatterPlatoonSplits,
+  CareerHitProfile,
+  DetailedHitProjection,
+  HIT_TYPE_POINTS,
+  HitType,
   HitTypeRates,
-  DetailedHitProjection
+  MatchupHitStats,
+  PitcherHitVulnerability,
+  PlayerHitStats,
+  WeatherHitImpact,
 } from "../types/analysis";
-import { PitcherSeasonStats } from "../types/player";
+import { BatterSeasonStats } from "../types/player/batter";
 
 // Interfaces for internal use
 interface PitcherTeam {
@@ -171,7 +167,9 @@ export async function getPlayerHitStats(
 /**
  * Get career hit profile based on historical data
  */
-export async function getCareerHitProfile(playerId: number): Promise<CareerHitProfile | null> {
+export async function getCareerHitProfile(
+  playerId: number
+): Promise<CareerHitProfile | null> {
   try {
     // Get player stats with historical data
     const playerData = await getBatterStats({
@@ -319,6 +317,12 @@ export async function getBallparkHitFactor(
     // Return specific hit factors
     return {
       overall: factors.overall,
+      singles: factors.types.singles || 1.0,
+      doubles: factors.types.doubles || 1.0,
+      triples: factors.types.triples || 1.0,
+      homeRuns: factors.types.homeRuns || 1.0,
+      runFactor: factors.types.runs || 1.0,
+      rbiFactor: factors.types.runs || 1.0,
       byHitType: {
         singles: factors.types.singles || 1.0,
         doubles: factors.types.doubles || 1.0,
@@ -342,7 +346,9 @@ export async function getBallparkHitFactor(
 /**
  * Get weather impact on hit production
  */
-export async function getWeatherHitImpact(gamePk: string): Promise<WeatherHitImpact | null> {
+export async function getWeatherHitImpact(
+  gamePk: string
+): Promise<WeatherHitImpact | null> {
   try {
     // Get game environment data
     const environment = await getGameEnvironmentData({ gamePk });
@@ -468,7 +474,8 @@ export async function getPitcherHitVulnerability(
 
     // Convert stats.gamesStarted to a number to match PitcherHitVulnerability type
     return {
-      gamesStarted: typeof stats.gamesStarted === 'number' ? stats.gamesStarted : 0,
+      gamesStarted:
+        typeof stats.gamesStarted === "number" ? stats.gamesStarted : 0,
       inningsPitched: ip,
       hitsAllowed,
       hitsPer9,
@@ -557,7 +564,9 @@ export async function getMatchupHitStats(
 /**
  * Get batter's platoon splits (vs LHP/RHP)
  */
-export async function getBatterPlatoonSplits(batterId: number): Promise<BatterPlatoonSplits | null> {
+export async function getBatterPlatoonSplits(
+  batterId: number
+): Promise<BatterPlatoonSplits | null> {
   try {
     // Get overall stats instead of splits
     const batterStats = await getBatterStats({ batterId });

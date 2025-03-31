@@ -41,6 +41,7 @@ export async function calculateRareEventPotential(
         expectedRareEventPoints: 0.05,
         riskRewardRating: 5.0,
         confidenceScore: 30,
+        confidence: 30,
       };
     }
 
@@ -181,6 +182,7 @@ export async function calculateRareEventPotential(
       expectedRareEventPoints,
       riskRewardRating,
       confidenceScore,
+      confidence: confidenceScore,
     };
   } catch (error) {
     console.error(
@@ -199,6 +201,7 @@ export async function calculateRareEventPotential(
       expectedRareEventPoints: 0.05,
       riskRewardRating: 5.0,
       confidenceScore: 30,
+      confidence: 30,
     };
   }
 }

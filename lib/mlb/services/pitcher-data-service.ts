@@ -190,7 +190,10 @@ export async function getEnhancedPitcherData(
     primaryPosition: baseStats.primaryPosition,
     throwsHand: baseStats.pitchHand,
     seasonStats,
-    careerStats,
+    careerStats: careerStats.map(stat => ({
+      ...stat,
+      hits: 0 // Add required hits property
+    })),
   };
 
   // Add game-specific stats if available

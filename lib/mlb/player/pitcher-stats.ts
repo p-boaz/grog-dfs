@@ -245,6 +245,7 @@ function transformPitcherStats(data: any): PitcherStats {
         saves: stat.saves || 0,
         homeRunsAllowed: estimateHRAllowed(stat),
         hitBatsmen: stat.hitBatsmen || 0,
+        hits: stat.hits || 0
       };
     }),
     sourceTimestamp: new Date(),

@@ -1,10 +1,7 @@
 import { DEFAULT_CACHE_TTL, markAsApiSource, withCache } from "../cache";
 import { makeMLBApiRequest } from "../core/api-client";
-import {
-  BatterPlateDiscipline,
-  BatterSplits,
-  BatterStats,
-} from "../types/player";
+import { BatterPlateDiscipline, BatterSplits } from "../types/player";
+import { BatterStats } from "../types/player/batter";
 
 /**
  * Fetch batter stats from MLB API
@@ -154,33 +151,42 @@ function transformBatterStats(data: any, requestedSeason: number): BatterStats {
   const homeRuns = seasonHittingStats.homeRuns || 0;
   const walks = seasonHittingStats.walks || 0;
   const strikeouts = seasonHittingStats.strikeouts || 0;
-  const plateAppearances = seasonHittingStats.plateAppearances || atBats + walks + (seasonHittingStats.hitByPitch || 0) + (seasonHittingStats.sacrificeFlies || 0);
+  const plateAppearances =
+    seasonHittingStats.plateAppearances ||
+    atBats +
+      walks +
+      (seasonHittingStats.hitByPitch || 0) +
+      (seasonHittingStats.sacrificeFlies || 0);
   const stolenBases = seasonHittingStats.stolenBases || 0;
   const caughtStealing = seasonHittingStats.caughtStealing || 0;
-  
+
   // Calculate BABIP (Batting Average on Balls in Play)
-  const babip = atBats > 0
-    ? (hits - homeRuns) / (atBats - strikeouts - homeRuns + (seasonHittingStats.sacrificeFlies || 0))
-    : 0;
-  
+  const babip =
+    atBats > 0
+      ? (hits - homeRuns) /
+        (atBats -
+          strikeouts -
+          homeRuns +
+          (seasonHittingStats.sacrificeFlies || 0))
+      : 0;
+
   // Calculate ISO (Isolated Power)
-  const iso = atBats > 0
-    ? ((doubles + 2 * triples + 3 * homeRuns) / atBats)
-    : 0;
-  
+  const iso = atBats > 0 ? (doubles + 2 * triples + 3 * homeRuns) / atBats : 0;
+
   // Calculate HR Rate
   const hrRate = atBats > 0 ? homeRuns / atBats : 0;
-  
+
   // Calculate K Rate
   const kRate = plateAppearances > 0 ? strikeouts / plateAppearances : 0;
-  
+
   // Calculate BB Rate
   const bbRate = plateAppearances > 0 ? walks / plateAppearances : 0;
-  
+
   // Calculate SB Rate
-  const sbRate = (stolenBases + caughtStealing) > 0
-    ? stolenBases / (stolenBases + caughtStealing)
-    : 0;
+  const sbRate =
+    stolenBases + caughtStealing > 0
+      ? stolenBases / (stolenBases + caughtStealing)
+      : 0;
 
   return {
     id: data.people[0].id,
@@ -205,7 +211,7 @@ function transformBatterStats(data: any, requestedSeason: number): BatterStats {
       ops: seasonHittingStats.ops || 0,
       plateAppearances: plateAppearances,
       caughtStealing: caughtStealing,
-      
+
       // Add calculated advanced metrics
       babip: babip,
       iso: iso,
@@ -218,7 +224,7 @@ function transformBatterStats(data: any, requestedSeason: number): BatterStats {
       const yearAtBats = year.stat?.atBats || 0;
       const yearStolenBases = year.stat?.stolenBases || 0;
       const yearCaughtStealing = year.stat?.caughtStealing || 0;
-      
+
       return {
         season: year.season,
         team: year.team?.name || "",
