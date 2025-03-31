@@ -1,189 +1,147 @@
-Comprehensive Type Centralization Plan
+# MLB Type Centralization Plan - Progress Update
 
-1. Directory Structure Creation
+## ✅ Completed Tasks
 
-Create a well-organized type hierarchy:
+1. **Directory Structure Created**
 
-/lib/mlb/types/
-├── core.ts # Core MLB data structures
-├── game.ts # Game, schedule, and feed related types
-├── player/
-│ ├── index.ts # Re-exports all player types
-│ ├── common.ts # Shared player types
-│ ├── batter.ts # Batter-specific types
-│ ├── pitcher.ts # Pitcher-specific types
-│ └── matchups.ts # Player matchup types
-├── analysis/
-│ ├── index.ts # Re-exports all analysis types
-│ ├── batter.ts # Batter analysis types
-│ ├── pitcher.ts # Pitcher analysis types
-│ ├── scoring.ts # DFS scoring and projection types
-│ └── events.ts # Special event types (HR, SB, etc.)
-├── environment/
-│ ├── index.ts # Re-exports environment types
-│ ├── weather.ts # Weather data types
-│ └── ballpark.ts # Ballpark factor types
-├── draftkings.ts # DraftKings salary and player mapping types
-├── statcast.ts # Statcast measurement types (moved from lib/types)
-├── validation.ts # Zod validation schemas
-└── index.ts # Main barrel file exporting all types
+   - Created `/lib/mlb/types/` with all necessary subdirectories
+   - Implemented appropriate index files with proper exports
 
-2. Migration Strategy
+2. **Type Files Created**
 
-1. Phase 1: Create the directory structure and core type files
+   - Moved and centralized types across the system
+   - Added JSDoc comments to all type definitions
+   - Organized by domain (player, analysis, environment)
 
+3. **Import Updates Progress**
+   - Updated key analysis files to use centralized types:
+     - `strikeouts.ts` - Now uses `PitcherPitchMixData` and `StrikeoutProjection`
+     - `home-runs.ts` - Now uses `HomeRunAnalysis` and `PitcherHomeRunVulnerability`
+     - `aggregate-scoring.ts` - Now uses `PitcherDFSPoints` and `PlayerProjection`
+     - `innings-pitched.ts` - Now uses `InningsProjection` and `RareEventAnalysis`
+   - Updated player-related files:
+     - `base-stealing.ts` - Now uses `PlayerSBSeasonStats`, `PlayerSBCareerProfile`, `StolenBaseContext`, and `StolenBaseProjection`
+     - `pitcher-stats.ts` - Now uses `PitcherStats`, `PitcherPitchMixData`, `PitcherBatterMatchup`, and `PitcherHomeRunVulnerability`
+     - `defense-stats.ts` - Now uses `CatcherDefenseMetrics` and `BatteryVulnerability`
+     - `batter-stats.ts` - Now uses `BatterSeasonStats`, `BatterStats`, `BatterSplits`, `BatterPlateDiscipline`, and `MLBBatter`
+     - `matchups.ts` - Now uses `PitcherBatterMatchup`, `BatterPlateDiscipline`, `AdvancedMatchupAnalysis`, `HitterMatchupAnalysis` and StatcastData related types
+   - Updated service files:
+     - `batter-data-service.ts` - Now uses `BatterSeasonStats`, `BatterStats`, and `BatterStatcastData` 
+     - `pitcher-data-service.ts` - Now uses `PitcherSeasonStats`, `PitcherCareerStatsSeason`, `PitcherStatcastData`, and `PitchUsage`
+   - Added new types to centralized structure:
+     - Added `CatcherDefenseMetrics` interface to `player/common.ts`
+     - Added `BatteryVulnerability` interface to `player/common.ts`
+     - Added `BatterPlateDiscipline` interface to `player/batter.ts`
+     - Added `BatterSplits` interface to `player/batter.ts`
+     - Added `BatterStats` interface to `player/batter.ts`
+     - Added `AdvancedMatchupAnalysis` interface to `analysis/matchups.ts`
+     - Added `HitterMatchupAnalysis` interface to `analysis/matchups.ts`
 
-    - Create all directories and skeleton files
-    - Move existing /lib/types/statcast.ts to new location
-    - Create index.ts files with placeholder exports
+## 🚧 Remaining Tasks
 
-2. Phase 2: Extract types from current files (by domain)
+1. **Continue Import Updates**
 
+   - Update remaining files to use centralized types:
+     - ✅ Files in `/lib/mlb/services/` directory
+     - ✅ Key files in `/lib/mlb/dfs-analysis/` directory
+     - Remaining files in `/lib/mlb/dfs-analysis/` directory 👈 Next priority
 
-    - Start with core types in core/types.ts
-    - Move player types from relevant files to /types/player/
-    - Move analysis types to /types/analysis/
-    - Move environment types to /types/environment/
+2. **Streamline Type Definitions**
 
-3. Phase 3: Update imports in existing files
+   - Normalize naming conventions
+   - Improve type reuse through composition
+   - Eliminate duplicate type definitions
+   - Ensure consistent JSDoc comments for all types
 
+3. **Documentation**
+   - Create a types reference guide
+   - Include examples of proper type usage
 
-    - For each file with moved types, update imports to reference new locations
-    - Use relative imports (e.g., ../../types/player/batter)
-    - OR barrel imports (e.g., @/lib/mlb/types)
+## Simplified Implementation Guide
 
-4. Phase 4: Standardize and improve types
+1. **For each file needing updates:**
 
+   - Identify local types that should be imported from central location
+   - Import appropriate types from `/lib/mlb/types/`
+   - Run `pnpm typecheck` to verify changes
 
-    - Normalize naming conventions (add consistent prefixes like "MLB")
-    - Add JSDoc comments to all types
-    - Address inconsistencies (null vs undefined)
-    - Improve type reuse through composition
+2. **Import pattern:**
 
-3. Implementation Steps
-
-1. Preparation
-   mkdir -p lib/mlb/types/player
-   mkdir -p lib/mlb/types/analysis
-   mkdir -p lib/mlb/types/environment
-   touch lib/mlb/types/index.ts
-1. Create base index files
-   // lib/mlb/types/index.ts
-   export _ from './core';
-   export _ from './game';
-   export _ from './draftkings';
-   export _ from './player';
-   export _ from './analysis';
-   export _ from './environment';
-   export _ from './statcast';
-   export _ from './validation';
-1. Move Statcast types
-   cp lib/types/statcast.ts lib/mlb/types/statcast.ts
-1. Create core type file
-
-
-    - Extract and normalize core types from lib/mlb/core/types.ts
-    - Add proper JSDoc comments
-
-5. Extract player types
-
-
-    - Identify all player-related interfaces and types across files
-    - Group by player type (common, batter, pitcher)
-    - Move to appropriate files within /types/player/
-
-6. Extract analysis types
-
-
-    - Centralize all interfaces from /dfs-analysis/ files
-    - Organize by domain (batter, pitcher, scoring)
-
-7. Create a comprehensive type catalog
-
-
-    - Document all types in a markdown file
-    - Include their purpose, structure, and usage examples
-
-4. Import Update Strategy
-
-1. Update pattern for imports
+   ```typescript
    // BEFORE
-   import { PlayerSBSeasonStats } from "../player/base-stealing";
+   interface LocalType { ... }
 
-// AFTER - Option 1 (direct import)
-import { PlayerSBSeasonStats } from "../types/player/batter";
+   // AFTER
+   import { CentralizedType } from "../types/domain/file";
+   ```
 
-// AFTER - Option 2 (barrel import)
-import { PlayerSBSeasonStats } from "../types"; 2. Search and replace method - For each extracted type, use grep to find all usages - Update imports systematically, one file at a time
+## Next Files to Update
 
-5. Testing Plan
+1. ✅ Services files:
+   - Files in `/lib/mlb/services/*.ts` completed
+2. Analysis-related files:
+   - ✅ Key files in `/lib/mlb/dfs-analysis/` updated:
+      - `strikeouts.ts`
+      - `home-runs.ts`
+      - `aggregate-scoring.ts`
+      - `innings-pitched.ts`
+   - Remaining `/lib/mlb/dfs-analysis/*.ts` files 👈 Next priority:
+      - `batter-analysis.ts`
+      - `hits.ts`
+      - `pitcher-control.ts`
+      - `pitcher-win.ts`
+      - `plate-discipline.ts`
+      - `rare-events.ts`
+      - `run-production.ts`
+      - `starting-pitcher-analysis.ts`
+      - `stolen-bases.ts`
 
-1. Type checking after each phase
-   pnpm typecheck
-1. Incremental testing
+3. Environment-related files:
+   - `/lib/mlb/weather/*.ts`
+   - `/lib/mlb/game/*.ts`
 
+## Lessons Learned
 
-    - After moving each group of types, run type checking
-    - Fix any type errors before proceeding
+1. **Fixed import issues:**
 
-3. Integration testing
+   - When updating `pitcher-stats.ts`, found a missing cache TTL property (`matchup`). Replaced with existing `player` TTL.
+   - Ensured types are properly re-exported through index files
 
+2. **Type centralization benefits:**
 
-    - Ensure all functions that use these types still work properly
-    - Run existing tests to verify nothing breaks
+   - Improved code consistency
+   - Better documentation through standardized JSDoc comments
+   - Easier to find and use types with properly organized structure
+   - Reduced duplication across the codebase
 
-6. Documentation
+3. **Adapting property names:**
 
-1. Add comprehensive JSDoc comments to all types
-   /\*\*
+   - Found that `BatterSeasonStats` used `rbis` while some files were using `rbi`
+   - Important to check source types carefully for property names to avoid typechecking errors
+   - Consider adding type adapters for legacy interfaces to ease migration
 
-- Interface for a player's stolen base statistics for a single season
-- @property battingAverage - Player's batting average for the season
-- @property stolenBases - Total number of successful stolen bases
-- @property stolenBaseAttempts - Total number of stolen base attempts
-- @property caughtStealing - Number of times caught stealing
-- @property gamesPlayed - Total games played in the season
-- @property stolenBaseRate - Stolen bases per game (SB/games)
-- @property stolenBaseSuccess - Success rate of stolen base attempts (SB/attempts)
-  \*/
-  export interface PlayerSBSeasonStats {
-  // ...
-  }
+4. **Property subset challenges:**
 
-2. Create a types reference guide
+   - Some modules throw type errors when switching to centralized types with fewer properties
+   - May need to expand centralized types to include all needed properties or create more specialized types
 
+5. **Leveraging existing types:**
+   - Check for existing types in the centralized system before creating new ones
+   - Prefer updating and expanding existing types rather than creating new duplicates
+   - For related domains (like statcast), consolidate types in one file instead of scattering them
 
-    - Document the organization of types
-    - Include examples of proper type usage
-    - Add to project documentation
+6. **Type composition approach:**
+   - Using type composition (like `PitcherSeasonStats & { additionalProps }`) works well for extending centralized types
+   - This approach maintains core type integrity while allowing for context-specific extensions
+   - Type checking catches missing required properties which helps ensure implementations are complete
 
-7. Rollout Plan
+7. **Safe defaults for required properties:**
+   - Adding `|| 0` for numeric properties ensures type safety when dealing with potentially undefined values
+   - This is especially important for properties marked as required in the type definitions
+   - For services that combine data from multiple sources, defaulting to safe values prevents runtime errors
 
-1. Start with non-critical types (least used)
-
-
-    - Begin with types used in fewer files
-    - Get comfortable with the migration pattern
-
-2. Move to core types
-
-
-    - Once process is established, move frequently used types
-    - Update all imports in a single PR
-
-3. Finalize with comprehensive unit tests
-
-
-    - Create tests to verify type integrity
-    - Ensure all edge cases are covered
-
-8. Timeline
-
-- Week 1: Setup directory structure, create index files, move Statcast types
-- Week 2: Extract and migrate core types, player types
-- Week 3: Extract analysis types, environment types
-- Week 4: Update imports, cleanup, testing
-
-This plan provides a structured approach to centralizing all MLB type definitions, making the
-codebase more maintainable, improving type consistency, and making it easier to find and use types
-throughout the application.
+8. **Managing return type extensions:**
+   - Using intersection types (like `InningsProjection & { additionalProps }`) allows adding custom properties to standard interfaces
+   - When modifying a function to use centralized types, it's important to carefully align all return values with the new type
+   - Adding null checking (e.g., `pitcherMetrics?.property || defaultValue`) improves robustness with optional properties
+   - Remember to update all error/fallback return paths when changing interface definitions

@@ -5,26 +5,12 @@
 import { getGameEnvironmentData } from "../index";
 import { getTeamStats } from "../schedule/schedule";
 import { getEnhancedPitcherData } from "../services/pitcher-data-service";
+import { PitcherPitchMixData } from "../types/player/pitcher";
+import { StrikeoutProjection } from "../types/analysis/pitcher";
 
-// Interface to define the structure of pitchMix that is compatible with PitcherPitchMixData
-interface EnhancedPitchMixData {
-  fastballPct?: number;
-  sliderPct?: number;
-  curvePct?: number;
-  changeupPct?: number;
-  cutterPct?: number;
-  splitterPct?: number;
-  otherPct?: number;
-  avgFastballVelo?: number;
-  maxFastballVelo?: number;
-  controlMetrics?: {
-    zonePercentage?: number;
-    firstPitchStrikePercent?: number;
-    swingingStrikePercent?: number;
-    chaseRate?: number;
-  };
-}
-
+/**
+ * Pitcher strikeout statistics and metrics
+ */
 export interface PitcherStrikeoutStats {
   name: string;
   teamName: string;
@@ -35,7 +21,23 @@ export interface PitcherStrikeoutStats {
   strikeoutPercentage: number;
   swingingStrikeRate: number;
   whiff?: number;
-  pitchMix?: Partial<EnhancedPitchMixData>;
+  pitchMix?: Partial<{
+    fastballPct?: number;
+    sliderPct?: number;
+    curvePct?: number;
+    changeupPct?: number;
+    cutterPct?: number;
+    splitterPct?: number;
+    otherPct?: number;
+    avgFastballVelo?: number;
+    maxFastballVelo?: number;
+    controlMetrics?: {
+      zonePercentage?: number;
+      firstPitchStrikePercent?: number;
+      swingingStrikePercent?: number;
+      chaseRate?: number;
+    };
+  }>;
   zonePct: number;
   outsidePitchPct: number;
   firstPitchStrikePercentage: number;
@@ -121,7 +123,7 @@ export async function getPitcherStrikeoutStats(
     strikeoutStuff = Math.max(1, Math.min(10, strikeoutStuff));
 
     // Prepare pitch mix data if available from Statcast
-    let pitchMix: Partial<EnhancedPitchMixData> | undefined = undefined;
+    let pitchMix: PitcherStrikeoutStats['pitchMix'] = undefined;
     if (pitcherData.pitchData) {
       pitchMix = {
         fastballPct:
@@ -240,12 +242,10 @@ export async function calculateExpectedStrikeouts(
   opposingTeamId: number,
   gameId?: string,
   inningsPitched?: number
-): Promise<{
-  expectedStrikeouts: number;
+): Promise<StrikeoutProjection & {
   lowRange: number;
   highRange: number;
   expectedRatePerInning: number;
-  confidence: number; // 1-10 scale
   factors: {
     pitcherBaseline: number;
     teamVulnerability: number;
@@ -358,12 +358,20 @@ export async function calculateExpectedStrikeouts(
       lowRange,
       highRange,
       expectedRatePerInning: adjustedKRate,
+      perInningRate: adjustedKRate,
       confidence,
+      ranges: {
+        low: lowRange,
+        high: highRange
+      },
       factors: {
         pitcherBaseline: baselineKRate,
         teamVulnerability: teamFactor,
         ballpark: environmentFactor,
         weather: environmentFactor,
+        pitcherKRate: baselineKRate * 5,
+        opposingTeamKRate: teamFactor * 5,
+        parkFactor: environmentFactor * 5,
       },
       expectedDfsPoints,
     };
@@ -379,12 +387,20 @@ export async function calculateExpectedStrikeouts(
       lowRange: 3.0,
       highRange: 7.0,
       expectedRatePerInning: 1.0,
+      perInningRate: 1.0,
       confidence: 3, // Low confidence due to error
+      ranges: {
+        low: 3.0,
+        high: 7.0
+      },
       factors: {
         pitcherBaseline: 1.0,
         teamVulnerability: 1.0,
         ballpark: 1.0,
         weather: 1.0,
+        pitcherKRate: 5.0,
+        opposingTeamKRate: 5.0,
+        parkFactor: 5.0,
       },
       expectedDfsPoints: 10.0, // 5 Ks * 2 points
     };

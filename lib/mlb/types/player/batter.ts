@@ -6,7 +6,7 @@
 
 /**
  * Player's stolen base statistics for a single season
- * 
+ *
  * @property battingAverage - Player's batting average for the season
  * @property stolenBases - Total number of successful stolen bases
  * @property stolenBaseAttempts - Total number of stolen base attempts
@@ -27,7 +27,7 @@ export interface PlayerSBSeasonStats {
 
 /**
  * Player's career stolen base profile
- * 
+ *
  * @property careerStolenBases - Total stolen bases over career
  * @property careerGames - Total career games played
  * @property careerRate - Career stolen bases per game
@@ -46,7 +46,7 @@ export interface PlayerSBCareerProfile {
 
 /**
  * Stolen base opportunity projection
- * 
+ *
  * @property expectedAttempts - Projected number of steal attempts per game
  * @property successProbability - Likelihood of successful stolen base
  * @property projectedSB - Expected stolen bases per game
@@ -67,7 +67,7 @@ export interface StolenBaseProjection {
 
 /**
  * Context for stolen base situation
- * 
+ *
  * @property isHome - Whether batter's team is home team
  * @property scoreMargin - Run differential (positive = ahead, negative = behind)
  * @property inning - Current inning
@@ -81,8 +81,8 @@ export interface StolenBaseContext {
 }
 
 /**
- * Batter season statistics 
- * 
+ * Batter season statistics
+ *
  * @property gamesPlayed - Games played in the season
  * @property atBats - Number of at bats
  * @property hits - Total hits
@@ -93,6 +93,14 @@ export interface StolenBaseContext {
  * @property obp - On-base percentage
  * @property slg - Slugging percentage
  * @property ops - On-base plus slugging
+ * @property wOBAvsL - Weighted on-base average versus left-handed pitchers
+ * @property wOBAvsR - Weighted on-base average versus right-handed pitchers
+ * @property last30wOBA - Weighted on-base average over the last 30 days
+ * @property runs - Runs scored
+ * @property hitByPitches - Times hit by pitch
+ * @property sacrificeFlies - Sacrifice flies
+ * @property plateAppearances - Total plate appearances
+ * @property caughtStealing - Times caught stealing
  */
 export interface BatterSeasonStats {
   gamesPlayed: number | null;
@@ -109,11 +117,20 @@ export interface BatterSeasonStats {
   obp?: number | null;
   slg?: number | null;
   ops?: number | null;
+  wOBAvsL?: number | null;
+  wOBAvsR?: number | null;
+  last30wOBA?: number | null;
+  runs?: number | null;
+  hitByPitches?: number | null;
+  sacrificeFlies?: number | null;
+  plateAppearances?: number | null;
+  caughtStealing?: number | null;
+  rbi?: number | null; // Alias for rbis for backward compatibility
 }
 
 /**
  * Comprehensive batter information
- * 
+ *
  * @property batterId - MLB player ID for batter
  * @property name - Full player name
  * @property team - Team abbreviation
@@ -132,4 +149,104 @@ export interface MLBBatter {
   stats: {
     seasons: Record<string, BatterSeasonStats>;
   };
+}
+
+/**
+ * Batter plate discipline metrics
+ *
+ * @property playerId - MLB player ID
+ * @property name - Player's full name
+ * @property discipline - Plate discipline metrics
+ * @property pitchTypePerformance - Performance against different pitch types
+ * @property sourceTimestamp - When data was last updated
+ */
+export interface BatterPlateDiscipline {
+  playerId: number;
+  name: string;
+  discipline: {
+    chaseRate: number; // Swing % on pitches outside zone
+    contactRate: number; // Contact % on all swings
+    zoneSwingRate: number; // Swing % on pitches in zone
+    whiffRate: number; // Miss % on all swings
+    firstPitchSwingRate: number;
+  };
+  pitchTypePerformance: {
+    vsFastball: number; // Performance score 0-100
+    vsBreakingBall: number;
+    vsOffspeed: number;
+  };
+  sourceTimestamp?: Date;
+}
+
+/**
+ * Batter splits against left-handed and right-handed pitchers
+ *
+ * @property vsLeft - Stats against left-handed pitchers
+ * @property vsRight - Stats against right-handed pitchers
+ */
+export interface BatterSplits {
+  vsLeft: {
+    plateAppearances: number;
+    atBats: number;
+    hits: number;
+    avg: number;
+    obp: number;
+    slg: number;
+    ops: number;
+    walkRate: number;
+    strikeoutRate: number;
+  };
+  vsRight: {
+    plateAppearances: number;
+    atBats: number;
+    hits: number;
+    avg: number;
+    obp: number;
+    slg: number;
+    ops: number;
+    walkRate: number;
+    strikeoutRate: number;
+  };
+}
+
+/**
+ * Complete batter stats including current season and career
+ *
+ * @property id - MLB player ID
+ * @property fullName - Player's full name
+ * @property currentTeam - Current team name
+ * @property primaryPosition - Primary defensive position
+ * @property batSide - Batting side (L/R/S)
+ * @property seasonStats - Current season statistics
+ * @property careerStats - Career statistics by season
+ * @property sourceTimestamp - When data was last updated
+ */
+export interface BatterStats {
+  id: number;
+  fullName: string;
+  currentTeam: string;
+  primaryPosition: string;
+  batSide: string;
+  seasonStats: BatterSeasonStats;
+  careerStats: Array<{
+    season: string;
+    team: string;
+    gamesPlayed: number;
+    atBats: number;
+    hits: number;
+    homeRuns: number;
+    rbi: number;
+    avg: number;
+    obp: number;
+    slg: number;
+    ops: number;
+    stolenBases: number;
+    caughtStealing: number;
+    hitByPitches: number;
+    sacrificeFlies: number;
+    walks: number;
+    strikeouts: number;
+    plateAppearances: number;
+  }>;
+  sourceTimestamp?: Date;
 }

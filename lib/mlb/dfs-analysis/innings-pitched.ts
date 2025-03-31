@@ -7,6 +7,8 @@ import { getTeamStats } from "../schedule/schedule";
 import { getGameEnvironmentData } from "../index";
 import { getGameFeed } from "../game/game-feed";
 import { calculatePitcherWinProbability } from "./pitcher-win";
+import { InningsProjection } from "../types/analysis/pitcher";
+import { RareEventAnalysis } from "../types/analysis/events";
 
 /**
  * Get pitcher's innings pitched statistics and durability metrics
@@ -230,13 +232,7 @@ export async function calculateExpectedInnings(
   pitcherId: number,
   gamePk: string,
   season: number = new Date().getFullYear()
-): Promise<{
-  expectedInnings: number;
-  inningsProjection: {
-    low: number;
-    mid: number;
-    high: number;
-  };
+): Promise<InningsProjection & {
   expectedDfsPoints: number;
   factors: {
     pitcherDurability: number;
@@ -245,6 +241,10 @@ export async function calculateExpectedInnings(
     pitcherEfficiency: number;
   };
   confidenceScore: number;
+  ranges: {
+    low: number;
+    high: number;
+  };
 }> {
   try {
     // Get pitcher metrics for both current and previous season
@@ -260,11 +260,18 @@ export async function calculateExpectedInnings(
       // If no data is available for either season, return conservative default values
       return {
         expectedInnings: 5.0, // League average for starters
-        inningsProjection: {
-          low: 4.0,
-          mid: 5.0,
-          high: 6.0,
+        leashLength: 5.0,
+        workloadConcerns: 5.0,
+        gameScriptImpact: 5.0,
+        pastWorkload: {
+          last3Games: [5, 5, 5],
+          averageInnings: 5.0
         },
+        ranges: {
+          low: 4.0,
+          high: 6.0
+        },
+        confidence: 30,
         expectedDfsPoints: 11.25, // 5 innings * 2.25 points
         factors: {
           pitcherDurability: 5.0,
@@ -298,23 +305,35 @@ export async function calculateExpectedInnings(
     // Calculate expected innings
     const expectedInnings = Math.min(9, baseInnings * gameContextMultiplier);
 
-    // Calculate projections
-    const inningsProjection = {
-      low: Math.max(2, expectedInnings - 1),
-      mid: expectedInnings,
-      high: Math.min(9, expectedInnings + 1),
-    };
+    // Calculate projections for ranges
+    const low = Math.max(2, expectedInnings - 1);
+    const mid = expectedInnings;
+    const high = Math.min(9, expectedInnings + 1);
 
     return {
       expectedInnings,
-      inningsProjection,
+      leashLength: pitcherMetrics ? pitcherMetrics.durabilityRating : 5,
+      workloadConcerns: 5, // Default value
+      gameScriptImpact: gameContextMultiplier * 5,
+      pastWorkload: {
+        last3Games: [5, 5, 5], // Default values
+        averageInnings: pitcherMetrics ? pitcherMetrics.avgInningsPerStart : 5
+      },
+      ranges: {
+        low,
+        high
+      },
       expectedDfsPoints: expectedInnings * 2.25,
       factors: {
-        pitcherDurability: pitcherMetrics.durabilityRating,
+        pitcherDurability: pitcherMetrics ? pitcherMetrics.durabilityRating : 5,
         teamHookTendency: 5.0, // Default if team data not available
         gameContext: gameContextMultiplier,
-        pitcherEfficiency: pitcherMetrics.pitchEfficiency || 16.0,
+        pitcherEfficiency: pitcherMetrics && pitcherMetrics.pitchEfficiency ? pitcherMetrics.pitchEfficiency : 16.0,
       },
+      confidence: calculateConfidenceScore(
+        pitcherMetrics,
+        gameEnvironment
+      ),
       confidenceScore: calculateConfidenceScore(
         pitcherMetrics,
         gameEnvironment
@@ -328,10 +347,16 @@ export async function calculateExpectedInnings(
     // Return conservative default values on error
     return {
       expectedInnings: 5.0,
-      inningsProjection: {
+      leashLength: 5.0,
+      workloadConcerns: 5.0,
+      gameScriptImpact: 5.0,
+      pastWorkload: {
+        last3Games: [5, 5, 5],
+        averageInnings: 5.0
+      },
+      ranges: {
         low: 4.0,
-        mid: 5.0,
-        high: 6.0,
+        high: 6.0
       },
       expectedDfsPoints: 11.25,
       factors: {
@@ -340,11 +365,20 @@ export async function calculateExpectedInnings(
         gameContext: 1.0,
         pitcherEfficiency: 16.0,
       },
+      confidence: 30,
       confidenceScore: 30,
     };
   }
 }
 
+/**
+ * Calculate game context multiplier for innings projection
+ * 
+ * @param gameEnvironment Game environment data
+ * @param gameFeed Game feed data
+ * @param winProb Win probability analysis
+ * @returns Multiplier for expected innings
+ */
 function calculateGameContextMultiplier(
   gameEnvironment: any,
   gameFeed: any,
@@ -377,23 +411,30 @@ function calculateGameContextMultiplier(
   return Math.max(0.8, Math.min(1.2, multiplier));
 }
 
+/**
+ * Calculate confidence score for innings projection
+ * 
+ * @param pitcherMetrics Pitcher innings metrics
+ * @param gameEnvironment Game environment data
+ * @returns Confidence score (0-100)
+ */
 function calculateConfidenceScore(
-  pitcherMetrics: any,
+  pitcherMetrics: ReturnType<typeof getPitcherInningsStats> extends Promise<infer T> ? T : never,
   gameEnvironment: any
 ): number {
   let score = 50; // Base confidence
 
   // Adjust based on sample size
-  if (pitcherMetrics.gamesStarted > 10) {
+  if (pitcherMetrics && pitcherMetrics.gamesStarted > 10) {
     score += 20;
-  } else if (pitcherMetrics.gamesStarted > 5) {
+  } else if (pitcherMetrics && pitcherMetrics.gamesStarted > 5) {
     score += 10;
   }
 
   // Adjust based on consistency
-  if (pitcherMetrics.qualityStartPercentage > 0.6) {
+  if (pitcherMetrics && pitcherMetrics.qualityStartPercentage && pitcherMetrics.qualityStartPercentage > 0.6) {
     score += 15;
-  } else if (pitcherMetrics.qualityStartPercentage < 0.4) {
+  } else if (pitcherMetrics && pitcherMetrics.qualityStartPercentage && pitcherMetrics.qualityStartPercentage < 0.4) {
     score -= 10;
   }
 
@@ -413,22 +454,23 @@ export async function calculateCompleteGamePotential(
   pitcherId: number,
   gamePk: string,
   season: number = new Date().getFullYear()
-): Promise<{
-  completeGameProbability: number; // 0-100%
-  shutoutProbability: number; // 0-100%
-  noHitterProbability: number; // 0-100%
-  expectedRareEventPoints: number; // Expected value of rare event bonuses
-}> {
+): Promise<RareEventAnalysis> {
   try {
     // Get pitcher innings metrics
     const pitcherMetrics = await getPitcherInningsStats(pitcherId, season);
 
     if (!pitcherMetrics) {
       return {
-        completeGameProbability: 0.5,
-        shutoutProbability: 0.1,
-        noHitterProbability: 0.01,
         expectedRareEventPoints: 0.02,
+        confidenceScore: 30,
+        eventProbabilities: {
+          completeGame: 0.5,
+          shutout: 0.1,
+          noHitter: 0.01,
+          qualityStart: 25,
+          perfectGame: 0.001
+        },
+        riskRewardRating: 3
       };
     }
 
@@ -493,12 +535,34 @@ export async function calculateCompleteGamePotential(
     // CG = 2.5 pts, CGSO = 5 pts (2.5 + 2.5), No-hitter = 10 pts (2.5 + 2.5 + 5)
     const expectedRareEventPoints =
       completeGameProb * 2.5 + shutoutProb * 2.5 + noHitterProb * 5;
+      
+    // Calculate quality start probability - more common than CG
+    const qualityStartProb = Math.min(70, pitcherMetrics.qualityStartPercentage ? pitcherMetrics.qualityStartPercentage * 100 : 50);
+    
+    // Calculate perfect game probability (extremely rare)
+    const perfectGameProb = Math.min(0.1, noHitterProb * 0.2);
+    
+    // Calculate risk-reward rating (1-10)
+    const riskRewardRating = Math.min(10, 
+      Math.max(1, 
+        completeGameProbability / 5 + 
+        shutoutProbability / 2 + 
+        noHitterProbability * 2 + 
+        pitcherMetrics.durabilityRating / 3
+      )
+    );
 
     return {
-      completeGameProbability,
-      shutoutProbability,
-      noHitterProbability,
       expectedRareEventPoints,
+      confidenceScore: Math.round(pitcherMetrics.durabilityRating * 10),
+      eventProbabilities: {
+        completeGame: completeGameProbability,
+        shutout: shutoutProbability,
+        noHitter: noHitterProbability,
+        qualityStart: qualityStartProb,
+        perfectGame: perfectGameProb
+      },
+      riskRewardRating
     };
   } catch (error) {
     console.error(
@@ -508,10 +572,16 @@ export async function calculateCompleteGamePotential(
 
     // Return minimal defaults
     return {
-      completeGameProbability: 0.5,
-      shutoutProbability: 0.1,
-      noHitterProbability: 0.01,
       expectedRareEventPoints: 0.02,
+      confidenceScore: 30,
+      eventProbabilities: {
+        completeGame: 0.5,
+        shutout: 0.1,
+        noHitter: 0.01,
+        qualityStart: 25,
+        perfectGame: 0.001
+      },
+      riskRewardRating: 3
     };
   }
 }

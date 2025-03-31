@@ -1,108 +1,10 @@
 import { DEFAULT_CACHE_TTL, markAsApiSource, withCache } from "../cache";
 import { makeMLBApiRequest } from "../core/api-client";
-
-interface BatterStats {
-  id: number;
-  fullName: string;
-  currentTeam: string;
-  primaryPosition: string;
-  batSide: string;
-  seasonStats: {
-    gamesPlayed: number;
-    atBats: number;
-    hits: number;
-    homeRuns: number;
-    rbi: number;
-    avg: number;
-    obp: number;
-    slg: number;
-    ops: number;
-    stolenBases: number;
-    caughtStealing: number;
-    wOBAvsL?: number;
-    wOBAvsR?: number;
-    last30wOBA?: number;
-    strikeouts: number;
-    walks: number;
-    hitByPitches: number;
-    sacrificeFlies: number;
-    doubles: number;
-    triples: number;
-    runs: number;
-    plateAppearances?: number;
-  };
-  careerStats: Array<{
-    season: string;
-    team: string;
-    gamesPlayed: number;
-    atBats: number;
-    hits: number;
-    homeRuns: number;
-    rbi: number;
-    avg: number;
-    obp: number;
-    slg: number;
-    ops: number;
-    stolenBases: number;
-    caughtStealing: number;
-    hitByPitches: number;
-    sacrificeFlies: number;
-    walks: number;
-    strikeouts: number;
-    plateAppearances: number;
-  }>;
-  sourceTimestamp?: Date;
-}
-
-interface BatterSplits {
-  vsLeft: {
-    plateAppearances: number;
-    atBats: number;
-    hits: number;
-    avg: number;
-    obp: number;
-    slg: number;
-    ops: number;
-    walkRate: number;
-    strikeoutRate: number;
-  };
-  vsRight: {
-    plateAppearances: number;
-    atBats: number;
-    hits: number;
-    avg: number;
-    obp: number;
-    slg: number;
-    ops: number;
-    walkRate: number;
-    strikeoutRate: number;
-  };
-}
-
-export interface BatterSeasonStats {
-  gamesPlayed: number;
-  atBats: number;
-  hits: number;
-  homeRuns: number;
-  rbi: number;
-  avg: number;
-  obp: number;
-  slg: number;
-  ops: number;
-  stolenBases: number;
-  caughtStealing: number;
-  wOBAvsL?: number;
-  wOBAvsR?: number;
-  last30wOBA?: number;
-  strikeouts: number;
-  walks: number;
-  doubles: number;
-  triples: number;
-  hitByPitches: number;
-  sacrificeFlies: number;
-  runs: number;
-  plateAppearances?: number;
-}
+import {
+  BatterPlateDiscipline,
+  BatterSplits,
+  BatterStats,
+} from "../types/player";
 
 /**
  * Fetch batter stats from MLB API
@@ -169,22 +71,17 @@ async function fetchBatterStats(params: {
         gamesPlayed: 0,
         atBats: 0,
         hits: 0,
+        doubles: 0,
+        triples: 0,
         homeRuns: 0,
-        rbi: 0,
+        rbis: 0,
+        walks: 0,
+        strikeouts: 0,
+        stolenBases: 0,
         avg: 0,
         obp: 0,
         slg: 0,
         ops: 0,
-        stolenBases: 0,
-        caughtStealing: 0,
-        strikeouts: 0,
-        walks: 0,
-        hitByPitches: 0,
-        sacrificeFlies: 0,
-        doubles: 0,
-        triples: 0,
-        runs: 0,
-        plateAppearances: 0,
       },
       careerStats: [],
       sourceTimestamp: new Date(),
@@ -201,22 +98,17 @@ async function fetchBatterStats(params: {
         gamesPlayed: 0,
         atBats: 0,
         hits: 0,
+        doubles: 0,
+        triples: 0,
         homeRuns: 0,
-        rbi: 0,
+        rbis: 0,
+        walks: 0,
+        strikeouts: 0,
+        stolenBases: 0,
         avg: 0,
         obp: 0,
         slg: 0,
         ops: 0,
-        stolenBases: 0,
-        caughtStealing: 0,
-        strikeouts: 0,
-        walks: 0,
-        hitByPitches: 0,
-        sacrificeFlies: 0,
-        doubles: 0,
-        triples: 0,
-        runs: 0,
-        plateAppearances: 0,
       },
       careerStats: [],
       sourceTimestamp: new Date(),
@@ -264,22 +156,17 @@ function transformBatterStats(data: any, requestedSeason: number): BatterStats {
       gamesPlayed: seasonHittingStats.gamesPlayed || 0,
       atBats: seasonHittingStats.atBats || 0,
       hits: seasonHittingStats.hits || 0,
+      doubles: seasonHittingStats.doubles || 0,
+      triples: seasonHittingStats.triples || 0,
       homeRuns: seasonHittingStats.homeRuns || 0,
-      rbi: seasonHittingStats.rbi || 0,
+      rbis: seasonHittingStats.rbi || 0,
+      walks: seasonHittingStats.walks || 0,
+      strikeouts: seasonHittingStats.strikeouts || 0,
+      stolenBases: seasonHittingStats.stolenBases || 0,
       avg: seasonHittingStats.avg || 0,
       obp: seasonHittingStats.obp || 0,
       slg: seasonHittingStats.slg || 0,
       ops: seasonHittingStats.ops || 0,
-      stolenBases: seasonHittingStats.stolenBases || 0,
-      caughtStealing: seasonHittingStats.caughtStealing || 0,
-      strikeouts: seasonHittingStats.strikeouts || 0,
-      walks: seasonHittingStats.walks || 0,
-      hitByPitches: seasonHittingStats.hitByPitch || 0,
-      sacrificeFlies: seasonHittingStats.sacFlies || 0,
-      doubles: seasonHittingStats.doubles || 0,
-      triples: seasonHittingStats.triples || 0,
-      runs: seasonHittingStats.runs || 0,
-      plateAppearances: seasonHittingStats.plateAppearances || 0,
     },
     careerStats: yearByYearHittingStats.map((year: any) => ({
       season: year.season,
@@ -302,27 +189,6 @@ function transformBatterStats(data: any, requestedSeason: number): BatterStats {
       plateAppearances: year.stat?.plateAppearances || 0,
     })),
   };
-}
-
-/**
- * Fetch batter plate discipline metrics
- */
-export interface BatterPlateDiscipline {
-  playerId: number;
-  name: string;
-  discipline: {
-    chaseRate: number; // Swing % on pitches outside zone
-    contactRate: number; // Contact % on all swings
-    zoneSwingRate: number; // Swing % on pitches in zone
-    whiffRate: number; // Miss % on all swings
-    firstPitchSwingRate: number;
-  };
-  pitchTypePerformance: {
-    vsFastball: number; // Performance score 0-100
-    vsBreakingBall: number;
-    vsOffspeed: number;
-  };
-  sourceTimestamp?: Date;
 }
 
 /**

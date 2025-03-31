@@ -1,5 +1,7 @@
 import { getBatterStats } from "../player/batter-stats";
 import { getBatterStatcastData } from "../savant";
+import { BatterSeasonStats, BatterStats } from "../types/player/batter";
+import { BatterStatcastData } from "../types/statcast";
 
 /**
  * Enhanced batter data that combines MLB API and Savant data
@@ -13,24 +15,7 @@ export interface EnhancedBatterData {
   batSide: string;
 
   // Season stats from MLB API
-  seasonStats: {
-    gamesPlayed: number;
-    atBats: number;
-    hits: number;
-    homeRuns: number;
-    rbi: number;
-    avg: number;
-    obp: number;
-    slg: number;
-    ops: number;
-    stolenBases: number;
-    caughtStealing: number;
-    runs: number;
-    doubles: number;
-    triples: number;
-    walks: number;
-    strikeouts: number;
-    sacrificeFlies: number;
+  seasonStats: BatterSeasonStats & {
     wOBA?: number;
     iso?: number;
     babip?: number;
@@ -195,11 +180,14 @@ function estimateSprintSpeed(stats: EnhancedBatterData["seasonStats"]): number {
 
   // Calculate stolen base rate per game
   const sbRate =
-    stats.gamesPlayed > 0 ? stats.stolenBases / stats.gamesPlayed : 0;
+    stats.gamesPlayed && stats.gamesPlayed > 0 && stats.stolenBases ? 
+    stats.stolenBases / stats.gamesPlayed : 0;
 
   // Calculate success rate
-  const attempts = stats.stolenBases + stats.caughtStealing;
-  const successRate = attempts > 0 ? stats.stolenBases / attempts : 0;
+  const stolenBases = stats.stolenBases || 0;
+  const caughtStealing = stats.caughtStealing || 0;
+  const attempts = stolenBases + caughtStealing;
+  const successRate = attempts > 0 ? stolenBases / attempts : 0;
 
   // League average sprint speed is ~27 ft/sec
   let estimatedSpeed = 27.0;
@@ -208,15 +196,15 @@ function estimateSprintSpeed(stats: EnhancedBatterData["seasonStats"]): number {
   if (sbRate > 0.3) estimatedSpeed += 2.0; // Elite frequency
   else if (sbRate > 0.2) estimatedSpeed += 1.5;
   else if (sbRate > 0.1) estimatedSpeed += 1.0;
-  else if (sbRate < 0.05 && stats.gamesPlayed > 20) estimatedSpeed -= 0.5;
+  else if (sbRate < 0.05 && stats.gamesPlayed && stats.gamesPlayed > 20) estimatedSpeed -= 0.5;
 
   // Adjust based on success rate with volume
-  if (successRate > 0.85 && stats.stolenBases >= 10)
+  if (successRate > 0.85 && stolenBases >= 10)
     estimatedSpeed += 1.0; // Efficient with volume
-  else if (successRate < 0.65 && stats.stolenBases >= 5) estimatedSpeed -= 0.5; // Inefficient with volume
+  else if (successRate < 0.65 && stolenBases >= 5) estimatedSpeed -= 0.5; // Inefficient with volume
 
   // Extra boost for players with high triple rates (speed indicator)
-  const tripleRate = stats.atBats > 0 ? (stats.triples || 0) / stats.atBats : 0;
+  const tripleRate = stats.atBats && stats.atBats > 0 ? (stats.triples || 0) / stats.atBats : 0;
   if (tripleRate > 0.01) estimatedSpeed += 0.5;
 
   // Ensure within reasonable range (23-31 ft/sec is MLB range)

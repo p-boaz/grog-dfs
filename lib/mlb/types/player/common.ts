@@ -6,7 +6,7 @@
 
 /**
  * Base player type with common fields
- * 
+ *
  * @property playerId - MLB player ID
  * @property name - Player's full name
  * @property team - Team abbreviation/name
@@ -25,7 +25,7 @@ export interface BasePlayer {
 
 /**
  * Common stats structure that applies to both pitchers and batters
- * 
+ *
  * @property gamesPlayed - Number of games played
  * @property sourceSeason - Season the stats are from
  * @property sourceType - Type of stats (actual/projected/etc)
@@ -33,12 +33,12 @@ export interface BasePlayer {
 export interface BaseStats {
   gamesPlayed: number | null;
   sourceSeason?: string;
-  sourceType?: 'actual' | 'projected' | 'combined';
+  sourceType?: "actual" | "projected" | "combined";
 }
 
 /**
  * DraftKings player entry
- * 
+ *
  * @property mlbId - MLB player ID
  * @property id - DraftKings player ID
  * @property name - Player name as listed in DraftKings
@@ -59,7 +59,7 @@ export interface DraftKingsPlayer {
 
 /**
  * DraftKings information for a player
- * 
+ *
  * @property draftKingsId - DraftKings player ID
  * @property salary - DraftKings salary
  * @property positions - Eligible positions
@@ -74,7 +74,7 @@ export interface DraftKingsInfo {
 
 /**
  * Player search result format
- * 
+ *
  * @property id - MLB player ID
  * @property fullName - Player's full name
  * @property team - Current team
@@ -91,4 +91,50 @@ export interface PlayerSearchResult {
   handedness?: string;
   lastSeason?: string;
   active: boolean;
+}
+
+/**
+ * Catcher's defensive metrics related to stolen bases
+ *
+ * @property playerId - MLB player ID
+ * @property fullName - Player's full name
+ * @property caughtStealingPercentage - Rate of caught stealing
+ * @property stolenBasesAllowed - Number of stolen bases allowed
+ * @property caughtStealing - Number of runners caught stealing
+ * @property attemptsPer9 - Steal attempts per 9 innings
+ * @property popTime - Time from catching to release in seconds
+ * @property armStrength - MPH on throws
+ * @property defensiveRating - Overall rating of defense vs stolen bases
+ * @property teamRank - Rank among MLB catchers
+ * @property runs_saved_vs_running - Advanced stat: runs saved vs average
+ * @property sourceTimestamp - When the data was retrieved
+ */
+export interface CatcherDefenseMetrics {
+  playerId: number;
+  fullName: string;
+  caughtStealingPercentage: number;
+  stolenBasesAllowed: number;
+  caughtStealing: number;
+  attemptsPer9: number;
+  popTime?: number; // Time from catching to release in seconds
+  armStrength?: number; // MPH on throws
+  defensiveRating: number; // Overall 0-100 rating of defense vs stolen bases
+  teamRank?: number; // Rank among MLB catchers
+  runs_saved_vs_running?: number; // Advanced stat: runs saved vs average
+  sourceTimestamp?: Date;
+}
+
+/**
+ * Battery (pitcher+catcher) vulnerability to stolen bases
+ *
+ * @property vulnerability - Rating from 1-10 (higher = easier to steal)
+ * @property catcherFactor - How much the catcher influences vulnerability
+ * @property pitcherFactor - How much the pitcher influences vulnerability
+ * @property catcherMetrics - Detailed catcher metrics
+ */
+export interface BatteryVulnerability {
+  vulnerability: number; // Scale 1-10 where 5 is league average
+  catcherFactor: number; // How much the catcher influences vulnerability (0-1)
+  pitcherFactor: number; // How much the pitcher influences vulnerability (0-1)
+  catcherMetrics: CatcherDefenseMetrics | null;
 }

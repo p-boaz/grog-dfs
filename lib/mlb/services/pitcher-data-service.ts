@@ -1,4 +1,5 @@
-import { PitcherStatcastData } from "../../types/statcast";
+import { PitcherStatcastData, PitchUsage } from "../types/statcast";
+import { PitcherSeasonStats, PitcherCareerStatsSeason } from "../types/player/pitcher";
 import { getPitcherStats } from "../player/pitcher-stats";
 import { getPitcherStatcastData } from "../savant";
 
@@ -14,19 +15,7 @@ export interface EnhancedPitcherData {
   throwsHand: string;
 
   // Season stats from MLB API
-  seasonStats: {
-    gamesPlayed: number;
-    gamesStarted: number;
-    inningsPitched: number;
-    wins: number;
-    losses: number;
-    era: number;
-    whip: number;
-    strikeouts: number;
-    walks: number;
-    saves: number;
-    homeRunsAllowed: number;
-    hitBatsmen?: number;
+  seasonStats: PitcherSeasonStats & {
     holds?: number;
     blownSaves?: number;
     completeGames?: number;
@@ -42,21 +31,7 @@ export interface EnhancedPitcherData {
   };
 
   // Career stats from MLB API
-  careerStats: Array<{
-    season: string;
-    team: string;
-    gamesPlayed: number;
-    gamesStarted: number;
-    inningsPitched: number;
-    wins: number;
-    losses: number;
-    era: number;
-    whip: number;
-    strikeouts: number;
-    walks: number;
-    saves: number;
-    homeRunsAllowed: number;
-  }>;
+  careerStats: PitcherCareerStatsSeason[];
 
   // Game-specific stats if available
   lastGameStats?: any;
@@ -64,16 +39,7 @@ export interface EnhancedPitcherData {
 
   // Pitch mix and velocity data from Savant
   pitchData?: {
-    pitchTypes: {
-      fastball: number;
-      slider: number;
-      curve: number;
-      changeup: number;
-      sinker: number;
-      cutter: number;
-      splitter: number;
-      other: number;
-    };
+    pitchTypes: PitchUsage;
     velocities: {
       avgFastball: number;
       maxFastball: number;
@@ -182,8 +148,8 @@ export async function getEnhancedPitcherData(
     walks: typedRawStats.walks || 0,
     saves: typedRawStats.saves || 0,
     homeRunsAllowed: typedRawStats.homeRunsAllowed || 0,
+    hitBatsmen: typedRawStats.hitBatsmen || 0, // Required in PitcherSeasonStats
     // Optional properties
-    hitBatsmen: typedRawStats.hitBatsmen,
     holds: typedRawStats.holds,
     blownSaves: typedRawStats.blownSaves,
     completeGames: typedRawStats.completeGames,
@@ -214,6 +180,7 @@ export async function getEnhancedPitcherData(
       walks: season.walks,
       saves: season.saves,
       homeRunsAllowed: season.homeRunsAllowed || 0, // Ensure this is not undefined
+      hitBatsmen: season.hitBatsmen || 0, // Required in PitcherCareerStatsSeason
     })) || [];
 
   const enhancedData: EnhancedPitcherData = {
@@ -247,6 +214,9 @@ export async function getEnhancedPitcherData(
         sinker: statcastData.pitches.sinker,
         cutter: statcastData.pitches.cutter,
         splitter: statcastData.pitches.splitter,
+        sweep: statcastData.pitches.sweep || 0, // Add missing properties from PitchUsage
+        fork: statcastData.pitches.fork || 0, 
+        knuckle: statcastData.pitches.knuckle || 0,
         other: statcastData.pitches.other,
       },
       velocities: {

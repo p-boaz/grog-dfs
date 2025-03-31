@@ -3,33 +3,13 @@
  */
 
 import { makeMLBApiRequest } from "../core/api-client";
-import { withCache, DEFAULT_CACHE_TTL, markAsApiSource } from "../cache";
+import {
+  PlayerSBCareerProfile,
+  PlayerSBSeasonStats,
+  StolenBaseContext,
+  StolenBaseProjection,
+} from "../types/player/batter";
 import { getCatcherDefense } from "./defense-stats";
-
-/**
- * Interface for player's stolen base profile for a season
- */
-export interface PlayerSBSeasonStats {
-  battingAverage: number;
-  stolenBases: number;
-  stolenBaseAttempts: number;
-  caughtStealing: number;
-  gamesPlayed: number;
-  stolenBaseRate: number; // SB per game
-  stolenBaseSuccess: number; // Success rate (0-1)
-}
-
-/**
- * Interface for player's career stolen base profile
- */
-export interface PlayerSBCareerProfile {
-  careerStolenBases: number;
-  careerGames: number;
-  careerRate: number; // Career SB per game
-  bestSeasonSB: number; // Most SB in a single season
-  bestSeasonRate: number; // Best SB per game in a season
-  recentTrend: "increasing" | "decreasing" | "stable";
-}
 
 /**
  * Get player's season stats focused on stolen bases
@@ -221,7 +201,7 @@ export async function getPlayerSBCareerProfile(
 }
 
 /**
- * Project stolen base opportunities for a player in a specific matchup
+ * Project stolen base opportunities and success probability
  *
  * @param playerId Batter's MLB ID
  * @param catcherId Catcher's MLB ID (optional)
@@ -233,24 +213,8 @@ export async function projectStolenBaseOpportunities(
   playerId: number,
   catcherId?: number,
   pitcherId?: number,
-  context?: {
-    isHome?: boolean;
-    scoreMargin?: number; // positive = ahead, negative = behind
-    inning?: number;
-    isCloseGame?: boolean;
-  }
-): Promise<{
-  expectedAttempts: number; // Expected SB attempts per game
-  successProbability: number; // Probability of success (0-1)
-  projectedSB: number; // Expected SB per game
-  factors: {
-    playerBaseline: number;
-    careerTrend: number;
-    catcherImpact: number;
-    pitcherImpact: number;
-    situationalAdjustment: number;
-  };
-} | null> {
+  context?: StolenBaseContext
+): Promise<StolenBaseProjection | null> {
   try {
     // Get player's baseline SB metrics
     const [seasonStats, careerProfile] = await Promise.all([

@@ -1,46 +1,11 @@
 import { DEFAULT_CACHE_TTL, markAsApiSource, withCache } from "../cache";
 import { makeMLBApiRequest } from "../core/api-client";
-
-interface PitcherStats {
-  id: number;
-  fullName: string;
-  currentTeam: string;
-  primaryPosition: string;
-  pitchHand: string;
-  seasonStats: {
-    [season: string]: {
-      gamesPlayed: number;
-      gamesStarted: number;
-      inningsPitched: number;
-      wins: number;
-      losses: number;
-      era: number;
-      whip: number;
-      strikeouts: number;
-      walks: number;
-      saves: number;
-      homeRunsAllowed?: number;
-      hitBatsmen: number;
-    };
-  };
-  careerStats: Array<{
-    season: string;
-    team: string;
-    gamesPlayed: number;
-    gamesStarted: number;
-    inningsPitched: number;
-    wins: number;
-    losses: number;
-    era: number;
-    whip: number;
-    strikeouts: number;
-    walks: number;
-    saves: number;
-    homeRunsAllowed?: number;
-    hitBatsmen: number;
-  }>;
-  sourceTimestamp?: Date;
-}
+import { PitcherBatterMatchup } from "../types/player/matchups";
+import {
+  PitcherHomeRunVulnerability,
+  PitcherPitchMixData,
+  PitcherStats,
+} from "../types/player/pitcher";
 
 /**
  * Fetch pitcher stats from MLB API
@@ -282,56 +247,6 @@ function transformPitcherStats(data: any): PitcherStats {
 }
 
 /**
- * Interface for pitcher's pitch mix data
- */
-export interface PitcherPitchMixData {
-  playerId: number;
-  name: string;
-  pitches: {
-    fastball: number; // percentage
-    slider: number;
-    curve: number;
-    changeup: number;
-    sinker: number;
-    cutter: number;
-    other: number;
-  };
-  averageVelocity: {
-    fastball?: number;
-    slider?: number;
-    curve?: number;
-    changeup?: number;
-    sinker?: number;
-    cutter?: number;
-  };
-  effectiveness: {
-    fastball?: number; // scale 0-100
-    slider?: number;
-    curve?: number;
-    changeup?: number;
-    sinker?: number;
-    cutter?: number;
-  };
-  controlMetrics: {
-    zonePercentage: number;
-    firstPitchStrikePercent: number;
-    swingingStrikePercent: number;
-    chaseRate: number;
-  };
-  velocityTrends?: {
-    recentGames: {
-      date: string;
-      avgVelocity: number;
-      change: number;
-    }[];
-    seasonAvg: number;
-    recent15DayAvg: number;
-    velocityChange: number;
-  };
-  sourceTimestamp?: Date;
-}
-
-/**
  * Fetch pitcher's pitch mix data
  */
 async function fetchPitcherPitchMix(params: {
@@ -397,36 +312,6 @@ export const getPitcherPitchMix = withCache(
   "pitcher-pitch-mix",
   DEFAULT_CACHE_TTL.player
 );
-
-/**
- * Interface for pitcher-batter matchup stats
- */
-export interface PitcherBatterMatchup {
-  pitcher: {
-    id: number;
-    name: string;
-    throwsHand: string;
-  };
-  batter: {
-    id: number;
-    name: string;
-    batsHand: string;
-  };
-  stats: {
-    atBats: number;
-    hits: number;
-    homeRuns: number;
-    strikeouts: number;
-    walks: number;
-    avg: number;
-    obp: number;
-    slg: number;
-    ops: number;
-    totalPitches?: number;
-    timing?: string;
-  };
-  sourceTimestamp?: Date;
-}
 
 /**
  * Fetch matchup data between a pitcher and batter
@@ -528,20 +413,12 @@ export const getPitcherBatterMatchup = withCache(
 );
 
 /**
- * Get pitcher's home run vulnerability
+ * Analyze a pitcher's vulnerability to home runs
  */
 export async function getPitcherHomeRunVulnerability(
   pitcherId: number,
   season = new Date().getFullYear()
-): Promise<{
-  gamesStarted: number;
-  inningsPitched: number;
-  homeRunsAllowed: number;
-  hrPer9: number;
-  flyBallPct?: number;
-  hrPerFlyBall?: number;
-  homeRunVulnerability: number; // 0-10 scale where 5 is average
-} | null> {
+): Promise<PitcherHomeRunVulnerability | null> {
   try {
     // Get pitcher stats
     const pitcherData = await getPitcherStats({

@@ -6,6 +6,100 @@
  */
 
 /**
+ * Individual pitch data from Statcast
+ *
+ * @property pitch_type - Pitch type code (FF, SL, CU, etc.)
+ * @property count - Number of pitches thrown
+ * @property velocity - Average velocity in mph
+ * @property whiff_rate - Swing and miss rate
+ * @property put_away_rate - Rate at which pitch results in outs
+ */
+export interface StatcastPitch {
+  pitch_type: string;
+  count: number;
+  velocity: number;
+  whiff_rate: number;
+  put_away_rate: number;
+}
+
+/**
+ * Pitcher control metrics from Statcast
+ *
+ * @property zone_rate - Percentage of pitches in strike zone
+ * @property first_pitch_strike - First pitch strike percentage
+ * @property whiff_rate - Overall swing and miss rate
+ * @property chase_rate - Rate at which batters chase pitches outside zone
+ */
+export interface StatcastControlMetrics {
+  zone_rate: number;
+  first_pitch_strike: number;
+  whiff_rate: number;
+  chase_rate: number;
+}
+
+/**
+ * Velocity trend data from Statcast
+ *
+ * @property game_date - Date of the game
+ * @property pitch_type - Pitch type code
+ * @property avg_velocity - Average velocity for that game
+ * @property velocity_change - Change in velocity compared to baseline
+ */
+export interface StatcastVelocityTrend {
+  game_date: string;
+  pitch_type: string;
+  avg_velocity: number;
+  velocity_change: number;
+}
+
+/**
+ * Comprehensive Statcast data structure
+ *
+ * @property pitch_mix - Array of pitch types and statistics
+ * @property control_metrics - Pitcher control statistics
+ * @property velocity_trends - Velocity trends over time
+ * @property is_default_data - Whether this is default data (not actual Statcast)
+ */
+export interface StatcastData {
+  pitch_mix: StatcastPitch[];
+  control_metrics: StatcastControlMetrics;
+  velocity_trends: StatcastVelocityTrend[];
+  is_default_data?: boolean;
+}
+
+/**
+ * Pitch effectiveness metrics
+ *
+ * @property fastballEff - Fastball effectiveness rating
+ * @property sliderEff - Slider effectiveness rating
+ * @property curveEff - Curveball effectiveness rating
+ * @property changeupEff - Changeup effectiveness rating
+ * @property sinkerEff - Sinker effectiveness rating
+ * @property cutterEff - Cutter effectiveness rating
+ */
+export interface PitchEffectiveness {
+  fastballEff?: number;
+  sliderEff?: number;
+  curveEff?: number;
+  changeupEff?: number;
+  sinkerEff?: number;
+  cutterEff?: number;
+}
+
+/**
+ * Statcast pitcher data with pitch effectiveness
+ *
+ * @property player_id - MLB player ID
+ * @property name - Pitcher's name
+ * @property pitch_effectiveness - Optional effectiveness metrics by pitch type
+ */
+export interface StatcastPitcherData extends StatcastData {
+  player_id: number;
+  name: string;
+  pitch_effectiveness?: PitchEffectiveness;
+}
+
+/**
  * Expected statistics from Statcast data
  * Includes expected batting average, slugging, etc. based on quality of contact
  */

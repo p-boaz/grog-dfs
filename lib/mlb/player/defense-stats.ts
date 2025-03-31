@@ -2,26 +2,12 @@
  * Defense-focused stats with emphasis on catcher metrics
  */
 
+import { DEFAULT_CACHE_TTL, markAsApiSource, withCache } from "../cache";
 import { makeMLBApiRequest } from "../core/api-client";
-import { withCache, DEFAULT_CACHE_TTL, markAsApiSource } from "../cache";
-
-/**
- * Interface for catcher's defensive metrics related to stolen bases
- */
-export interface CatcherDefenseMetrics {
-  playerId: number;
-  fullName: string;
-  caughtStealingPercentage: number;
-  stolenBasesAllowed: number;
-  caughtStealing: number;
-  attemptsPer9: number;
-  popTime?: number; // Time from catching to release in seconds
-  armStrength?: number; // MPH on throws
-  defensiveRating: number; // Overall 0-100 rating of defense vs stolen bases
-  teamRank?: number; // Rank among MLB catchers
-  runs_saved_vs_running?: number; // Advanced stat: runs saved vs average
-  sourceTimestamp?: Date;
-}
+import {
+  BatteryVulnerability,
+  CatcherDefenseMetrics,
+} from "../types/player/common";
 
 /**
  * Get catcher's defensive metrics, focusing on stolen base prevention
@@ -143,12 +129,7 @@ export async function getBatteryVulnerability(
   catcherId: number,
   pitcherId: number,
   season = new Date().getFullYear()
-): Promise<{
-  vulnerability: number; // Scale 1-10 where 5 is league average
-  catcherFactor: number; // How much the catcher influences vulnerability (0-1)
-  pitcherFactor: number; // How much the pitcher influences vulnerability (0-1)
-  catcherMetrics: CatcherDefenseMetrics | null;
-} | null> {
+): Promise<BatteryVulnerability | null> {
   try {
     // Get catcher metrics
     const catcherMetrics = await getCatcherDefense({

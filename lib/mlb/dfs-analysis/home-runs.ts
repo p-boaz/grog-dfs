@@ -9,6 +9,8 @@ import {
   getEnhancedBatterData,
 } from "../services/batter-data-service";
 import { getEnhancedPitcherData } from "../services/pitcher-data-service";
+import { HomeRunAnalysis } from "../types/analysis/events";
+import { PitcherHomeRunVulnerability } from "../types/player/pitcher";
 
 /**
  * Get player's season stats with focus on home run metrics
@@ -364,19 +366,13 @@ export async function getWeatherHomeRunImpact(gamePk: string): Promise<{
 export async function getPitcherHomeRunVulnerability(
   pitcherId: number,
   season = new Date().getFullYear()
-): Promise<{
-  homeRunsAllowed: number;
-  inningsPitched: number;
-  hrPer9: number;
-  flyBallPct?: number;
-  hrPerFlyBall?: number;
+): Promise<(PitcherHomeRunVulnerability & {
   vsLHB?: number;
   vsRHB?: number;
   parkFactor?: number;
-  homeRunVulnerability: number; // 1-10 scale
   hardHitPercent?: number;
   barrelRate?: number;
-} | null> {
+}) | null> {
   try {
     // Fetch enhanced pitcher data including Statcast metrics
     const pitcherData = await getEnhancedPitcherData(pitcherId, season);
@@ -423,6 +419,7 @@ export async function getPitcherHomeRunVulnerability(
     vulnerability = Math.max(1, Math.min(10, vulnerability));
 
     return {
+      gamesStarted: pitcherData.seasonStats.gamesStarted || 0,
       homeRunsAllowed,
       inningsPitched,
       hrPer9,
@@ -457,7 +454,7 @@ export async function estimateHomeRunProbability(
     windDirection?: string;
     isOutdoor?: boolean;
   }
-): Promise<{
+): Promise<Omit<HomeRunAnalysis, 'multipleHRProbability'> & {
   probability: number; // 0-1 scale
   confidence: number; // 1-10 scale
   factors: {
@@ -602,6 +599,8 @@ export async function estimateHomeRunProbability(
 
     return {
       probability: cappedProbability,
+      homeRunProbability: cappedProbability,
+      expectedHomeRuns: cappedProbability, // Expected HR per game
       confidence,
       factors: {
         batterProfile: batterFactor,
@@ -609,6 +608,12 @@ export async function estimateHomeRunProbability(
         ballpark: parkFactor,
         weather: weatherFactor,
         platoonAdvantage: platoonFactor,
+        batterPower: batterFactor * 5,
+        // We're mapping custom properties to the standard interface
+        // pitcherVulnerability is already defined above
+        ballparkFactor: parkFactor * 5,
+        weatherFactor: weatherFactor * 5,
+        recentForm: platoonFactor * 5,
       },
       expectedValue,
     };
@@ -621,13 +626,19 @@ export async function estimateHomeRunProbability(
     // Return conservative default values
     return {
       probability: 0.03, // League average
+      homeRunProbability: 0.03,
+      expectedHomeRuns: 0.03,
       confidence: 3, // Lower confidence due to error
       factors: {
         batterProfile: 1.0,
-        pitcherVulnerability: 1.0,
+        pitcherVulnerability: 5.0, // Set to 5.0 for scaled version
         ballpark: 1.0,
         weather: 1.0,
         platoonAdvantage: 1.0,
+        batterPower: 5.0,
+        ballparkFactor: 5.0,
+        weatherFactor: 5.0,
+        recentForm: 5.0,
       },
       expectedValue: 0.3, // 0.03 * 10
     };

@@ -1,11 +1,16 @@
 import { DEFAULT_CACHE_TTL, markAsApiSource, withCache } from "../cache";
 import { makeMLBApiRequest } from "../core/api-client";
+import { PlayerStats as ImportedPlayerStats } from "../core/types";
+import {
+  AdvancedMatchupAnalysis,
+  HitterMatchupAnalysis,
+} from "../types/analysis";
 import {
   BatterPlateDiscipline,
-  PlayerStats as ImportedPlayerStats,
   PitcherBatterMatchup,
   PitcherPitchMixData,
-} from "../core/types";
+} from "../types/player";
+import { StatcastPitch } from "../types/statcast";
 import { getBatterStats } from "./batter-stats";
 import { getPitcherStats } from "./pitcher-stats";
 
@@ -13,51 +18,6 @@ type PlayerStats = Pick<ImportedPlayerStats, "fullName" | "seasonStats"> & {
   pitchHand?: string;
   batSide?: string;
 };
-
-// Type definitions for Statcast response data
-interface StatcastPitch {
-  pitch_type: string;
-  count: number;
-  velocity: number;
-  whiff_rate: number;
-  put_away_rate: number;
-}
-
-interface StatcastControlMetrics {
-  zone_rate: number;
-  first_pitch_strike: number;
-  whiff_rate: number;
-  chase_rate: number;
-}
-
-interface StatcastVelocityTrend {
-  game_date: string;
-  pitch_type: string;
-  avg_velocity: number;
-  velocity_change: number;
-}
-
-interface StatcastData {
-  pitch_mix: StatcastPitch[];
-  control_metrics: StatcastControlMetrics;
-  velocity_trends: StatcastVelocityTrend[];
-  is_default_data?: boolean;
-}
-
-interface PitchEffectiveness {
-  fastballEff?: number;
-  sliderEff?: number;
-  curveEff?: number;
-  changeupEff?: number;
-  sinkerEff?: number;
-  cutterEff?: number;
-}
-
-interface StatcastPitcherData extends StatcastData {
-  player_id: number;
-  name: string;
-  pitch_effectiveness?: PitchEffectiveness;
-}
 
 // Helper function to convert number to decimal string
 const toDecimalString = (num: number): string => num.toString();
@@ -534,20 +494,7 @@ export const getBatterPlateDiscipline = withCache(
 export async function getAdvancedMatchupAnalysis(params: {
   pitcherId: number;
   batterId: number;
-}): Promise<{
-  matchupRating: number; // 0-100 scale
-  advantagePlayer: "pitcher" | "batter" | "neutral";
-  confidenceScore: number; // 0-100 scale
-  factors: {
-    historicalSuccess: number; // -10 to +10
-    pitchTypeAdvantage: number; // -10 to +10
-    plateSplitAdvantage: number; // -10 to +10
-    recentForm: number; // -10 to +10
-    velocityTrend: number; // -5 to +5
-  };
-  keyInsights: string[];
-  historicalMatchup?: PitcherBatterMatchup;
-}> {
+}): Promise<AdvancedMatchupAnalysis> {
   const { pitcherId, batterId } = params;
 
   try {
@@ -951,24 +898,7 @@ export async function getAdvancedMatchupAnalysis(params: {
 export async function analyzeHitterMatchup(
   batterId: number,
   pitcherId: number
-): Promise<{
-  plateAppearances: number;
-  babip: number;
-  sampleSize: number;
-  confidence: number;
-  expectedAvg: number;
-  expectedObp: number;
-  expectedSlg: number;
-  strikeoutProbability: number;
-  walkProbability: number;
-  homeProbability: number;
-  stats: {
-    plateAppearances: number;
-    walks: number;
-    hitByPitch: number;
-    strikeouts: number;
-  };
-}> {
+): Promise<HitterMatchupAnalysis> {
   // Get batter and pitcher stats
   const batterStats = await getBatterStats({ batterId });
   const pitcherStats = await getPitcherStats({ pitcherId });

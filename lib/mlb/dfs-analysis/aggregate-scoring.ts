@@ -8,6 +8,7 @@ import { calculateExpectedStrikeouts } from "./strikeouts";
 import { calculateExpectedInnings } from "./innings-pitched";
 import { calculateRareEventPotential } from "./rare-events";
 import { getPitcherHomeRunVulnerability } from "../player/pitcher-stats";
+import { PitcherDFSPoints, PlayerProjection } from "../types/analysis/scoring";
 
 /**
  * Calculate comprehensive DFS points projection for a pitcher
@@ -62,7 +63,7 @@ export async function calculatePitcherDfsProjection(
       hrVulnerability
     ] = await Promise.all([
       calculatePitcherWinProbability(pitcherId, gamePk, season),
-      calculateExpectedStrikeouts(pitcherId, parseInt(gamePk), season.toString()),
+      calculateExpectedStrikeouts(pitcherId, parseInt(gamePk), gamePk),
       calculateExpectedInnings(pitcherId, gamePk, season),
       calculateRareEventPotential(pitcherId, gamePk, season),
       getPitcherHomeRunVulnerability(pitcherId, season)
@@ -124,7 +125,7 @@ export async function calculatePitcherDfsProjection(
     };
     
     const overallConfidence = 
-      (inningsProjection.confidenceScore * confidenceWeights.innings) +
+      (inningsProjection.confidence * confidenceWeights.innings) +
       (strikeoutProjection.confidence * confidenceWeights.strikeouts) +
       (winProjection.confidenceScore * confidenceWeights.win) +
       (rareEventsProjection.confidenceScore * confidenceWeights.rareEvents);
@@ -167,7 +168,7 @@ export async function calculatePitcherDfsProjection(
       confidence: {
         overall: Math.round(overallConfidence),
         categoryScores: {
-          innings: inningsProjection.confidenceScore,
+          innings: inningsProjection.confidence,
           strikeouts: strikeoutProjection.confidence,
           win: winProjection.confidenceScore,
           rareEvents: rareEventsProjection.confidenceScore
