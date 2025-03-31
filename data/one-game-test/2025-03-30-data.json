@@ -1,0 +1,439 @@
+{
+  "date": "2025-03-30",
+  "games": [
+    {
+      "gameId": 778526,
+      "gameTime": "2025-03-30T17:35:00Z",
+      "status": {
+        "abstractGameState": "Final",
+        "codedGameState": "F",
+        "detailedState": "Final",
+        "statusCode": "F",
+        "startTimeTBD": false,
+        "abstractGameCode": "F"
+      },
+      "homeTeam": {
+        "id": 120,
+        "name": "Washington Nationals"
+      },
+      "awayTeam": {
+        "id": 143,
+        "name": "Philadelphia Phillies"
+      },
+      "venue": {
+        "id": 3309,
+        "name": "Nationals Park"
+      },
+      "lineups": {
+        "away": [
+          656941,
+          664761,
+          547180,
+          592206,
+          681082,
+          624641,
+          669016,
+          665019,
+          665561
+        ],
+        "home": [
+          682928,
+          695578,
+          671277,
+          660688,
+          663993,
+          605137,
+          657557,
+          686611,
+          696285
+        ],
+        "awayBatters": [
+          {
+            "id": 656941,
+            "fullName": "Kyle Schwarber",
+            "position": "DH"
+          },
+          {
+            "id": 664761,
+            "fullName": "Alec Bohm",
+            "position": "3B"
+          },
+          {
+            "id": 547180,
+            "fullName": "Bryce Harper",
+            "position": "1B"
+          },
+          {
+            "id": 592206,
+            "fullName": "Nick Castellanos",
+            "position": "RF"
+          },
+          {
+            "id": 681082,
+            "fullName": "Bryson Stott",
+            "position": "2B"
+          },
+          {
+            "id": 624641,
+            "fullName": "Edmundo Sosa",
+            "position": "SS"
+          },
+          {
+            "id": 669016,
+            "fullName": "Brandon Marsh",
+            "position": "LF"
+          },
+          {
+            "id": 679032,
+            "fullName": "Johan Rojas",
+            "position": "CF"
+          },
+          {
+            "id": 665019,
+            "fullName": "Kody Clemens",
+            "position": "PH"
+          },
+          {
+            "id": 665561,
+            "fullName": "Rafael Marchán",
+            "position": "C"
+          },
+          {
+            "id": 605400,
+            "fullName": "Aaron Nola",
+            "position": "P"
+          },
+          {
+            "id": 614179,
+            "fullName": "José Ruiz",
+            "position": "P"
+          },
+          {
+            "id": 621381,
+            "fullName": "Matt Strahm",
+            "position": "P"
+          },
+          {
+            "id": 621383,
+            "fullName": "Tanner Banks",
+            "position": "P"
+          }
+        ],
+        "homeBatters": [
+          {
+            "id": 682928,
+            "fullName": "CJ Abrams",
+            "position": "SS"
+          },
+          {
+            "id": 695578,
+            "fullName": "James Wood",
+            "position": "LF"
+          },
+          {
+            "id": 671277,
+            "fullName": "Luis García Jr.",
+            "position": "2B"
+          },
+          {
+            "id": 660688,
+            "fullName": "Keibert Ruiz",
+            "position": "C"
+          },
+          {
+            "id": 663993,
+            "fullName": "Nathaniel Lowe",
+            "position": "1B"
+          },
+          {
+            "id": 605137,
+            "fullName": "Josh Bell",
+            "position": "DH"
+          },
+          {
+            "id": 657557,
+            "fullName": "Paul DeJong",
+            "position": "3B"
+          },
+          {
+            "id": 686611,
+            "fullName": "Dylan Crews",
+            "position": "RF"
+          },
+          {
+            "id": 696285,
+            "fullName": "Jacob Young",
+            "position": "CF"
+          },
+          {
+            "id": 680730,
+            "fullName": "Mitchell Parker",
+            "position": "P"
+          },
+          {
+            "id": 678606,
+            "fullName": "Jose A. Ferrer",
+            "position": "P"
+          },
+          {
+            "id": 605347,
+            "fullName": "Jorge López",
+            "position": "P"
+          },
+          {
+            "id": 695418,
+            "fullName": "Brad Lord",
+            "position": "P"
+          },
+          {
+            "id": 640448,
+            "fullName": "Kyle Finnegan",
+            "position": "P"
+          }
+        ],
+        "confirmed": true,
+        "sourceTimestamp": "2025-03-31T05:55:57.899Z",
+        "__isApiSource": true
+      },
+      "pitchers": {
+        "away": {
+          "id": 605400,
+          "fullName": "Aaron Nola"
+        },
+        "home": {
+          "id": 680730,
+          "fullName": "Mitchell Parker"
+        }
+      },
+      "environment": {
+        "temperature": 79,
+        "windSpeed": 16,
+        "windDirection": "Out To CF",
+        "precipitation": false,
+        "isOutdoor": true,
+        "venueId": 3309,
+        "venueName": "Nationals Park",
+        "hasRoof": false,
+        "sourceTimestamp": "2025-03-31T05:55:57.606Z",
+        "__isApiSource": true
+      },
+      "teamStats": {
+        "home": {
+          "hitting": {
+            "gamesPlayed": 3,
+            "groundOuts": 23,
+            "airOuts": 16,
+            "runs": 14,
+            "doubles": 6,
+            "triples": 0,
+            "homeRuns": 6,
+            "strikeOuts": 39,
+            "baseOnBalls": 7,
+            "intentionalWalks": 0,
+            "hits": 26,
+            "hitByPitch": 2,
+            "avg": ".252",
+            "atBats": 103,
+            "obp": ".313",
+            "slg": ".485",
+            "ops": ".798",
+            "caughtStealing": 1,
+            "stolenBases": 5,
+            "stolenBasePercentage": ".833",
+            "groundIntoDoublePlay": 1,
+            "numberOfPitches": 479,
+            "plateAppearances": 113,
+            "totalBases": 50,
+            "rbi": 14,
+            "leftOnBase": 19,
+            "sacBunts": 1,
+            "sacFlies": 0,
+            "babip": ".345",
+            "groundOutsToAirouts": "1.44",
+            "catchersInterference": 0,
+            "atBatsPerHomeRun": "17.17"
+          },
+          "pitching": {
+            "gamesPlayed": 3,
+            "gamesStarted": 3,
+            "groundOuts": 25,
+            "airOuts": 24,
+            "runs": 19,
+            "doubles": 4,
+            "triples": 1,
+            "homeRuns": 5,
+            "strikeOuts": 30,
+            "baseOnBalls": 18,
+            "intentionalWalks": 0,
+            "hits": 30,
+            "hitByPitch": 1,
+            "avg": ".275",
+            "atBats": 109,
+            "obp": ".383",
+            "slg": ".468",
+            "ops": ".851",
+            "caughtStealing": 1,
+            "stolenBases": 1,
+            "stolenBasePercentage": ".500",
+            "groundIntoDoublePlay": 3,
+            "numberOfPitches": 509,
+            "era": "5.79",
+            "inningsPitched": "28.0",
+            "wins": 1,
+            "losses": 2,
+            "saves": 1,
+            "saveOpportunities": 2,
+            "holds": 0,
+            "blownSaves": 1,
+            "earnedRuns": 18,
+            "whip": "1.71",
+            "battersFaced": 128,
+            "outs": 84,
+            "gamesPitched": 3,
+            "completeGames": 0,
+            "shutouts": 0,
+            "strikes": 323,
+            "strikePercentage": ".630",
+            "hitBatsmen": 1,
+            "balks": 1,
+            "wildPitches": 3,
+            "pickoffs": 0,
+            "totalBases": 51,
+            "groundOutsToAirouts": "1.04",
+            "winPercentage": ".333",
+            "pitchesPerInning": "18.18",
+            "gamesFinished": 3,
+            "strikeoutWalkRatio": "1.67",
+            "strikeoutsPer9Inn": "9.64",
+            "walksPer9Inn": "5.79",
+            "hitsPer9Inn": "9.64",
+            "runsScoredPer9": "6.11",
+            "homeRunsPer9": "1.61",
+            "catchersInterference": 0,
+            "sacBunts": 0,
+            "sacFlies": 0
+          },
+          "name": "Washington Nationals"
+        },
+        "away": {
+          "hitting": {
+            "gamesPlayed": 3,
+            "groundOuts": 25,
+            "airOuts": 24,
+            "runs": 19,
+            "doubles": 4,
+            "triples": 1,
+            "homeRuns": 5,
+            "strikeOuts": 30,
+            "baseOnBalls": 18,
+            "intentionalWalks": 0,
+            "hits": 30,
+            "hitByPitch": 1,
+            "avg": ".275",
+            "atBats": 109,
+            "obp": ".383",
+            "slg": ".468",
+            "ops": ".851",
+            "caughtStealing": 1,
+            "stolenBases": 1,
+            "stolenBasePercentage": ".500",
+            "groundIntoDoublePlay": 3,
+            "numberOfPitches": 509,
+            "plateAppearances": 128,
+            "totalBases": 51,
+            "rbi": 17,
+            "leftOnBase": 26,
+            "sacBunts": 0,
+            "sacFlies": 0,
+            "babip": ".338",
+            "groundOutsToAirouts": "1.04",
+            "catchersInterference": 0,
+            "atBatsPerHomeRun": "21.80"
+          },
+          "pitching": {
+            "gamesPlayed": 3,
+            "gamesStarted": 3,
+            "groundOuts": 23,
+            "airOuts": 16,
+            "runs": 14,
+            "doubles": 6,
+            "triples": 0,
+            "homeRuns": 6,
+            "strikeOuts": 39,
+            "baseOnBalls": 7,
+            "intentionalWalks": 0,
+            "hits": 26,
+            "hitByPitch": 2,
+            "avg": ".252",
+            "atBats": 103,
+            "obp": ".313",
+            "slg": ".485",
+            "ops": ".798",
+            "caughtStealing": 1,
+            "stolenBases": 5,
+            "stolenBasePercentage": ".833",
+            "groundIntoDoublePlay": 1,
+            "numberOfPitches": 479,
+            "era": "4.67",
+            "inningsPitched": "27.0",
+            "wins": 2,
+            "losses": 1,
+            "saves": 0,
+            "saveOpportunities": 1,
+            "holds": 1,
+            "blownSaves": 1,
+            "earnedRuns": 14,
+            "whip": "1.22",
+            "battersFaced": 113,
+            "outs": 81,
+            "gamesPitched": 3,
+            "completeGames": 0,
+            "shutouts": 0,
+            "strikes": 317,
+            "strikePercentage": ".660",
+            "hitBatsmen": 2,
+            "balks": 0,
+            "wildPitches": 0,
+            "pickoffs": 0,
+            "totalBases": 50,
+            "groundOutsToAirouts": "1.44",
+            "winPercentage": ".667",
+            "pitchesPerInning": "17.74",
+            "gamesFinished": 3,
+            "strikeoutWalkRatio": "5.57",
+            "strikeoutsPer9Inn": "13.00",
+            "walksPer9Inn": "2.33",
+            "hitsPer9Inn": "8.67",
+            "runsScoredPer9": "4.67",
+            "homeRunsPer9": "2.00",
+            "catchersInterference": 0,
+            "sacBunts": 1,
+            "sacFlies": 0
+          },
+          "name": "Philadelphia Phillies"
+        }
+      },
+      "ballpark": {
+        "overall": 1,
+        "handedness": {
+          "rHB": 1,
+          "lHB": 1
+        },
+        "types": {
+          "singles": 1,
+          "doubles": 1,
+          "triples": 1,
+          "homeRuns": 1,
+          "runs": 1
+        },
+        "venueId": 3309
+      }
+    }
+  ],
+  "count": 0,
+  "collectTimestamp": "2025-03-31T05:55:57.524Z",
+  "seasons": [
+    "2024",
+    "2025"
+  ]
+}

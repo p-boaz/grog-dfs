@@ -11,7 +11,9 @@
     "db:studio": "drizzle-kit studio",
     "lint": "next lint",
     "typecheck": "tsc --noEmit --watch",
-    "dev:with-types": "concurrently \"pnpm dev\" \"pnpm typecheck\""
+    "dev:with-types": "concurrently \"pnpm dev\" \"pnpm typecheck\"",
+    "test:one-game": "tsx -e \"import { collectDailyDFSData } from './lib/mlb/daily-data-collector'; collectDailyDFSData(undefined, 1).then(result => { console.log('\\n--- Test Summary ---'); console.log(`Date: ${result.date}`); console.log(`Number of games processed: ${result.games.length}`); }).catch(console.error)\"",
+    "test:one-game:detailed": "tsx -e \"import { collectDailyDFSData } from './lib/mlb/daily-data-collector'; collectDailyDFSData(undefined, 1).then(result => { console.log('\\n--- Test Summary ---'); console.log(`Date: ${result.date}`); console.log(`Number of games processed: ${result.games.length}`); if (result.games.length > 0) { const game = result.games[0]; console.log('\\nGame details:'); console.log(`ID: ${game.gameId}`); console.log(`Teams: ${game.awayTeam.name} @ ${game.homeTeam.name}`); console.log(`Venue: ${game.venue.name}`); console.log('\\nLineups:'); console.log(`Home: ${game.lineups.home.length} players`); console.log(`Away: ${game.lineups.away.length} players`); console.log('\\nPitchers:'); if (game.pitchers.home) { console.log(`Home: ${game.pitchers.home.fullName}`); } else { console.log('Home: TBD'); } if (game.pitchers.away) { console.log(`Away: ${game.pitchers.away.fullName}`); } else { console.log('Away: TBD'); } console.log('\\nEnvironment:'); console.log(`Temperature: ${game.environment.temperature}°F`); console.log(`Wind: ${game.environment.windSpeed} mph ${game.environment.windDirection}`); console.log(`Outdoor: ${game.environment.isOutdoor ? 'Yes' : 'No'}`); } }).catch(console.error)\""
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.3",

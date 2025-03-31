@@ -1,0 +1,120 @@
+[
+  {
+    "pitcherId": 680730,
+    "name": "Mitchell Parker",
+    "team": "Washington Nationals",
+    "opponent": "Philadelphia Phillies",
+    "gameId": 778526,
+    "venue": "Nationals Park",
+    "stats": {
+      "seasonStats": {
+        "gamesPlayed": null,
+        "inningsPitched": null,
+        "wins": null,
+        "losses": null,
+        "era": null,
+        "whip": null,
+        "strikeouts": null,
+        "walks": null,
+        "saves": null,
+        "homeRunsAllowed": null
+      },
+      "homeRunVulnerability": {
+        "gamesStarted": 1,
+        "inningsPitched": "6.1",
+        "homeRunsAllowed": 0,
+        "hrPer9": 0,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 1
+      }
+    },
+    "projections": {
+      "winProbability": 21,
+      "expectedStrikeouts": 0,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": -1.286499999999999,
+        "upside": -1.543799999999999,
+        "floor": -1.0291999999999992
+      }
+    },
+    "environment": {
+      "temperature": 79,
+      "windSpeed": 16,
+      "windDirection": "Out To CF",
+      "isOutdoor": true
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38257588",
+      "salary": 7300,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 12.77
+    }
+  },
+  {
+    "pitcherId": 605400,
+    "name": "Aaron Nola",
+    "team": "Philadelphia Phillies",
+    "opponent": "Washington Nationals",
+    "gameId": 778526,
+    "venue": "Nationals Park",
+    "stats": {
+      "seasonStats": {
+        "gamesPlayed": null,
+        "inningsPitched": null,
+        "wins": null,
+        "losses": null,
+        "era": null,
+        "whip": null,
+        "strikeouts": null,
+        "walks": null,
+        "saves": null,
+        "homeRunsAllowed": null
+      },
+      "homeRunVulnerability": {
+        "gamesStarted": 1,
+        "inningsPitched": "5.1",
+        "homeRunsAllowed": 2,
+        "hrPer9": 3.5294117647058827,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 10
+      }
+    },
+    "projections": {
+      "winProbability": 21,
+      "expectedStrikeouts": 0,
+      "expectedInnings": 5,
+      "dfsProjection": {
+        "expectedPoints": -1.286499999999999,
+        "upside": -1.543799999999999,
+        "floor": -1.0291999999999992
+      }
+    },
+    "environment": {
+      "temperature": 79,
+      "windSpeed": 16,
+      "windDirection": "Out To CF",
+      "isOutdoor": true
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38257577",
+      "salary": 9200,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 18.1
+    }
+  }
+]

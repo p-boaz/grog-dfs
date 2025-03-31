@@ -1,19 +1,19 @@
 // daily-data-collector.ts
 
+import { format } from "date-fns";
+import { getProbableLineups } from "../mlb/game/lineups";
 import {
+  getBallparkFactors,
   getSchedule,
   getTeamStats,
-  getBallparkFactors,
 } from "../mlb/schedule/schedule";
-import { getProbableLineups } from "../mlb/game/lineups";
 import { getGameEnvironmentData } from "../mlb/weather/weather";
-import { analyzeStartingPitchers } from "./dfs-analysis/starting-pitcher-analysis";
-import { analyzeBatters } from "./dfs-analysis/batter-analysis";
-import { format } from "date-fns";
-import type { DailyMLBData } from "./core/types";
-import { getDKSalaries } from "./draftkings/salaries";
-import { populateMlbIds } from "./draftkings/player-mapping";
 import { saveToJsonFile } from "./core/file-utils";
+import type { DailyMLBData } from "./core/types";
+import { analyzeBatters } from "./dfs-analysis/batter-analysis";
+import { analyzeStartingPitchers } from "./dfs-analysis/starting-pitcher-analysis";
+import { populateMlbIds } from "./draftkings/player-mapping";
+import { getDKSalaries } from "./draftkings/salaries";
 
 // Constants for placeholder values
 const PLACEHOLDER = {
@@ -29,13 +29,18 @@ const SUPPORTED_SEASONS = ["2024", "2025"];
 /**
  * Collect and analyze daily DFS data for MLB games
  * @param date Optional date string in YYYY-MM-DD format. If not provided, uses today's date.
+ * @param maxGames Optional number to limit the games processed (for testing)
  * @returns Promise<DailyMLBData> Daily MLB data including games, stats, and analysis
  */
 export async function collectDailyDFSData(
-  date?: string
+  date?: string,
+  maxGames?: number
 ): Promise<DailyMLBData> {
   const targetDate = date || format(new Date(), "yyyy-MM-dd");
   console.log(`Starting data collection for ${targetDate}...`);
+  if (maxGames) {
+    console.log(`Limiting collection to ${maxGames} game(s) for testing`);
+  }
 
   try {
     // Load DraftKings salaries first to create maps for both batters and pitchers
@@ -76,7 +81,7 @@ export async function collectDailyDFSData(
 
     // Get schedule data
     const scheduleResponse = await getSchedule(targetDate);
-    const gameData =
+    let gameData =
       scheduleResponse.dates?.[0]?.games.map((game) => ({
         gameId: game.gamePk,
         gameTime: game.gameDate,
@@ -142,6 +147,12 @@ export async function collectDailyDFSData(
           },
         },
       })) || [];
+
+    // Limit games if maxGames is specified
+    if (maxGames && gameData.length > maxGames) {
+      console.log(`Limiting from ${gameData.length} to ${maxGames} game(s)`);
+      gameData = gameData.slice(0, maxGames);
+    }
 
     // Initialize data object with required properties
     const data: DailyMLBData = {
@@ -396,13 +407,16 @@ export async function collectDailyDFSData(
 /**
  * Wrapper function for daily automated data collection
  * Uses today's date and provides simplified interface
+ * @param maxGames Optional parameter to limit the number of games processed (for testing)
  */
-export async function runDailyDataCollection(): Promise<DailyMLBData> {
+export async function runDailyDataCollection(
+  maxGames?: number
+): Promise<DailyMLBData> {
   const today = new Date().toISOString().split("T")[0];
   console.log(`Starting daily data collection for ${today}...`);
 
   try {
-    const data = await collectDailyDFSData(today);
+    const data = await collectDailyDFSData(today, maxGames);
     console.log(`Successfully collected data for ${today}`);
     return data;
   } catch (error) {
