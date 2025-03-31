@@ -7,6 +7,10 @@ import { getCatcherDefense } from "../player/defense-stats";
 import { getEnhancedBatterData } from "../services/batter-data-service";
 import { getEnhancedPitcherData } from "../services/pitcher-data-service";
 import { getGameEnvironmentData } from "../weather/weather";
+import { StolenBaseAnalysis } from "../types/analysis/events";
+import { PlayerSBCareerProfile, PlayerSBSeasonStats, StolenBaseContext } from "../types/player/batter";
+import { CatcherDefenseMetrics } from "../types/player/common";
+import { PitcherHoldMetrics } from "../types/player/pitcher";
 
 /**
  * Result interface for stolen base probability calculations
@@ -41,16 +45,7 @@ export interface StolenBaseProbabilityResult {
 export async function getPlayerSeasonStats(
   playerId: number,
   season = new Date().getFullYear()
-): Promise<{
-  battingAverage: number;
-  stolenBases: number;
-  stolenBaseAttempts: number;
-  caughtStealing: number;
-  gamesPlayed: number;
-  stolenBaseRate: number;
-  stolenBaseSuccess: number;
-  sprintSpeed?: number;
-} | null> {
+): Promise<PlayerSBSeasonStats | null> {
   try {
     // Fetch enhanced player data that includes Statcast metrics
     const enhancedData = await getEnhancedBatterData(playerId, season);
@@ -95,14 +90,7 @@ export async function getPlayerSeasonStats(
  * Get career stolen base profile based on historical data
  * Useful for identifying players with consistent stealing tendencies
  */
-export async function getCareerStolenBaseProfile(playerId: number): Promise<{
-  careerStolenBases: number;
-  careerGames: number;
-  careerRate: number;
-  bestSeasonSB: number;
-  bestSeasonRate: number;
-  recentTrend: "increasing" | "decreasing" | "stable";
-} | null> {
+export async function getCareerStolenBaseProfile(playerId: number): Promise<PlayerSBCareerProfile | null> {
   try {
     // Get enhanced player data with career stats
     const enhancedData = await getEnhancedBatterData(playerId);
@@ -196,15 +184,7 @@ export async function getCareerStolenBaseProfile(playerId: number): Promise<{
 export async function getCatcherStolenBaseDefense(
   catcherId: number,
   season = new Date().getFullYear()
-): Promise<{
-  caughtStealingPercentage: number;
-  stolenBasesAllowed: number;
-  caughtStealing: number;
-  attemptsPer9: number;
-  defensiveRating: number;
-  popTime?: number;
-  armStrength?: number;
-} | null> {
+): Promise<CatcherDefenseMetrics | null> {
   try {
     // Delegate to the defense-stats implementation
     const defenseMetrics = await getCatcherDefense({
@@ -242,13 +222,7 @@ export async function getCatcherStolenBaseDefense(
 export async function getPitcherRunningGameControl(
   pitcherId: number,
   season = new Date().getFullYear()
-): Promise<{
-  pickoffMoves: number; // 1-10 scale
-  slideStepTime: number; // Time to plate with slide step in seconds
-  timeToPlate: number; // Regular delivery time in seconds
-  stolenBaseAllowedRate: number; // SB allowed per 9 innings
-  holdRating: number; // 1-10 scale of ability to hold runners
-} | null> {
+): Promise<PitcherHoldMetrics | null> {
   try {
     // Get enhanced pitcher data that may include time to plate metrics
     const pitcherData = await getEnhancedPitcherData(pitcherId, season);
@@ -296,7 +270,7 @@ export async function calculateStolenBaseProbability(
   batterId: number,
   gamePk: string,
   oppPitcherId: number
-): Promise<StolenBaseProbabilityResult> {
+): Promise<StolenBaseAnalysis & StolenBaseProbabilityResult> {
   try {
     // Get enhanced batter data with Statcast metrics
     const enhancedBatterData = await getEnhancedBatterData(batterId);

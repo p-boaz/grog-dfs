@@ -8,6 +8,8 @@ import { analyzeHitterMatchup } from "../player/matchups";
 import { getPitcherStats } from "../player/pitcher-stats";
 import { getEnhancedBatterData } from "../services/batter-data-service";
 import { getEnhancedPitcherData } from "../services/pitcher-data-service";
+import { BatterControlFactors, ControlMatchupData, ControlProjection, PitcherControlProfile } from "../types/analysis/pitcher";
+import { BatterPlateDiscipline } from "../types/player/batter";
 
 // Points awarded in DraftKings for these categories
 export const WALK_POINTS = 2;
@@ -23,26 +25,7 @@ export const HBP_POINTS = 2;
 export async function getPlayerPlateDisciplineStats(
   playerId: number,
   season = new Date().getFullYear()
-): Promise<{
-  walks: number;
-  strikeouts: number;
-  hitByPitch: number;
-  plateAppearances: number;
-  atBats: number;
-  games: number;
-  walkRate: number;
-  strikeoutRate: number;
-  hbpRate: number;
-  bbToK: number; // Walk to strikeout ratio
-  atBatsPerWalk: number;
-  discipline: {
-    chaseRate?: number; // Swing % at pitches outside zone
-    zoneSwingRate?: number; // Swing % at pitches in zone
-    contactRate?: number; // Contact % on swings
-    zoneContactRate?: number; // Contact % on pitches in zone
-    firstPitchStrikeRate?: number; // First pitch strike percentage
-  };
-} | null> {
+): Promise<BatterPlateDiscipline | null> {
   try {
     // Fetch full player stats
     const playerData = await getBatterStats({
@@ -318,25 +301,7 @@ export async function getCareerPlateDisciplineProfile(
 export async function getPitcherControlProfile(
   pitcherId: number,
   season = new Date().getFullYear()
-): Promise<{
-  gamesStarted: number;
-  inningsPitched: number;
-  walks: number;
-  strikeouts: number;
-  hitBatsmen: number;
-  walksPerNine: number;
-  strikeoutsPerNine: number;
-  hbpPerNine: number;
-  strikeoutToWalkRatio: number;
-  control: {
-    walkPropensity: "high" | "medium" | "low";
-    hbpPropensity: "high" | "medium" | "low";
-    zonePercentage?: number; // Percent of pitches in the strike zone
-    firstPitchStrikePercentage?: number;
-    pitchEfficiency?: number; // Average pitches per PA
-  };
-  controlRating: number; // 0-10 scale where 5 is average
-} | null> {
+): Promise<PitcherControlProfile | null> {
   try {
     // Get pitcher stats
     const pitcherData = await getPitcherStats({
@@ -461,17 +426,7 @@ export async function getPitcherControlProfile(
 export async function getMatchupWalkData(
   batterId: number,
   pitcherId: number
-): Promise<{
-  plateAppearances: number;
-  walks: number;
-  hitByPitch: number;
-  strikeouts: number;
-  walkRate: number;
-  hbpRate: number;
-  strikeoutRate: number;
-  sampleSize: "large" | "medium" | "small" | "none";
-  relativeWalkRate: number; // How this matchup compares to batter's overall walk rate
-} | null> {
+): Promise<ControlMatchupData | null> {
   try {
     // Get matchup data
     const matchup = await analyzeHitterMatchup(batterId, pitcherId).catch(
@@ -838,23 +793,7 @@ export async function calculateExpectedWalks(
 export async function calculatePlateDisciplineProjection(
   batterId: number,
   opposingPitcherId: number
-): Promise<{
-  walks: {
-    expected: number;
-    points: number;
-    confidence: number;
-  };
-  hbp: {
-    expected: number;
-    points: number;
-    confidence: number;
-  };
-  total: {
-    expected: number;
-    points: number;
-    confidence: number;
-  };
-}> {
+): Promise<ControlProjection> {
   try {
     // Get walks projection
     const projection = await calculateExpectedWalks(

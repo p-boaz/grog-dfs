@@ -7,6 +7,7 @@ import { getGameFeed } from "../game/game-feed";
 import { getGameEnvironmentData } from "../index";
 import { getPitcherStats } from "../player/pitcher-stats";
 import { getTeamStats } from "../schedule/schedule";
+import { RareEventAnalysis } from "../types/analysis/events";
 
 /**
  * Calculate rare event potential and expected DFS points
@@ -16,18 +17,7 @@ export async function calculateRareEventPotential(
   pitcherId: number,
   gamePk: string,
   season: number = new Date().getFullYear()
-): Promise<{
-  eventProbabilities: {
-    completeGame: number;
-    qualityStart: number;
-    shutout: number;
-    noHitter: number;
-    perfectGame: number;
-  };
-  expectedRareEventPoints: number;
-  riskRewardRating: number;
-  confidenceScore: number;
-}> {
+): Promise<RareEventAnalysis> {
   try {
     // Get pitcher stats for both current and previous season
     const [currentSeasonStats, previousSeasonStats] = await Promise.all([

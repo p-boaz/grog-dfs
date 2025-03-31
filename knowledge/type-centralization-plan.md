@@ -44,7 +44,8 @@
    - Update remaining files to use centralized types:
      - ✅ Files in `/lib/mlb/services/` directory
      - ✅ Key files in `/lib/mlb/dfs-analysis/` directory
-     - Remaining files in `/lib/mlb/dfs-analysis/` directory 👈 Next priority
+     - ✅ Remaining files in `/lib/mlb/dfs-analysis/` directory completed
+     - Environment-related files in `/lib/mlb/weather/*.ts` and `/lib/mlb/game/*.ts` 👈 Next priority
 
 2. **Streamline Type Definitions**
 
@@ -75,28 +76,28 @@
    import { CentralizedType } from "../types/domain/file";
    ```
 
-## Next Files to Update
+## Files Updated
 
 1. ✅ Services files:
-   - Files in `/lib/mlb/services/*.ts` completed
-2. Analysis-related files:
-   - ✅ Key files in `/lib/mlb/dfs-analysis/` updated:
-      - `strikeouts.ts`
-      - `home-runs.ts`
-      - `aggregate-scoring.ts`
-      - `innings-pitched.ts`
-   - Remaining `/lib/mlb/dfs-analysis/*.ts` files 👈 Next priority:
-      - `batter-analysis.ts`
-      - `hits.ts`
-      - `pitcher-control.ts`
-      - `pitcher-win.ts`
-      - `plate-discipline.ts`
-      - `rare-events.ts`
-      - `run-production.ts`
-      - `starting-pitcher-analysis.ts`
-      - `stolen-bases.ts`
+   - All files in `/lib/mlb/services/*.ts` completed
 
-3. Environment-related files:
+2. ✅ Analysis-related files:
+   - Key files in `/lib/mlb/dfs-analysis/`:
+      - `strikeouts.ts` ✅ Completed 
+      - `home-runs.ts` ✅ Completed
+      - `aggregate-scoring.ts` ✅ Completed
+      - `innings-pitched.ts` ✅ Completed
+      - `starting-pitcher-analysis.ts` ✅ Completed
+      - `hits.ts` ✅ Completed (centralized types and fixed interface conflicts)
+      - `pitcher-control.ts` ✅ Completed (improved existing types and added 7 new interfaces)
+      - `pitcher-win.ts` ✅ Completed (implemented WinProbabilityAnalysis interface)
+      - `plate-discipline.ts` ✅ Completed (implemented BatterControlFactors, ControlMatchupData, ControlProjection, PitcherControlProfile)
+      - `rare-events.ts` ✅ Completed (implemented RareEventAnalysis interface)
+      - `run-production.ts` ✅ Completed (implemented RunProductionStats, RunProductionAnalysis and added several new interfaces) 
+      - `stolen-bases.ts` ✅ Completed (implemented StolenBaseAnalysis, PlayerSBSeasonStats, PlayerSBCareerProfile, PitcherHoldMetrics)
+   - Fixed quality metrics calculation issue in `batter-analysis.ts` ✅
+
+3. 🚧 Environment-related files (next priority):
    - `/lib/mlb/weather/*.ts`
    - `/lib/mlb/game/*.ts`
 
@@ -145,3 +146,33 @@
    - When modifying a function to use centralized types, it's important to carefully align all return values with the new type
    - Adding null checking (e.g., `pitcherMetrics?.property || defaultValue`) improves robustness with optional properties
    - Remember to update all error/fallback return paths when changing interface definitions
+
+9. **Interface mismatches causing runtime issues:**
+   - Discovered quality metrics weren't appearing in test results because necessary properties were missing
+   - The issue: `BatterQualityMetrics` interface and calculation functions referenced advanced stats that weren't being calculated
+   - Fixed by:
+     1. Adding missing advanced stats fields (`babip`, `iso`, `hrRate`, `kRate`, `bbRate`, `sbRate`) to the `BatterSeasonStats` interface
+     2. Implementing calculation logic for these advanced metrics in `transformBatterStats()`
+     3. Resolving a mismatch between the `BatterQualityMetrics` interface and calculation functions
+   - Lesson: Just declaring fields in interfaces isn't enough; implementation functions must properly calculate and populate those fields
+
+10. **Resolving interface naming conflicts:**
+   - Discovered an interface naming conflict between `batter.ts` and `events.ts` which both defined a `HitProjection` interface
+   - This caused type errors when both were imported in the same file
+   - Fixed by:
+     1. Renaming one interface to `DetailedHitProjection` in `events.ts`
+     2. Updating all references to the renamed interface
+     3. Adding type assertions where necessary for cross-file compatibility
+   - Lesson: When working with a large codebase, it's important to choose unique names for interfaces or use namespaces to avoid conflicts
+
+11. **Adding new type interfaces improves organization:**
+   - While updating the dfs-analysis files, we found opportunities to add new type interfaces:
+     - For `run-production.ts`, we added RunProductionStats, CareerRunProductionProfile, TeamOffensiveContext, etc.
+     - For `pitcher.ts`, we added PitcherHoldMetrics for stolen base analysis
+     - For `plate-discipline.ts`, we leveraged BatterControlFactors and ControlMatchupData
+   - These new interfaces help organize the code and provide better documentation
+
+12. **Type composition benefits:**
+   - Used type intersection (e.g., `StolenBaseAnalysis & StolenBaseProbabilityResult`) to combine standardized interfaces with module-specific additions
+   - This approach preserves the original interfaces while adding custom properties needed by specific modules
+   - Makes it easy to gradually migrate to the new type system while maintaining backward compatibility

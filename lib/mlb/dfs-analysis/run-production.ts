@@ -8,6 +8,8 @@ import { getBallparkFactors } from "../index";
 import { getBatterStats } from "../player/batter-stats";
 import { getPitcherStats } from "../player/pitcher-stats";
 import { getTeamStats } from "../schedule/schedule";
+import { RunProductionAnalysis, RunProductionStats } from "../types/analysis/batter";
+import { BallparkHitFactor, BatterPlatoonSplits } from "../types/analysis/events";
 
 // Points awarded in DraftKings for runs and RBIs
 export const RUN_POINTS = 2;
@@ -50,24 +52,7 @@ export const LINEUP_RBI_WEIGHTS = {
 export async function getPlayerRunProductionStats(
   playerId: number,
   season = new Date().getFullYear()
-): Promise<{
-  runs: number;
-  rbi: number;
-  games: number;
-  plateAppearances: number;
-  runsPerGame: number;
-  rbiPerGame: number;
-  onBasePercentage: number;
-  sluggingPct: number;
-  battingAverage: number;
-  runningSpeed?: number; // 0-100 scale
-  battedBallProfile?: {
-    flyBallPct: number;
-    lineDrivePct: number;
-    groundBallPct: number;
-    hardHitPct: number;
-  };
-} | null> {
+): Promise<RunProductionStats | null> {
   try {
     // Fetch full player stats
     const playerData = await getBatterStats({
@@ -136,17 +121,7 @@ export async function getPlayerRunProductionStats(
 /**
  * Get career run production metrics and trends
  */
-export async function getCareerRunProductionProfile(playerId: number): Promise<{
-  careerRuns: number;
-  careerRBI: number;
-  careerGames: number;
-  careerRunsPerGame: number;
-  careerRBIPerGame: number;
-  bestSeasonRuns: number;
-  bestSeasonRBI: number;
-  recentTrend: "increasing" | "decreasing" | "stable";
-  seasonToSeasonVariance: number; // 0-1 scale, how consistent are the player's run production numbers
-} | null> {
+export async function getCareerRunProductionProfile(playerId: number): Promise<CareerRunProductionProfile | null> {
   try {
     // Get player stats with historical data
     const playerData = await getBatterStats({
@@ -296,16 +271,7 @@ export async function getCareerRunProductionProfile(playerId: number): Promise<{
 export async function getTeamOffensiveContext(
   teamId: number,
   season = new Date().getFullYear()
-): Promise<{
-  runsPerGame: number;
-  teamOffensiveRating: number; // 0-100 scale
-  lineupStrength: {
-    overall: number; // 0-100 scale
-    topOfOrder: number; // 0-100 scale
-    bottomOfOrder: number; // 0-100 scale
-  };
-  runnersOnBaseFrequency: number; // Estimated % of time runners are on base
-} | null> {
+): Promise<TeamOffensiveContext | null> {
   try {
     // Get team stats
     const teamData = await getTeamStats(teamId, season);
@@ -360,11 +326,7 @@ export async function getTeamOffensiveContext(
 /**
  * Get ballpark run factors
  */
-export async function getBallparkRunFactor(venueId: number): Promise<{
-  overall: number;
-  runFactor: number;
-  rbiFactor: number;
-} | null> {
+export async function getBallparkRunFactor(venueId: number): Promise<BallparkHitFactor | null> {
   try {
     const season = new Date().getFullYear().toString();
     const factors = await getBallparkFactors({
@@ -398,14 +360,7 @@ export async function getBallparkRunFactor(venueId: number): Promise<{
 export async function getLineupContext(
   playerId: number,
   gameId: string
-): Promise<{
-  lineupPosition: number | null;
-  battingOrder: string | null; // "top" | "middle" | "bottom"
-  hittersBehind: number; // Number of hitters behind in lineup
-  hittersAhead: number; // Number of hitters ahead in lineup
-  expectedRunOpportunities: number; // Estimated times runner will be on base ahead of batter
-  expectedRbiOpportunities: number; // Estimated times runner will be on base for batter to drive in
-} | null> {
+): Promise<LineupContext | null> {
   try {
     // Get lineup information
     const lineupData = await getProbableLineups({
@@ -501,17 +456,7 @@ export async function getLineupContext(
 export async function getPitcherRunAllowance(
   pitcherId: number,
   season = new Date().getFullYear()
-): Promise<{
-  gamesStarted: number;
-  inningsPitched: number;
-  earnedRuns: number;
-  runsAllowed: number;
-  era: number; // Earned Run Average
-  runsPer9: number;
-  whip: number; // Walks + Hits per Inning Pitched
-  runScoringOpportunityRate: number; // Rate of creating run scoring opportunities
-  runAllowanceRating: number; // 0-10 scale where 5 is average
-} | null> {
+): Promise<PitcherRunAllowance | null> {
   try {
     // Get pitcher stats
     const pitcherData = await getPitcherStats({
@@ -587,18 +532,7 @@ export async function calculateExpectedRuns(
   gameId: string,
   opposingPitcherId: number,
   isHome: boolean
-): Promise<{
-  expectedRuns: number;
-  confidenceScore: number; // 0-100
-  factors: {
-    playerBaseline: number;
-    lineupPosition: number;
-    teamOffense: number;
-    pitcherQuality: number;
-    ballpark: number;
-    gameContext: number;
-  };
-}> {
+): Promise<ExpectedRuns> {
   try {
     // Gather all required data in parallel
     const [
@@ -754,19 +688,7 @@ export async function calculateExpectedRBIs(
   gameId: string,
   opposingPitcherId: number,
   isHome: boolean
-): Promise<{
-  expectedRBIs: number;
-  confidenceScore: number; // 0-100
-  factors: {
-    playerBaseline: number;
-    lineupPosition: number;
-    teamOffense: number;
-    pitcherQuality: number;
-    ballpark: number;
-    battingSkill: number;
-    gameContext: number;
-  };
-}> {
+): Promise<ExpectedRBIs> {
   try {
     // Gather all required data in parallel
     const [
@@ -933,23 +855,7 @@ export async function calculateRunProductionProjection(
   gameId: string,
   opposingPitcherId: number,
   isHome: boolean
-): Promise<{
-  runs: {
-    expected: number;
-    points: number;
-    confidence: number;
-  };
-  rbis: {
-    expected: number;
-    points: number;
-    confidence: number;
-  };
-  total: {
-    expected: number;
-    points: number;
-    confidence: number;
-  };
-}> {
+): Promise<RunProductionAnalysis> {
   try {
     // Get both runs and RBIs projections
     const [runsProjection, rbisProjection] = await Promise.all([

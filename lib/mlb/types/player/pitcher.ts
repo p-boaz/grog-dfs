@@ -5,6 +5,23 @@
  */
 
 /**
+ * Pitcher's ability to hold runners and control the running game
+ * 
+ * @property pickoffMoves - Pickoff move quality (1-10 scale)
+ * @property slideStepTime - Time to plate with slide step (seconds)
+ * @property timeToPlate - Regular delivery time (seconds)
+ * @property stolenBaseAllowedRate - SB allowed per 9 innings
+ * @property holdRating - Rating of ability to hold runners (1-10)
+ */
+export interface PitcherHoldMetrics {
+  pickoffMoves: number; // 1-10 scale
+  slideStepTime: number; // Time to plate with slide step in seconds
+  timeToPlate: number; // Regular delivery time in seconds
+  stolenBaseAllowedRate: number; // SB allowed per 9 innings
+  holdRating: number; // 1-10 scale of ability to hold runners
+}
+
+/**
  * Pitcher's performance stats for a specific season
  * 
  * @property gamesPlayed - Total games played/appeared in

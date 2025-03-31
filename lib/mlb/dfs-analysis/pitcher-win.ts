@@ -7,6 +7,7 @@ import { getGameFeed } from "../game/game-feed";
 import { getGameEnvironmentData } from "../index";
 import { getPitcherStats } from "../player/pitcher-stats";
 import { getTeamStats } from "../schedule/schedule";
+import { WinProbabilityAnalysis } from "../types/analysis/pitcher";
 
 /**
  * Get pitcher's win statistics and performance metrics
@@ -386,7 +387,7 @@ export async function calculatePitcherWinProbability(
   pitcherId: number,
   gamePk: string,
   season: number = new Date().getFullYear()
-): Promise<{
+): Promise<WinProbabilityAnalysis & {
   pitcherFactors: {
     pitcherQuality: number; // 1-10 scale
     durability: number; // 1-10 scale
@@ -402,9 +403,7 @@ export async function calculatePitcherWinProbability(
     homeAway: number; // -1 to +1 scale
     weather: number; // -1 to +1 scale
   };
-  overallWinProbability: number; // 0-100%
   expectedDfsPoints: number; // Expected DFS points from a win (4 points in DK)
-  confidenceScore: number; // 1-100, how confident we are in this prediction
 }> {
   try {
     // Get pitcher stats
