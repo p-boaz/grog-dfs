@@ -1,11 +1,13 @@
 import { withCache, DEFAULT_CACHE_TTL, markAsApiSource } from "../cache";
 import { makeMLBApiRequest } from "../core/api-client";
+import { GameFeedResponse } from "../types/game";
 import { 
-  GameFeedResponse, 
   MLBWeatherData, 
   DetailedWeatherInfo,
-  GameEnvironmentData
-} from "../core/types";
+  GameEnvironmentData,
+  WeatherImpactAnalysis
+} from "../types/environment/weather";
+import { BallparkFactors } from "../types/environment/ballpark";
 
 /**
  * Helper function to parse wind string into components
@@ -205,10 +207,13 @@ export const getGameEnvironmentData = withCache(
  * Fetch ballpark factors - raw function without caching
  * This will eventually pull data from a proper source rather than hardcoded values
  */
+/**
+ * Fetch ballpark factors for a specific venue and season
+ */
 async function fetchBallparkFactors(params: {
   venueId: number;
   season: string;
-}): Promise<any> {
+}): Promise<BallparkFactors> {
   const { venueId, season } = params;
 
   // Database of estimated factors based on historical data

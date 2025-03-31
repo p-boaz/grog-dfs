@@ -1,6 +1,6 @@
 import { withCache, DEFAULT_CACHE_TTL, markAsApiSource } from "../cache";
 import { makeMLBApiRequest } from "../core/api-client";
-import { ProbableLineup } from "../core/types";
+import { ProbableLineup } from "../types/game";
 
 /**
  * Predict lineup based on historical data and team patterns

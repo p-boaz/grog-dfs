@@ -1,6 +1,9 @@
 import { DEFAULT_CACHE_TTL, markAsApiSource, withCache } from "../cache";
 import { makeMLBApiRequest } from "../core/api-client";
-import { GameBoxScoreResponse, GameFeedResponse } from "../core/types";
+import { 
+  GameBoxScoreResponse, 
+  GameFeedResponse 
+} from "../types/game";
 
 /**
  * Fetch game data with different strategies for live vs historical games

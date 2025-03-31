@@ -39,13 +39,13 @@
 
 ## 🚧 Remaining Tasks
 
-1. **Continue Import Updates**
+1. **Import Updates Completed** ✅
 
-   - Update remaining files to use centralized types:
+   - All targeted files have been updated to use centralized types:
      - ✅ Files in `/lib/mlb/services/` directory
      - ✅ Key files in `/lib/mlb/dfs-analysis/` directory
      - ✅ Remaining files in `/lib/mlb/dfs-analysis/` directory completed
-     - Environment-related files in `/lib/mlb/weather/*.ts` and `/lib/mlb/game/*.ts` 👈 Next priority
+     - ✅ Environment-related files in `/lib/mlb/weather/weather.ts` and `/lib/mlb/game/*.ts`
 
 2. **Streamline Type Definitions**
 
@@ -97,9 +97,10 @@
       - `stolen-bases.ts` ✅ Completed (implemented StolenBaseAnalysis, PlayerSBSeasonStats, PlayerSBCareerProfile, PitcherHoldMetrics)
    - Fixed quality metrics calculation issue in `batter-analysis.ts` ✅
 
-3. 🚧 Environment-related files (next priority):
-   - `/lib/mlb/weather/*.ts`
-   - `/lib/mlb/game/*.ts`
+3. ✅ Environment-related files:
+   - `/lib/mlb/weather/weather.ts` ✅ Completed (imported types from environment/weather.ts and environment/ballpark.ts)
+   - `/lib/mlb/game/game-feed.ts` ✅ Completed (imported GameBoxScoreResponse and GameFeedResponse from types/game)
+   - `/lib/mlb/game/lineups.ts` ✅ Completed (imported ProbableLineup from types/game)
 
 ## Lessons Learned
 
@@ -176,3 +177,9 @@
    - Used type intersection (e.g., `StolenBaseAnalysis & StolenBaseProbabilityResult`) to combine standardized interfaces with module-specific additions
    - This approach preserves the original interfaces while adding custom properties needed by specific modules
    - Makes it easy to gradually migrate to the new type system while maintaining backward compatibility
+
+13. **Duplicated types across the codebase:**
+   - Found duplicate weather and game-related types defined in both `/lib/mlb/core/types.ts` and in dedicated type modules 
+   - Resolved by updating imports to use the centralized types from their dedicated modules
+   - Kept module-specific imports (e.g., GameFeedResponse) from the appropriate modules rather than using the main index export
+   - This approach reduces the risk of importing conflicting types through different paths
