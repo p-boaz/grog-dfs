@@ -50,12 +50,12 @@
       "homeRuns": 1
     },
     "draftKings": {
-      "draftKingsId": null,
-      "salary": 0,
+      "draftKingsId": "38263505",
+      "salary": 6500,
       "positions": [
-        "SP"
+        "RP"
       ],
-      "avgPointsPerGame": 0
+      "avgPointsPerGame": 10.82
     }
   },
   {
@@ -109,12 +109,12 @@
       "homeRuns": 1
     },
     "draftKings": {
-      "draftKingsId": null,
-      "salary": 0,
+      "draftKingsId": "38263500",
+      "salary": 8700,
       "positions": [
         "SP"
       ],
-      "avgPointsPerGame": 0
+      "avgPointsPerGame": 12.02
     }
   }
 ]

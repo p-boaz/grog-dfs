@@ -30,7 +30,7 @@
         "awayBatters": [],
         "homeBatters": [],
         "confirmed": false,
-        "sourceTimestamp": "2025-03-31T08:11:43.369Z",
+        "sourceTimestamp": "2025-03-31T08:43:36.155Z",
         "__isApiSource": true
       },
       "pitchers": {
@@ -52,7 +52,7 @@
         "venueId": 4,
         "venueName": "Rate Field",
         "hasRoof": false,
-        "sourceTimestamp": "2025-03-31T08:11:43.056Z",
+        "sourceTimestamp": "2025-03-31T08:43:35.808Z",
         "__isApiSource": true
       },
       "teamStats": {
@@ -268,8 +268,8 @@
       }
     }
   ],
-  "count": 0,
-  "collectTimestamp": "2025-03-31T08:11:42.993Z",
+  "count": 33,
+  "collectTimestamp": "2025-03-31T08:43:35.730Z",
   "seasons": [
     "2024",
     "2025"
