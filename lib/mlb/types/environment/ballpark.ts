@@ -33,6 +33,25 @@ export interface BallparkFactors {
 }
 
 /**
+ * Ballpark hit factor for specific hit types
+ * 
+ * @property singles - Factor for singles (1.0 is neutral)
+ * @property doubles - Factor for doubles (1.0 is neutral)
+ * @property triples - Factor for triples (1.0 is neutral)
+ * @property homeRuns - Factor for home runs (1.0 is neutral)
+ * @property runFactor - Factor for runs (1.0 is neutral)
+ */
+export interface BallparkHitFactor {
+  singles: number;
+  doubles: number;
+  triples: number;
+  homeRuns: number;
+  runFactor: number; // Factor for runs (1.0 is neutral)
+  overall?: number; // Overall ballpark factor
+  rbiFactor?: number; // Factor specifically for RBIs
+}
+
+/**
  * Detailed ballpark dimensions
  * 
  * @property leftField - Left field distance in feet

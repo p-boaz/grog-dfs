@@ -196,8 +196,10 @@ export async function getCatcherStolenBaseDefense(
       return null;
     }
 
-    // Map to enhanced interface format
+    // Map to enhanced interface format with required playerId and fullName
     return {
+      playerId: defenseMetrics.playerId,
+      fullName: defenseMetrics.fullName || "Unknown Catcher",
       caughtStealingPercentage: defenseMetrics.caughtStealingPercentage,
       stolenBasesAllowed: defenseMetrics.stolenBasesAllowed,
       caughtStealing: defenseMetrics.caughtStealing,
@@ -497,16 +499,22 @@ export async function calculateStolenBaseProbability(
     const finalConfidence = Math.min(10, Math.max(1, confidence));
 
     return {
-      probability: finalProbability,
-      expectedValue,
+      // StolenBaseAnalysis required properties
+      expectedSteals: finalProbability * attemptLikelihood,
+      stealAttemptProbability: attemptLikelihood,
+      stealSuccessProbability: finalProbability,
       factors: {
-        batterProfile: batterFactor,
+        batterSpeed: sprintSpeedFactor,
+        batterTendency: batterFactor,
         catcherDefense: catcherFactor,
-        pitcherHold: pitcherFactor,
-        gameContext: contextFactor,
-        sprintSpeed: sprintSpeedFactor,
+        pitcherHoldRate: pitcherFactor,
+        gameScriptFactor: contextFactor,
       },
       confidence: finalConfidence,
+      
+      // Additional properties
+      probability: finalProbability,
+      expectedValue,
       insightDetails,
     };
   } catch (error) {
@@ -517,16 +525,22 @@ export async function calculateStolenBaseProbability(
 
     // Return conservative default values
     return {
-      probability: 0.67, // League average success rate
-      expectedValue: 0.67 * 0.5 * 5, // Average expected points with 50% attempt likelihood
+      // StolenBaseAnalysis required properties
+      expectedSteals: 0.33, // Approximately one every 3 games
+      stealAttemptProbability: 0.5, // 50% chance of attempting
+      stealSuccessProbability: 0.67, // League average success rate
       factors: {
-        batterProfile: 1.0,
-        catcherDefense: 1.0,
-        pitcherHold: 1.0,
-        gameContext: 1.0,
-        sprintSpeed: 1.0,
+        batterSpeed: 5.0, // Average speed
+        batterTendency: 5.0, // Average tendency
+        catcherDefense: 5.0, // Average defense
+        pitcherHoldRate: 5.0, // Average hold
+        gameScriptFactor: 5.0, // Average game situation
       },
       confidence: 3, // Low confidence due to error
+      
+      // Additional properties
+      probability: 0.67, // League average success rate
+      expectedValue: 0.67 * 0.5 * 5 // Average expected points with 50% attempt likelihood
     };
   }
 }

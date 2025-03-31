@@ -191,8 +191,8 @@ export async function calculatePitcherDfsProjection(
     const overallConfidence =
       inningsProjection.confidence * confidenceWeights.innings +
       strikeoutProjection.confidence * confidenceWeights.strikeouts +
-      winProjection.confidenceScore * confidenceWeights.win +
-      rareEventsProjection.confidenceScore * confidenceWeights.rareEvents;
+      winProjection.confidence * confidenceWeights.win +
+      rareEventsProjection.confidence * confidenceWeights.rareEvents;
 
     // Calculate pitcher quality rating (1-10 scale)
     const qualityComponents = [
@@ -237,8 +237,8 @@ export async function calculatePitcherDfsProjection(
         categoryScores: {
           innings: inningsProjection.confidence,
           strikeouts: strikeoutProjection.confidence,
-          win: winProjection.confidenceScore,
-          rareEvents: rareEventsProjection.confidenceScore,
+          win: winProjection.confidence,
+          rareEvents: rareEventsProjection.confidence,
         },
       },
     };

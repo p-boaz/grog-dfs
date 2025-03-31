@@ -1,16 +1,16 @@
 "use client";
 
+import { EnvironmentInfo } from "@/components/dfs/EnvironmentInfo";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
-  TableHeader,
   TableBody,
-  TableRow,
-  TableHead,
   TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
-import { EnvironmentInfo } from "@/components/dfs/EnvironmentInfo";
 import { useDFSData } from "@/lib/hooks/useDFSData";
 
 interface BatterData {
@@ -151,7 +151,7 @@ export function DFSBattersView({ date }: DFSBattersViewProps) {
             <CardTitle>Top Value Play</CardTitle>
           </CardHeader>
           <CardContent>
-            {topValuePlay && (
+            {topValuePlay ? (
               <div>
                 <div className="font-medium">{topValuePlay.name}</div>
                 <div className="text-sm text-muted-foreground">
@@ -160,15 +160,23 @@ export function DFSBattersView({ date }: DFSBattersViewProps) {
                 <div className="mt-2">
                   <div className="text-sm">
                     Projected:{" "}
-                    {topValuePlay.projections.dfsProjection.expectedPoints.toFixed(
-                      2
-                    )}
+                    {topValuePlay.projections?.dfsProjection?.expectedPoints
+                      ? topValuePlay.projections.dfsProjection.expectedPoints.toFixed(
+                          2
+                        )
+                      : "N/A"}
                   </div>
                   <div className="text-sm">
                     Floor:{" "}
-                    {topValuePlay.projections.dfsProjection.floor.toFixed(2)}
+                    {topValuePlay.projections?.dfsProjection?.floor
+                      ? topValuePlay.projections.dfsProjection.floor.toFixed(2)
+                      : "N/A"}
                   </div>
                 </div>
+              </div>
+            ) : (
+              <div className="text-sm text-muted-foreground">
+                No data available
               </div>
             )}
           </CardContent>
@@ -179,7 +187,7 @@ export function DFSBattersView({ date }: DFSBattersViewProps) {
             <CardTitle>Highest Upside</CardTitle>
           </CardHeader>
           <CardContent>
-            {highestUpside && (
+            {highestUpside ? (
               <div>
                 <div className="font-medium">{highestUpside.name}</div>
                 <div className="text-sm text-muted-foreground">
@@ -188,16 +196,26 @@ export function DFSBattersView({ date }: DFSBattersViewProps) {
                 <div className="mt-2">
                   <div className="text-sm">
                     Upside:{" "}
-                    {highestUpside.projections.dfsProjection.upside.toFixed(2)}
+                    {highestUpside.projections?.dfsProjection?.upside
+                      ? highestUpside.projections.dfsProjection.upside.toFixed(
+                          2
+                        )
+                      : "N/A"}
                   </div>
                   <div className="text-sm">
                     HR Prob:{" "}
-                    {(
-                      highestUpside.projections.homeRunProbability * 100
-                    ).toFixed(1)}
+                    {highestUpside.projections?.homeRunProbability
+                      ? (
+                          highestUpside.projections.homeRunProbability * 100
+                        ).toFixed(1)
+                      : "N/A"}
                     %
                   </div>
                 </div>
+              </div>
+            ) : (
+              <div className="text-sm text-muted-foreground">
+                No data available
               </div>
             )}
           </CardContent>
@@ -284,21 +302,34 @@ export function DFSBattersView({ date }: DFSBattersViewProps) {
                     </div>
                   </TableCell>
                   <TableCell>
-                    {batter.projections.dfsProjection.expectedPoints.toFixed(2)}
+                    {batter.projections?.dfsProjection?.expectedPoints
+                      ? batter.projections.dfsProjection.expectedPoints.toFixed(
+                          2
+                        )
+                      : "N/A"}
                   </TableCell>
                   <TableCell>
-                    {batter.projections.dfsProjection.floor.toFixed(2)}
+                    {batter.projections?.dfsProjection?.floor
+                      ? batter.projections.dfsProjection.floor.toFixed(2)
+                      : "N/A"}
                   </TableCell>
                   <TableCell>
-                    {batter.projections.dfsProjection.upside.toFixed(2)}
+                    {batter.projections?.dfsProjection?.upside
+                      ? batter.projections.dfsProjection.upside.toFixed(2)
+                      : "N/A"}
                   </TableCell>
                   <TableCell>
-                    {(batter.projections.homeRunProbability * 100).toFixed(1)}%
+                    {batter.projections?.homeRunProbability
+                      ? (batter.projections.homeRunProbability * 100).toFixed(1)
+                      : "N/A"}
+                    %
                   </TableCell>
                   <TableCell>
-                    {(batter.projections.stolenBaseProbability * 100).toFixed(
-                      1
-                    )}
+                    {batter.projections?.stolenBaseProbability
+                      ? (
+                          batter.projections.stolenBaseProbability * 100
+                        ).toFixed(1)
+                      : "N/A"}
                     %
                   </TableCell>
                   <TableCell>

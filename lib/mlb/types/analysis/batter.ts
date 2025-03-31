@@ -369,3 +369,62 @@ export interface DetailedHitProjections {
     confidence: number; // 0-100
   };
 }
+
+/**
+ * Expected runs projection for a batter
+ * 
+ * @property expected - Expected runs value
+ * @property ceiling - High-end projection
+ * @property floor - Low-end projection
+ * @property runFactors - Factors affecting the projection (renamed to avoid conflict)
+ * @property confidence - Confidence score (0-100)
+ */
+export interface ExpectedRuns {
+  expected: number;
+  ceiling: number;
+  floor: number;
+  runFactors: {
+    playerSkill: number; // 0-10 scale
+    lineupContext: number; // 0-10 scale
+    opposingPitcher: number; // 0-10 scale
+    ballparkFactor: number; // 0-10 scale
+  };
+  confidence: number; // 0-100
+}
+
+/**
+ * Expected RBIs projection for a batter
+ * 
+ * @property expected - Expected RBI value
+ * @property ceiling - High-end projection
+ * @property floor - Low-end projection
+ * @property rbiFactors - Factors affecting the projection (renamed to avoid conflict)
+ * @property confidence - Confidence score (0-100)
+ */
+export interface ExpectedRBIs {
+  expected: number;
+  ceiling: number;
+  floor: number;
+  rbiFactors: {
+    playerSkill: number; // 0-10 scale
+    lineupContext: number; // 0-10 scale
+    opposingPitcher: number; // 0-10 scale
+    ballparkFactor: number; // 0-10 scale
+  };
+  confidence: number; // 0-100
+}
+
+/**
+ * Pitcher's tendency to allow runs
+ * 
+ * @property runsAllowedPerGame - Average runs allowed per game
+ * @property earnedRunAverage - ERA
+ * @property baseRunners - Average baserunners allowed per inning
+ * @property scoringInningPercentage - % of innings where runs are scored
+ */
+export interface PitcherRunAllowance {
+  runsAllowedPerGame: number;
+  earnedRunAverage: number;
+  baseRunners: number; // Average per inning
+  scoringInningPercentage: number;
+}

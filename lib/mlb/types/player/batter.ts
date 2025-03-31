@@ -126,6 +126,14 @@ export interface BatterSeasonStats {
   plateAppearances?: number | null;
   caughtStealing?: number | null;
   rbi?: number | null; // Alias for rbis for backward compatibility
+  
+  // Advanced metrics needed for quality calculations
+  babip?: number | null;
+  iso?: number | null; 
+  hrRate?: number | null;
+  kRate?: number | null;
+  bbRate?: number | null;
+  sbRate?: number | null;
 }
 
 /**
@@ -169,12 +177,18 @@ export interface BatterPlateDiscipline {
     zoneSwingRate: number; // Swing % on pitches in zone
     whiffRate: number; // Miss % on all swings
     firstPitchSwingRate: number;
+    zoneContactRate?: number; // Contact % on pitches in zone
+    firstPitchStrikeRate?: number; // First pitch strike %
   };
   pitchTypePerformance: {
     vsFastball: number; // Performance score 0-100
     vsBreakingBall: number;
     vsOffspeed: number;
   };
+  // Additional properties needed in code
+  walkRate?: number; // BB/PA
+  hbpRate?: number; // HBP/PA
+  plateAppearances?: number; // Total plate appearances
   sourceTimestamp?: Date;
 }
 

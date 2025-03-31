@@ -545,8 +545,8 @@ export async function estimateHomeRunProbability(
     }
 
     // Adjust for ballpark
-    if (ballparkFactors && ballparkFactors.homeRuns) {
-      parkFactor = ballparkFactors.homeRuns;
+    if (ballparkFactors && ballparkFactors.types && ballparkFactors.types.homeRuns) {
+      parkFactor = ballparkFactors.types.homeRuns;
     }
 
     // Adjust for weather if available and outdoors

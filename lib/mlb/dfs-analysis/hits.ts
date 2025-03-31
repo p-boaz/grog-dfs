@@ -6,51 +6,40 @@
 import { getBallparkFactors, getGameEnvironmentData } from "../index";
 import { getBatterStats } from "../player/batter-stats";
 import { getPitcherStats } from "../player/pitcher-stats";
+import { 
+  BatterSeasonStats, 
+  BatterStats 
+} from "../types/player";
+import {
+  HitType,
+  HIT_TYPE_POINTS,
+  PlayerHitStats,
+  CareerHitProfile,
+  BallparkHitFactor,
+  WeatherHitImpact,
+  PitcherHitVulnerability,
+  MatchupHitStats,
+  BatterPlatoonSplits,
+  HitTypeRates,
+  DetailedHitProjection
+} from "../types/analysis";
+import { PitcherSeasonStats } from "../types/player";
 
-// Enum for hit types
-export enum HitType {
-  SINGLE = "single",
-  DOUBLE = "double",
-  TRIPLE = "triple",
-  HOME_RUN = "homeRun",
+// Interfaces for internal use
+interface PitcherTeam {
+  id: number;
+  venue: {
+    id: number;
+  };
 }
 
-// Points awarded in DraftKings for each hit type
-export const HIT_TYPE_POINTS = {
-  [HitType.SINGLE]: 3,
-  [HitType.DOUBLE]: 5,
-  [HitType.TRIPLE]: 8,
-  [HitType.HOME_RUN]: 10,
-};
-
-// Update the batter stats interface
-interface BatterSeasonStats {
-  gamesPlayed: number;
-  atBats: number;
-  hits: number;
-  homeRuns: number;
-  rbi: number;
-  avg: number;
-  obp: number;
-  slg: number;
-  ops: number;
-  stolenBases: number;
-  caughtStealing: number;
-  doubles: number;
-  triples: number;
-  strikeouts?: number;
-  walks?: number;
-  wOBA?: number;
-  iso?: number;
-  babip?: number;
-  kRate?: number;
-  bbRate?: number;
-  hrRate?: number;
-  sbRate?: number;
-  runs?: number;
-  sacrificeFlies?: number;
+interface PitcherData {
+  primaryPosition: string;
+  seasonStats: any;
+  currentTeam: PitcherTeam;
 }
 
+// Career stats representation for a batter
 interface BatterCareerStats {
   season: string;
   team: string;
@@ -75,24 +64,6 @@ interface BatterCareerStats {
   plateAppearances?: number;
 }
 
-// Simplifying the PitcherSeasonStats interface to avoid type errors
-interface PitcherSeasonStats {
-  [key: string]: any; // Using index signature to avoid specific property type errors
-}
-
-interface PitcherTeam {
-  id: number;
-  venue: {
-    id: number;
-  };
-}
-
-interface PitcherData {
-  primaryPosition: string;
-  seasonStats: PitcherSeasonStats;
-  currentTeam: PitcherTeam;
-}
-
 /**
  * Get player's season stats with focus on hit metrics
  *
@@ -103,24 +74,7 @@ interface PitcherData {
 export async function getPlayerHitStats(
   playerId: number,
   season = new Date().getFullYear()
-): Promise<{
-  battingAverage: number;
-  onBasePercentage: number;
-  sluggingPct: number;
-  hits: number;
-  singles: number;
-  doubles: number;
-  triples: number;
-  atBats: number;
-  games: number;
-  hitRate: number;
-  singleRate: number;
-  doubleRate: number;
-  tripleRate: number;
-  babip?: number; // Batting avg on balls in play
-  lineDriverRate?: number;
-  contactRate?: number;
-} | null> {
+): Promise<PlayerHitStats | null> {
   try {
     // Fetch full player stats
     const playerData = await getBatterStats({
@@ -217,28 +171,7 @@ export async function getPlayerHitStats(
 /**
  * Get career hit profile based on historical data
  */
-export async function getCareerHitProfile(playerId: number): Promise<{
-  careerHits: number;
-  careerSingles: number;
-  careerDoubles: number;
-  careerTriples: number;
-  careerGames: number;
-  careerAtBats: number;
-  careerBattingAverage: number;
-  hitTypeDistribution: {
-    singlePct: number;
-    doublePct: number;
-    triplePct: number;
-    homeRunPct: number;
-  };
-  bestSeasonAvg: number;
-  recentTrend: "increasing" | "decreasing" | "stable";
-  homeVsAway: {
-    homeAvg: number;
-    awayAvg: number;
-    homeAdvantage: number; // Ratio of home to away batting average
-  };
-} | null> {
+export async function getCareerHitProfile(playerId: number): Promise<CareerHitProfile | null> {
   try {
     // Get player stats with historical data
     const playerData = await getBatterStats({
@@ -371,19 +304,7 @@ export async function getCareerHitProfile(playerId: number): Promise<{
 export async function getBallparkHitFactor(
   venueId: number,
   batterHand: "L" | "R" = "R"
-): Promise<{
-  overall: number;
-  byHitType: {
-    singles: number;
-    doubles: number;
-    triples: number;
-    homeRuns: number;
-  };
-  byHandedness: {
-    rHB: number;
-    lHB: number;
-  };
-} | null> {
+): Promise<BallparkHitFactor | null> {
   try {
     const season = new Date().getFullYear().toString();
     const factors = await getBallparkFactors({
@@ -421,21 +342,7 @@ export async function getBallparkHitFactor(
 /**
  * Get weather impact on hit production
  */
-export async function getWeatherHitImpact(gamePk: string): Promise<{
-  temperature: number;
-  windSpeed: number;
-  windDirection: string;
-  isOutdoor: boolean;
-  temperatureFactor: number; // Effect of temperature
-  windFactor: number; // Effect of wind
-  overallFactor: number; // Combined effect
-  byHitType: {
-    singles: number;
-    doubles: number;
-    triples: number;
-    homeRuns: number;
-  };
-} | null> {
+export async function getWeatherHitImpact(gamePk: string): Promise<WeatherHitImpact | null> {
   try {
     // Get game environment data
     const environment = await getGameEnvironmentData({ gamePk });
@@ -506,19 +413,7 @@ export async function getWeatherHitImpact(gamePk: string): Promise<{
 export async function getPitcherHitVulnerability(
   pitcherId: number,
   season = new Date().getFullYear()
-): Promise<{
-  gamesStarted: number;
-  inningsPitched: number;
-  hitsAllowed: number;
-  hitsPer9: number;
-  babip: number; // Batting average on balls in play allowed
-  byHitType: {
-    singles: number; // Vulnerability score by hit type (1-10)
-    doubles: number;
-    triples: number;
-  };
-  hitVulnerability: number; // 0-10 scale where 5 is average
-} | null> {
+): Promise<PitcherHitVulnerability | null> {
   try {
     // Get pitcher stats
     const pitcherData = await getPitcherStats({
@@ -571,8 +466,9 @@ export async function getPitcherHitVulnerability(
     const doubleVuln = vulnerability * 0.9; // Doubles slightly lower
     const tripleVuln = 5; // Default to average for triples (rare event)
 
+    // Convert stats.gamesStarted to a number to match PitcherHitVulnerability type
     return {
-      gamesStarted: (stats as PitcherSeasonStats).gamesStarted || 0,
+      gamesStarted: typeof stats.gamesStarted === 'number' ? stats.gamesStarted : 0,
       inningsPitched: ip,
       hitsAllowed,
       hitsPer9,
@@ -599,16 +495,7 @@ export async function getPitcherHitVulnerability(
 export async function getMatchupHitStats(
   batterId: number,
   pitcherId: number
-): Promise<{
-  atBats: number;
-  hits: number;
-  singles: number;
-  doubles: number;
-  triples: number;
-  battingAverage: number;
-  sampleSize: "large" | "medium" | "small" | "none";
-  advantage: "batter" | "pitcher" | "neutral";
-} | null> {
+): Promise<MatchupHitStats | null> {
   try {
     // Instead of using analyzeHitterMatchup, we'll use basic stats
     const [batterStats, pitcherStats] = await Promise.all([
@@ -670,24 +557,7 @@ export async function getMatchupHitStats(
 /**
  * Get batter's platoon splits (vs LHP/RHP)
  */
-export async function getBatterPlatoonSplits(batterId: number): Promise<{
-  vsLeft: {
-    battingAverage: number;
-    onBasePercentage: number;
-    sluggingPct: number;
-    ops: number;
-    atBats: number;
-  };
-  vsRight: {
-    battingAverage: number;
-    onBasePercentage: number;
-    sluggingPct: number;
-    ops: number;
-    atBats: number;
-  };
-  platoonAdvantage: "vs-left" | "vs-right" | "neutral";
-  platoonSplit: number;
-} | null> {
+export async function getBatterPlatoonSplits(batterId: number): Promise<BatterPlatoonSplits | null> {
   try {
     // Get overall stats instead of splits
     const batterStats = await getBatterStats({ batterId });
@@ -740,34 +610,7 @@ export async function calculateHitTypeRates(
   gameId: string,
   pitcherId: number,
   isHome: boolean
-): Promise<{
-  expectedBA: number;
-  hitTypeRates: {
-    single: number;
-    double: number;
-    triple: number;
-    homeRun: number;
-  };
-  factors: {
-    playerBaseline: number;
-    ballpark: {
-      singles: number;
-      doubles: number;
-      triples: number;
-      homeRuns: number;
-    };
-    weather: {
-      singles: number;
-      doubles: number;
-      triples: number;
-      homeRuns: number;
-    };
-    pitcher: number;
-    matchup: number;
-    platoon: number;
-    homeAway: number;
-  };
-} | null> {
+): Promise<HitTypeRates | null> {
   try {
     // Get player's batting data
     const playerHitStats = await getPlayerHitStats(batterId);
@@ -885,30 +728,7 @@ export async function calculateHitProjection(
   gameId: string,
   opposingPitcherId: number,
   isHome: boolean
-): Promise<{
-  expectedHits: number;
-  byType: {
-    singles: {
-      expected: number;
-      points: number;
-    };
-    doubles: {
-      expected: number;
-      points: number;
-    };
-    triples: {
-      expected: number;
-      points: number;
-    };
-    homeRuns: {
-      expected: number;
-      points: number;
-    };
-  };
-  totalHitPoints: number;
-  atBats: number;
-  confidence: number; // 0-1 scale
-}> {
+): Promise<DetailedHitProjection> {
   try {
     // Calculate hit rates
     const hitRates = await calculateHitTypeRates(
@@ -920,7 +740,7 @@ export async function calculateHitProjection(
 
     // If hit rates calculation failed, use conservative defaults
     if (!hitRates) {
-      return {
+      const defaultProjection: DetailedHitProjection = {
         expectedHits: 0.7, // MLB average is about 1 hit per game
         byType: {
           singles: {
@@ -944,6 +764,7 @@ export async function calculateHitProjection(
         atBats: 4,
         confidence: 0.5, // Medium confidence
       };
+      return defaultProjection;
     }
 
     // Estimate plate appearances/at-bats
@@ -985,7 +806,7 @@ export async function calculateHitProjection(
     // Ensure confidence is in valid range
     confidence = Math.max(0.3, Math.min(0.95, confidence));
 
-    return {
+    const projection: DetailedHitProjection = {
       expectedHits,
       byType: {
         singles: {
@@ -1009,6 +830,7 @@ export async function calculateHitProjection(
       atBats,
       confidence,
     };
+    return projection;
   } catch (error) {
     console.error(
       `Error calculating hit projection for player ${batterId}:`,
@@ -1016,7 +838,7 @@ export async function calculateHitProjection(
     );
 
     // Return default values if calculation fails
-    return {
+    const fallbackProjection: DetailedHitProjection = {
       expectedHits: 0.7,
       byType: {
         singles: {
@@ -1040,5 +862,6 @@ export async function calculateHitProjection(
       atBats: 4,
       confidence: 0.5,
     };
+    return fallbackProjection;
   }
 }

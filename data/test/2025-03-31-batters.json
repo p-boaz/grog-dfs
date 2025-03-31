@@ -1484,11 +1484,11 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 11,
-        "hits": 4,
-        "avg": ".364",
+        "atBats": 2,
+        "hits": 0,
+        "avg": ".000",
         "homeRuns": 0,
-        "ops": ".781"
+        "ops": ".000"
       }
     },
     "projections": {
@@ -1661,7 +1661,7 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 4,
+        "atBats": 1,
         "hits": 0,
         "avg": ".000",
         "homeRuns": 0,
@@ -2723,7 +2723,7 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 3,
+        "atBats": 6,
         "hits": 0,
         "avg": ".000",
         "homeRuns": 0,
@@ -2900,11 +2900,11 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 7,
-        "hits": 2,
-        "avg": ".286",
+        "atBats": 3,
+        "hits": 0,
+        "avg": ".000",
         "homeRuns": 0,
-        "ops": ".715"
+        "ops": ".000"
       }
     },
     "projections": {
@@ -3077,11 +3077,11 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 2,
-        "hits": 0,
-        "avg": ".000",
+        "atBats": 4,
+        "hits": 1,
+        "avg": ".250",
         "homeRuns": 0,
-        "ops": ".333"
+        "ops": ".650"
       }
     },
     "projections": {
@@ -3254,11 +3254,11 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 29,
-        "hits": 9,
-        "avg": ".310",
-        "homeRuns": 3,
-        "ops": "1.102"
+        "atBats": 9,
+        "hits": 2,
+        "avg": ".222",
+        "homeRuns": 0,
+        "ops": ".444"
       }
     },
     "projections": {
@@ -4847,11 +4847,11 @@
       "advantageScore": 0,
       "platoonAdvantage": false,
       "historicalStats": {
-        "atBats": 13,
-        "hits": 3,
-        "avg": ".231",
+        "atBats": 4,
+        "hits": 1,
+        "avg": ".250",
         "homeRuns": 0,
-        "ops": ".517"
+        "ops": ".650"
       }
     },
     "projections": {

@@ -138,30 +138,240 @@ export interface InningsProjection {
 /**
  * Pitcher control metrics projection
  * 
- * @property walks - Projected walks
- * @property hits - Projected hits allowed
- * @property hitsByPitch - Projected hit batters
- * @property total - Combined control impact on scoring
+ * @property walks - Projected walks with range (expected, high, low)
+ * @property hits - Projected hits allowed with range (expected, high, low)
+ * @property hbp - Projected hit by pitch with range (expected, high, low)
+ * @property overall - Overall control rating and confidence
  */
 export interface ControlProjection {
   walks: {
     expected: number;
-    points: number;
-    confidence: number; // 0-100
+    high: number;
+    low: number;
+    range: number;
   };
   hits: {
     expected: number;
-    points: number;
-    confidence: number; // 0-100
+    high: number;
+    low: number;
+    range: number;
   };
-  hitsByPitch: {
+  hbp: {
     expected: number;
-    points: number;
-    confidence: number; // 0-100
+    high: number;
+    low: number;
+    range: number;
   };
-  total: {
+  overall: {
+    controlRating: number; // 0-10 scale
+    confidenceScore: number; // 0-100 scale
+  };
+}
+
+/**
+ * Pitcher's control statistics and metrics
+ * 
+ * @property walks - Total walks issued
+ * @property hits - Total hits allowed
+ * @property hitBatsmen - Total hit batters
+ * @property inningsPitched - Innings pitched
+ * @property gamesStarted - Games started
+ * @property walksPerNine - Walks per 9 innings
+ * @property hitsPerNine - Hits per 9 innings
+ * @property hbpPerNine - Hit batters per 9 innings
+ * @property whip - Walks plus hits per inning pitched
+ * @property strikeoutToWalkRatio - K/BB ratio
+ * @property zonePercentage - Percentage of pitches in strike zone
+ * @property firstPitchStrikePercentage - First pitch strike percentage
+ * @property pitchEfficiency - Average pitches per plate appearance
+ */
+export interface PitcherControlStats {
+  walks: number;
+  hits: number;
+  hitBatsmen: number;
+  inningsPitched: number;
+  gamesStarted: number;
+  walksPerNine: number;
+  hitsPerNine: number;
+  hbpPerNine: number;
+  whip: number;
+  strikeoutToWalkRatio: number;
+  zonePercentage?: number;
+  firstPitchStrikePercentage?: number;
+  pitchEfficiency?: number; // Average pitches per PA
+}
+
+/**
+ * Detailed pitcher control profile with ratings
+ *
+ * @property gamesStarted - Games started
+ * @property inningsPitched - Innings pitched
+ * @property walks - Total walks issued
+ * @property strikeouts - Total strikeouts
+ * @property hits - Total hits allowed
+ * @property hitBatsmen - Total hit batters
+ * @property walksPerNine - Walks per 9 innings
+ * @property hitsPerNine - Hits per 9 innings
+ * @property hbpPerNine - Hit batters per 9 innings
+ * @property whip - Walks plus hits per inning pitched
+ * @property strikeoutToWalkRatio - K/BB ratio
+ * @property control - Control propensity ratings
+ * @property controlRating - Overall control rating (0-10 scale)
+ */
+export interface PitcherControlProfile {
+  gamesStarted: number;
+  inningsPitched: number;
+  walks: number;
+  strikeouts: number;
+  hits: number;
+  hitBatsmen: number;
+  walksPerNine: number;
+  hitsPerNine: number;
+  hbpPerNine: number;
+  whip: number;
+  strikeoutToWalkRatio: number;
+  control: {
+    walkPropensity: "high" | "medium" | "low";
+    hitsPropensity: "high" | "medium" | "low";
+    hbpPropensity: "high" | "medium" | "low";
+    zonePercentage?: number;
+    firstPitchStrikePercentage?: number;
+    pitchEfficiency?: number;
+  };
+  controlRating: number; // 0-10 scale where 5 is average
+}
+
+/**
+ * Career control profile and trends for pitcher
+ *
+ * @property careerWalks - Total career walks
+ * @property careerHits - Total career hits allowed
+ * @property careerHbp - Total career hit batters
+ * @property careerInningsPitched - Total career innings pitched
+ * @property careerWhip - Career WHIP
+ * @property bestSeasonWhip - Best season WHIP
+ * @property recentTrend - Direction of recent trend
+ * @property controlPropensity - Overall control tendency
+ * @property age - Pitcher's age
+ * @property yearsExperience - Years of MLB experience
+ * @property seasonToSeasonConsistency - Consistency rating (0-1 scale)
+ */
+export interface CareerControlProfile {
+  careerWalks: number;
+  careerHits: number;
+  careerHbp: number;
+  careerInningsPitched: number;
+  careerWhip: number;
+  bestSeasonWhip: number;
+  recentTrend: "improving" | "declining" | "stable";
+  controlPropensity: "high" | "medium" | "low";
+  age: number;
+  yearsExperience: number;
+  seasonToSeasonConsistency: number; // 0-1 scale, 1 being very consistent
+}
+
+/**
+ * Batter vs pitcher control matchup data
+ *
+ * @property plateAppearances - Total plate appearances
+ * @property atBats - Total at bats
+ * @property hits - Total hits
+ * @property walks - Total walks
+ * @property hitByPitch - Total hit by pitch
+ * @property strikeouts - Total strikeouts
+ * @property hitRate - Hits / at bats
+ * @property walkRate - Walks / plate appearances
+ * @property hbpRate - HBP / plate appearances
+ * @property strikeoutRate - Strikeouts / plate appearances
+ * @property sampleSize - Quality of sample
+ * @property relativeHitRate - Matchup hit rate vs pitcher's baseline
+ * @property relativeWalkRate - Matchup walk rate vs pitcher's baseline
+ */
+export interface ControlMatchupData {
+  plateAppearances: number;
+  atBats: number;
+  hits: number;
+  walks: number;
+  hitByPitch: number;
+  strikeouts: number;
+  hitRate: number;
+  walkRate: number;
+  hbpRate: number;
+  strikeoutRate: number;
+  sampleSize: "large" | "medium" | "small" | "none";
+  relativeHitRate: number; // How this matchup compares to pitcher's overall hit rate
+  relativeWalkRate: number; // How this matchup compares to pitcher's overall walk rate
+}
+
+/**
+ * Batter's control-related attributes
+ *
+ * @property eyeRating - Batter's ability to draw walks (0-10)
+ * @property contactRating - Batter's ability to make contact (0-10)
+ * @property discipline - Plate discipline metrics
+ */
+export interface BatterControlFactors {
+  eyeRating: number; // 0-10 scale of batter's ability to draw walks
+  contactRating: number; // 0-10 scale of batter's ability to make contact
+  discipline: {
+    chaseRate?: number; // Swing % at pitches outside zone
+    contactRate?: number; // Contact % on swings
+    walkRate: number; // BB/PA
+    strikeoutRate: number; // K/PA
+  };
+}
+
+/**
+ * Expected control events for a pitcher in a game
+ *
+ * @property expectedHitsAllowed - Projected hits allowed
+ * @property expectedWalksAllowed - Projected walks issued
+ * @property expectedHbpAllowed - Projected hit batters
+ * @property confidenceScore - Confidence score (0-100)
+ * @property factors - Factors affecting control events
+ */
+export interface ExpectedControlEvents {
+  expectedHitsAllowed: number;
+  expectedWalksAllowed: number;
+  expectedHbpAllowed: number;
+  confidenceScore: number; // 0-100
+  factors: {
+    pitcherControlFactor: number;
+    batterEyeFactor: number;
+    batterContactFactor: number;
+    matchupFactor: number;
+  };
+}
+
+/**
+ * Expected control outcomes for a game
+ * 
+ * @property walks - Walk projection details
+ * @property hits - Hit projection details
+ * @property hbp - Hit-by-pitch projection details
+ * @property overall - Overall control projection
+ */
+export interface ControlProjection {
+  walks: {
     expected: number;
-    points: number;
-    confidence: number; // 0-100
+    high: number;
+    low: number;
+    range: number;
+  };
+  hits: {
+    expected: number;
+    high: number;
+    low: number;
+    range: number;
+  };
+  hbp: {
+    expected: number;
+    high: number;
+    low: number;
+    range: number;
+  };
+  overall: {
+    controlRating: number; // 0-10 scale
+    confidenceScore: number; // 0-100 scale
   };
 }

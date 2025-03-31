@@ -508,6 +508,27 @@ export async function calculatePitcherWinProbability(
     confidenceScore = Math.min(100, confidenceScore);
 
     return {
+      // WinProbabilityAnalysis required properties
+      overallWinProbability: winProbabilityPct,
+      factorWeights: {
+        pitcherSkill: 0.35,
+        teamOffense: 0.20,
+        teamDefense: 0.10,
+        bullpenStrength: 0.15,
+        homeField: 0.10,
+        opposingPitcher: 0.10,
+      },
+      factors: {
+        pitcherSkill: pitcherQuality,
+        teamOffense: runSupport,
+        teamDefense: 5, // Default value
+        bullpenStrength: bullpenStrengthRating,
+        homeField: homeAdvantage,
+        opposingPitcher: 10 - opposingTeamRating, // Invert scale
+      },
+      confidence: confidenceScore,
+      
+      // Extended properties
       pitcherFactors: {
         pitcherQuality,
         durability,
@@ -523,9 +544,7 @@ export async function calculatePitcherWinProbability(
         homeAway: homeAdvantage,
         weather: weatherFactor,
       },
-      overallWinProbability: winProbabilityPct,
       expectedDfsPoints,
-      confidenceScore,
     };
   } catch (error) {
     console.error(
@@ -535,6 +554,27 @@ export async function calculatePitcherWinProbability(
 
     // Return default values with low confidence
     return {
+      // WinProbabilityAnalysis required properties
+      overallWinProbability: 50,
+      factorWeights: {
+        pitcherSkill: 0.35,
+        teamOffense: 0.20,
+        teamDefense: 0.10,
+        bullpenStrength: 0.15,
+        homeField: 0.10,
+        opposingPitcher: 0.10,
+      },
+      factors: {
+        pitcherSkill: 5,
+        teamOffense: 5,
+        teamDefense: 5,
+        bullpenStrength: 5,
+        homeField: 0,
+        opposingPitcher: 5,
+      },
+      confidence: 20,
+      
+      // Extended properties
       pitcherFactors: {
         pitcherQuality: 5,
         durability: 5,
@@ -550,9 +590,7 @@ export async function calculatePitcherWinProbability(
         homeAway: 0,
         weather: 0,
       },
-      overallWinProbability: 50,
       expectedDfsPoints: 2,
-      confidenceScore: 20,
     };
   }
 }

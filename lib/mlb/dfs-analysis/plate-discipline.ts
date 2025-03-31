@@ -81,6 +81,8 @@ export async function getPlayerPlateDisciplineStats(
       contactRate: 0.75, // League average is ~75%
       zoneContactRate: 0.85, // League average is ~85%
       firstPitchStrikeRate: 0.6, // League average is ~60%
+      whiffRate: 0.25, // League average is ~25%
+      firstPitchSwingRate: 0.28, // League average is ~28%
     };
 
     // Adjust estimated discipline based on available stats
@@ -298,6 +300,26 @@ export async function getCareerPlateDisciplineProfile(
 /**
  * Get pitcher's walk and HBP tendencies
  */
+/**
+ * Determine hits propensity based on hits per 9 innings
+ * @param hits Number of hits allowed
+ * @param inningsPitched Innings pitched
+ * @returns Hit propensity categorization
+ */
+function determineHitsPropensity(hits: number, inningsPitched: number): "high" | "medium" | "low" {
+  if (!inningsPitched) return "medium";
+  
+  const hitsPerNine = (hits / inningsPitched) * 9;
+  
+  if (hitsPerNine >= 9.5) {
+    return "high";
+  } else if (hitsPerNine >= 7.5) {
+    return "medium";
+  } else {
+    return "low";
+  }
+}
+
 export async function getPitcherControlProfile(
   pitcherId: number,
   season = new Date().getFullYear()
@@ -339,9 +361,11 @@ export async function getPitcherControlProfile(
 
     // Extract needed values
     const ip = parseFloat(stats.inningsPitched.toString());
+    const inningsPitched = ip; // For use with determineHitsPropensity
     const walks = stats.walks || 0;
     const strikeouts = stats.strikeouts || 0;
     const hitBatsmen = stats.hitBatsmen || 0;
+    const hits = stats.hits || 0; // For use with determineHitsPropensity
 
     // Calculate per 9 inning rates
     const walksPerNine = (walks / ip) * 9;
@@ -399,11 +423,11 @@ export async function getPitcherControlProfile(
       strikeouts,
       hitBatsmen,
       walksPerNine,
-      strikeoutsPerNine,
       hbpPerNine,
       strikeoutToWalkRatio,
       control: {
         walkPropensity,
+        hitsPropensity: determineHitsPropensity(hits, inningsPitched),
         hbpPropensity,
         zonePercentage: estimatedControl.zonePercentage,
         firstPitchStrikePercentage: estimatedControl.firstPitchStrikePercentage,
@@ -452,13 +476,17 @@ export async function getMatchupWalkData(
     // Calculate rates
     const walkRate = plateAppearances > 0 ? walks / plateAppearances : 0;
     const hbpRate = plateAppearances > 0 ? hitByPitch / plateAppearances : 0;
-    const strikeoutRate =
-      plateAppearances > 0 ? strikeouts / plateAppearances : 0;
-
-    // Calculate relative walk rate
-    // (matchup walk rate / batter's baseline walk rate)
-    const relativeWalkRate =
-      baselineWalkRate > 0 ? walkRate / baselineWalkRate : 1.0;
+    const strikeoutRate = plateAppearances > 0 ? strikeouts / plateAppearances : 0;
+    
+    // Get at-bats and hits
+    const atBats = matchup.stats.atBats || 0;
+    const hits = matchup.stats.hits || 0;
+    const hitRate = atBats > 0 ? hits / atBats : 0;
+    
+    // Calculate relative rates
+    // (matchup rate / batter's baseline rate)
+    const relativeWalkRate = baselineWalkRate > 0 ? walkRate / baselineWalkRate : 1.0;
+    const relativeHitRate = 0.250 / Math.max(0.001, hitRate); // Inverted so higher is better control
 
     // Determine sample size
     let sampleSize: "large" | "medium" | "small" | "none" = "none";
@@ -478,8 +506,12 @@ export async function getMatchupWalkData(
       walkRate,
       hbpRate,
       strikeoutRate,
+      atBats,
+      hits,
+      hitRate,
       sampleSize,
       relativeWalkRate,
+      relativeHitRate
     };
   } catch (error) {
     console.error(
@@ -812,21 +844,29 @@ export async function calculatePlateDisciplineProjection(
     // HBP is less predictable than walks, so lower confidence
     const hbpConfidence = Math.max(40, projection.confidenceScore - 20);
 
+    // Create a ControlProjection object conforming to the interface definition
     return {
       walks: {
         expected: projection.expectedWalks,
-        points: walkPoints,
-        confidence: projection.confidenceScore,
+        high: projection.expectedWalks * 1.3,
+        low: projection.expectedWalks * 0.7,
+        range: projection.expectedWalks * 0.6,
+      },
+      hits: {
+        expected: 3.0, // Average hits allowed per game
+        high: 5.0,
+        low: 1.0,
+        range: 4.0,
       },
       hbp: {
         expected: projection.expectedHbp,
-        points: hbpPoints,
-        confidence: hbpConfidence,
+        high: projection.expectedHbp * 1.5,
+        low: projection.expectedHbp * 0.5,
+        range: projection.expectedHbp,
       },
-      total: {
-        expected: totalExpected,
-        points: totalPoints,
-        confidence: projection.confidenceScore,
+      overall: {
+        controlRating: 5.0,
+        confidenceScore: projection.confidenceScore,
       },
     };
   } catch (error) {
@@ -835,22 +875,29 @@ export async function calculatePlateDisciplineProjection(
       error
     );
 
-    // Return conservative default values
+    // Return conservative default values matching the ControlProjection interface
     return {
       walks: {
         expected: 0.4,
-        points: 0.8,
-        confidence: 50,
+        high: 0.6,
+        low: 0.2,
+        range: 0.4,
+      },
+      hits: {
+        expected: 3.0,
+        high: 4.5,
+        low: 1.5,
+        range: 3.0,
       },
       hbp: {
         expected: 0.04,
-        points: 0.08,
-        confidence: 40,
+        high: 0.06,
+        low: 0.02,
+        range: 0.04,
       },
-      total: {
-        expected: 0.44,
-        points: 0.88,
-        confidence: 50,
+      overall: {
+        controlRating: 5.0,
+        confidenceScore: 50,
       },
     };
   }

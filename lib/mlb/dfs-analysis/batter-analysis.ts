@@ -12,6 +12,7 @@ import {
   getPlayerHitStats,
   getWeatherHitImpact,
 } from "./hits";
+import { DetailedHitProjection } from "../types/analysis";
 import { estimateHomeRunProbability } from "./home-runs";
 import { calculatePlateDisciplineProjection } from "./plate-discipline";
 import { calculateRunProductionProjection } from "./run-production";
@@ -1500,10 +1501,11 @@ async function calculateDetailedHitProjections(
       throw new Error("Failed to calculate hit projection");
     }
 
+    const typedHitProjection = hitProjection as DetailedHitProjection;
     return {
-      total: hitProjection.expectedHits,
-      byType: hitProjection.byType,
-      confidence: hitProjection.confidence,
+      total: typedHitProjection.expectedHits,
+      byType: typedHitProjection.byType,
+      confidence: typedHitProjection.confidence,
       factors: {
         weather: weatherImpact,
         ballpark: ballparkFactors,

@@ -146,6 +146,42 @@ function transformBatterStats(data: any, requestedSeason: number): BatterStats {
       (s: any) => s.season === requestedSeason.toString()
     )?.stat || {};
 
+  // Calculate advanced metrics for quality calculations
+  const atBats = seasonHittingStats.atBats || 0;
+  const hits = seasonHittingStats.hits || 0;
+  const doubles = seasonHittingStats.doubles || 0;
+  const triples = seasonHittingStats.triples || 0;
+  const homeRuns = seasonHittingStats.homeRuns || 0;
+  const walks = seasonHittingStats.walks || 0;
+  const strikeouts = seasonHittingStats.strikeouts || 0;
+  const plateAppearances = seasonHittingStats.plateAppearances || atBats + walks + (seasonHittingStats.hitByPitch || 0) + (seasonHittingStats.sacrificeFlies || 0);
+  const stolenBases = seasonHittingStats.stolenBases || 0;
+  const caughtStealing = seasonHittingStats.caughtStealing || 0;
+  
+  // Calculate BABIP (Batting Average on Balls in Play)
+  const babip = atBats > 0
+    ? (hits - homeRuns) / (atBats - strikeouts - homeRuns + (seasonHittingStats.sacrificeFlies || 0))
+    : 0;
+  
+  // Calculate ISO (Isolated Power)
+  const iso = atBats > 0
+    ? ((doubles + 2 * triples + 3 * homeRuns) / atBats)
+    : 0;
+  
+  // Calculate HR Rate
+  const hrRate = atBats > 0 ? homeRuns / atBats : 0;
+  
+  // Calculate K Rate
+  const kRate = plateAppearances > 0 ? strikeouts / plateAppearances : 0;
+  
+  // Calculate BB Rate
+  const bbRate = plateAppearances > 0 ? walks / plateAppearances : 0;
+  
+  // Calculate SB Rate
+  const sbRate = (stolenBases + caughtStealing) > 0
+    ? stolenBases / (stolenBases + caughtStealing)
+    : 0;
+
   return {
     id: data.people[0].id,
     fullName: data.people[0].fullName,
@@ -154,40 +190,56 @@ function transformBatterStats(data: any, requestedSeason: number): BatterStats {
     batSide: data.people[0].batSide?.code || "",
     seasonStats: {
       gamesPlayed: seasonHittingStats.gamesPlayed || 0,
-      atBats: seasonHittingStats.atBats || 0,
-      hits: seasonHittingStats.hits || 0,
-      doubles: seasonHittingStats.doubles || 0,
-      triples: seasonHittingStats.triples || 0,
-      homeRuns: seasonHittingStats.homeRuns || 0,
+      atBats: atBats,
+      hits: hits,
+      doubles: doubles,
+      triples: triples,
+      homeRuns: homeRuns,
       rbis: seasonHittingStats.rbi || 0,
-      walks: seasonHittingStats.walks || 0,
-      strikeouts: seasonHittingStats.strikeouts || 0,
-      stolenBases: seasonHittingStats.stolenBases || 0,
+      walks: walks,
+      strikeouts: strikeouts,
+      stolenBases: stolenBases,
       avg: seasonHittingStats.avg || 0,
       obp: seasonHittingStats.obp || 0,
       slg: seasonHittingStats.slg || 0,
       ops: seasonHittingStats.ops || 0,
+      plateAppearances: plateAppearances,
+      caughtStealing: caughtStealing,
+      
+      // Add calculated advanced metrics
+      babip: babip,
+      iso: iso,
+      hrRate: hrRate,
+      kRate: kRate,
+      bbRate: bbRate,
+      sbRate: sbRate,
     },
-    careerStats: yearByYearHittingStats.map((year: any) => ({
-      season: year.season,
-      team: year.team?.name || "",
-      gamesPlayed: year.stat?.gamesPlayed || 0,
-      atBats: year.stat?.atBats || 0,
-      hits: year.stat?.hits || 0,
-      homeRuns: year.stat?.homeRuns || 0,
-      rbi: year.stat?.rbi || 0,
-      avg: year.stat?.avg || 0,
-      obp: year.stat?.obp || 0,
-      slg: year.stat?.slg || 0,
-      ops: year.stat?.ops || 0,
-      stolenBases: year.stat?.stolenBases || 0,
-      caughtStealing: year.stat?.caughtStealing || 0,
-      hitByPitches: year.stat?.hitByPitches || 0,
-      sacrificeFlies: year.stat?.sacrificeFlies || 0,
-      walks: year.stat?.baseOnBalls || 0,
-      strikeouts: year.stat?.strikeOuts || 0,
-      plateAppearances: year.stat?.plateAppearances || 0,
-    })),
+    careerStats: yearByYearHittingStats.map((year: any) => {
+      const yearAtBats = year.stat?.atBats || 0;
+      const yearStolenBases = year.stat?.stolenBases || 0;
+      const yearCaughtStealing = year.stat?.caughtStealing || 0;
+      
+      return {
+        season: year.season,
+        team: year.team?.name || "",
+        gamesPlayed: year.stat?.gamesPlayed || 0,
+        atBats: yearAtBats,
+        hits: year.stat?.hits || 0,
+        homeRuns: year.stat?.homeRuns || 0,
+        rbi: year.stat?.rbi || 0,
+        avg: year.stat?.avg || 0,
+        obp: year.stat?.obp || 0,
+        slg: year.stat?.slg || 0,
+        ops: year.stat?.ops || 0,
+        stolenBases: yearStolenBases,
+        caughtStealing: yearCaughtStealing,
+        hitByPitches: year.stat?.hitByPitches || 0,
+        sacrificeFlies: year.stat?.sacrificeFlies || 0,
+        walks: year.stat?.baseOnBalls || 0,
+        strikeouts: year.stat?.strikeOuts || 0,
+        plateAppearances: year.stat?.plateAppearances || 0,
+      };
+    }),
   };
 }
 

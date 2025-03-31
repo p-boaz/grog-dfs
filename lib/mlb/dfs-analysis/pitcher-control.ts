@@ -12,6 +12,15 @@ import {
 } from "../player/batter-stats";
 import { analyzeHitterMatchup } from "../player/matchups";
 import { getPitcherPitchMix, getPitcherStats } from "../player/pitcher-stats";
+import {
+  PitcherControlStats,
+  PitcherControlProfile,
+  CareerControlProfile,
+  ControlMatchupData,
+  BatterControlFactors,
+  ExpectedControlEvents,
+  ControlProjection
+} from "../types/analysis";
 
 // Negative points in DraftKings for these categories
 export const HIT_AGAINST_POINTS = -0.6;
@@ -28,21 +37,7 @@ export const HBP_AGAINST_POINTS = -0.6;
 export async function getPitcherControlStats(
   pitcherId: number,
   season = new Date().getFullYear()
-): Promise<{
-  walks: number;
-  hits: number;
-  hitBatsmen: number;
-  inningsPitched: number;
-  gamesStarted: number;
-  walksPerNine: number;
-  hitsPerNine: number;
-  hbpPerNine: number;
-  whip: number;
-  strikeoutToWalkRatio: number;
-  zonePercentage?: number;
-  firstPitchStrikePercentage?: number;
-  pitchEfficiency?: number; // Average pitches per PA
-} | null> {
+): Promise<PitcherControlStats | null> {
   try {
     // Get pitcher stats
     const pitcherData = await getPitcherStats({
@@ -117,28 +112,7 @@ export async function getPitcherControlStats(
 export async function getPitcherControlProfile(
   pitcherId: number,
   season = new Date().getFullYear()
-): Promise<{
-  gamesStarted: number;
-  inningsPitched: number;
-  walks: number;
-  strikeouts: number;
-  hits: number;
-  hitBatsmen: number;
-  walksPerNine: number;
-  hitsPerNine: number;
-  hbpPerNine: number;
-  whip: number;
-  strikeoutToWalkRatio: number;
-  control: {
-    walkPropensity: "high" | "medium" | "low";
-    hitsPropensity: "high" | "medium" | "low";
-    hbpPropensity: "high" | "medium" | "low";
-    zonePercentage?: number;
-    firstPitchStrikePercentage?: number;
-    pitchEfficiency?: number;
-  };
-  controlRating: number; // 0-10 scale where 5 is average
-} | null> {
+): Promise<PitcherControlProfile | null> {
   try {
     // Get pitcher control stats
     const controlStats = await getPitcherControlStats(pitcherId, season);
@@ -266,19 +240,7 @@ export async function getPitcherControlProfile(
 /**
  * Get career control profile and trends for pitcher
  */
-export async function getCareerControlProfile(pitcherId: number): Promise<{
-  careerWalks: number;
-  careerHits: number;
-  careerHbp: number;
-  careerInningsPitched: number;
-  careerWhip: number;
-  bestSeasonWhip: number;
-  recentTrend: "improving" | "declining" | "stable";
-  controlPropensity: "high" | "medium" | "low";
-  age: number;
-  yearsExperience: number;
-  seasonToSeasonConsistency: number; // 0-1 scale, 1 being very consistent
-} | null> {
+export async function getCareerControlProfile(pitcherId: number): Promise<CareerControlProfile | null> {
   try {
     // Get player stats with historical data
     const pitcherData = await getPitcherStats({
@@ -445,21 +407,7 @@ export async function getCareerControlProfile(pitcherId: number): Promise<{
 export async function getControlMatchupData(
   batterId: number,
   pitcherId: number
-): Promise<{
-  plateAppearances: number;
-  atBats: number;
-  hits: number;
-  walks: number;
-  hitByPitch: number;
-  strikeouts: number;
-  hitRate: number;
-  walkRate: number;
-  hbpRate: number;
-  strikeoutRate: number;
-  sampleSize: "large" | "medium" | "small" | "none";
-  relativeHitRate: number; // How this matchup compares to pitcher's overall hit rate
-  relativeWalkRate: number; // How this matchup compares to pitcher's overall walk rate
-} | null> {
+): Promise<ControlMatchupData | null> {
   try {
     // Get matchup data
     const matchup = await analyzeHitterMatchup(batterId, pitcherId).catch(
@@ -541,16 +489,7 @@ export async function getControlMatchupData(
 /**
  * Get batter's control-related attributes
  */
-export async function getBatterControlFactors(batterId: number): Promise<{
-  eyeRating: number; // 0-10 scale of batter's ability to draw walks
-  contactRating: number; // 0-10 scale of batter's ability to make contact
-  discipline: {
-    chaseRate?: number; // Swing % at pitches outside zone
-    contactRate?: number; // Contact % on swings
-    walkRate: number; // BB/PA
-    strikeoutRate: number; // K/PA
-  };
-} | null> {
+export async function getBatterControlFactors(batterId: number): Promise<BatterControlFactors | null> {
   try {
     // Get batter stats
     const batterStats = await getBatterStats({
@@ -628,18 +567,7 @@ export async function getBatterControlFactors(batterId: number): Promise<{
 export async function calculateExpectedControlEvents(
   pitcherId: number,
   opposingLineup: number[] // Array of batter IDs
-): Promise<{
-  expectedHitsAllowed: number;
-  expectedWalksAllowed: number;
-  expectedHbpAllowed: number;
-  confidenceScore: number; // 0-100
-  factors: {
-    pitcherControlFactor: number;
-    batterEyeFactor: number;
-    batterContactFactor: number;
-    matchupFactor: number;
-  };
-}> {
+): Promise<ExpectedControlEvents> {
   try {
     // Get pitcher's control profile
     const controlProfile = await getPitcherControlProfile(pitcherId).catch(
@@ -790,28 +718,7 @@ export async function calculateExpectedControlEvents(
 export async function calculateControlProjection(
   pitcherId: number,
   opposingLineup: number[] // Array of batter IDs
-): Promise<{
-  hitsAllowed: {
-    expected: number;
-    points: number;
-    confidence: number;
-  };
-  walksAllowed: {
-    expected: number;
-    points: number;
-    confidence: number;
-  };
-  hbpAllowed: {
-    expected: number;
-    points: number;
-    confidence: number;
-  };
-  total: {
-    expected: number;
-    points: number;
-    confidence: number;
-  };
-}> {
+): Promise<ControlProjection> {
   try {
     // Get control events projection
     const projection = await calculateExpectedControlEvents(
@@ -835,17 +742,17 @@ export async function calculateControlProjection(
     const hbpConfidence = Math.max(40, projection.confidenceScore - 20);
 
     return {
-      hitsAllowed: {
+      hits: {
         expected: projection.expectedHitsAllowed,
         points: hitPoints,
         confidence: projection.confidenceScore,
       },
-      walksAllowed: {
+      walks: {
         expected: projection.expectedWalksAllowed,
         points: walkPoints,
         confidence: projection.confidenceScore,
       },
-      hbpAllowed: {
+      hitsByPitch: {
         expected: projection.expectedHbpAllowed,
         points: hbpPoints,
         confidence: hbpConfidence,
@@ -863,18 +770,18 @@ export async function calculateControlProjection(
     );
 
     // Return conservative default values
-    return {
-      hitsAllowed: {
+    const defaultControlProjection: ControlProjection = {
+      hits: {
         expected: 6.0,
         points: 6.0 * HIT_AGAINST_POINTS,
         confidence: 50,
       },
-      walksAllowed: {
+      walks: {
         expected: 2.25,
         points: 2.25 * WALK_AGAINST_POINTS,
         confidence: 50,
       },
-      hbpAllowed: {
+      hitsByPitch: {
         expected: 0.3,
         points: 0.3 * HBP_AGAINST_POINTS,
         confidence: 40,
@@ -888,5 +795,6 @@ export async function calculateControlProjection(
         confidence: 50,
       },
     };
+    return defaultControlProjection;
   }
 }

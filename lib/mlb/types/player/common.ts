@@ -138,3 +138,36 @@ export interface BatteryVulnerability {
   pitcherFactor: number; // How much the pitcher influences vulnerability (0-1)
   catcherMetrics: CatcherDefenseMetrics | null;
 }
+
+/**
+ * Interface for player stolen base stats for a season
+ * 
+ * @property playerId - MLB player ID
+ * @property season - The season for these stats
+ * @property stolenBases - Number of stolen bases
+ * @property caughtStealing - Number of times caught stealing
+ * @property stolenBaseAttempts - Total attempts (SB + CS)
+ * @property stolenBaseSuccess - Success rate
+ * @property stolenBasePercentage - Success rate as percentage
+ * @property gamesStolenBase - Number of games with at least one SB
+ * @property attemptsPerGame - Steal attempts per game
+ * @property successPerGame - Successful steals per game
+ * @property greenLightScore - Measure of player's freedom to steal (0-100)
+ * @property opportunityRate - How often player gets to first base
+ * @property sprintSpeed - Player's sprint speed in feet/second
+ */
+export interface PlayerSBSeasonStats {
+  playerId: number;
+  season: string;
+  stolenBases: number;
+  caughtStealing: number;
+  stolenBaseAttempts: number;
+  stolenBaseSuccess: number;
+  stolenBasePercentage: number;
+  gamesStolenBase: number;
+  attemptsPerGame: number;
+  successPerGame: number;
+  greenLightScore: number;
+  opportunityRate: number;
+  sprintSpeed?: number;
+}
