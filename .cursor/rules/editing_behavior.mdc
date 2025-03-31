@@ -1,0 +1,20 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+name: Editing Behavior
+description: Dictates how file edits and interactions with the user should be handled during coding.
+globs: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"]
+
+---
+
+- Edit only one file at a time so the user can easily review changes.
+- For each file, provide all edits in a single, consolidated block.
+- Do not ask for confirmation of things already provided in context.
+- Do not ask the user to manually verify code that is visible in context.
+- Do not suggest updates to a file unless actual changes are required.
+- Preserve all unrelated or untouched code—do not modify it.
+- When referencing files, use the real file path, not context-generated labels.
+- Do not discuss the current implementation unless it’s necessary for the change or the user requests it.
+- Always check the current context-generated file for accuracy before making edits.

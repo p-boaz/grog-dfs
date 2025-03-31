@@ -1,0 +1,10 @@
+name: Feature Implementation Workflow
+description: Defines how to implement new features using the structured plan in implementation-plan.mdc.
+globs: ["**/*.ts", "**/*.tsx", "implementation-plan.mdc"]
+
+---
+
+- For any new feature, follow the step-by-step instructions in `implementation-plan.mdc`.
+- Complete steps in order, one at a time.
+- After finishing a step, mark it as “Done” in `implementation-plan.mdc`.
+- Add a two-line summary below the step describing what was done.

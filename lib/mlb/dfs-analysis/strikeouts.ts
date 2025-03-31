@@ -216,7 +216,7 @@ export async function getTeamStrikeoutVulnerability(
       5 + ((strikeoutsPerGame - leagueAvgKPerGame) / leagueAvgKPerGame) * 5;
 
     return {
-      teamName: teamStats.name, // Assume TeamStats has a name property
+      teamName: teamStats.name || `Team ${teamId}`,
       gamesPlayed: stats.gamesPlayed || 0,
       strikeouts: stats.strikeouts || 0,
       strikeoutsPerGame,

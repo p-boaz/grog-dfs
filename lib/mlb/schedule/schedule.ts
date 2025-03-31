@@ -1,6 +1,6 @@
-import { withCache, DEFAULT_CACHE_TTL, markAsApiSource } from "../cache";
+import { markAsApiSource } from "../cache";
 import { makeMLBApiRequest } from "../core/api-client";
-import type { MLBScheduleResponse, BallparkFactors } from "../core/types";
+import type { BallparkFactors, MLBScheduleResponse } from "../core/types";
 
 /**
  * Fetch MLB schedule data for a specific date
@@ -123,6 +123,7 @@ interface MLBTeamStatsResponse {
 interface TeamStats {
   hitting: Record<string, any>;
   pitching: Record<string, any>;
+  name?: string;
 }
 
 /**
@@ -136,9 +137,18 @@ export async function getTeamStats(
     const response = await makeMLBApiRequest<MLBTeamStatsResponse>(
       `/teams/${teamId}/stats?season=${season}&group=hitting,pitching&sportId=1&stats=season`
     );
+
+    // Get team details to include name
+    const teamDetails = await makeMLBApiRequest<any>(
+      `/teams/${teamId}?season=${season}`
+    );
+
+    const teamName = teamDetails?.teams?.[0]?.name || `Team ${teamId}`;
+
     return {
       hitting: response.stats[0]?.splits[0]?.stat || {},
       pitching: response.stats[1]?.splits[0]?.stat || {},
+      name: teamName,
     };
   } catch (error) {
     console.warn(
@@ -148,6 +158,7 @@ export async function getTeamStats(
     return {
       hitting: {},
       pitching: {},
+      name: `Team ${teamId}`,
     };
   }
 }

@@ -1,0 +1,105 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+name: Development Guide
+description: Development standards, environment setup, testing, MLB analysis modules, and scoring logic.
+globs: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.md", "pnpm-lock.yaml", "schema.ts"]
+
+---
+
+## 🧠 Important Rules
+
+- ALWAYS use `pnpm` for running scripts; NEVER use `npx`
+- The project is configured for `pnpm`; using `npx` can break dependencies
+- DO NOT use default values in functions — pass actual values explicitly
+
+## 🗃️ Database Schema & Migrations
+
+- NEVER write migration files manually
+- Always update `schema.ts` first
+- Run `pnpm db:generate` to create migration files automatically
+- Run `pnpm db:migrate` to apply them — no exceptions
+- For enum changes: update `schema.ts`, then regenerate migration
+
+## 📦 Key Commands
+
+- Build: `pnpm run build`
+- Dev server: `pnpm run dev`
+- Tests:
+  - Vitest (unit):
+    - All tests: `pnpm test`
+    - Specific test: `pnpm test lib/mlb/__tests__/api.test.ts`
+    - UI mode: `pnpm test:ui`
+    - Browser tests: `pnpm test -- --browser`
+  - MLB API test: `pnpm tsx lib/mlb/test-mlb-api.ts`
+  - Lint: `pnpm lint`
+  - TypeCheck: `pnpm typecheck`
+- Database:
+  - Setup: `pnpm db:setup`
+  - Seed: `pnpm db:seed`
+  - Migrate: `pnpm db:migrate`
+  - Generate: `pnpm db:generate`
+  - Studio: `pnpm db:studio`
+
+## ⚾ DraftKings MLB Classic Scoring System
+
+### Hitters
+- Single: +3 pts
+- Double: +5 pts
+- Triple: +8 pts
+- Home Run: +10 pts
+- RBI, Run, Walk, HBP: +2 pts each
+- Stolen Base: +5 pts
+
+### Pitchers
+- Inning: +2.25 pts
+- Strikeout: +2 pts
+- Win: +4 pts
+- Earned Run: -2 pts
+- Hits, Walks, HBP: -0.6 pts each
+- Bonuses: CG +2.5, Shutout +2.5, No-Hitter +5
+
+## 🧩 MLB Analysis Modules (`/lib/mlb/dfs-analysis`)
+
+1. `batter-analysis.ts`: Multi-season projections + lineup/environmental context
+2. `home-runs.ts`: HR probability from batter/pitcher trends + park/weather
+3. `stolen-bases.ts`: Steal opportunity vs. catcher defense
+4. `pitcher-win.ts`: Win probability modeling with run support
+5. `strikeouts.ts`: K projection based on pitch mix and team matchup
+6. `innings-pitched.ts`: Endurance and hook tendencies
+7. `starting-pitcher-analysis.ts`: Full pitcher model integration and rankings
+
+## 🧱 Code Style & Structure
+
+- **TypeScript**: Strict mode, explicit types
+- **Imports**: Grouped by domain (React, external, internal)
+- **Formatting**: 2-space indent, semicolons required
+- **Testing**:
+  - `.test.ts` for Node, `.browser.test.ts` for browser
+  - Use `__tests__` directories
+- **Naming**:
+  - Components: PascalCase
+  - Vars/functions: camelCase
+  - Types/interfaces: PascalCase + prefix (e.g., `PlayerData`)
+  - DB tables: snake_case + domain prefix (e.g., `mlb_`)
+- **Error Handling**: Typed try/catch with early returns
+- **Components**: Modular, single-responsibility with `shadcn/ui`
+
+## 📁 Project Layout Overview
+
+- `/app`: Next.js routes and pages
+- `/components`: Reusable UI (shadcn/ui)
+- `/lib`:
+  - `/mlb`: All fantasy data integrations and logic
+    - `core`, `player`, `dfs-analysis`, `game`, `schedule`, `weather`
+  - `/db`: DB schema and migration logic
+- `/docs`: Guides and internal documentation
+
+## 📊 MLB Data Sources & Capabilities
+
+- **Data**: MLB Stats API, Baseball Savant, Weather APIs
+- **Functionality**: Player/matchup analysis, scoring prediction, live feeds
+- **Models**: Home runs, steals, K rates, endurance, rare events
+

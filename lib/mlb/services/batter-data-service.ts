@@ -74,6 +74,13 @@ export interface EnhancedBatterData {
     };
   };
 
+  // Running metrics from Statcast
+  runningMetrics?: {
+    sprintSpeed: number; // ft/sec
+    homeToFirst: number; // seconds
+    bolts: number; // Number of 30+ ft/sec runs (elite speed)
+  };
+
   // Platoon splits from Savant
   platoonSplits?: {
     vsLeft: {
@@ -149,6 +156,24 @@ export async function getEnhancedBatterData(
       },
     };
 
+    // Add running metrics if available in Statcast data
+    if (statcastData.running_metrics) {
+      enhancedData.runningMetrics = {
+        sprintSpeed:
+          statcastData.running_metrics.sprint_speed ||
+          estimateSprintSpeed(enhancedData.seasonStats),
+        homeToFirst: statcastData.running_metrics.home_to_first || 0,
+        bolts: statcastData.running_metrics.bolts || 0,
+      };
+    } else if (enhancedData.seasonStats.stolenBases > 0) {
+      // If no Statcast running data but player has stolen bases, estimate sprint speed
+      enhancedData.runningMetrics = {
+        sprintSpeed: estimateSprintSpeed(enhancedData.seasonStats),
+        homeToFirst: 0,
+        bolts: 0,
+      };
+    }
+
     // Add platoon splits if available
     if (statcastData.platoon_splits) {
       enhancedData.platoonSplits = {
@@ -159,6 +184,43 @@ export async function getEnhancedBatterData(
   }
 
   return enhancedData;
+}
+
+/**
+ * Helper function to estimate sprint speed when Statcast data is unavailable
+ * Based on stolen base metrics and player profile
+ */
+function estimateSprintSpeed(stats: EnhancedBatterData["seasonStats"]): number {
+  if (!stats) return 27.0; // League average default
+
+  // Calculate stolen base rate per game
+  const sbRate =
+    stats.gamesPlayed > 0 ? stats.stolenBases / stats.gamesPlayed : 0;
+
+  // Calculate success rate
+  const attempts = stats.stolenBases + stats.caughtStealing;
+  const successRate = attempts > 0 ? stats.stolenBases / attempts : 0;
+
+  // League average sprint speed is ~27 ft/sec
+  let estimatedSpeed = 27.0;
+
+  // Adjust based on SB frequency
+  if (sbRate > 0.3) estimatedSpeed += 2.0; // Elite frequency
+  else if (sbRate > 0.2) estimatedSpeed += 1.5;
+  else if (sbRate > 0.1) estimatedSpeed += 1.0;
+  else if (sbRate < 0.05 && stats.gamesPlayed > 20) estimatedSpeed -= 0.5;
+
+  // Adjust based on success rate with volume
+  if (successRate > 0.85 && stats.stolenBases >= 10)
+    estimatedSpeed += 1.0; // Efficient with volume
+  else if (successRate < 0.65 && stats.stolenBases >= 5) estimatedSpeed -= 0.5; // Inefficient with volume
+
+  // Extra boost for players with high triple rates (speed indicator)
+  const tripleRate = stats.atBats > 0 ? (stats.triples || 0) / stats.atBats : 0;
+  if (tripleRate > 0.01) estimatedSpeed += 0.5;
+
+  // Ensure within reasonable range (23-31 ft/sec is MLB range)
+  return Math.min(31.0, Math.max(23.0, estimatedSpeed));
 }
 
 /**

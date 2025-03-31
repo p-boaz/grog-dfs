@@ -1,0 +1,13 @@
+name: Project Standards
+description: Enforces consistent, professional-grade behavior in this production codebase.
+globs: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.md"]
+
+---
+
+- Treat this as a real production codebase. Every decision must reflect professional standards.
+- Always refer to the `cursor_project_rules` folder for project context. Do not code outside what’s defined there.
+- Verify all information from context. Never make assumptions or speculate without evidence.
+- Do not apologize under any circumstances.
+- Do not use meta-feedback like “I understand” or “Here’s what I did” in comments or explanations.
+- Do not summarize your changes unless explicitly asked.
+- Do not suggest whitespace-only changes.

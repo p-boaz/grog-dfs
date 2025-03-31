@@ -4,6 +4,67 @@ I've examined the codebase and noticed that the rich data from the savant.ts mod
 
 The DFS analysis modules could benefit from direct access to the detailed metrics available through savant.ts:
 
+## Current Progress and Next Steps
+
+### Completed Integration:
+
+- Created intermediate service modules as recommended in section 2:
+
+  - Implemented `pitcher-data-service.ts` with `getEnhancedPitcherData()` which combines MLB API and Statcast data
+  - Implemented `batter-data-service.ts` with `getEnhancedBatterData()` for comprehensive batter stats
+
+- Integrated Statcast data into key analysis modules:
+  - **strikeouts.ts**: Now uses Statcast metrics (whiff rate, chase rate, zone percentage) through the `getEnhancedPitcherData` service
+  - **home-runs.ts**: Updated to leverage Statcast quality of contact metrics for more accurate home run probability models
+  - **stolen-bases.ts**: Successfully enhanced with sprint speed data from Statcast for more accurate baserunning projections
+  - Fixed linter errors and type compatibility issues across the integrated modules
+
+### Next Step:
+
+Enhance the plate-discipline.ts module by incorporating Statcast plate discipline metrics such as chase rate, zone contact rate, and swing/take tendencies. This will help us better predict batter performance against different pitch types:
+
+```typescript
+// TO IMPLEMENT:
+import { getEnhancedBatterData } from "../services/batter-data-service";
+import { getEnhancedPitcherData } from "../services/pitcher-data-service";
+
+/**
+ * Enhanced plate discipline metrics that combines MLB API and Statcast data
+ */
+export async function getAdvancedPlateDisciplineMetrics(
+  batterId: number,
+  pitcherId: number
+): Promise<{
+  batterMetrics: {
+    chaseRate: number; // Swing percentage on pitches outside zone
+    zoneContactRate: number; // Contact rate on pitches in zone
+    whiffRate: number; // Miss rate on swings
+    firstPitchSwingRate: number; // Rate of swinging at first pitch
+    zoneSwingRate: number; // Swing rate on pitches in zone
+  };
+  pitcherMetrics: {
+    zoneRate: number; // Percentage of pitches in zone
+    chaseInducedRate: number; // Rate at which batters chase
+    contactAllowedRate: number; // Rate of contact allowed on swings
+    firstPitchStrikeRate: number; // First pitch strike percentage
+  };
+  matchupAdvantage: "batter" | "pitcher" | "neutral";
+  predictionConfidence: number; // 1-10 scale
+}> {
+  // Get enhanced data for both players
+  const [batterData, pitcherData] = await Promise.all([
+    getEnhancedBatterData(batterId),
+    getEnhancedPitcherData(pitcherId),
+  ]);
+
+  // Extract plate discipline metrics from Statcast data
+  // Calculate matchup-specific probabilities
+  // Return detailed metrics that will improve DFS projections
+}
+```
+
+This integration will strengthen our ability to predict plate appearances by incorporating detailed swing/take tendencies and pitch-type specific metrics, leading to more accurate DFS points projections.
+
 ### For batter-analysis.ts:
 
 ```typescript

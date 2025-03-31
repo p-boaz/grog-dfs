@@ -1,0 +1,13 @@
+name: Code Quality Guidelines
+description: Ensures edits maintain high standards in readability, performance, error handling, and test coverage.
+globs: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"]
+
+---
+
+- Use explicit, descriptive variable names—avoid ambiguity.
+- Follow the existing code style and formatting used in the project.
+- Prioritize performance when suggesting or implementing code.
+- Always consider security implications when making changes.
+- For new or updated code, include or suggest relevant unit or integration tests.
+- Add clear and robust error handling when appropriate.
+- Design code to be modular and reusable where possible.

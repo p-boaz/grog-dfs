@@ -2,9 +2,34 @@
  * Specialized functions for analyzing stolen base potential and probabilities
  */
 
+import { getGameFeed } from "../game/game-feed";
 import { getCatcherDefense } from "../player/defense-stats";
 import { getEnhancedBatterData } from "../services/batter-data-service";
 import { getEnhancedPitcherData } from "../services/pitcher-data-service";
+import { getGameEnvironmentData } from "../weather/weather";
+
+/**
+ * Result interface for stolen base probability calculations
+ */
+export interface StolenBaseProbabilityResult {
+  probability: number; // 0-1 scale for likelihood of success
+  expectedValue: number; // Expected fantasy points
+  factors: {
+    batterProfile: number;
+    catcherDefense: number;
+    pitcherHold: number;
+    gameContext: number;
+    sprintSpeed: number; // New factor for sprint speed impact
+  };
+  confidence: number; // 1-10 scale
+  insightDetails?: {
+    // Optional detailed insights
+    sprintSpeed?: number;
+    sprintSpeedPercentile?: number;
+    successRateProjection?: number;
+    attemptLikelihood?: number;
+  };
+}
 
 /**
  * Get player's season stats with focus on stolen bases and baserunning
@@ -27,7 +52,7 @@ export async function getPlayerSeasonStats(
   sprintSpeed?: number;
 } | null> {
   try {
-    // Fetch enhanced player data that may include Statcast metrics
+    // Fetch enhanced player data that includes Statcast metrics
     const enhancedData = await getEnhancedBatterData(playerId, season);
 
     // If no stats are available, return null
@@ -44,14 +69,8 @@ export async function getPlayerSeasonStats(
     const stolenBaseSuccess =
       stolenBaseAttempts > 0 ? stats.stolenBases / stolenBaseAttempts : 0;
 
-    // Extract sprint speed from Statcast data if available
-    // This would come from a more comprehensive Statcast integration
-    // For now, estimate based on SB success rate and frequency
-    const estimatedSprintSpeed = estimateSprintSpeed(
-      stolenBaseRate,
-      stolenBaseSuccess,
-      stats.stolenBases
-    );
+    // Use sprint speed from enhanced data if available
+    const sprintSpeed = enhancedData.runningMetrics?.sprintSpeed;
 
     return {
       battingAverage: stats.avg,
@@ -61,7 +80,7 @@ export async function getPlayerSeasonStats(
       gamesPlayed: stats.gamesPlayed,
       stolenBaseRate,
       stolenBaseSuccess,
-      sprintSpeed: estimatedSprintSpeed,
+      sprintSpeed,
     };
   } catch (error) {
     console.error(
@@ -271,31 +290,57 @@ export async function getPitcherRunningGameControl(
 }
 
 /**
- * Calculate stolen base probability for a specific batter/pitcher/catcher matchup
+ * Calculate stolen base probability for a specific batter in a specific game
  */
 export async function calculateStolenBaseProbability(
   batterId: number,
-  pitcherId: number,
-  catcherId: number
-): Promise<{
-  probability: number; // 0-1 scale
-  expectedValue: number; // Expected fantasy points
-  factors: {
-    batterProfile: number;
-    catcherDefense: number;
-    pitcherHold: number;
-    gameContext: number;
-  };
-  confidence: number; // 1-10 scale
-}> {
+  gamePk: string,
+  oppPitcherId: number
+): Promise<StolenBaseProbabilityResult> {
   try {
+    // Get enhanced batter data with Statcast metrics
+    const enhancedBatterData = await getEnhancedBatterData(batterId);
+
+    // Get game data to find catcher
+    const gameData = await getGameFeed({ gamePk });
+
+    // Determine the catcher ID
+    let catcherId = 0;
+
+    try {
+      // Determine if batter is home or away
+      const batterTeamId = enhancedBatterData.currentTeam;
+      const homeTeamId = gameData?.gameData?.teams?.home?.team?.id;
+      const isHome = homeTeamId && batterTeamId === String(homeTeamId);
+
+      // Get opposing team's catcher
+      const oppTeam = isHome ? "away" : "home";
+      const players = gameData?.liveData?.boxscore?.teams?.[oppTeam]?.players;
+
+      if (players) {
+        const playerEntries = Object.entries(players);
+        for (const [_, playerData] of playerEntries) {
+          const player = playerData as any;
+          if (player?.position?.code === "2" && player?.person?.id) {
+            catcherId = player.person.id;
+            break;
+          }
+        }
+      }
+    } catch (error) {
+      console.warn(`Could not determine catcher ID for game ${gamePk}:`, error);
+    }
+
+    // Get environment data for weather factors
+    const environmentData = await getGameEnvironmentData({ gamePk });
+
     // Get all relevant data in parallel
     const [batterStats, careerProfile, catcherDefense, pitcherControl] =
       await Promise.all([
         getPlayerSeasonStats(batterId),
         getCareerStolenBaseProfile(batterId),
-        getCatcherStolenBaseDefense(catcherId),
-        getPitcherRunningGameControl(pitcherId),
+        catcherId ? getCatcherStolenBaseDefense(catcherId) : null,
+        getPitcherRunningGameControl(oppPitcherId),
       ]);
 
     // Base probability factors
@@ -303,9 +348,16 @@ export async function calculateStolenBaseProbability(
     let catcherFactor = 1.0;
     let pitcherFactor = 1.0;
     let contextFactor = 1.0;
+    let sprintSpeedFactor = 1.0;
 
     // Base confidence level
     let confidence = 5;
+
+    // Get sprint speed from enhanced batter data
+    const sprintSpeed = enhancedBatterData.runningMetrics?.sprintSpeed;
+
+    // Process detailed insights
+    const insightDetails: StolenBaseProbabilityResult["insightDetails"] = {};
 
     // Calculate batter factor based on SB tendency
     if (batterStats) {
@@ -323,80 +375,103 @@ export async function calculateStolenBaseProbability(
       } else if (batterStats.stolenBaseSuccess < 0.6) {
         batterFactor *= 0.8; // Penalty for unsuccessful stealers
       }
-
-      // Adjust for sprint speed if available
-      if (batterStats.sprintSpeed) {
-        // Sprint speed of 30 ft/sec is elite, 27 is average
-        if (batterStats.sprintSpeed > 29) {
-          batterFactor *= 1.3;
-          confidence += 1;
-        } else if (batterStats.sprintSpeed < 26) {
-          batterFactor *= 0.7;
-        }
-      }
     }
 
-    // Adjust for career profile
-    if (careerProfile) {
-      // Consider recent trend
-      if (careerProfile.recentTrend === "increasing") {
-        batterFactor *= 1.15;
-      } else if (careerProfile.recentTrend === "decreasing") {
-        batterFactor *= 0.85;
-      }
+    // Apply sprint speed factor - this is now a primary factor
+    if (sprintSpeed) {
+      // Store sprint speed in insights
+      insightDetails.sprintSpeed = sprintSpeed;
 
-      // Confidence boost for consistent base stealers
-      if (careerProfile.careerRate > 0.2) {
-        confidence += 1;
-      }
-    }
-
-    // Calculate catcher factor
-    if (catcherDefense) {
-      // League average CS% is ~28%
-      // Higher CS% means lower success probability for runner
-      catcherFactor = Math.min(
-        2.0,
-        Math.max(
-          0.5,
-          0.28 / Math.max(0.2, catcherDefense.caughtStealingPercentage)
-        )
+      // Calculate percentile (roughly)
+      // MLB sprint speed ranges from about 23 ft/sec to 31 ft/sec
+      // with 27 ft/sec being approximately average
+      const percentile = Math.min(
+        100,
+        Math.max(0, ((sprintSpeed - 23) / (31 - 23)) * 100)
       );
+      insightDetails.sprintSpeedPercentile = Math.round(percentile);
 
-      // Additional adjustments based on advanced metrics
+      // Apply sprint speed as a major factor in stolen base probability
+      // Elite speed (30+ ft/sec) is a massive advantage
+      if (sprintSpeed >= 30) {
+        sprintSpeedFactor = 1.8; // Elite speed (80% boost)
+        confidence += 2;
+      } else if (sprintSpeed >= 29) {
+        sprintSpeedFactor = 1.6; // Very fast
+        confidence += 1;
+      } else if (sprintSpeed >= 28) {
+        sprintSpeedFactor = 1.4; // Above average speed
+        confidence += 1;
+      } else if (sprintSpeed >= 27) {
+        sprintSpeedFactor = 1.1; // Slightly above average speed
+      } else if (sprintSpeed < 26) {
+        sprintSpeedFactor = 0.7; // Below average speed
+        confidence -= 1;
+      } else if (sprintSpeed < 25) {
+        sprintSpeedFactor = 0.5; // Well below average speed
+        confidence -= 2;
+      }
+    }
+
+    // Calculate catcher factor if available
+    if (catcherDefense) {
+      // Convert defensive rating to a factor
+      // Higher rating means better defense, so invert for our formula
+      catcherFactor = 2 - catcherDefense.defensiveRating / 5;
+
+      // Adjust for pop time if available
       if (catcherDefense.popTime) {
-        // Pop time of 2.0 is average, 1.9 is good, 1.8 is elite
+        // Pop time below 1.9 is elite, above 2.1 is poor
         if (catcherDefense.popTime < 1.9) {
-          catcherFactor *= 0.8; // Significant reduction for quick pop times
-          confidence += 1;
+          catcherFactor *= 0.7; // Hard to steal on
         } else if (catcherDefense.popTime > 2.1) {
-          catcherFactor *= 1.2; // Bonus for slow pop times
+          catcherFactor *= 1.3; // Easier to steal on
         }
       }
 
-      // Overall defensive rating impact
-      catcherFactor *= (6 - catcherDefense.defensiveRating) / 5;
+      // Clamp to reasonable range
+      catcherFactor = Math.min(1.8, Math.max(0.5, catcherFactor));
     }
 
     // Calculate pitcher factor
     if (pitcherControl) {
-      // Pitchers with good hold ratings reduce SB probability
-      pitcherFactor = (11 - pitcherControl.holdRating) / 10;
+      pitcherFactor = 1.0;
 
-      // Time to plate is crucial
-      // League average is ~1.4 seconds
-      if (pitcherControl.timeToPlate < 1.3) {
-        pitcherFactor *= 0.8; // Quick delivery reduces success
-        confidence += 1;
-      } else if (pitcherControl.timeToPlate > 1.5) {
-        pitcherFactor *= 1.2; // Slow delivery increases success
+      // Adjust for slide step time
+      // Faster to plate = harder to steal
+      if (pitcherControl.slideStepTime < 1.2) {
+        pitcherFactor *= 0.8; // Very quick to plate
+      } else if (pitcherControl.slideStepTime > 1.5) {
+        pitcherFactor *= 1.2; // Slow to plate
+      }
+
+      // Adjust for hold rating
+      pitcherFactor *= 5 / pitcherControl.holdRating;
+
+      // Clamp to reasonable range
+      pitcherFactor = Math.min(1.5, Math.max(0.7, pitcherFactor));
+    }
+
+    // Calculate context factor based on game situation
+    // Default to neutral
+    if (environmentData) {
+      // Weather can affect stolen base attempts
+      // Wet field conditions decrease likelihood of attempts
+      if (environmentData.precipitation) {
+        contextFactor *= 0.9;
+      }
+
+      // Very cold weather also decreases attempts
+      if (environmentData.temperature < 40) {
+        contextFactor *= 0.9;
       }
     }
 
     // Calculate base probability (weighted factors)
     const weights = {
-      batter: 0.5, // Batter factor has highest impact
-      catcher: 0.3, // Catcher has significant impact
+      sprintSpeed: 0.3, // Sprint speed now has highest impact
+      batter: 0.3, // Batter stealing tendency is still important
+      catcher: 0.2, // Catcher has significant impact
       pitcher: 0.15, // Pitcher has moderate impact
       context: 0.05, // Game context has minor impact
     };
@@ -404,16 +479,45 @@ export async function calculateStolenBaseProbability(
     const baseProbability = 0.67; // League average SB success rate
     const adjustedProbability =
       baseProbability *
-      (batterFactor * weights.batter +
+      (sprintSpeedFactor * weights.sprintSpeed +
+        batterFactor * weights.batter +
         catcherFactor * weights.catcher +
         pitcherFactor * weights.pitcher +
         contextFactor * weights.context);
+
+    // Calculate attempt likelihood based on career profile
+    let attemptLikelihood = 0.5; // Neutral default
+    if (careerProfile) {
+      // High career rate indicates higher likelihood of attempts
+      if (careerProfile.careerRate > 0.2) {
+        attemptLikelihood = 0.8;
+      } else if (careerProfile.careerRate > 0.1) {
+        attemptLikelihood = 0.6;
+      } else if (careerProfile.careerRate < 0.05) {
+        attemptLikelihood = 0.2;
+      }
+
+      // Recent trend affects likelihood
+      if (careerProfile.recentTrend === "increasing") {
+        attemptLikelihood += 0.1;
+      } else if (careerProfile.recentTrend === "decreasing") {
+        attemptLikelihood -= 0.1;
+      }
+
+      // Clamp to reasonable range
+      attemptLikelihood = Math.min(1.0, Math.max(0.1, attemptLikelihood));
+    }
+
+    // Store additional insights
+    insightDetails.attemptLikelihood = attemptLikelihood;
+    insightDetails.successRateProjection = adjustedProbability;
 
     // Ensure probability is reasonable
     const finalProbability = Math.min(0.95, Math.max(0.2, adjustedProbability));
 
     // Calculate expected fantasy points (5 points per SB in DraftKings)
-    const expectedValue = finalProbability * 5;
+    // Adjust by attempt likelihood - players who don't attempt won't get SBs
+    const expectedValue = finalProbability * attemptLikelihood * 5;
 
     // Final confidence capped at 1-10
     const finalConfidence = Math.min(10, Math.max(1, confidence));
@@ -426,24 +530,27 @@ export async function calculateStolenBaseProbability(
         catcherDefense: catcherFactor,
         pitcherHold: pitcherFactor,
         gameContext: contextFactor,
+        sprintSpeed: sprintSpeedFactor,
       },
       confidence: finalConfidence,
+      insightDetails,
     };
   } catch (error) {
     console.error(
-      `Error calculating stolen base probability for batter ${batterId} vs pitcher ${pitcherId} and catcher ${catcherId}:`,
+      `Error calculating stolen base probability for batter ${batterId} in game ${gamePk}:`,
       error
     );
 
     // Return conservative default values
     return {
       probability: 0.67, // League average success rate
-      expectedValue: 0.67 * 5, // Average expected points
+      expectedValue: 0.67 * 0.5 * 5, // Average expected points with 50% attempt likelihood
       factors: {
         batterProfile: 1.0,
         catcherDefense: 1.0,
         pitcherHold: 1.0,
         gameContext: 1.0,
+        sprintSpeed: 1.0,
       },
       confidence: 3, // Low confidence due to error
     };
@@ -452,7 +559,7 @@ export async function calculateStolenBaseProbability(
 
 /**
  * Helper function to estimate sprint speed from stolen base metrics
- * In a real implementation, this would use actual Statcast sprint speed
+ * This is a fallback when Statcast data is not available
  */
 function estimateSprintSpeed(
   stolenBaseRate: number,
@@ -478,31 +585,33 @@ function estimateSprintSpeed(
 }
 
 /**
- * Helper function to estimate pop time from caught stealing percentage
+ * Estimate pop time based on caught stealing percentage
+ * This is a fallback when Statcast data is not available
  */
 function estimatePopTime(caughtStealingPct: number): number {
   // League average pop time is ~2.0 seconds
-  // Elite is ~1.85, poor is ~2.15
-  // CS% of 40% is elite, 20% is poor
-
-  const popTimeRange = 0.3; // Range from best to worst (1.85 to 2.15)
-  const csRange = 30; // Range from best to worst CS% (45% to 15%)
-
-  // Normalize CS% to 0-1 range where 1 is best
-  const normalizedCS = Math.min(0.45, Math.max(0.15, caughtStealingPct)) - 0.15;
-  const scaledCS = normalizedCS / 0.3;
-
-  // Calculate pop time where higher scaledCS means lower (better) pop time
-  return 2.15 - scaledCS * popTimeRange;
+  // CS% of 40% is very good, 20% is poor
+  if (caughtStealingPct >= 40) return 1.85; // Elite
+  if (caughtStealingPct >= 35) return 1.9;
+  if (caughtStealingPct >= 30) return 1.95;
+  if (caughtStealingPct >= 25) return 2.0; // Average
+  if (caughtStealingPct >= 20) return 2.05;
+  if (caughtStealingPct >= 15) return 2.1;
+  return 2.15; // Poor
 }
 
 /**
- * Helper function to estimate arm strength from caught stealing percentage
+ * Estimate arm strength based on caught stealing percentage
+ * This is a fallback when Statcast data is not available
  */
 function estimateArmStrength(caughtStealingPct: number): number {
-  // Arm strength on 1-10 scale where 10 is best
-  // CS% of 40% is elite (9-10), 20% is poor (3-4)
-
-  // Simple linear mapping from CS% to arm strength rating
-  return Math.min(10, Math.max(1, caughtStealingPct * 25));
+  // League average arm strength is ~85 mph
+  // CS% of 40% is very good, 20% is poor
+  if (caughtStealingPct >= 40) return 87;
+  if (caughtStealingPct >= 35) return 86;
+  if (caughtStealingPct >= 30) return 85;
+  if (caughtStealingPct >= 25) return 84;
+  if (caughtStealingPct >= 20) return 83;
+  if (caughtStealingPct >= 15) return 82;
+  return 81;
 }

@@ -487,8 +487,7 @@ export async function estimateHomeRunProbability(
     const gameEnvironment =
       weatherConditions ||
       (await getGameEnvironmentData({
-        venueId: ballparkId,
-        date: new Date().toISOString().split("T")[0],
+        gamePk: ballparkId.toString(),
       }));
 
     // Base probability from player's HR rate

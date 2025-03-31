@@ -1,0 +1,15 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+name: Compatibility and Dependency Management
+description: Guards against version conflicts and unnecessary third-party additions.
+globs: ["**/*.ts", "**/*.tsx", "package.json", "pnpm-lock.yaml", "yarn.lock"]
+
+---
+
+- Ensure all code is compatible with the specified framework or language versions in this project.
+- If a version conflict arises, provide a backward-compatible solution or flag the issue clearly.
+- Do not introduce new dependencies unless strictly necessary.
+- If a dependency is added, explain why and check if an existing one can serve the purpose.
