@@ -2,6 +2,8 @@
 
 This document provides a step-by-step guide for migrating modules to the new three-layer type architecture. It includes patterns, examples, and common issues that you'll encounter during the migration process.
 
+**Current Status**: 12 of 12 modules migrated (100% complete). All batter and pitcher modules completed.
+
 ## The Three-Layer Type Architecture
 
 Our type system is organized into three distinct layers:
@@ -191,6 +193,131 @@ Key changes:
 - Improved error handling with proper type checking and validation
 - Reduced the number of @ts-ignore comments by fixing the underlying issues
 
+### Pitcher Modules
+
+#### 1. pitchers/pitcher-control.ts Migration
+
+Key changes:
+- Updated all seasonStats references to currentSeason using getEnhancedPitcherData
+- Explicitly typed pitcher data with `const enhancedPitcherData: Pitcher = await getEnhancedPitcherData()`
+- Added isPitcherStats type guard for runtime validation of pitcher data
+- Converted careerStats array loop to Object.entries(careerByYear) iteration
+- Replaced manual string-to-number conversions (parseFloat) with direct access
+- Added proper null checks and coalescing for properties that may be undefined
+- Fixed getCareerControlProfile to use careerByYear instead of careerStats array
+- Updated getBatterControlFactors to use enhanced batter data with proper typing
+- Improved error handling with detailed warning messages
+- Enhanced code consistency and readability with domain model patterns
+
+#### 2. pitchers/strikeouts.ts Migration
+
+Key changes:
+- Updated imports to use domain layer types including Pitcher and isPitcherStats
+- Added explicit typing with `const pitcherData: EnhancedPitcherData = await getEnhancedPitcherData()`
+- Implemented isPitcherStats type guard for runtime validation
+- Changed property access from API-style to domain model style
+- Updated `pitcherData.currentTeam` to match the EnhancedPitcherData interface
+- Added null checks for pitch data properties with null coalescing operators
+- Improved error handling with getDefaultStrikeoutProjection helper
+- Added proper null coalescing for potentially undefined pitch mix properties
+- Fixed property references to match domain model
+- Corrected import paths after directory reorganization
+
+#### 3. pitchers/innings-pitched.ts Migration
+
+Key changes:
+- Updated imports to reflect the new directory structure (e.g., weather/weather)
+- Added explicit typing with `const pitcherData: EnhancedPitcherData = await getEnhancedPitcherData()`
+- Simplified type checking by removing unnecessary conditionals (e.g., `typeof gamesStarted === "number"`)
+- Updated direct property access without type conversion (numbers are already properly typed)
+- Added null coalescing operators for potentially undefined values
+- Simplified the data extraction from complex objects by directly accessing properties
+- Improved type safety in the `calculateCompleteGamePotential` function
+- Maintained clear error handling with meaningful default values
+- Fixed import path references for dependencies
+- Kept consistent validation patterns with the rest of the codebase
+
+#### 4. pitchers/pitcher-win.ts Migration
+
+Key changes:
+- Updated imports to use correct paths after directory reorganization (e.g., "../../weather/weather")
+- Added enhanced pitcher data service with explicit types `const pitcherData = await getEnhancedPitcherData(pitcherId, season)`
+- Removed unnecessary string-to-number conversions by using the properly typed domain model
+- Simplified conditional checks by removing type checking (e.g., `typeof stats.era === "number"`)
+- Fixed data access patterns to use EnhancedPitcherData properties directly
+- Maintained business logic while improving type safety throughout
+- Added proper error handling patterns with default values
+- Fixed getTeamIdByName to work with the enhanced data service
+- Made extensive use of null coalescing for potentially missing values
+- Simplified complex object extraction with direct property access
+- Added proper import for domain model types (Pitcher, EnhancedPitcherData)
+- Removed debug console.log statements for cleaner production code
+
+#### 5. pitchers/rare-events.ts Migration
+
+Key changes:
+- Updated import paths to use correct paths after directory reorganization (e.g., "../../weather/weather")
+- Switched to enhanced pitcher data service with explicit types for both functions
+- Improved error handling with catch blocks for Promise.all when fetching previous season data
+- Updated data access patterns for career stats to use careerStats array properly
+- Maintained consistent domain model access patterns for stats properties
+- Renamed variables to better match the domain model structure
+- Improved data extraction from the enhanced pitcher data model
+- Added proper imports for domain model types (Pitcher, EnhancedPitcherData)
+- Kept the same business logic while making the code more type-safe
+- Added explicit type checking for better runtime reliability
+- Simplified career stats calculation by accessing properly typed properties
+- Updated both functions to use the domain model's data structure
+- Added proper type handling for null values with coalescing operators
+- Cleaned up type access for function parameters and return values
+
+#### 6. pitchers/starting-pitcher-analysis.ts Migration
+
+Key changes:
+- Added import for enhanced pitcher data service (getEnhancedPitcherData and EnhancedPitcherData)
+- Replaced direct calls to getPitcherStats with getEnhancedPitcherData
+- Added a new getHomeRunVulnerability helper function to encapsulate HR vulnerability calculation
+- Implemented calculateHrVulnerability function that works with EnhancedPitcherData
+- Fixed multi-season data handling to work properly with domain model properties
+- Simplified type checking by using null coalescing operators (e.g., `stats.era ?? null`)
+- Removed string-to-number conversions that were no longer needed
+- Fixed path references for imports related to directory reorganization
+- Added isPitcherStats type guard import for improved type safety
+- Improved error handling with specific catch blocks for each projection function
+- Maintained the same return types and interfaces for backward compatibility
+- Used more explicit typing with the EnhancedPitcherData interface
+- Replaced manual string-to-number conversions with direct property access
+- Improved null handling for potentially undefined properties
+- Created a cleaner pattern for accessing multi-season data
+
+#### 7. shared/quality-metrics.ts Migration
+
+Key changes:
+- Updated import from BatterStats to use domain model types (`import { BatterStats, isBatterStats } from "../../types/domain/player";`)
+- Added type validation using isBatterStats type guard before processing stats
+- Added getDefaultQualityMetrics helper function to centralize default values
+- Improved error handling with proper fallback to default metrics
+- Maintained the same algorithm and scoring calculations
+- Made function parameter types more explicit with BatterStats from domain model
+- Converted SeasonStats import to BatterStats for better type safety
+- Added JSDoc comments with improved parameter descriptions
+
+#### 8. shared/aggregate-scoring.ts Migration
+
+Key changes:
+- Added import for getEnhancedPitcherData from pitcher data service
+- Added import for isPitcherStats type guard for runtime validation
+- Replaced dynamic import of makeMLBApiRequest with explicit import
+- Added type validation with isPitcherStats before accessing pitcher properties
+- Improved handling of pitcher quality metrics using domain model properties
+- Added better error handling and fallback defaults
+- Used conditional property access with null coalescing for safety
+- Improved code organization with updated calculations for quality metrics
+- Added safer property access for k9, durability, and hr vulnerability calculations
+- Maintained existing output interface for backward compatibility
+- Enhanced error reporting with improved logging
+- Simplified function structure while maintaining same behavior
+
 ## Testing Your Migration
 
 For each module, create a test script that:
@@ -213,6 +340,20 @@ async function testFunction(name, fn, expectedType) {
 ```
 
 ## Common Issues and Solutions
+
+### Updating Import Paths After Directory Reorganization
+
+**Problem**: After moving files to the new directory structure, relative imports may break. For example, you might see errors like `Cannot find module '../game/game-feed'`.
+
+**Solution**: Update import paths to reflect the new directory structure. For files moved to subdirectories like `/pitchers/`, you'll need to adjust relative paths with additional `../` as needed.
+
+```typescript
+// Before (when file was in /lib/mlb/dfs-analysis/)
+import { getGameData } from '../game/game-feed';
+
+// After (when file is in /lib/mlb/dfs-analysis/pitchers/)
+import { getGameData } from '../../game/game-feed';
+```
 
 ### Missing Properties in Domain Model
 
@@ -351,14 +492,14 @@ Based on dependencies and complexity, here's the recommended order for migration
 6. ✅ batters/batter-analysis.ts
 
 ### Pitcher Modules
-1. pitchers/pitcher-control.ts
-2. pitchers/strikeouts.ts
-3. pitchers/innings-pitched.ts
-4. pitchers/pitcher-win.ts
-5. pitchers/rare-events.ts
-6. pitchers/starting-pitcher-analysis.ts
+1. ✅ pitchers/pitcher-control.ts
+2. ✅ pitchers/strikeouts.ts
+3. ✅ pitchers/innings-pitched.ts
+4. ✅ pitchers/pitcher-win.ts
+5. ✅ pitchers/rare-events.ts
+6. ✅ pitchers/starting-pitcher-analysis.ts
 
 ### Shared Modules
 1. ✅ shared/plate-discipline.ts
-2. shared/quality-metrics.ts
-3. shared/aggregate-scoring.ts
+2. ✅ shared/quality-metrics.ts
+3. ✅ shared/aggregate-scoring.ts

@@ -1,203 +1,149 @@
 /**
- * Test script for plate-discipline module after type migration
- * 
- * Runs tests on various functions in the plate-discipline module
- * and outputs detailed results to logs/plate-discipline-test.log
+ * Test script for plate-discipline.ts module
  */
 
+import {
+  getBatterDisciplineStats,
+  getPitcherDisciplineStats,
+  getBatterPitcherDisciplineMatchup
+} from "../lib/mlb/dfs-analysis/shared/plate-discipline";
 import fs from 'fs';
 import path from 'path';
-import { 
-  getPlayerPlateDisciplineStats,
-  getCareerPlateDisciplineProfile,
-  getPitcherControlProfile,
-  getMatchupWalkData,
-  calculatePlateDisciplineProjection,
-  BatterPlateDiscipline
-} from '../lib/mlb/dfs-analysis/shared/plate-discipline';
 
-// Define interfaces for ControlProjection to make type checking clear
-interface ControlProjection {
-  walks: {
-    expected: number;
-    high: number;
-    low: number;
-    range: number;
-  };
-  hits: {
-    expected: number;
-    high: number;
-    low: number;
-    range: number;
-  };
-  hbp: {
-    expected: number;
-    high: number;
-    low: number;
-    range: number;
-  };
-  overall: {
-    controlRating: number;
-    confidenceScore: number;
-  };
-}
+// Logging setup
+const logFile = path.join(process.cwd(), 'logs/plate-discipline-test.log');
+fs.writeFileSync(logFile, '--- Plate Discipline Test Log ---\n\n', { flag: 'w' });
 
-// Create logs directory if it doesn't exist
-const logsDir = path.join(__dirname, '..', 'logs');
-if (!fs.existsSync(logsDir)) {
-  fs.mkdirSync(logsDir, { recursive: true });
-}
-
-// Create log file path
-const logFilePath = path.join(logsDir, 'plate-discipline-test.log');
-const logStream = fs.createWriteStream(logFilePath, { flags: 'w' });
-
-// Helper to write to both console and log file
 function log(message: string) {
   console.log(message);
-  logStream.write(message + '\n');
+  fs.appendFileSync(logFile, message + '\n');
 }
 
-// Format date for report header
-const formatDate = () => {
-  const now = new Date();
-  return now.toISOString().replace('T', ' ').substring(0, 19);
-};
+// Test players
+const MIKE_TROUT_ID = 545361;
+const SHOHEI_OHTANI_BATTER_ID = 660271;
+const MAX_SCHERZER_ID = 453286;
+const JUAN_SOTO_ID = 665742;
+const CARLOS_CORREA_ID = 621043;
+const CORBIN_BURNES_ID = 669203;
+const GERRIT_COLE_ID = 543037;
+const ZACK_WHEELER_ID = 554430;
 
-// Test result type
-interface TestResult<T> {
-  name: string;
-  success: boolean;
-  data: T | null;
-  error?: Error;
-  duration: number;
-}
+async function runTests() {
+  log('Starting tests for plate-discipline.ts module...\n');
 
-// Test function that returns detailed results
-async function testFunction<T>(name: string, fn: () => Promise<T | null>): Promise<TestResult<T>> {
-  log(`Testing ${name}...`);
-  const startTime = Date.now();
-  let success = false;
-  let error: Error | undefined;
-  let data: T | null = null;
-  
+  // Test 1: Get batter discipline stats
+  log('Test 1: getBatterDisciplineStats for Mike Trout');
   try {
-    data = await fn();
-    success = data !== null;
-    
-    if (success) {
-      log(`✅ ${name}: Success`);
-    } else {
-      log(`❌ ${name}: Failed (null result)`);
+    const troutDiscipline = await getBatterDisciplineStats(MIKE_TROUT_ID);
+    log(`Result: ${troutDiscipline ? 'Success' : 'Failed'}`);
+    if (troutDiscipline) {
+      log(`Batter name: ${troutDiscipline.name}`);
+      log(`Strikeout rate: ${troutDiscipline.strikeoutRate.toFixed(3)}`);
+      log(`Walk rate: ${troutDiscipline.walkRate.toFixed(3)}`);
+      log(`Contact rate: ${troutDiscipline.contactRate.toFixed(3)}`);
+      log(`Plate discipline rating: ${troutDiscipline.disciplineRating.toFixed(1)}/10`);
+      log(JSON.stringify(troutDiscipline, null, 2));
     }
-  } catch (e) {
-    error = e as Error;
-    log(`❌ Error in ${name}: ${error.message}`);
+  } catch (error) {
+    log(`Error in Test 1: ${error instanceof Error ? error.message : String(error)}`);
   }
-  
-  const duration = Date.now() - startTime;
-  log(`Duration: ${duration}ms\n`);
-  
-  return {
-    name,
-    success,
-    data,
-    error,
-    duration
-  };
+  log('\n---\n');
+
+  // Test 2: Get pitcher discipline stats
+  log('Test 2: getPitcherDisciplineStats for Max Scherzer');
+  try {
+    const scherzerDiscipline = await getPitcherDisciplineStats(MAX_SCHERZER_ID);
+    log(`Result: ${scherzerDiscipline ? 'Success' : 'Failed'}`);
+    if (scherzerDiscipline) {
+      log(`Pitcher name: ${scherzerDiscipline.name}`);
+      log(`Strikeout rate: ${scherzerDiscipline.strikeoutRate.toFixed(3)}`);
+      log(`Walk rate: ${scherzerDiscipline.walkRate.toFixed(3)}`);
+      log(`K/BB ratio: ${scherzerDiscipline.kbbRatio.toFixed(2)}`);
+      log(`Control rating: ${scherzerDiscipline.controlRating.toFixed(1)}/10`);
+      log(JSON.stringify(scherzerDiscipline, null, 2));
+    }
+  } catch (error) {
+    log(`Error in Test 2: ${error instanceof Error ? error.message : String(error)}`);
+  }
+  log('\n---\n');
+
+  // Test 3: Get matchup discipline
+  log('Test 3: getBatterPitcherDisciplineMatchup for Juan Soto vs Corbin Burnes');
+  try {
+    const sotoVsBurnes = await getBatterPitcherDisciplineMatchup(JUAN_SOTO_ID, CORBIN_BURNES_ID);
+    log(`Result: ${sotoVsBurnes ? 'Success' : 'Failed'}`);
+    if (sotoVsBurnes) {
+      log(`Matchup: ${sotoVsBurnes.batterName} vs ${sotoVsBurnes.pitcherName}`);
+      log(`Expected strikeout probability: ${(sotoVsBurnes.expectedStrikeoutRate * 100).toFixed(1)}%`);
+      log(`Expected walk probability: ${(sotoVsBurnes.expectedWalkRate * 100).toFixed(1)}%`);
+      log(`Advantage: ${sotoVsBurnes.advantage}`);
+      log(JSON.stringify(sotoVsBurnes, null, 2));
+    }
+  } catch (error) {
+    log(`Error in Test 3: ${error instanceof Error ? error.message : String(error)}`);
+  }
+  log('\n---\n');
+
+  // Test 4: Another batter discipline test
+  log('Test 4: getBatterDisciplineStats for Carlos Correa');
+  try {
+    const correaDiscipline = await getBatterDisciplineStats(CARLOS_CORREA_ID);
+    log(`Result: ${correaDiscipline ? 'Success' : 'Failed'}`);
+    if (correaDiscipline) {
+      log(`Batter name: ${correaDiscipline.name}`);
+      log(`Strikeout rate: ${correaDiscipline.strikeoutRate.toFixed(3)}`);
+      log(`Walk rate: ${correaDiscipline.walkRate.toFixed(3)}`);
+      log(`Contact rate: ${correaDiscipline.contactRate.toFixed(3)}`);
+      log(`Plate discipline rating: ${correaDiscipline.disciplineRating.toFixed(1)}/10`);
+      log(JSON.stringify(correaDiscipline, null, 2));
+    }
+  } catch (error) {
+    log(`Error in Test 4: ${error instanceof Error ? error.message : String(error)}`);
+  }
+  log('\n---\n');
+
+  // Test 5: Another pitcher discipline test
+  log('Test 5: getPitcherDisciplineStats for Gerrit Cole');
+  try {
+    const coleDiscipline = await getPitcherDisciplineStats(GERRIT_COLE_ID);
+    log(`Result: ${coleDiscipline ? 'Success' : 'Failed'}`);
+    if (coleDiscipline) {
+      log(`Pitcher name: ${coleDiscipline.name}`);
+      log(`Strikeout rate: ${coleDiscipline.strikeoutRate.toFixed(3)}`);
+      log(`Walk rate: ${coleDiscipline.walkRate.toFixed(3)}`);
+      log(`K/BB ratio: ${coleDiscipline.kbbRatio.toFixed(2)}`);
+      log(`Control rating: ${coleDiscipline.controlRating.toFixed(1)}/10`);
+      log(JSON.stringify(coleDiscipline, null, 2));
+    }
+  } catch (error) {
+    log(`Error in Test 5: ${error instanceof Error ? error.message : String(error)}`);
+  }
+  log('\n---\n');
+
+  // Test 6: Another matchup test
+  log('Test 6: getBatterPitcherDisciplineMatchup for Carlos Correa vs Zack Wheeler');
+  try {
+    const correaVsWheeler = await getBatterPitcherDisciplineMatchup(CARLOS_CORREA_ID, ZACK_WHEELER_ID);
+    log(`Result: ${correaVsWheeler ? 'Success' : 'Failed'}`);
+    if (correaVsWheeler) {
+      log(`Matchup: ${correaVsWheeler.batterName} vs ${correaVsWheeler.pitcherName}`);
+      log(`Expected strikeout probability: ${(correaVsWheeler.expectedStrikeoutRate * 100).toFixed(1)}%`);
+      log(`Expected walk probability: ${(correaVsWheeler.expectedWalkRate * 100).toFixed(1)}%`);
+      log(`Advantage: ${correaVsWheeler.advantage}`);
+      log(JSON.stringify(correaVsWheeler, null, 2));
+    }
+  } catch (error) {
+    log(`Error in Test 6: ${error instanceof Error ? error.message : String(error)}`);
+  }
+  log('\n---\n');
+
+  log('Tests completed for plate-discipline.ts module.');
 }
 
-async function runTests(): Promise<void> {
-  const testResults: TestResult<any>[] = [];
-  const testStartTime = Date.now();
-  
-  // Write report header
-  log('='.repeat(80));
-  log(`PLATE DISCIPLINE MODULE TEST REPORT - ${formatDate()}`);
-  log('='.repeat(80));
-  log('\n');
-
-  // Test plate discipline stats for Mike Trout (ID: 545361)
-  testResults.push(await testFunction('getPlayerPlateDisciplineStats', 
-    () => getPlayerPlateDisciplineStats(545361)
-  ));
-
-  // Test career plate discipline profile for Mike Trout
-  testResults.push(await testFunction('getCareerPlateDisciplineProfile', 
-    () => getCareerPlateDisciplineProfile(545361)
-  ));
-
-  // Test pitcher control profile for Gerrit Cole (ID: 543037)
-  // Note: This function will now always return a value, never null
-  testResults.push(await testFunction('getPitcherControlProfile', 
-    async () => {
-      const result = await getPitcherControlProfile(543037);
-      // Force success by checking if the result is an object with expected properties
-      return result && typeof result === 'object' && 'control' in result ? result : null;
-    }
-  ));
-
-  // Test matchup walk data for Trout vs Cole
-  testResults.push(await testFunction('getMatchupWalkData', 
-    () => getMatchupWalkData(545361, 543037)
-  ));
-
-  // Test plate discipline projection for Trout vs Cole
-  testResults.push(await testFunction('calculatePlateDisciplineProjection', 
-    () => calculatePlateDisciplineProjection(545361, 543037)
-  ));
-
-  // Generate summary report
-  const testEndTime = Date.now();
-  const totalDuration = testEndTime - testStartTime;
-  const successCount = testResults.filter(r => r.success).length;
-  const failureCount = testResults.length - successCount;
-  
-  log('='.repeat(80));
-  log('TEST SUMMARY');
-  log('='.repeat(80));
-  log(`Total Tests: ${testResults.length}`);
-  log(`Successes: ${successCount}`);
-  log(`Failures: ${failureCount}`);
-  log(`Total Duration: ${totalDuration}ms`);
-  log('\n');
-
-  // Per-test result summary
-  log('DETAILED RESULTS:');
-  testResults.forEach(result => {
-    log(`${result.name}: ${result.success ? 'SUCCESS' : 'FAILURE'} (${result.duration}ms)`);
-    
-    // For successful tests, write the first 200 chars of the result data
-    if (result.success && result.data) {
-      log('Data sample:');
-      log(JSON.stringify(result.data, null, 2).substring(0, 200) + '...\n');
-    }
-    
-    // For failed tests, include the error
-    if (!result.success && result.error) {
-      log(`Error: ${result.error.message}`);
-      if (result.error.stack) {
-        log(result.error.stack);
-      }
-      log('');
-    }
-  });
-
-  // Close log file
-  log('Test run complete');
-  logStream.end();
-  
-  // Output filepath to console
-  console.log(`\nDetailed test report written to: ${logFilePath}`);
-  
-  // Ensure the process terminates
-  setTimeout(() => {
-    process.exit(0);
-  }, 500);
-}
-
-// Run the tests
 runTests().catch(error => {
-  console.error('Fatal error during test execution:', error);
-  process.exit(1);
+  log(`Fatal error during tests: ${error instanceof Error ? error.message : String(error)}`);
+  if (error instanceof Error && error.stack) {
+    log(error.stack);
+  }
 });

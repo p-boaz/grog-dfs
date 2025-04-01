@@ -1,0 +1,156 @@
+--- Rare Events Test Log ---
+
+Starting tests for rare-events.ts module...
+
+Test 1: calculateRareEventPotential for Max Scherzer
+Result: Success
+Complete Game probability: 1.50%
+Quality Start probability: 60.00%
+Shutout probability: 0.75%
+No-Hitter probability: 0.23%
+Perfect Game probability: 0.05%
+Expected DFS points from rare events: 0.07
+Risk-Reward Rating: 6.0/10
+Confidence: 60/100
+{
+  "eventProbabilities": {
+    "completeGame": 1.5,
+    "qualityStart": 60,
+    "shutout": 0.75,
+    "noHitter": 0.22500000000000003,
+    "perfectGame": 0.04500000000000001
+  },
+  "expectedRareEventPoints": 0.072,
+  "riskRewardRating": 6,
+  "confidenceScore": 60,
+  "confidence": 60
+}
+
+---
+
+Test 2: calculateRareEventPotential for Gerrit Cole
+Result: Success
+Complete Game probability: 1.00%
+Quality Start probability: 50.00%
+Shutout probability: 0.50%
+No-Hitter probability: 0.10%
+Perfect Game probability: 0.01%
+Expected DFS points from rare events: 0.04
+Risk-Reward Rating: 5.0/10
+Confidence: 60/100
+{
+  "eventProbabilities": {
+    "completeGame": 1,
+    "qualityStart": 50,
+    "shutout": 0.5,
+    "noHitter": 0.1,
+    "perfectGame": 0.010000000000000002
+  },
+  "expectedRareEventPoints": 0.043500000000000004,
+  "riskRewardRating": 5,
+  "confidenceScore": 60,
+  "confidence": 60
+}
+
+---
+
+Test 3: analyzeHistoricalRareEvents for Justin Verlander
+Result: Success
+Pitcher: Justin Verlander (San Francisco Giants)
+Career Games: 587
+Career Complete Games: 8
+Career Shutouts: 2
+Career No-Hitters: 0
+Career Completion Rate: 1.4%
+Current Season Games: 1
+Season Complete Games: 0
+{
+  "pitcher": {
+    "id": 434378,
+    "name": "Justin Verlander",
+    "team": "San Francisco Giants"
+  },
+  "careerStats": {
+    "completeGames": 8,
+    "shutouts": 2,
+    "noHitters": 0,
+    "perfectGames": 0,
+    "qualityStarts": 314,
+    "totalGames": 587,
+    "completionRate": 0.013628620102214651
+  },
+  "seasonStats": {
+    "completeGames": 0,
+    "shutouts": 0,
+    "noHitters": 0,
+    "perfectGames": 0,
+    "qualityStarts": 1,
+    "totalGames": 1,
+    "completionRate": 0
+  }
+}
+
+---
+
+Test 4: analyzeHistoricalRareEvents for Shane Bieber
+Result: Success
+Pitcher: Shane Bieber (Cleveland Guardians)
+Career Games: 136
+Career Complete Games: 2
+Career Shutouts: 1
+Career No-Hitters: 0
+Career Completion Rate: 1.5%
+Current Season Games: 0
+Season Complete Games: 0
+{
+  "pitcher": {
+    "id": 669456,
+    "name": "Shane Bieber",
+    "team": "Cleveland Guardians"
+  },
+  "careerStats": {
+    "completeGames": 2,
+    "shutouts": 1,
+    "noHitters": 0,
+    "perfectGames": 0,
+    "qualityStarts": 73,
+    "totalGames": 136,
+    "completionRate": 0.014705882352941176
+  },
+  "seasonStats": {
+    "completeGames": 0,
+    "shutouts": 0,
+    "noHitters": 0,
+    "perfectGames": 0,
+    "qualityStarts": 0,
+    "totalGames": 0,
+    "completionRate": 0
+  }
+}
+
+---
+
+Test 5: calculateRareEventPotential for Clayton Kershaw
+Result: Success
+Complete Game probability: 1.00%
+Quality Start probability: 50.00%
+Expected DFS points from rare events: 0.04
+Risk-Reward Rating: 5.0/10
+Confidence: 60/100
+{
+  "eventProbabilities": {
+    "completeGame": 1,
+    "qualityStart": 50,
+    "shutout": 0.5,
+    "noHitter": 0.1,
+    "perfectGame": 0.010000000000000002
+  },
+  "expectedRareEventPoints": 0.043500000000000004,
+  "riskRewardRating": 5,
+  "confidenceScore": 60,
+  "confidence": 60
+}
+
+---
+
+Tests completed for rare-events.ts module.

@@ -3,17 +3,24 @@
  * Used to determine the overall quality of a player for DFS projections
  */
 
-import { BatterQualityMetrics, SeasonStats } from "../../types/analysis";
+import { BatterQualityMetrics } from "../../types/analysis";
+import { BatterStats, isBatterStats } from "../../types/domain/player";
 
 /**
  * Calculate quality metrics for a batter based on current season stats
- * @param stats Season statistics for the batter
+ * @param stats Batter statistics
  * @returns BatterQualityMetrics object with scores from 0-1
  */
 export function calculateQualityMetrics(
-  stats: SeasonStats
+  stats: BatterStats
 ): BatterQualityMetrics {
   try {
+    // Validate stats object with type guard
+    if (!isBatterStats(stats)) {
+      console.warn("Invalid batter stats provided to calculateQualityMetrics");
+      return getDefaultQualityMetrics();
+    }
+
     // Calculate batted ball quality (based on BABIP and ISO)
     const babip = stats.babip || 0;
     const iso = stats.iso || 0;
@@ -53,15 +60,22 @@ export function calculateQualityMetrics(
     };
   } catch (error) {
     console.error("Error calculating quality metrics:", error);
-    return {
-      battedBallQuality: 0.3,
-      power: 0.3,
-      contactRate: 0.3,
-      plateApproach: 0.3,
-      speed: 0.3,
-      consistency: 30,
-    };
+    return getDefaultQualityMetrics();
   }
+}
+
+/**
+ * Get default quality metrics for fallback
+ */
+function getDefaultQualityMetrics(): BatterQualityMetrics {
+  return {
+    battedBallQuality: 0.3,
+    power: 0.3,
+    contactRate: 0.3,
+    plateApproach: 0.3,
+    speed: 0.3,
+    consistency: 30,
+  };
 }
 
 /**
@@ -132,7 +146,7 @@ function calculateSpeedScore(sbRate: number, triplesRate: number): number {
 /**
  * Calculate consistency score (0-100 scale)
  */
-function calculateConsistencyScore(stats: SeasonStats): number {
+function calculateConsistencyScore(stats: BatterStats): number {
   // This would ideally use variance in game-to-game stats
   // For now, use a simple model where more games played = more reliable data
   const gamesPlayed = stats.gamesPlayed || 0;

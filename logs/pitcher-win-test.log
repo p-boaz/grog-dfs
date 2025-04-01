@@ -1,0 +1,131 @@
+--- Pitcher Win Test Log ---
+
+Starting tests for pitcher-win.ts module...
+
+Test 1: getPitcherWinStats for Gerrit Cole
+Result: Success
+Pitcher name: Gerrit Cole
+Team: New York Yankees
+Games started: 0
+Win-Loss: 0-0
+Win percentage: 0.0%
+Team win percentage: 100.0%
+ERA: 0.00
+WHIP: 0.00
+Avg innings per start: 0.0
+{
+  "name": "Gerrit Cole",
+  "gamesStarted": 0,
+  "wins": 0,
+  "losses": 0,
+  "winPercentage": 0,
+  "teamWinPct": 1,
+  "teamName": "New York Yankees",
+  "qualityStarts": 0,
+  "qualityStartPct": 0,
+  "era": 0,
+  "whip": 0,
+  "inningsPitched": 0,
+  "avgInningsPerStart": 0
+}
+
+---
+
+Test 2: getTeamOffensiveSupport for Yankees (147)
+Result: Success
+Runs per game: 12.00
+Error in Test 2: yankeeOffense.teamOPS.toFixed is not a function
+
+---
+
+Test 3: getTeamBullpenStrength for Dodgers (119)
+Result: Success
+Error in Test 3: dodgersBullpen.bullpenERA.toFixed is not a function
+
+---
+
+Test 4: calculatePitcherWinProbability for Max Scherzer
+Result: Success
+Overall win probability: 25%
+Expected DFS points: 1.02
+Confidence: 75/100
+Pitcher quality: 3.8/10
+Team offense: 5.1/10
+Bullpen strength: 4.3/10
+Home/Away factor: -1 (1=home, -1=away)
+{
+  "overallWinProbability": 25,
+  "factorWeights": {
+    "pitcherSkill": 0.35,
+    "teamOffense": 0.2,
+    "teamDefense": 0.1,
+    "bullpenStrength": 0.15,
+    "homeField": 0.1,
+    "opposingPitcher": 0.1
+  },
+  "factors": {
+    "pitcherSkill": 3.75,
+    "teamOffense": 5.111111111111111,
+    "teamDefense": 5,
+    "bullpenStrength": 4.326923076923077,
+    "homeField": -1,
+    "opposingPitcher": 5
+  },
+  "confidence": 75,
+  "pitcherFactors": {
+    "pitcherQuality": 3.75,
+    "durability": 3.5,
+    "recentForm": 5
+  },
+  "teamFactors": {
+    "teamQuality": 6,
+    "runSupport": 5.111111111111111,
+    "bullpenStrength": 4.326923076923077
+  },
+  "gameFactors": {
+    "opposingTeam": 5,
+    "homeAway": -1,
+    "weather": 0
+  },
+  "expectedDfsPoints": 1.0197435897435898
+}
+
+---
+
+Test 5: getPitcherWinStats for Shane Bieber
+Result: Success
+Pitcher name: Shane Bieber
+Team: Cleveland Guardians
+Games started: 0
+Win-Loss: 0-0
+Win percentage: 0.0%
+Team win percentage: 50.0%
+ERA: 0.00
+WHIP: 0.00
+Avg innings per start: 0.0
+{
+  "name": "Shane Bieber",
+  "gamesStarted": 0,
+  "wins": 0,
+  "losses": 0,
+  "winPercentage": 0,
+  "teamWinPct": 0.5,
+  "teamName": "Cleveland Guardians",
+  "qualityStarts": 0,
+  "qualityStartPct": 0,
+  "era": 0,
+  "whip": 0,
+  "inningsPitched": 0,
+  "avgInningsPerStart": 0
+}
+
+---
+
+Test 6: getTeamOffensiveSupport for Braves (144)
+Result: Success
+Runs per game: 1.60
+Error in Test 6: bravesOffense.teamOPS.toFixed is not a function
+
+---
+
+Tests completed for pitcher-win.ts module.

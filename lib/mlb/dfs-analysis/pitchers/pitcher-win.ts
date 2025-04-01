@@ -4,10 +4,11 @@
 
 import { makeMLBApiRequest } from "../../core/api-client";
 import { getGameFeed } from "../../game/game-feed";
-import { getGameEnvironmentData } from "../../index";
-import { getPitcherStats } from "../../player/pitcher-stats";
+import { getGameEnvironmentData } from "../../weather/weather";
 import { getTeamStats } from "../../schedule/schedule";
 import { WinProbabilityAnalysis } from "../../types/analysis/pitcher";
+import { Pitcher } from "../../types/domain/player";
+import { getEnhancedPitcherData } from "../../services/pitcher-data-service";
 
 /**
  * Get pitcher's win statistics and performance metrics
@@ -31,8 +32,8 @@ export async function getPitcherWinStats(
   avgInningsPerStart: number;
 } | null> {
   try {
-    // Get pitcher stats
-    const pitcherData = await getPitcherStats({ pitcherId, season });
+    // Get enhanced pitcher data using the data service
+    const pitcherData = await getEnhancedPitcherData(pitcherId, season);
 
     // Get current team - skip team lookup if no team data
     const currentTeam = pitcherData.currentTeam;
@@ -70,20 +71,8 @@ export async function getPitcherWinStats(
       console.warn(`No current team found for pitcher ${pitcherId}`);
     }
 
-    // Extract pitching stats
-    const stats = pitcherData.seasonStats[season.toString()] || {
-      gamesPlayed: 0,
-      gamesStarted: 0,
-      inningsPitched: 0,
-      wins: 0,
-      losses: 0,
-      era: 0,
-      whip: 0,
-      strikeouts: 0,
-      walks: 0,
-      saves: 0,
-      hitBatsmen: 0,
-    };
+    // Extract pitching stats from the enhanced data
+    const stats = pitcherData.seasonStats;
 
     // Calculate quality starts (estimated)
     let estimatedQualityStarts = 0;
@@ -305,16 +294,6 @@ async function getSeasonTeamStats(
       return null;
     }
 
-    // When logging the response, we properly see the data structure
-    console.log(`Response has stats groups: ${response.stats.length}`);
-
-    // Check the first item in each group to determine which is hitting/pitching
-    const group0Keys = Object.keys(response.stats[0]);
-    const group1Keys = Object.keys(response.stats[1]);
-
-    console.log(`Group 0 keys: ${group0Keys.join(", ")}`);
-    console.log(`Group 1 keys: ${group1Keys.join(", ")}`);
-
     // Determine which group is hitting and which is pitching
     let hittingStatsGroup: any = null;
     let pitchingStatsGroup: any = null;
@@ -365,15 +344,6 @@ async function getSeasonTeamStats(
       console.log(`Missing stat objects for team ${teamId}, season ${season}`);
       return null;
     }
-
-    // Log what we found to verify
-    console.log(`Found team stats for ${teamId}, season ${season}:`);
-    console.log(
-      `- Hitting: Games=${hittingSplit.stat.gamesPlayed}, AVG=${hittingSplit.stat.avg}, OPS=${hittingSplit.stat.ops}`
-    );
-    console.log(
-      `- Pitching: W=${pitchingSplit.stat.wins}, L=${pitchingSplit.stat.losses}, ERA=${pitchingSplit.stat.era}`
-    );
 
     // Extract stats from the correct season
     const hittingStats = hittingSplit.stat;
@@ -473,13 +443,9 @@ export async function calculatePitcherWinProbability(
     // Get pitcher stats
     const pitcherStats = await getPitcherWinStats(pitcherId, season);
 
-    // Get pitcher's team ID
-    const pitcherData = await getPitcherStats({
-      pitcherId,
-      season,
-    });
-
-    const pitcherTeam = pitcherData?.currentTeam || "";
+    // Get pitcher data from enhanced data service
+    const pitcherData = await getEnhancedPitcherData(pitcherId, season);
+    const pitcherTeam = pitcherData.currentTeam || "";
     const teamId = pitcherTeam ? await getTeamIdByName(pitcherTeam) : null;
 
     // Get team-specific data if we have the team ID

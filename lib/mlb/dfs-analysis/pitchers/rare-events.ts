@@ -3,11 +3,13 @@
  * Including complete games, shutouts, no-hitters, and perfect games
  */
 
-import { getGameFeed } from "../game/game-feed";
-import { getGameEnvironmentData } from "../index";
-import { getPitcherStats } from "../player/pitcher-stats";
-import { getTeamStats } from "../schedule/schedule";
-import { RareEventAnalysis } from "../types/analysis/events";
+import { getGameFeed } from "../../game/game-feed";
+import { getGameEnvironmentData } from "../../weather/weather";
+import { getTeamStats } from "../../schedule/schedule";
+import { RareEventAnalysis } from "../../types/analysis/events";
+import { EnhancedPitcherData } from "../../services/pitcher-data-service";
+import { getEnhancedPitcherData } from "../../services/pitcher-data-service";
+import { Pitcher } from "../../types/domain/player";
 
 /**
  * Calculate rare event potential and expected DFS points
@@ -19,10 +21,10 @@ export async function calculateRareEventPotential(
   season: number = new Date().getFullYear()
 ): Promise<RareEventAnalysis> {
   try {
-    // Get pitcher stats for both current and previous season
+    // Get pitcher stats for both current and previous season using enhanced data service
     const [currentSeasonStats, previousSeasonStats] = await Promise.all([
-      getPitcherStats({ pitcherId, season }),
-      getPitcherStats({ pitcherId, season: season - 1 }),
+      getEnhancedPitcherData(pitcherId, season),
+      getEnhancedPitcherData(pitcherId, season - 1).catch(() => null),
     ]);
 
     // Use current season stats if available, otherwise fall back to previous season
@@ -64,21 +66,8 @@ export async function calculateRareEventPotential(
       ? await getTeamStats(opponentId, season)
       : null;
 
-    // Calculate base probabilities
-    const currentSeason = season.toString();
-    const stats = pitcherStats.seasonStats[currentSeason] || {
-      gamesPlayed: 0,
-      gamesStarted: 0,
-      inningsPitched: 0,
-      wins: 0,
-      losses: 0,
-      era: 4.5, // League average ERA
-      whip: 1.3, // League average WHIP
-      strikeouts: 0,
-      walks: 0,
-      saves: 0,
-      hitBatsmen: 0,
-    };
+    // Extract stats directly from the pitcherStats using the domain model
+    const stats = pitcherStats.seasonStats;
 
     const inningsPitched = stats.inningsPitched || 0;
     const era = stats.era || 4.5; // League average ERA
@@ -238,8 +227,8 @@ export async function analyzeHistoricalRareEvents(
   };
 }> {
   try {
-    // Get pitcher data
-    const pitcherData = await getPitcherStats({ pitcherId, season });
+    // Get pitcher data from enhanced data service
+    const pitcherData = await getEnhancedPitcherData(pitcherId, season);
 
     if (!pitcherData) {
       throw new Error(`Could not get pitcher data for ID ${pitcherId}`);
@@ -248,23 +237,21 @@ export async function analyzeHistoricalRareEvents(
     // For this function, we would ideally query a database with historical rare events
     // In absence of that, we'll simulate based on available data
 
-    // Extract career stats
+    // Extract career stats - use careerStats array from enhanced data
     const careerGames = pitcherData.careerStats.reduce(
-      (sum, season) => sum + season.gamesPlayed,
+      (sum, seasonData) => sum + seasonData.gamesPlayed,
       0
     );
 
     // Estimate rare events based on career stats and ERA
     // These are approximations and would be replaced with actual data in production
-    const careerEra =
-      pitcherData.careerStats.length > 0
+    const careerEra = 
+      careerGames > 0 
         ? pitcherData.careerStats.reduce(
-            (sum, season) => sum + season.era * season.gamesPlayed,
+            (sum, seasonData) => sum + (seasonData.era * seasonData.gamesPlayed),
             0
           ) / careerGames
-        : typeof pitcherData.seasonStats.era === "number"
-        ? pitcherData.seasonStats.era
-        : 4.5;
+        : pitcherData.seasonStats.era || 4.5;
 
     // Better pitchers have more rare events
     const rareEventFactor = Math.max(
@@ -286,11 +273,8 @@ export async function analyzeHistoricalRareEvents(
     const qualityStartRate = 0.4 + rareEventFactor * 0.1;
     const careerQualityStarts = Math.round(careerGames * qualityStartRate);
 
-    // Calculate season stats (more restricted sample size)
-    const seasonGamesValue =
-      typeof pitcherData.seasonStats.gamesPlayed === "number"
-        ? pitcherData.seasonStats.gamesPlayed
-        : 0;
+    // Calculate season stats using the current season data from the enhanced data service
+    const seasonGamesValue = pitcherData.seasonStats.gamesPlayed || 0;
 
     // Season stats are more variable due to smaller sample
     const seasonCGs = Math.min(

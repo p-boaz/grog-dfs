@@ -1,13 +1,11 @@
-import {
-  getPitcherHomeRunVulnerability,
-  getPitcherStats,
-} from "../../player/pitcher-stats";
-import { calculateExpectedStrikeouts } from "../strikeouts";
-import { calculatePitcherDfsProjection } from "./aggregate-scoring";
+import { EnhancedPitcherData, getEnhancedPitcherData } from "../../services/pitcher-data-service";
+import { calculateExpectedStrikeouts } from "../pitchers/strikeouts";
+import { calculatePitcherDfsProjection } from "../shared/aggregate-scoring";
 import { calculateExpectedInnings } from "./innings-pitched";
 import { calculateControlProjection } from "./pitcher-control";
 import { calculatePitcherWinProbability } from "./pitcher-win";
 import { calculateRareEventPotential } from "./rare-events";
+import { isPitcherStats } from "../../types/domain/player";
 
 // Constants for placeholder values
 const PLACEHOLDER = {
@@ -30,12 +28,6 @@ interface PitcherSeasonStats {
   walks: number | null;
   saves: number | null;
   homeRunsAllowed?: number | null;
-}
-
-interface PitcherStats {
-  seasonStats: {
-    [season: string]: PitcherSeasonStats;
-  };
 }
 
 interface StartingPitcherAnalysis {
@@ -154,37 +146,40 @@ async function analyzePitcher({
   game: any;
 }): Promise<StartingPitcherAnalysis> {
   try {
-    // Get stats for both seasons
-    const [stats2024, stats2025] = await Promise.all([
-      getPitcherStats({ pitcherId, season: 2024 }),
-      getPitcherStats({ pitcherId, season: 2025 }),
+    // Get enhanced pitcher data from the domain model
+    const [pitcherData2024, pitcherData2025] = await Promise.all([
+      getEnhancedPitcherData(pitcherId, 2024),
+      getEnhancedPitcherData(pitcherId, 2025),
     ]);
 
     // Combine stats with preference for 2025 data
-    const combinedStats = {
-      seasonStats: {
-        "2024": stats2024?.seasonStats || {},
-        "2025": stats2025?.seasonStats || {},
-      },
-    };
+    const currentSeason2025 = pitcherData2025?.seasonStats;
+    const currentSeason2024 = pitcherData2024?.seasonStats;
 
     // Use 2025 stats as primary, fall back to 2024 if needed
-    const seasonStats2025 = combinedStats.seasonStats["2025"];
-    const seasonStats2024 = combinedStats.seasonStats["2024"];
-    const primaryStats =
-      typeof seasonStats2025.gamesPlayed === "number" &&
-      seasonStats2025.gamesPlayed > 0
-        ? seasonStats2025
-        : seasonStats2024;
+    let primaryStats = null;
+    if (currentSeason2025 && currentSeason2025.gamesPlayed > 0) {
+      primaryStats = currentSeason2025;
+    } else if (currentSeason2024) {
+      primaryStats = currentSeason2024;
+    } else {
+      // If no stats available, use defaults
+      primaryStats = {
+        gamesPlayed: 0,
+        inningsPitched: 0,
+        wins: 0,
+        losses: 0,
+        era: 4.5,
+        whip: 1.3,
+        strikeouts: 0,
+        walks: 0,
+        saves: 0,
+        homeRunsAllowed: 0,
+      };
+    }
 
-    // Get home run vulnerability data for both seasons
-    const [hrVulnerability2024, hrVulnerability2025] = await Promise.all([
-      getPitcherHomeRunVulnerability(pitcherId, 2024),
-      getPitcherHomeRunVulnerability(pitcherId, 2025),
-    ]);
-
-    // Use the most recent HR vulnerability data
-    const hrVulnerability = hrVulnerability2025 || hrVulnerability2024;
+    // Get home run vulnerability
+    const hrVulnerability = await getHomeRunVulnerability(pitcherId, 2025, 2024);
 
     // Initialize projections with placeholders
     let projections = {
@@ -297,29 +292,16 @@ async function analyzePitcher({
 
     // Convert primaryStats to required format for StartingPitcherAnalysis
     const formattedStats = {
-      gamesPlayed:
-        typeof primaryStats.gamesPlayed === "number"
-          ? primaryStats.gamesPlayed
-          : null,
-      inningsPitched:
-        typeof primaryStats.inningsPitched === "number"
-          ? primaryStats.inningsPitched
-          : null,
-      wins: typeof primaryStats.wins === "number" ? primaryStats.wins : null,
-      losses:
-        typeof primaryStats.losses === "number" ? primaryStats.losses : null,
-      era: typeof primaryStats.era === "number" ? primaryStats.era : null,
-      whip: typeof primaryStats.whip === "number" ? primaryStats.whip : null,
-      strikeouts:
-        typeof primaryStats.strikeouts === "number"
-          ? primaryStats.strikeouts
-          : null,
-      walks: typeof primaryStats.walks === "number" ? primaryStats.walks : null,
-      saves: typeof primaryStats.saves === "number" ? primaryStats.saves : null,
-      homeRunsAllowed:
-        typeof primaryStats.homeRunsAllowed === "number"
-          ? primaryStats.homeRunsAllowed
-          : null,
+      gamesPlayed: primaryStats.gamesPlayed ?? null,
+      inningsPitched: primaryStats.inningsPitched ?? null,
+      wins: primaryStats.wins ?? null,
+      losses: primaryStats.losses ?? null,
+      era: primaryStats.era ?? null,
+      whip: primaryStats.whip ?? null,
+      strikeouts: primaryStats.strikeouts ?? null,
+      walks: primaryStats.walks ?? null,
+      saves: primaryStats.saves ?? null,
+      homeRunsAllowed: primaryStats.homeRunsAllowed ?? null,
     };
 
     return {
@@ -355,6 +337,61 @@ async function analyzePitcher({
     console.error(`Error analyzing pitcher ${pitcherId}:`, error);
     return getDefaultPitcherAnalysis(pitcherId, isHome, game);
   }
+}
+
+/**
+ * Get home run vulnerability data for a pitcher
+ * Tries 2025 first, falls back to 2024 if needed
+ */
+async function getHomeRunVulnerability(
+  pitcherId: number,
+  primarySeason: number,
+  fallbackSeason: number
+) {
+  try {
+    // Calculate HR vulnerability from enhanced data
+    const enhancedData = await getEnhancedPitcherData(pitcherId, primarySeason);
+    
+    // If no primary season data, try fallback
+    if (!enhancedData || !enhancedData.seasonStats || enhancedData.seasonStats.inningsPitched <= 0) {
+      const fallbackData = await getEnhancedPitcherData(pitcherId, fallbackSeason);
+      if (!fallbackData || !fallbackData.seasonStats || fallbackData.seasonStats.inningsPitched <= 0) {
+        return null;
+      }
+      
+      return calculateHrVulnerability(fallbackData);
+    }
+    
+    return calculateHrVulnerability(enhancedData);
+  } catch (error) {
+    console.error(`Error getting HR vulnerability for pitcher ${pitcherId}:`, error);
+    return null;
+  }
+}
+
+/**
+ * Calculate home run vulnerability from pitcher data
+ */
+function calculateHrVulnerability(enhancedData: EnhancedPitcherData) {
+  const stats = enhancedData.seasonStats;
+  if (!stats || stats.inningsPitched <= 0) return null;
+  
+  const ip = stats.inningsPitched;
+  const hrs = stats.homeRunsAllowed || 0;
+  
+  // Calculate HR/9
+  const hrPer9 = (hrs / ip) * 9;
+  
+  // Calculate vulnerability on 0-10 scale where 5 is average
+  // 1.25 HR/9 is approximately average
+  const vulnerability = 5 * (hrPer9 / 1.25);
+  
+  return {
+    hrPer9,
+    flyBallPct: 0.35, // Default value
+    hrPerFlyBall: 0.12, // Default value
+    homeRunVulnerability: Math.max(1, Math.min(10, vulnerability)),
+  };
 }
 
 // Add helper function for default analysis

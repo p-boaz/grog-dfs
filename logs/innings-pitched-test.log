@@ -1,0 +1,119 @@
+--- Innings Pitched Test Log ---
+
+Starting tests for innings-pitched.ts module...
+
+Test 1: getPitcherInningsStats for Gerrit Cole
+Result: Failed
+
+---
+
+Test 2: getTeamHookTendencies for Yankees
+Result: Success
+Team: New York Yankees
+Quick hook rating: 5.0/10
+Bullpen usage rating: 5.0/10
+Starter innings per game: 5.5
+{
+  "teamName": "New York Yankees",
+  "quickHookRating": 5,
+  "bullpenUsageRating": 5,
+  "starterInningsPerGame": 5.5,
+  "confidenceScore": 60
+}
+
+---
+
+Test 3: calculateExpectedInnings for Cole vs. Red Sox
+Result: Success
+Expected innings: 6.1
+Range: 5.1 - 7.1
+Expected DFS points: 13.8
+Confidence: 65/100
+{
+  "expectedInnings": 6.147058823529412,
+  "leashLength": 5.75,
+  "workloadConcerns": 5,
+  "gameScriptImpact": 5.5,
+  "pastWorkload": {
+    "last3Games": [
+      5,
+      5,
+      5
+    ],
+    "averageInnings": 5.588235294117647
+  },
+  "ranges": {
+    "low": 5.147058823529412,
+    "high": 7.147058823529412
+  },
+  "expectedDfsPoints": 13.830882352941178,
+  "factors": {
+    "pitcherDurability": 5.75,
+    "teamHookTendency": 5,
+    "gameContext": 1.1,
+    "pitcherEfficiency": 16.83157894736842
+  },
+  "confidence": 65,
+  "confidenceScore": 65
+}
+
+---
+
+Test 4: calculateCompleteGamePotential for Scherzer
+Result: Success
+Expected rare event points: 0.01
+Complete game probability: 0.2%
+No-hitter probability: 0.00%
+Quality start probability: 35.0%
+Risk/reward rating: 1.2/10
+{
+  "expectedRareEventPoints": 0.007449999999999999,
+  "confidenceScore": 33,
+  "confidence": 33,
+  "eventProbabilities": {
+    "completeGame": 0.2,
+    "shutout": 0.09,
+    "noHitter": 0.004,
+    "qualityStart": 35,
+    "perfectGame": 0.000008000000000000001
+  },
+  "riskRewardRating": 1.1763333333333332
+}
+
+---
+
+Test 5: getPitcherInningsStats for Wheeler
+Result: Success
+Pitcher name: Zack Wheeler
+Avg innings per start: 6.00
+Durability rating: 7.3/10
+{
+  "name": "Zack Wheeler",
+  "teamName": "Philadelphia Phillies",
+  "gamesStarted": 1,
+  "inningsPitched": "6.0",
+  "avgInningsPerStart": 6,
+  "qualityStartPercentage": 0.65,
+  "completionRate": 0.75,
+  "pitchEfficiency": 17,
+  "earlyHookRate": 0.15,
+  "durabilityRating": 7.25
+}
+
+---
+
+Test 6: Comparing innings potential for multiple pitchers
+Successfully retrieved stats for 1 out of 4 pitchers
+Pitcher Innings Comparison (Sorted by Durability Rating):
+[
+  {
+    "name": "Max Scherzer",
+    "inningsPitched": "3.0",
+    "avgInningsPerStart": 3,
+    "durabilityRating": 3.25
+  }
+]
+
+---
+
+Tests completed for innings-pitched.ts module.

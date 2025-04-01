@@ -3,11 +3,13 @@
  * into comprehensive DFS point projections
  */
 
-import { getPitcherHomeRunVulnerability } from "../player/pitcher-stats";
-import { calculateExpectedInnings } from "./innings-pitched";
-import { calculatePitcherWinProbability } from "./pitcher-win";
-import { calculateRareEventPotential } from "./rare-events";
-import { calculateExpectedStrikeouts } from "./strikeouts";
+import { getEnhancedPitcherData } from "../../services/pitcher-data-service";
+import { calculateExpectedInnings } from "../pitchers/innings-pitched";
+import { calculatePitcherWinProbability } from "../pitchers/pitcher-win";
+import { calculateRareEventPotential } from "../pitchers/rare-events";
+import { calculateExpectedStrikeouts } from "../pitchers/strikeouts";
+import { makeMLBApiRequest } from "../../core/api-client";
+import { isPitcherStats } from "../../types/domain/player";
 
 /**
  * Helper function to find which team a pitcher is on in a game
@@ -79,9 +81,6 @@ export async function calculatePitcherDfsProjection(
   try {
     // Collect all category-specific projections in parallel
     // First, try to get the game feed to determine the opposing team
-    // Import what we need without creating circular dependencies
-    const { makeMLBApiRequest } = await import("../core/api-client");
-    
     let opposingTeamID = opposingTeamId;
     
     if (!opposingTeamID) {
@@ -111,33 +110,38 @@ export async function calculatePitcherDfsProjection(
       }
     }
     
+    // Get enhanced pitcher data for additional metrics
+    const pitcherData = await getEnhancedPitcherData(pitcherId, season);
+    
     const [
       winProjection,
       strikeoutProjection,
       inningsProjection,
       rareEventsProjection,
-      hrVulnerability,
     ] = await Promise.all([
       calculatePitcherWinProbability(pitcherId, gamePk, season),
       calculateExpectedStrikeouts(pitcherId, opposingTeamID, gamePk),
       calculateExpectedInnings(pitcherId, gamePk, season),
       calculateRareEventPotential(pitcherId, gamePk, season),
-      getPitcherHomeRunVulnerability(pitcherId, season),
     ]);
 
-    // Extract pitcher name and team from any available projection
-    const name = winProjection.pitcherFactors
-      ? strikeoutProjection.expectedStrikeouts > 0
-        ? strikeoutProjection.factors.pitcherBaseline
-        : 0
-      : "";
-    const team = ""; // Would extract from pitcher data
-
+    // Extract pitcher name and team from enhanced data
+    const name = pitcherData?.fullName || "";
+    const team = pitcherData?.currentTeam || "";
+    
     // Calculate expected earned runs
-    // Use HR vulnerability and innings to estimate ER
-    const hrVulnerabilityFactor = hrVulnerability
-      ? hrVulnerability.homeRunVulnerability / 5
-      : 1;
+    // Get HR vulnerability from current stats
+    let hrVulnerabilityFactor = 1.0;
+    
+    if (pitcherData && isPitcherStats(pitcherData.seasonStats)) {
+      const innings = pitcherData.seasonStats.inningsPitched || 1;
+      const hrs = pitcherData.seasonStats.homeRunsAllowed || 0;
+      const hrPer9 = (hrs / innings) * 9;
+      
+      // Normal HR/9 is around 1.25, adjust vulnerability based on deviation
+      hrVulnerabilityFactor = hrPer9 / 1.25;
+    }
+    
     const projectedInnings = inningsProjection.expectedInnings;
     const baseEraEstimate = 4.0; // League average
     const adjustedEra = baseEraEstimate * hrVulnerabilityFactor;
@@ -195,10 +199,39 @@ export async function calculatePitcherDfsProjection(
       rareEventsProjection.confidence * confidenceWeights.rareEvents;
 
     // Calculate pitcher quality rating (1-10 scale)
+    // Get pitching stats from enhanced data if available
+    let pitcherBaseline = 5; // Default to average
+    let durability = 5; // Default to average
+    let hrVulnerability = 5; // Default to average
+    
+    if (pitcherData && isPitcherStats(pitcherData.seasonStats)) {
+      const stats = pitcherData.seasonStats;
+      
+      // Use K/9 for baseline pitcher quality
+      const k9 = stats.k9 || (stats.strikeouts / (stats.inningsPitched || 1)) * 9;
+      
+      // Average K/9 is around 8.5, scale to 1-10
+      pitcherBaseline = Math.min(10, Math.max(1, k9 / 10 * 10));
+      
+      // Durability based on average innings per start
+      const inningsPerStart = stats.inningsPitched / (stats.gamesStarted || 1);
+      
+      // Average IP/GS is around 5.5, scale to 1-10
+      durability = Math.min(10, Math.max(1, inningsPerStart / 7 * 10));
+      
+      // HR vulnerability based on HR/9
+      const homeRunsAllowed = stats.homeRunsAllowed || 0;
+      const inningsPitched = stats.inningsPitched || 1;
+      const hr9 = (homeRunsAllowed / inningsPitched) * 9;
+      
+      // Average HR/9 is around 1.25, scale to 10-1 (inverted because lower is better)
+      hrVulnerability = Math.min(10, Math.max(1, 10 - (hr9 / 2.5 * 10)));
+    }
+    
     const qualityComponents = [
-      strikeoutProjection.factors.pitcherBaseline,
-      inningsProjection.factors.pitcherDurability,
-      10 - (hrVulnerability ? hrVulnerability.homeRunVulnerability : 5), // Invert HR vulnerability
+      pitcherBaseline,
+      durability,
+      hrVulnerability,
     ];
 
     const qualityRating =
@@ -208,7 +241,7 @@ export async function calculatePitcherDfsProjection(
     return {
       pitcher: {
         id: pitcherId,
-        name: name as string | undefined,
+        name,
         team,
       },
       points: {

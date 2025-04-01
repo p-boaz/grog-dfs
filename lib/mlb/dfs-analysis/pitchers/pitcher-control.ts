@@ -15,6 +15,8 @@ import {
   getPitcherPitchMix,
   getPitcherStats,
 } from "../../player/pitcher-stats";
+import { getEnhancedBatterData } from "../../services/batter-data-service";
+import { getEnhancedPitcherData } from "../../services/pitcher-data-service";
 import {
   BatterControlFactors,
   CareerControlProfile,
@@ -24,6 +26,7 @@ import {
   PitcherControlProfile,
   PitcherControlStats,
 } from "../../types/analysis";
+import { Batter, Pitcher, isPitcherStats } from "../../types/domain/player";
 
 // Negative points in DraftKings for these categories
 export const HIT_AGAINST_POINTS = -0.6;
@@ -42,31 +45,31 @@ export async function getPitcherControlStats(
   season = new Date().getFullYear()
 ): Promise<PitcherControlStats | null> {
   try {
-    // Get pitcher stats
-    const pitcherData = await getPitcherStats({
-      pitcherId,
-      season,
-    });
+    // Get enhanced pitcher data using the domain model
+    const enhancedPitcherData: Pitcher = await getEnhancedPitcherData(pitcherId, season);
 
     // Verify player is a pitcher with innings pitched
     if (
-      !pitcherData ||
-      pitcherData.primaryPosition !== "P" ||
-      !pitcherData.seasonStats.inningsPitched ||
-      parseFloat(pitcherData.seasonStats.inningsPitched.toString()) === 0
+      !enhancedPitcherData ||
+      enhancedPitcherData.position !== "P" ||
+      !enhancedPitcherData.currentSeason.inningsPitched ||
+      enhancedPitcherData.currentSeason.inningsPitched === 0
     ) {
       return null;
     }
 
-    // Extract needed values
-    const stats = (pitcherData.seasonStats[season.toString()] || {}) as Record<
-      string,
-      any
-    >;
-    const ip = parseFloat(stats.inningsPitched?.toString() || "0");
-    const walks = Number(stats.walks || 0);
-    const strikeouts = Number(stats.strikeouts || 0);
-    const hits = 0; // Need to calculate or retrieve from more detailed stats
+    // Use type guard to validate pitcher stats
+    if (!isPitcherStats(enhancedPitcherData.currentSeason)) {
+      console.warn(`Invalid pitcher stats for player ${pitcherId}`);
+      return null;
+    }
+
+    // Extract needed values from currentSeason
+    const stats = enhancedPitcherData.currentSeason;
+    const ip = stats.inningsPitched;
+    const walks = stats.walks || 0;
+    const strikeouts = stats.strikeouts || 0;
+    const hits = stats.hitsAllowed || 0;
 
     // Try to get more detailed pitch mix data which includes control metrics
     const pitchMixData = await getPitcherPitchMix({ pitcherId }).catch(
@@ -75,24 +78,24 @@ export async function getPitcherControlStats(
 
     // Calculate per 9 inning rates
     const walksPerNine = (walks / ip) * 9;
-    const hitsPerNine = 0; // Need to calculate
-    const hbpPerNine = 0; // Need to extract from more detailed stats
+    const hitsPerNine = (hits / ip) * 9;
+    const hbpPerNine = (stats.hitBatsmen / ip) * 9;
 
     // Calculate WHIP (Walks + Hits per Inning Pitched)
-    const whip = Number(stats.whip || 0);
+    const whip = stats.whip;
 
     // Calculate K/BB ratio
     const strikeoutToWalkRatio = walks > 0 ? strikeouts / walks : strikeouts;
 
     return {
       walks,
-      hits: 0, // Placeholder - need to extract from detailed stats
-      hitBatsmen: 0, // Placeholder - need to extract from detailed stats
+      hits,
+      hitBatsmen: stats.hitBatsmen || 0,
       inningsPitched: ip,
-      gamesStarted: Number(stats.gamesPlayed || 0),
+      gamesStarted: stats.gamesStarted || 0,
       walksPerNine,
-      hitsPerNine: hitsPerNine || 0,
-      hbpPerNine: hbpPerNine || 0,
+      hitsPerNine,
+      hbpPerNine,
       whip,
       strikeoutToWalkRatio,
       zonePercentage: pitchMixData?.controlMetrics?.zonePercentage,
@@ -247,23 +250,21 @@ export async function getCareerControlProfile(
   pitcherId: number
 ): Promise<CareerControlProfile | null> {
   try {
-    // Get player stats with historical data
-    const pitcherData = await getPitcherStats({
-      pitcherId,
-    });
+    // Get enhanced pitcher data with career information
+    const enhancedPitcherData: Pitcher = await getEnhancedPitcherData(pitcherId);
 
     if (
-      !pitcherData ||
-      !pitcherData.careerStats ||
-      pitcherData.careerStats.length === 0
+      !enhancedPitcherData ||
+      !enhancedPitcherData.careerByYear ||
+      Object.keys(enhancedPitcherData.careerByYear).length === 0
     ) {
       return null;
     }
 
-    // Get career totals
+    // Career totals
     let careerWalks = 0;
-    let careerHits = 0; // Would need to calculate from WHIP and IP
-    let careerHbp = 0; // Not directly available in basic stats
+    let careerHits = 0; 
+    let careerHbp = 0;
     let careerInningsPitched = 0;
     let bestSeasonWhip = 999; // Start with a high value
     let firstSeasonYear: number | null = null;
@@ -271,24 +272,28 @@ export async function getCareerControlProfile(
     // Track WHIP by season for consistency and trend analysis
     const seasonWhipValues: { season: number; whip: number; ip: number }[] = [];
 
-    // Process each season
-    pitcherData.careerStats.forEach((season) => {
+    // Process each season in careerByYear
+    Object.entries(enhancedPitcherData.careerByYear).forEach(([seasonYear, season]) => {
       // Skip seasons with too few innings
-      if (parseFloat(season.inningsPitched?.toString() || "0") < 20) return;
+      if (season.inningsPitched < 20) return;
 
-      const seasonYear = parseInt(season.season);
+      const year = parseInt(seasonYear);
       const walks = season.walks || 0;
-      const ip = parseFloat(season.inningsPitched?.toString() || "0");
+      const ip = season.inningsPitched;
       const whip = season.whip || 0;
+      const hits = season.hitsAllowed || 0;
+      const hitBatsmen = season.hitBatsmen || 0;
 
       // Track first season for experience calculation
-      if (firstSeasonYear === null || seasonYear < firstSeasonYear) {
-        firstSeasonYear = seasonYear;
+      if (firstSeasonYear === null || year < firstSeasonYear) {
+        firstSeasonYear = year;
       }
 
       // Update career totals
       careerWalks += walks;
       careerInningsPitched += ip;
+      careerHits += hits;
+      careerHbp += hitBatsmen;
 
       // Check if best season by WHIP
       if (whip < bestSeasonWhip && ip >= 50) {
@@ -297,24 +302,16 @@ export async function getCareerControlProfile(
 
       // Track for consistency and trend analysis
       seasonWhipValues.push({
-        season: seasonYear,
+        season: year,
         whip,
         ip,
       });
     });
 
     // Calculate career WHIP
-    const careerWhip =
-      pitcherData.careerStats.reduce(
-        (total, season) =>
-          total +
-          parseFloat(season.inningsPitched?.toString() || "0") *
-            (season.whip || 0),
-        0
-      ) / Math.max(1, careerInningsPitched);
-
-    // Estimate careerHits based on WHIP and walks
-    careerHits = Math.round(careerWhip * careerInningsPitched - careerWalks);
+    const careerWhip = careerInningsPitched > 0 
+      ? (careerWalks + careerHits) / careerInningsPitched 
+      : 0;
 
     // Calculate years of experience
     const currentYear = new Date().getFullYear();
@@ -387,7 +384,7 @@ export async function getCareerControlProfile(
     return {
       careerWalks,
       careerHits,
-      careerHbp: 0, // Not available in basic stats
+      careerHbp,
       careerInningsPitched,
       careerWhip,
       bestSeasonWhip,
@@ -498,12 +495,16 @@ export async function getBatterControlFactors(
   batterId: number
 ): Promise<BatterControlFactors | null> {
   try {
-    // Get batter stats
-    const batterStats = await getBatterStats({
-      batterId,
-    });
+    // Get enhanced batter data using the domain model
+    const enhancedBatterData: Batter = await getEnhancedBatterData(batterId);
 
-    if (!batterStats || !batterStats.seasonStats) {
+    if (!enhancedBatterData || !enhancedBatterData.currentSeason) {
+      return null;
+    }
+
+    // Use type guard to ensure we have valid BatterStats
+    if (!enhancedBatterData.currentSeason) {
+      console.warn(`No current season data for batter ${batterId}`);
       return null;
     }
 
@@ -518,17 +519,18 @@ export async function getBatterControlFactors(
       }
     );
 
+    const currentStats = enhancedBatterData.currentSeason;
+
     // Calculate walk rate and strikeout rate
-    const stats = batterStats.seasonStats;
     const plateAppearances =
-      stats.atBats +
-      (stats.walks || 0) +
-      (stats.hitByPitches || 0) +
-      (stats.sacrificeFlies || 0);
+      currentStats.atBats +
+      (currentStats.walks || 0) +
+      (currentStats.hitByPitches || 0) +
+      (currentStats.sacrificeFlies || 0);
     const walkRate =
-      plateAppearances > 0 ? (stats.walks || 0) / plateAppearances : 0;
+      plateAppearances > 0 ? (currentStats.walks || 0) / plateAppearances : 0;
     const strikeoutRate =
-      plateAppearances > 0 ? (stats.strikeouts || 0) / plateAppearances : 0;
+      plateAppearances > 0 ? (currentStats.strikeouts || 0) / plateAppearances : 0;
 
     // Calculate eye rating (0-10 scale based on walk rate)
     // MLB average walk rate is ~8%

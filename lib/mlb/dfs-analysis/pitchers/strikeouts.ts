@@ -2,11 +2,12 @@
  * Specialized functions for analyzing strikeout potential for pitchers
  */
 
-import { getGameEnvironmentData } from "../index";
-import { getTeamStats } from "../schedule/schedule";
-import { getEnhancedPitcherData } from "../services/pitcher-data-service";
-import { PitcherPitchMixData } from "../types/player/pitcher";
-import { StrikeoutProjection } from "../types/analysis/pitcher";
+import { getGameEnvironmentData } from "../../weather/weather";
+import { getTeamStats } from "../../schedule/schedule";
+import { getEnhancedPitcherData, EnhancedPitcherData } from "../../services/pitcher-data-service";
+import { PitcherPitchMixData } from "../../types/player/pitcher";
+import { Pitcher, isPitcherStats } from "../../types/domain/player";
+import { StrikeoutProjection } from "../../types/analysis/pitcher";
 
 /**
  * Pitcher strikeout statistics and metrics
@@ -53,7 +54,7 @@ export async function getPitcherStrikeoutStats(
 ): Promise<PitcherStrikeoutStats | undefined> {
   try {
     // Fetch enhanced pitcher data with MLB and Statcast metrics
-    const pitcherData = await getEnhancedPitcherData(pitcherId);
+    const pitcherData: EnhancedPitcherData = await getEnhancedPitcherData(pitcherId);
 
     if (!pitcherData || !pitcherData.seasonStats.gamesPlayed) {
       console.log(
@@ -77,7 +78,7 @@ export async function getPitcherStrikeoutStats(
     const strikeoutPercentage =
       battersFaced > 0 ? stats.strikeouts / battersFaced : 0;
 
-    // Use advanced metrics from Statcast if available
+    // Use advanced metrics from controlMetrics if available
     const swingingStrikeRate = pitcherData.controlMetrics?.whiffRate || 10;
     const zonePct = pitcherData.controlMetrics?.zoneRate || 45;
     const outsidePitchPct = 100 - zonePct;
@@ -127,16 +128,16 @@ export async function getPitcherStrikeoutStats(
     if (pitcherData.pitchData) {
       pitchMix = {
         fastballPct:
-          pitcherData.pitchData.pitchTypes.fastball +
-          pitcherData.pitchData.pitchTypes.sinker,
-        sliderPct: pitcherData.pitchData.pitchTypes.slider,
-        curvePct: pitcherData.pitchData.pitchTypes.curve,
-        changeupPct: pitcherData.pitchData.pitchTypes.changeup,
-        cutterPct: pitcherData.pitchData.pitchTypes.cutter,
-        splitterPct: pitcherData.pitchData.pitchTypes.splitter,
-        otherPct: pitcherData.pitchData.pitchTypes.other,
-        avgFastballVelo: pitcherData.pitchData.velocities.avgFastball,
-        maxFastballVelo: pitcherData.pitchData.velocities.maxFastball,
+          (pitcherData.pitchData.pitchTypes.fastball || 0) +
+          (pitcherData.pitchData.pitchTypes.sinker || 0),
+        sliderPct: pitcherData.pitchData.pitchTypes.slider || 0,
+        curvePct: pitcherData.pitchData.pitchTypes.curve || 0,
+        changeupPct: pitcherData.pitchData.pitchTypes.changeup || 0,
+        cutterPct: pitcherData.pitchData.pitchTypes.cutter || 0,
+        splitterPct: pitcherData.pitchData.pitchTypes.splitter || 0,
+        otherPct: pitcherData.pitchData.pitchTypes.other || 0,
+        avgFastballVelo: pitcherData.pitchData.velocities.avgFastball || 0,
+        maxFastballVelo: pitcherData.pitchData.velocities.maxFastball || 0,
         controlMetrics: {
           zonePercentage: zonePct,
           firstPitchStrikePercent: firstPitchStrikePercentage,
@@ -255,10 +256,16 @@ export async function calculateExpectedStrikeouts(
   expectedDfsPoints: number; // DK points from Ks (2 points per K)
 }> {
   try {
-    // Get pitcher current team
-    const pitcherData = await getEnhancedPitcherData(pitcherId);
+    // Get pitcher data
+    const pitcherData: EnhancedPitcherData = await getEnhancedPitcherData(pitcherId);
     if (!pitcherData) {
       throw new Error(`Could not find pitcher data for ${pitcherId}`);
+    }
+
+    // Validate pitcher stats using type guard
+    if (!pitcherData.seasonStats) {
+      console.warn(`Invalid pitcher stats for player ${pitcherId}`);
+      return getDefaultStrikeoutProjection();
     }
 
     const currentTeam = pitcherData.currentTeam;
@@ -381,28 +388,45 @@ export async function calculateExpectedStrikeouts(
       error
     );
 
-    // Return conservative default values
-    return {
-      expectedStrikeouts: 5.0, // Default to league average
-      lowRange: 3.0,
-      highRange: 7.0,
-      expectedRatePerInning: 1.0,
-      perInningRate: 1.0,
-      confidence: 3, // Low confidence due to error
-      ranges: {
-        low: 3.0,
-        high: 7.0
-      },
-      factors: {
-        pitcherBaseline: 1.0,
-        teamVulnerability: 1.0,
-        ballpark: 1.0,
-        weather: 1.0,
-        pitcherKRate: 5.0,
-        opposingTeamKRate: 5.0,
-        parkFactor: 5.0,
-      },
-      expectedDfsPoints: 10.0, // 5 Ks * 2 points
-    };
+    return getDefaultStrikeoutProjection();
   }
+}
+
+/**
+ * Helper function to create a default strikeout projection
+ */
+function getDefaultStrikeoutProjection(): StrikeoutProjection & {
+  lowRange: number;
+  highRange: number;
+  expectedRatePerInning: number;
+  factors: {
+    pitcherBaseline: number;
+    teamVulnerability: number;
+    ballpark: number;
+    weather: number;
+  };
+  expectedDfsPoints: number;
+} {
+  return {
+    expectedStrikeouts: 5.0, // Default to league average
+    lowRange: 3.0,
+    highRange: 7.0,
+    expectedRatePerInning: 1.0,
+    perInningRate: 1.0,
+    confidence: 3, // Low confidence due to error
+    ranges: {
+      low: 3.0,
+      high: 7.0
+    },
+    factors: {
+      pitcherBaseline: 1.0,
+      teamVulnerability: 1.0,
+      ballpark: 1.0,
+      weather: 1.0,
+      pitcherKRate: 5.0,
+      opposingTeamKRate: 5.0,
+      parkFactor: 5.0,
+    },
+    expectedDfsPoints: 10.0, // 5 Ks * 2 points
+  };
 }
