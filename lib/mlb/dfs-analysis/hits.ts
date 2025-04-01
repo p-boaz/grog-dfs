@@ -10,7 +10,6 @@ import {
   BallparkHitFactor,
   BatterPlatoonSplits,
   CareerHitProfile,
-  // @ts-ignore Missing export
   DetailedHitProjection,
   HitTypeRates,
   MatchupHitStats,
@@ -21,9 +20,8 @@ import {
   HIT_TYPE_POINTS,
 } from "../types/analysis/hits";
 
-import { BatterSeasonStats } from "../types/player/batter";
-import { Environment } from "../types/environment/weather";
-import { BallparkFactors } from "../types/environment/ballpark";
+import { Batter, BatterStats } from "../types/domain/player";
+import { GameEnvironment, BallparkFactors } from "../types/domain/game";
 
 // Interfaces for internal use
 interface PitcherTeam {

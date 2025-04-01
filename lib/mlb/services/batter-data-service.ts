@@ -1,7 +1,8 @@
 import { getBatterStats } from "../player/batter-stats";
 import { getBatterStatcastData } from "../savant";
-import { BatterSeasonStats, BatterStats } from "../types/player/batter";
+import { BatterSeasonStats, BatterStats as LegacyBatterStats } from "../types/player/batter"; // Legacy types
 import { BatterStatcastData } from "../types/statcast";
+import { Batter, BatterStats } from "../types/domain/player";
 
 /**
  * Enhanced batter data that combines MLB API and Savant data
@@ -97,7 +98,7 @@ export async function getEnhancedBatterData(
   season = new Date().getFullYear()
 ): Promise<EnhancedBatterData> {
   // Fetch both data sources concurrently
-  const [baseStats, statcastData] = await Promise.all([
+  const [batter, statcastData] = await Promise.all([
     getBatterStats({ batterId, season }),
     getBatterStatcastData({ batterId, season }).catch((error) => {
       console.warn(
@@ -108,23 +109,75 @@ export async function getEnhancedBatterData(
   ]);
 
   // Start with the base stats from MLB API
+  // Note: This uses the new domain model batter, but maintains 
+  // the EnhancedBatterData legacy structure for compatibility
   const enhancedData: EnhancedBatterData = {
     id: batterId,
-    fullName: baseStats.fullName,
-    currentTeam: baseStats.currentTeam,
-    primaryPosition: baseStats.primaryPosition,
-    batSide: baseStats.batSide,
-    seasonStats: baseStats.seasonStats,
-    careerStats: baseStats.careerStats,
+    fullName: batter.fullName,
+    currentTeam: batter.team,
+    primaryPosition: batter.position,
+    batSide: batter.handedness,
+    // Convert from domain model to the expected seasonStats format
+    seasonStats: {
+      gamesPlayed: batter.currentSeason.gamesPlayed,
+      atBats: batter.currentSeason.atBats,
+      hits: batter.currentSeason.hits,
+      doubles: batter.currentSeason.doubles,
+      triples: batter.currentSeason.triples,
+      homeRuns: batter.currentSeason.homeRuns,
+      rbi: batter.currentSeason.rbi,
+      rbis: batter.currentSeason.rbi, // For backward compatibility
+      walks: batter.currentSeason.walks,
+      strikeouts: batter.currentSeason.strikeouts,
+      stolenBases: batter.currentSeason.stolenBases,
+      avg: batter.currentSeason.avg,
+      obp: batter.currentSeason.obp,
+      slg: batter.currentSeason.slg,
+      ops: batter.currentSeason.ops,
+      runs: batter.currentSeason.runs,
+      hitByPitches: batter.currentSeason.hitByPitches,
+      sacrificeFlies: batter.currentSeason.sacrificeFlies,
+      plateAppearances: batter.currentSeason.plateAppearances,
+      caughtStealing: batter.currentSeason.caughtStealing,
+      // Add calculated metrics
+      wOBA: batter.currentSeason.wOBA,
+      iso: batter.currentSeason.iso,
+      babip: batter.currentSeason.babip,
+      kRate: batter.currentSeason.kRate,
+      bbRate: batter.currentSeason.bbRate,
+      hrRate: batter.currentSeason.hrRate,
+      sbRate: batter.currentSeason.sbRate
+    },
+    // Convert career stats to expected format - Type-safe version
+    careerStats: Object.entries(batter.careerByYear).map(([year, seasonStats]) => {
+      // Add explicit typing to fix "unknown" type issue
+      const typedStats = seasonStats as BatterStats;
+      return {
+        season: year,
+        team: '',  // Not available in all domain models
+        gamesPlayed: typedStats.gamesPlayed,
+        atBats: typedStats.atBats,
+        hits: typedStats.hits,
+        homeRuns: typedStats.homeRuns,
+        rbi: typedStats.rbi,
+        avg: typedStats.avg,
+        obp: typedStats.obp,
+        slg: typedStats.slg,
+        ops: typedStats.ops,
+        stolenBases: typedStats.stolenBases,
+        caughtStealing: typedStats.caughtStealing
+      };
+    }),
   };
 
   // Add game-specific stats if available
-  if ("lastGameStats" in baseStats && baseStats.lastGameStats) {
-    enhancedData.lastGameStats = baseStats.lastGameStats;
+  // Note: These are not part of the new domain model, so we check for them and populate if found
+  if ("lastGameStats" in batter && (batter as any).lastGameStats) {
+    enhancedData.lastGameStats = (batter as any).lastGameStats;
   }
 
-  if ("lastFiveGames" in baseStats && Array.isArray(baseStats.lastFiveGames)) {
-    enhancedData.lastFiveGames = baseStats.lastFiveGames;
+  if ("lastFiveGames" in batter && Array.isArray((batter as any).lastFiveGames)) {
+    enhancedData.lastFiveGames = (batter as any).lastFiveGames;
   }
 
   // Add Statcast quality metrics if available
@@ -175,7 +228,7 @@ export async function getEnhancedBatterData(
  * Helper function to estimate sprint speed when Statcast data is unavailable
  * Based on stolen base metrics and player profile
  */
-function estimateSprintSpeed(stats: EnhancedBatterData["seasonStats"]): number {
+function estimateSprintSpeed(stats: EnhancedBatterData["seasonStats"] | BatterStats): number {
   if (!stats) return 27.0; // League average default
 
   // Calculate stolen base rate per game
@@ -216,7 +269,7 @@ function estimateSprintSpeed(stats: EnhancedBatterData["seasonStats"]): number {
  * Based on power metrics from standard stats
  */
 export function estimateBarrelRate(
-  stats: EnhancedBatterData["seasonStats"]
+  stats: EnhancedBatterData["seasonStats"] | BatterStats
 ): number {
   if (!stats) return 0.05; // League average default
 
@@ -235,7 +288,7 @@ export function estimateBarrelRate(
  * Helper function to estimate exit velocity when Statcast data is unavailable
  */
 export function estimateExitVelocity(
-  stats: EnhancedBatterData["seasonStats"]
+  stats: EnhancedBatterData["seasonStats"] | BatterStats
 ): number {
   if (!stats) return 88; // League average default
 

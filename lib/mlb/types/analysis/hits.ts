@@ -2,7 +2,11 @@
  * MLB Hit Analysis Type Definitions
  *
  * This file contains type definitions for hit analysis and projections.
+ * This includes hit types, ballpark factors, weather impacts, and projection models.
  */
+
+import { BatterStats, PitcherStats } from "../domain/player";
+import { BallparkFactors, GameEnvironment } from "../domain/game";
 
 /**
  * Hit type enum - moved to hits.ts as concrete enum (not as type)
@@ -25,48 +29,111 @@ export const HIT_TYPE_POINTS = {
 };
 
 /**
- * Hit type rates for a batter
+ * Projected hit type rates with factors that influenced the projection
  *
- * @property single - Rate of singles per at-bat
- * @property double - Rate of doubles per at-bat
- * @property triple - Rate of triples per at-bat
- * @property homeRun - Rate of home runs per at-bat
+ * @property expectedBA - Expected batting average
+ * @property hitTypeRates - Rates for each hit type
+ * @property factors - Factors that influence the projection
  */
 export interface HitTypeRates {
-  single: number;
-  double: number;
-  triple: number;
-  homeRun: number;
+  expectedBA: number; // Expected batting average
+  hitTypeRates: {
+    single: number;
+    double: number;
+    triple: number;
+    homeRun: number;
+  };
+  
+  // Factors that influenced the projection
+  factors: {
+    playerBaseline: number;
+    ballpark: {
+      singles: number;
+      doubles: number;
+      triples: number;
+      homeRuns: number;
+    };
+    weather: {
+      singles: number;
+      doubles: number;
+      triples: number;
+      homeRuns: number;
+    };
+    pitcher: number;
+    matchup: number;
+    platoon: number;
+    homeAway: number;
+  };
 }
 
 /**
- * Ballpark factor for different hit types
+ * Ballpark factors for different hit types
  *
+ * @property overall - Overall park factor (1.0 is neutral)
  * @property singles - Park factor for singles (1.0 is neutral)
  * @property doubles - Park factor for doubles (1.0 is neutral) 
  * @property triples - Park factor for triples (1.0 is neutral)
  * @property homeRuns - Park factor for home runs (1.0 is neutral)
+ * @property runFactor - Park factor for runs (1.0 is neutral)
+ * @property rbiFactor - Park factor for RBIs (1.0 is neutral)
+ * @property byHitType - Factors by hit type (same as singles, doubles, etc.)
+ * @property byHandedness - Factors by batter handedness
  */
 export interface BallparkHitFactor {
-  singles: number;
-  doubles: number;
-  triples: number;
-  homeRuns: number;
+  // Overall park factor
+  overall: number; // 1.0 is neutral
+  
+  // Individual hit type factors
+  singles: number; // 1.0 is neutral
+  doubles: number; // 1.0 is neutral
+  triples: number; // 1.0 is neutral
+  homeRuns: number; // 1.0 is neutral
+  
+  // Run production factors
+  runFactor: number; // 1.0 is neutral
+  rbiFactor: number; // 1.0 is neutral
+  
+  // Grouped factors (for convenience)
+  byHitType: {
+    singles: number;
+    doubles: number;
+    triples: number;
+    homeRuns: number;
+  };
+  
+  // Handedness factors
+  byHandedness: {
+    rHB: number; // Right-handed batters
+    lHB: number; // Left-handed batters
+  };
 }
 
 /**
  * Weather impact on different hit types
  *
- * @property temperature - Temperature factor
- * @property wind - Wind factor
- * @property overall - Overall weather factor
- * @property byType - Factors by hit type
+ * @property temperature - Game temperature (°F)
+ * @property windSpeed - Wind speed (mph)
+ * @property windDirection - Wind direction
+ * @property isOutdoor - Whether the game is played outdoors
+ * @property temperatureFactor - Impact of temperature
+ * @property windFactor - Impact of wind
+ * @property overallFactor - Overall weather impact
+ * @property byHitType - Impact by hit type
  */
 export interface WeatherHitImpact {
-  temperature: number;
-  wind: number; 
-  overall: number;
-  byType: {
+  // Environmental conditions
+  temperature: number; // °F
+  windSpeed: number; // mph
+  windDirection: string; // "in", "out", "left", "right", "none"
+  isOutdoor: boolean;
+  
+  // Impact factors (1.0 is neutral)
+  temperatureFactor: number;
+  windFactor: number; 
+  overallFactor: number;
+  
+  // Impact by hit type (1.0 is neutral)
+  byHitType: {
     singles: number;
     doubles: number;
     triples: number;
@@ -75,93 +142,177 @@ export interface WeatherHitImpact {
 }
 
 /**
- * Platoon splits for a batter
+ * Platoon splits for a batter against LHP/RHP
  *
  * @property vsLeft - Stats against left-handed pitchers
  * @property vsRight - Stats against right-handed pitchers
+ * @property platoonAdvantage - Which pitcher handedness gives batter advantage
+ * @property platoonSplit - Magnitude of the platoon split
  */
 export interface BatterPlatoonSplits {
   vsLeft: {
-    avg: number;
+    battingAverage: number;
+    onBasePercentage: number;
+    sluggingPct: number;
     ops: number;
-    wOBA: number;
+    atBats: number;
   };
   vsRight: {
-    avg: number;
+    battingAverage: number;
+    onBasePercentage: number;
+    sluggingPct: number;
     ops: number;
-    wOBA: number;
+    atBats: number;
   };
+  platoonAdvantage: "vs-left" | "vs-right" | "balanced";
+  platoonSplit: number; // Magnitude of the split (OPS points)
 }
 
 /**
- * Player hit stats
- *
- * @property avg - Batting average
- * @property obp - On-base percentage
- * @property slg - Slugging percentage
- * @property ops - On-base plus slugging
- * @property iso - Isolated power
+ * Player hit stats with additional metrics specific to hit analysis
+ * 
+ * @property battingAverage - Batting average
+ * @property onBasePercentage - On-base percentage
+ * @property sluggingPct - Slugging percentage
+ * @property hits - Total hits
+ * @property singles - Singles count
+ * @property doubles - Doubles count
+ * @property triples - Triples count
+ * @property atBats - Total at-bats
+ * @property games - Games played
+ * @property hitRate - Hits per at-bat
+ * @property singleRate - Singles per at-bat
+ * @property doubleRate - Doubles per at-bat
+ * @property tripleRate - Triples per at-bat
  * @property babip - Batting average on balls in play
+ * @property lineDriverRate - Line drive percentage
+ * @property contactRate - Contact rate on swings
  */
 export interface PlayerHitStats {
-  avg: number;
-  obp: number;
-  slg: number;
-  ops: number;
-  iso?: number;
-  babip?: number;
+  // Core batting metrics
+  battingAverage: number;
+  onBasePercentage: number;
+  sluggingPct: number;
+  
+  // Hit counts
+  hits: number;
+  singles: number;
+  doubles: number;
+  triples: number;
+  
+  // Context metrics
+  atBats: number;
+  games: number;
+  
+  // Hit rates
+  hitRate: number;
+  singleRate: number;
+  doubleRate: number;
+  tripleRate: number;
+  babip: number;
+  
+  // Quality metrics
+  lineDriverRate: number;
+  contactRate: number;
 }
 
 /**
- * Career hit profile for a batter
+ * Career hit profile for a batter with comprehensive metrics
  *
- * @property careerAvg - Career batting average
- * @property careerIso - Career isolated power
+ * @property careerHits - Total career hits
+ * @property careerSingles - Total career singles
+ * @property careerDoubles - Total career doubles
+ * @property careerTriples - Total career triples
+ * @property careerGames - Total career games
+ * @property careerAtBats - Total career at-bats
+ * @property careerBattingAverage - Career batting average
+ * @property hitTypeDistribution - Distribution of hit types
+ * @property bestSeasonAvg - Best single-season batting average
  * @property recentTrend - Recent trend direction
- * @property consistencyRating - How consistent is the batter
- * @property advantageVsHandedness - Advantage vs pitcher handedness
+ * @property homeVsAway - Home vs away performance
  */
 export interface CareerHitProfile {
-  careerAvg: number;
-  careerIso: number;
+  // Career totals
+  careerHits: number;
+  careerSingles: number;
+  careerDoubles: number;
+  careerTriples: number;
+  careerGames: number;
+  careerAtBats: number;
+  careerBattingAverage: number;
+  
+  // Distribution of hit types
+  hitTypeDistribution: {
+    singlePct: number;
+    doublePct: number;
+    triplePct: number;
+    homeRunPct: number;
+  };
+  
+  // Performance metrics
+  bestSeasonAvg: number;
   recentTrend: "increasing" | "decreasing" | "stable";
-  consistencyRating: number; // 0-100
-  advantageVsHandedness: number; // 0-1 scale
+  
+  // Splits
+  homeVsAway: {
+    homeAvg: number;
+    awayAvg: number;
+    homeAdvantage: number;
+  };
 }
 
 /**
  * Pitcher vulnerability to different hit types
  *
- * @property contactAllowed - Rate of contact allowed
- * @property hardHitAllowed - Rate of hard hit balls allowed
- * @property byType - Vulnerability by hit type
+ * @property gamesStarted - Games started
+ * @property inningsPitched - Innings pitched
+ * @property hitsAllowed - Hits allowed
+ * @property hitsPer9 - Hits allowed per 9 innings
+ * @property babip - Batting average on balls in play allowed
+ * @property byHitType - Vulnerability by hit type (1-10 scale)
+ * @property hitVulnerability - Overall hit vulnerability rating
  */
 export interface PitcherHitVulnerability {
-  contactAllowed: number; // Higher = more vulnerable
-  hardHitAllowed: number; // Higher = more vulnerable  
-  byType: {
-    singles: number;
-    doubles: number;
-    triples: number;
-    homeRuns: number;
+  // Core stats
+  gamesStarted: number;
+  inningsPitched: number;
+  hitsAllowed: number;
+  hitsPer9: number;
+  babip: number;
+  
+  // Vulnerability ratings (higher = more vulnerable)
+  byHitType: {
+    singles: number; // 1-10 scale
+    doubles: number; // 1-10 scale
+    triples: number; // 1-10 scale
   };
+  
+  // Overall rating
+  hitVulnerability: number; // 1-10 scale
 }
 
 /**
- * Matchup hit statistics
+ * Matchup hit statistics for batter vs pitcher
  *
  * @property atBats - Total at-bats in matchup
  * @property hits - Total hits in matchup
- * @property extraBaseHits - Total extra-base hits
- * @property homeRuns - Total home runs
- * @property avg - Batting average in matchup
- * @property ops - OPS in matchup
+ * @property singles - Singles in matchup
+ * @property doubles - Doubles in matchup
+ * @property triples - Triples in matchup
+ * @property battingAverage - Batting average in matchup
+ * @property sampleSize - Sample size classification
+ * @property advantage - Which player has the advantage
  */
 export interface MatchupHitStats {
+  // Raw matchup numbers
   atBats: number;
   hits: number;
-  extraBaseHits: number;
-  homeRuns: number;
-  avg: number;
-  ops: number;
+  singles: number;
+  doubles: number;
+  triples: number;
+  battingAverage: number;
+  
+  // Evaluation metrics
+  sampleSize: "large" | "medium" | "small" | "none";
+  advantage: "batter" | "pitcher" | "neutral";
 }

@@ -5,13 +5,22 @@ import { BatterApiResponse } from "../types/api/player";
 import { batterFromApi, Batter, BatterStats } from "../types/domain/player";
 import { ApiSourceMarker } from "../types/api/common";
 
+// Define interfaces for API responses with proper types
+interface BatterPlateDisciplineWithStringTimestamp extends Omit<BatterPlateDiscipline, 'sourceTimestamp'> {
+  sourceTimestamp: string;
+  __isApiSource: boolean;
+}
+
+// Extend BatterSplits to work with API marker
+interface BatterSplitsWithApiMarker extends BatterSplits, ApiSourceMarker {}
+
 /**
  * Fetch batter stats from MLB API
  */
 async function fetchBatterStats(params: {
   batterId: number;
   season?: number;
-}): Promise<BatterStats> {
+}): Promise<Batter & ApiSourceMarker> {
   const { batterId, season = new Date().getFullYear() } = params;
   const currentSeason = season;
   const previousSeason = currentSeason - 1;
@@ -24,9 +33,17 @@ async function fetchBatterStats(params: {
       );
 
       if (response?.people?.[0]) {
+        // Transform to API response format
+        const apiResponse = transformToBatterApiResponse(response, currentSeason);
+        
+        // Convert API response to domain model
+        const batter = batterFromApi(apiResponse);
+        
+        // Mark as API source and add timestamp
         return markAsApiSource({
-          ...transformBatterStats(response, currentSeason),
-          sourceTimestamp: new Date(),
+          ...batter,
+          sourceTimestamp: new Date().toISOString(),
+          __isApiSource: true
         });
       }
       console.warn(
@@ -46,9 +63,17 @@ async function fetchBatterStats(params: {
       );
 
       if (response?.people?.[0]) {
+        // Transform to API response format
+        const apiResponse = transformToBatterApiResponse(response, previousSeason);
+        
+        // Convert API response to domain model
+        const batter = batterFromApi(apiResponse);
+        
+        // Mark as API source and add timestamp
         return markAsApiSource({
-          ...transformBatterStats(response, previousSeason),
-          sourceTimestamp: new Date(),
+          ...batter,
+          sourceTimestamp: new Date().toISOString(),
+          __isApiSource: true
         });
       }
       console.warn(`No data found for previous season ${previousSeason}`);
@@ -59,8 +84,8 @@ async function fetchBatterStats(params: {
       );
     }
 
-    // If no stats found for either season, return default data
-    return markAsApiSource({
+    // If no stats found for either season, create an empty batter object
+    const emptyApiResponse: BatterApiResponse = {
       id: batterId,
       fullName: `Batter ${batterId}`,
       currentTeam: "",
@@ -78,10 +103,10 @@ async function fetchBatterStats(params: {
         walks: 0,
         strikeouts: 0,
         stolenBases: 0,
-        avg: 0,
-        obp: 0,
-        slg: 0,
-        ops: 0,
+        avg: "0",
+        obp: "0",
+        slg: "0",
+        ops: "0",
         runs: 0,
         hitByPitches: 0,
         sacrificeFlies: 0,
@@ -89,11 +114,23 @@ async function fetchBatterStats(params: {
         caughtStealing: 0,
       },
       careerStats: [],
-      sourceTimestamp: new Date(),
+      sourceTimestamp: new Date().toISOString(),
+      __isApiSource: true
+    };
+    
+    // Convert to domain model
+    const emptyBatter = batterFromApi(emptyApiResponse);
+    
+    return markAsApiSource({
+      ...emptyBatter,
+      sourceTimestamp: new Date().toISOString(),
+      __isApiSource: true
     });
   } catch (error) {
     console.error(`Error fetching stats for batter ${batterId}:`, error);
-    return markAsApiSource({
+    
+    // Create empty API response in case of error
+    const emptyApiResponse: BatterApiResponse = {
       id: batterId,
       fullName: `Batter ${batterId}`,
       currentTeam: "",
@@ -111,10 +148,10 @@ async function fetchBatterStats(params: {
         walks: 0,
         strikeouts: 0,
         stolenBases: 0,
-        avg: 0,
-        obp: 0,
-        slg: 0,
-        ops: 0,
+        avg: "0",
+        obp: "0",
+        slg: "0",
+        ops: "0",
         runs: 0,
         hitByPitches: 0,
         sacrificeFlies: 0,
@@ -122,13 +159,24 @@ async function fetchBatterStats(params: {
         caughtStealing: 0,
       },
       careerStats: [],
-      sourceTimestamp: new Date(),
+      sourceTimestamp: new Date().toISOString(),
+      __isApiSource: true
+    };
+    
+    // Convert to domain model
+    const emptyBatter = batterFromApi(emptyApiResponse);
+    
+    return markAsApiSource({
+      ...emptyBatter,
+      sourceTimestamp: new Date().toISOString(),
+      __isApiSource: true
     });
   }
 }
 
 /**
  * Get batter stats with caching (6 hour TTL by default)
+ * Returns a normalized Batter domain object with proper types
  */
 export const getBatterStats = withCache(
   fetchBatterStats,
@@ -137,9 +185,10 @@ export const getBatterStats = withCache(
 );
 
 /**
- * Transform the MLB API batter data into a standardized format
+ * Transform the MLB API raw data into a structured BatterApiResponse format
+ * This creates a properly formatted API response that can be passed to batterFromApi
  */
-function transformBatterStats(data: any, requestedSeason: number): BatterStats {
+function transformToBatterApiResponse(data: any, requestedSeason: number): BatterApiResponse {
   const batterId = data.people[0].id;
   const batterName = data.people[0].fullName;
   const stats = data.people[0].stats || [];
@@ -157,113 +206,76 @@ function transformBatterStats(data: any, requestedSeason: number): BatterStats {
       (s: any) => s.season === requestedSeason.toString()
     )?.stat || {};
 
-  // Calculate advanced metrics for quality calculations
-  const atBats = seasonHittingStats.atBats || 0;
-  const hits = seasonHittingStats.hits || 0;
-  const doubles = seasonHittingStats.doubles || 0;
-  const triples = seasonHittingStats.triples || 0;
-  const homeRuns = seasonHittingStats.homeRuns || 0;
-  const walks = seasonHittingStats.walks || 0;
-  const strikeouts = seasonHittingStats.strikeouts || 0;
+  // Calculate plateAppearances if not provided
   const plateAppearances =
     seasonHittingStats.plateAppearances ||
-    atBats +
-      walks +
+    (seasonHittingStats.atBats || 0) +
+      (seasonHittingStats.walks || 0) +
       (seasonHittingStats.hitByPitch || 0) +
       (seasonHittingStats.sacrificeFlies || 0);
-  const stolenBases = seasonHittingStats.stolenBases || 0;
-  const caughtStealing = seasonHittingStats.caughtStealing || 0;
 
-  // Calculate BABIP (Batting Average on Balls in Play)
-  const babip =
-    atBats > 0
-      ? (hits - homeRuns) /
-        (atBats -
-          strikeouts -
-          homeRuns +
-          (seasonHittingStats.sacrificeFlies || 0))
-      : 0;
+  // Create season stats in the API response format
+  // Note that avg, obp, slg, ops are strings in the API format
+  const formattedSeasonStats = {
+    gamesPlayed: seasonHittingStats.gamesPlayed || 0,
+    atBats: seasonHittingStats.atBats || 0,
+    hits: seasonHittingStats.hits || 0,
+    doubles: seasonHittingStats.doubles || 0,
+    triples: seasonHittingStats.triples || 0,
+    homeRuns: seasonHittingStats.homeRuns || 0,
+    rbi: seasonHittingStats.rbi || 0,
+    rbis: seasonHittingStats.rbi || 0, // For backward compatibility
+    walks: seasonHittingStats.walks || 0,
+    strikeouts: seasonHittingStats.strikeouts || 0,
+    stolenBases: seasonHittingStats.stolenBases || 0,
+    avg: seasonHittingStats.avg?.toString() || "0",
+    obp: seasonHittingStats.obp?.toString() || "0",
+    slg: seasonHittingStats.slg?.toString() || "0",
+    ops: seasonHittingStats.ops?.toString() || "0",
+    plateAppearances: plateAppearances,
+    caughtStealing: seasonHittingStats.caughtStealing || 0,
+    runs: seasonHittingStats.runs || 0,
+    hitByPitches: seasonHittingStats.hitByPitch || 0,
+    sacrificeFlies: seasonHittingStats.sacrificeFlies || 0,
+  };
 
-  // Calculate ISO (Isolated Power)
-  const iso = atBats > 0 ? (doubles + 2 * triples + 3 * homeRuns) / atBats : 0;
+  // Map career stats with proper types
+  const careerStats = yearByYearHittingStats.map((year: any) => {
+    return {
+      season: year.season,
+      team: year.team?.name || "",
+      gamesPlayed: year.stat?.gamesPlayed || 0,
+      atBats: year.stat?.atBats || 0,
+      hits: year.stat?.hits || 0,
+      homeRuns: year.stat?.homeRuns || 0,
+      rbi: year.stat?.rbi || 0,
+      avg: year.stat?.avg?.toString() || "0",
+      obp: year.stat?.obp?.toString() || "0", 
+      slg: year.stat?.slg?.toString() || "0",
+      ops: year.stat?.ops?.toString() || "0",
+      stolenBases: year.stat?.stolenBases || 0,
+      caughtStealing: year.stat?.caughtStealing || 0,
+      doubles: year.stat?.doubles,
+      triples: year.stat?.triples,
+      strikeouts: year.stat?.strikeouts || year.stat?.strikeOuts,
+      walks: year.stat?.walks || year.stat?.baseOnBalls,
+      plateAppearances: year.stat?.plateAppearances,
+      babip: year.stat?.babip,
+      iso: year.stat?.isolatedPower,
+    };
+  });
 
-  // Calculate HR Rate
-  const hrRate = atBats > 0 ? homeRuns / atBats : 0;
-
-  // Calculate K Rate
-  const kRate = plateAppearances > 0 ? strikeouts / plateAppearances : 0;
-
-  // Calculate BB Rate
-  const bbRate = plateAppearances > 0 ? walks / plateAppearances : 0;
-
-  // Calculate SB Rate
-  const sbRate =
-    stolenBases + caughtStealing > 0
-      ? stolenBases / (stolenBases + caughtStealing)
-      : 0;
-
+  // Return the complete API response format
   return {
-    id: data.people[0].id,
-    fullName: data.people[0].fullName,
+    id: batterId,
+    fullName: batterName,
     currentTeam: data.people[0].currentTeam?.name || "",
     primaryPosition: data.people[0].primaryPosition?.abbreviation || "",
     batSide: data.people[0].batSide?.code || "",
-    seasonStats: {
-      gamesPlayed: seasonHittingStats.gamesPlayed || 0,
-      atBats: atBats,
-      hits: hits,
-      doubles: doubles,
-      triples: triples,
-      homeRuns: homeRuns,
-      rbi: seasonHittingStats.rbi || 0,
-      rbis: seasonHittingStats.rbi || 0, // For backward compatibility
-      walks: walks,
-      strikeouts: strikeouts,
-      stolenBases: stolenBases,
-      avg: seasonHittingStats.avg || 0,
-      obp: seasonHittingStats.obp || 0,
-      slg: seasonHittingStats.slg || 0,
-      ops: seasonHittingStats.ops || 0,
-      plateAppearances: plateAppearances,
-      caughtStealing: caughtStealing,
-      runs: seasonHittingStats.runs || 0,
-      hitByPitches: seasonHittingStats.hitByPitch || 0,
-      sacrificeFlies: seasonHittingStats.sacrificeFlies || 0,
-
-      // Add calculated advanced metrics
-      babip: babip,
-      iso: iso,
-      hrRate: hrRate,
-      kRate: kRate,
-      bbRate: bbRate,
-      sbRate: sbRate,
-    },
-    careerStats: yearByYearHittingStats.map((year: any) => {
-      const yearAtBats = year.stat?.atBats || 0;
-      const yearStolenBases = year.stat?.stolenBases || 0;
-      const yearCaughtStealing = year.stat?.caughtStealing || 0;
-
-      return {
-        season: year.season,
-        team: year.team?.name || "",
-        gamesPlayed: year.stat?.gamesPlayed || 0,
-        atBats: yearAtBats,
-        hits: year.stat?.hits || 0,
-        homeRuns: year.stat?.homeRuns || 0,
-        rbi: year.stat?.rbi || 0,
-        avg: year.stat?.avg || 0,
-        obp: year.stat?.obp || 0,
-        slg: year.stat?.slg || 0,
-        ops: year.stat?.ops || 0,
-        stolenBases: yearStolenBases,
-        caughtStealing: yearCaughtStealing,
-        hitByPitches: year.stat?.hitByPitches || 0,
-        sacrificeFlies: year.stat?.sacrificeFlies || 0,
-        walks: year.stat?.baseOnBalls || 0,
-        strikeouts: year.stat?.strikeOuts || 0,
-        plateAppearances: year.stat?.plateAppearances || 0,
-      };
-    }),
+    seasonStats: formattedSeasonStats,
+    careerStats: careerStats,
+    sourceTimestamp: new Date().toISOString(),
+    __isApiSource: true
   };
 }
 
@@ -272,17 +284,17 @@ function transformBatterStats(data: any, requestedSeason: number): BatterStats {
  */
 async function fetchBatterPlateDiscipline(params: {
   batterId: number;
-}): Promise<BatterPlateDiscipline | null> {
+}): Promise<BatterPlateDisciplineWithStringTimestamp | null> {
   const { batterId } = params;
 
   try {
     // Get basic player info
-    const batterInfo = await getBatterStats({ batterId });
+    const batter = await getBatterStats({ batterId });
 
     // Use default values until statcast data integration is complete
     return markAsApiSource({
       playerId: batterId,
-      name: batterInfo.fullName,
+      name: batter.fullName,
       discipline: {
         chaseRate: 0.28,
         contactRate: 0.76,
@@ -295,7 +307,8 @@ async function fetchBatterPlateDiscipline(params: {
         vsBreakingBall: 50,
         vsOffspeed: 45,
       },
-      sourceTimestamp: new Date(),
+      sourceTimestamp: new Date().toISOString(),
+      __isApiSource: true
     });
   } catch (error) {
     console.error(
@@ -308,6 +321,7 @@ async function fetchBatterPlateDiscipline(params: {
 
 /**
  * Get batter plate discipline data with caching
+ * Note: The return type adapts to the API format with string timestamp
  */
 export const getBatterPlateDiscipline = withCache(
   fetchBatterPlateDiscipline,
@@ -317,13 +331,17 @@ export const getBatterPlateDiscipline = withCache(
 
 /**
  * Detailed batter info including status
+ * This is a direct API pass-through function
  */
 export async function getBatterInfo(batterId: string): Promise<any> {
   try {
     const data = await makeMLBApiRequest<any>(
       `/people/${batterId}?hydrate=stats(type=season)`
     );
-    return markAsApiSource(data);
+    return markAsApiSource({
+      ...data,
+      sourceTimestamp: new Date().toISOString()
+    });
   } catch (error) {
     console.error(
       `Error fetching detailed info for batter ${batterId}:`,
@@ -335,10 +353,11 @@ export async function getBatterInfo(batterId: string): Promise<any> {
 
 /**
  * Fetch batter splits against LHP/RHP from MLB API
+ * This provides normalized split stats with numeric values
  */
 async function fetchBatterSplits(
   batterId: number
-): Promise<BatterSplits | null> {
+): Promise<BatterSplitsWithApiMarker | null> {
   try {
     const season = new Date().getFullYear();
     const response = await makeMLBApiRequest<any>(
@@ -357,19 +376,20 @@ async function fetchBatterSplits(
       response.stats[0].splits.find((split: any) => split.split.code === "vr")
         ?.stat || {};
 
-    return {
+    // Return the parsed data as a BatterSplits object
+    const splits: BatterSplits = {
       vsLeft: {
         plateAppearances: vsLHPSplit.plateAppearances || 0,
         atBats: vsLHPSplit.atBats || 0,
         hits: vsLHPSplit.hits || 0,
-        avg: vsLHPSplit.avg || 0,
-        obp: vsLHPSplit.obp || 0,
-        slg: vsLHPSplit.slg || 0,
-        ops: vsLHPSplit.ops || 0,
-        walkRate: vsLHPSplit.baseOnBalls
+        avg: parseFloat(vsLHPSplit.avg || '0'),
+        obp: parseFloat(vsLHPSplit.obp || '0'),
+        slg: parseFloat(vsLHPSplit.slg || '0'),
+        ops: parseFloat(vsLHPSplit.ops || '0'),
+        walkRate: vsLHPSplit.baseOnBalls && vsLHPSplit.plateAppearances
           ? vsLHPSplit.baseOnBalls / vsLHPSplit.plateAppearances
           : 0,
-        strikeoutRate: vsLHPSplit.strikeOuts
+        strikeoutRate: vsLHPSplit.strikeOuts && vsLHPSplit.plateAppearances
           ? vsLHPSplit.strikeOuts / vsLHPSplit.plateAppearances
           : 0,
       },
@@ -377,18 +397,25 @@ async function fetchBatterSplits(
         plateAppearances: vsRHPSplit.plateAppearances || 0,
         atBats: vsRHPSplit.atBats || 0,
         hits: vsRHPSplit.hits || 0,
-        avg: vsRHPSplit.avg || 0,
-        obp: vsRHPSplit.obp || 0,
-        slg: vsRHPSplit.slg || 0,
-        ops: vsRHPSplit.ops || 0,
-        walkRate: vsRHPSplit.baseOnBalls
+        avg: parseFloat(vsRHPSplit.avg || '0'),
+        obp: parseFloat(vsRHPSplit.obp || '0'),
+        slg: parseFloat(vsRHPSplit.slg || '0'),
+        ops: parseFloat(vsRHPSplit.ops || '0'),
+        walkRate: vsRHPSplit.baseOnBalls && vsRHPSplit.plateAppearances
           ? vsRHPSplit.baseOnBalls / vsRHPSplit.plateAppearances
           : 0,
-        strikeoutRate: vsRHPSplit.strikeOuts
+        strikeoutRate: vsRHPSplit.strikeOuts && vsRHPSplit.plateAppearances
           ? vsRHPSplit.strikeOuts / vsRHPSplit.plateAppearances
           : 0,
-      },
+      }
     };
+    
+    // Mark as API source with timestamp
+    return markAsApiSource({
+      ...splits,
+      sourceTimestamp: new Date().toISOString(),
+      __isApiSource: true
+    });
   } catch (error) {
     console.error(`Error fetching splits for batter ${batterId}:`, error);
     return null;
