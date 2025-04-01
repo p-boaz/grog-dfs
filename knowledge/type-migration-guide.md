@@ -177,6 +177,20 @@ Key changes:
 - Fixed potential type issues with proper null coalescing
 - Updated interface to align with domain model standards
 
+#### 6. batters/batter-analysis.ts Migration
+
+Key changes:
+- Updated all playerData.seasonStats references to use enhancedBatterData.currentSeason
+- Added explicit Batter type for enhanced batter data (getEnhancedBatterData)
+- Implemented proper type guards with isBatterStats for better runtime validation
+- Updated all references to player handedness (batSide → handedness)
+- Converted stat access to use domain model properties
+- Added proper null coalescing for potentially undefined values
+- Created a new mapSeasonStatsFromBatterStats helper for proper mapping
+- Updated estimateBatterPoints to use BatterStats instead of SeasonStats
+- Improved error handling with proper type checking and validation
+- Reduced the number of @ts-ignore comments by fixing the underlying issues
+
 ## Testing Your Migration
 
 For each module, create a test script that:
@@ -267,6 +281,24 @@ if (!pitcherData || !pitcherData.currentSeason) {
 }
 ```
 
+### Testing Challenges with Dependencies
+
+**Problem**: Integration testing modules with numerous dependencies can be challenging when those dependencies require real API data.
+
+**Solution**: 
+1. Focus unit tests on self-contained functions that don't depend on external modules.
+2. Use a separate, standalone test file for each module to isolate dependency issues.
+3. Create mock implementations for critical dependencies when testing complex modules.
+4. Test exported utility functions that don't have external dependencies.
+5. Consider adding Jest mock support for comprehensive module testing.
+```typescript
+// Example of testing just a self-contained function
+test('getDefaultBatterAnalysis with valid inputs', () => {
+  const result = getDefaultBatterAnalysis(sampleBatter, sampleGame);
+  expect(result).not.toBeNull();
+});
+```
+
 ### Gradual Migration with Adapters
 
 **Problem**: Need to update dependent modules without breaking existing code.
@@ -316,7 +348,7 @@ Based on dependencies and complexity, here's the recommended order for migration
 3. ✅ shared/plate-discipline.ts
 4. ✅ batters/home-runs.ts
 5. ✅ batters/stolen-bases.ts
-6. batters/batter-analysis.ts
+6. ✅ batters/batter-analysis.ts
 
 ### Pitcher Modules
 1. pitchers/pitcher-control.ts

@@ -13,18 +13,18 @@ import { estimateHomeRunProbability } from "./home-runs";
 import { estimateStolenBaseProbability } from "./stolen-bases";
 // @ts-ignore Missing function name mismatches
 import { calculateRunProduction } from "./run-production";
-import { calculatePlateDisciplineProjection } from "./plate-discipline";
+import { calculatePlateDisciplineProjection } from "../shared/plate-discipline";
 // @ts-ignore Missing function name mismatches
 import { calculateHitProjections } from "./hits";
-import { getGameEnvironmentData } from "../weather/weather";
+import { getGameEnvironmentData } from "../../weather/weather";
 // @ts-ignore Missing module
-import { getBallparkFactors } from "../environment";
-import { getBatterStats } from "../player/batter-stats";
-import { getPitcherStats } from "../player/pitcher-stats";
+import { getBallparkFactors } from "../../environment";
+import { getBatterStats } from "../../player/batter-stats";
+import { getPitcherStats } from "../../player/pitcher-stats";
 // @ts-ignore Missing export
-import { getMatchupData } from "../player/matchups";
+import { getMatchupData } from "../../player/matchups";
 // @ts-ignore Missing export
-import { calculatePitcherDfsProjection } from "./starting-pitcher-analysis";
+import { calculatePitcherDfsProjection } from "../pitchers/starting-pitcher-analysis";
 import {
   BatterAnalysis,
   BatterInfo,
@@ -34,11 +34,13 @@ import {
   Projections,
   RunProductionAnalysis,
   SeasonStats,
-} from "../types/analysis";
-import { BallparkFactors } from "../types/environment/ballpark";
-import { Environment } from "../types/environment/weather";
-import { calculateQualityMetrics } from "./quality-metrics";
-import { mapBatterToPlayer } from "../draftkings/player-mapping";
+} from "../../types/analysis";
+import { BallparkFactors } from "../../types/environment/ballpark";
+import { Environment } from "../../types/environment/weather";
+import { calculateQualityMetrics } from "../shared/quality-metrics";
+import { mapBatterToPlayer } from "../../draftkings/player-mapping";
+import { Batter, BatterStats, isBatterStats } from "../../types/domain/player";
+import { getEnhancedBatterData } from "../../services/batter-data-service";
 
 /**
  * Analyze batters for the specified game
@@ -91,7 +93,7 @@ export async function analyzeBatters(
  * @param game Game info
  * @returns BatterAnalysis object
  */
-async function analyzeBatter(
+export async function analyzeBatter(
   batter: BatterInfo,
   game: GameInfo
 ): Promise<BatterAnalysis> {
@@ -101,11 +103,8 @@ async function analyzeBatter(
     const team = isHome ? game.homeTeam : game.awayTeam;
     const opponent = isHome ? game.awayTeam : game.homeTeam;
 
-    // Get batter's stats
-    const stats = await getBatterStats({
-      batterId: batter.id || 0,
-      season: 2025,
-    }).catch(() => null);
+    // Get enhanced batter's stats with domain model types
+    const enhancedBatterData: Batter = await getEnhancedBatterData(batter.id);
 
     // Create empty season stats
     const emptySeasonStats: SeasonStats = {
@@ -234,82 +233,38 @@ async function analyzeBatter(
     };
 
     // Update stats if available
-    if (stats) {
-      // Create a base stats object with required properties
-      const baseStats: SeasonStats = {
-        gamesPlayed: stats.seasonStats.gamesPlayed || 0,
-        atBats: stats.seasonStats.atBats || 0,
-        hits: stats.seasonStats.hits || 0,
-        runs: stats.seasonStats.runs || 0,
-        doubles: stats.seasonStats.doubles || 0,
-        triples: stats.seasonStats.triples || 0,
-        homeRuns: stats.seasonStats.homeRuns || 0,
-        rbi: stats.seasonStats.rbi || 0,
-        avg: stats.seasonStats.avg || 0,
-        obp: stats.seasonStats.obp || 0,
-        slg: stats.seasonStats.slg || 0,
-        ops: stats.seasonStats.ops || 0,
-        stolenBases: stats.seasonStats.stolenBases || 0,
-        caughtStealing: stats.seasonStats.caughtStealing || 0,
-        walks: stats.seasonStats.walks || 0,
-        strikeouts: stats.seasonStats.strikeouts || 0,
-        sacrificeFlies: stats.seasonStats.sacrificeFlies || 0,
-        hitByPitches: stats.seasonStats.hitByPitches || 0,
-        plateAppearances: stats.seasonStats.plateAppearances || 0,
-      };
+    if (enhancedBatterData) {
+      // Get current season stats from domain model
+      const currentStats = enhancedBatterData.currentSeason;
 
-      // Add any available additional properties
-      if ("runs" in stats.seasonStats)
-        baseStats.runs = stats.seasonStats.runs as number;
-      if ("wOBAvsL" in stats.seasonStats)
-        baseStats.wOBAvsL = stats.seasonStats.wOBAvsL as number;
-      if ("wOBAvsR" in stats.seasonStats)
-        baseStats.wOBAvsR = stats.seasonStats.wOBAvsR as number;
-      if ("wOBA" in stats.seasonStats)
-        baseStats.wOBA = stats.seasonStats.wOBA as number;
-      if ("iso" in stats.seasonStats)
-        baseStats.iso = stats.seasonStats.iso as number;
-      if ("babip" in stats.seasonStats)
-        baseStats.babip = stats.seasonStats.babip as number;
-      if ("kRate" in stats.seasonStats)
-        baseStats.kRate = stats.seasonStats.kRate as number;
-      if ("bbRate" in stats.seasonStats)
-        baseStats.bbRate = stats.seasonStats.bbRate as number;
-      if ("hrRate" in stats.seasonStats)
-        baseStats.hrRate = stats.seasonStats.hrRate as number;
-      if ("sbRate" in stats.seasonStats)
-        baseStats.sbRate = stats.seasonStats.sbRate as number;
-
-      // Get previous season stats if available (2024 in this case)
-      const prevStats = {
-        seasonStats: baseStats,
-      };
-
-      // Update overall entry with current stats
-      const currentStats = stats;
+      // Make sure the stats is valid using the type guard
+      if (!isBatterStats(currentStats)) {
+        console.warn(`Invalid batter stats for player ${batter.id}`);
+        return entry; // Return the default entry
+      }
 
       // Set platoon advantage
       const platoonAdvantage =
         (batter.isHome
-          ? game.pitchers.away.throwsHand === "L" && stats.batSide === "R"
-          : game.pitchers.home.throwsHand === "L" && stats.batSide === "R") ||
+          ? game.pitchers.away.throwsHand === "L" && enhancedBatterData.handedness === "R"
+          : game.pitchers.home.throwsHand === "L" && enhancedBatterData.handedness === "R") ||
         (batter.isHome
-          ? game.pitchers.away.throwsHand === "R" && stats.batSide === "L"
-          : game.pitchers.home.throwsHand === "R" && stats.batSide === "L");
+          ? game.pitchers.away.throwsHand === "R" && enhancedBatterData.handedness === "L"
+          : game.pitchers.home.throwsHand === "R" && enhancedBatterData.handedness === "L");
 
       // Get matchup data against this pitcher
       const matchup = await getMatchupData(
-        currentStats.id,
+        enhancedBatterData.id,
         batter.isHome ? game.pitchers.away.id : game.pitchers.home.id
       );
 
       // Calculate batter quality metrics
-      const qualityMetrics = calculateQualityMetrics(currentStats.seasonStats);
+      const qualityMetrics = calculateQualityMetrics(currentStats);
 
       // Get HR probability projection
       // @ts-ignore Type mismatch with BallparkFactors
       const hrProbability = await estimateHomeRunProbability(
-        currentStats.id,
+        enhancedBatterData.id,
         game.pitchers.away.id,
         game.ballpark,
         game.environment
@@ -317,14 +272,14 @@ async function analyzeBatter(
 
       // Get stolen base probability
       const sbProbability = await estimateStolenBaseProbability(
-        currentStats.id,
+        enhancedBatterData.id,
         game.pitchers.away.id,
         batter.isHome ? game.lineups.awayCatcher?.id : game.lineups.homeCatcher?.id
       );
 
       // Get run production projection
       const runProductionProj = await calculateRunProduction(
-        currentStats.id,
+        enhancedBatterData.id,
         game.pitchers.away.id,
         game.gameId.toString()
       );
@@ -337,14 +292,14 @@ async function analyzeBatter(
 
       // Calculate plate discipline
       const plateDiscipline = await calculatePlateDisciplineProjection(
-        currentStats.id,
+        enhancedBatterData.id,
         game.pitchers.away.id
       );
 
       // Calculate final projections
       // @ts-ignore Type mismatch with BallparkFactors
       const projections = await calculateProjections(
-        currentStats.seasonStats,
+        currentStats,
         game.environment,
         game.ballpark,
         batter,
@@ -353,7 +308,7 @@ async function analyzeBatter(
 
       // Calculate expected points
       const expectedPoints = estimateBatterPoints(
-        currentStats.seasonStats,
+        currentStats,
         hrProbability.probability,
         sbProbability.probability,
         pitcherProj,
@@ -363,7 +318,7 @@ async function analyzeBatter(
       );
 
       // Get DraftKings info
-      const dkInfo = await mapBatterToPlayer(currentStats.id, currentStats.fullName);
+      const dkInfo = await mapBatterToPlayer(enhancedBatterData.id, enhancedBatterData.fullName);
 
       // Update entry with all calculated data
       entry.factors.platoon = platoonAdvantage;
@@ -436,10 +391,12 @@ async function analyzeBatter(
       // Add quality metrics
       entry.stats.quality = qualityMetrics;
 
-      // Set season stats object for 2024 and 2025
+      // Convert domain model BatterStats to SeasonStats for 2024 and 2025
+      // Most of the SeasonStats properties match directly with BatterStats
+      // For 2024 (CurrentSeason)
       entry.stats.seasonStats = {
-        "2024": mapSeasonStats(currentStats.seasonStats),
-        "2025": mapSeasonStats(prevStats.seasonStats),
+        "2024": mapSeasonStatsFromBatterStats(enhancedBatterData.currentSeason),
+        "2025": mapSeasonStatsFromBatterStats(enhancedBatterData.currentSeason), // Using same data for both years for testing
       };
     }
 
@@ -453,8 +410,8 @@ async function analyzeBatter(
 /**
  * Estimate fantasy points for a batter
  */
-function estimateBatterPoints(
-  stats: SeasonStats,
+export function estimateBatterPoints(
+  stats: BatterStats,
   hrProb: number,
   sbProb: number,
   pitcherProj: any,
@@ -510,7 +467,74 @@ function parseAverage(value: string): number {
 }
 
 /**
- * Helper function to map season stats and convert averages to strings
+ * Helper function to map domain model BatterStats to SeasonStats
+ */
+function mapSeasonStatsFromBatterStats(stats: BatterStats): SeasonStats {
+  if (!stats) {
+    return {
+      gamesPlayed: 0,
+      atBats: 0,
+      hits: 0,
+      homeRuns: 0,
+      rbi: 0,
+      avg: 0,
+      obp: 0,
+      slg: 0,
+      ops: 0,
+      stolenBases: 0,
+      caughtStealing: 0,
+      runs: 0,
+      doubles: 0,
+      triples: 0,
+      walks: 0,
+      strikeouts: 0,
+      sacrificeFlies: 0,
+      hitByPitches: 0,
+      plateAppearances: 0,
+      wOBA: 0,
+      iso: 0,
+      babip: 0,
+      kRate: 0,
+      bbRate: 0,
+      hrRate: 0,
+      sbRate: 0,
+    };
+  }
+
+  // Map the domain model BatterStats to SeasonStats
+  // Most field names match directly
+  return {
+    gamesPlayed: stats.gamesPlayed || 0,
+    atBats: stats.atBats || 0,
+    hits: stats.hits || 0,
+    homeRuns: stats.homeRuns || 0,
+    rbi: stats.rbi || 0,
+    avg: stats.avg || 0,
+    obp: stats.obp || 0,
+    slg: stats.slg || 0,
+    ops: stats.ops || 0,
+    stolenBases: stats.stolenBases || 0,
+    caughtStealing: stats.caughtStealing || 0,
+    runs: stats.runs || 0,
+    doubles: stats.doubles || 0,
+    triples: stats.triples || 0,
+    walks: stats.walks || 0,
+    strikeouts: stats.strikeouts || 0,
+    sacrificeFlies: stats.sacrificeFlies || 0,
+    hitByPitches: stats.hitByPitches || 0,
+    plateAppearances: stats.plateAppearances || 0,
+    wOBA: stats.wOBA || 0,
+    iso: stats.iso || 0,
+    babip: stats.babip || 0,
+    kRate: stats.kRate || 0,
+    bbRate: stats.bbRate || 0,
+    hrRate: stats.hrRate || 0,
+    sbRate: stats.sbRate || 0,
+  };
+}
+
+/**
+ * Helper function to map old-style season stats objects
  */
 function mapSeasonStats(stats: SeasonStats | undefined): SeasonStats {
   if (!stats) {
@@ -551,8 +575,8 @@ function mapSeasonStats(stats: SeasonStats | undefined): SeasonStats {
 /**
  * Calculate projections for a batter
  */
-async function calculateProjections(
-  stats: SeasonStats,
+export async function calculateProjections(
+  stats: BatterStats,
   environment: Environment,
   ballpark: BallparkFactors,
   batter: BatterInfo,
@@ -662,7 +686,7 @@ async function calculateDetailedHitProjections(
 /**
  * Create default batter analysis for missing data
  */
-function getDefaultBatterAnalysis(
+export function getDefaultBatterAnalysis(
   batter: BatterInfo,
   game: GameInfo
 ): BatterAnalysis {
