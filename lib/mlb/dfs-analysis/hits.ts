@@ -465,12 +465,12 @@ export async function getMatchupHitStats(
       return null;
     }
 
-    // Use season stats as an approximation
-    const atBats = batterStats.seasonStats.atBats || 0;
-    const hits = batterStats.seasonStats.hits || 0;
-    const homeRuns = batterStats.seasonStats.homeRuns || 0;
-    const doubles = batterStats.seasonStats.doubles || 0;
-    const triples = batterStats.seasonStats.triples || 0;
+    // Use currentSeason from the domain model instead of seasonStats
+    const atBats = batterStats.currentSeason.atBats || 0;
+    const hits = batterStats.currentSeason.hits || 0;
+    const homeRuns = batterStats.currentSeason.homeRuns || 0;
+    const doubles = batterStats.currentSeason.doubles || 0;
+    const triples = batterStats.currentSeason.triples || 0;
     const singles = hits - homeRuns - doubles - triples;
     const battingAverage = atBats > 0 ? hits / atBats : 0;
 
@@ -526,19 +526,20 @@ export async function getBatterPlatoonSplits(
       return null;
     }
 
+    // Use currentSeason from the domain model
     // Use overall stats as a base
     const stats = {
-      battingAverage: batterStats.seasonStats.avg || 0,
-      onBasePercentage: batterStats.seasonStats.obp || 0,
-      sluggingPct: batterStats.seasonStats.slg || 0,
-      ops: batterStats.seasonStats.ops || 0,
-      atBats: batterStats.seasonStats.atBats || 0,
+      battingAverage: batterStats.currentSeason.avg || 0,
+      onBasePercentage: batterStats.currentSeason.obp || 0,
+      sluggingPct: batterStats.currentSeason.slg || 0,
+      ops: batterStats.currentSeason.ops || 0,
+      atBats: batterStats.currentSeason.atBats || 0,
     };
 
     // Estimate L/R splits based on typical MLB platoon splits
     // Right-handed batters typically have .020 OPS points better vs LHP
     // Left-handed batters typically have .035 OPS points better vs RHP
-    const isLefty = batterStats.batSide === "L";
+    const isLefty = batterStats.handedness === "L";
     const splitFactor = isLefty ? 0.035 : 0.02;
 
     // Return properly typed BatterPlatoonSplits 
@@ -595,6 +596,7 @@ export async function calculateHitTypeRates(
     const playerHitStats = await getPlayerHitStats(batterId);
 
     if (!playerHitStats) {
+      console.error(`Cannot calculate hit type rates without player hit stats for ID ${batterId}`);
       return null;
     }
 
@@ -706,9 +708,18 @@ export async function calculateHitProjection(
   gameId: string,
   opposingPitcherId: number,
   isHome: boolean
-): Promise<DetailedHitProjection> {
+): Promise<DetailedHitProjection | null> {
   try {
-    // Calculate hit rates
+    // Get player hit stats first to make sure we have basic player data
+    const playerHitStats = await getPlayerHitStats(batterId);
+    if (!playerHitStats) {
+      console.error(`Cannot calculate hit projection without player hit stats for ID ${batterId}`);
+      // CRITICAL: Return null when player hit stats are missing
+      return null;
+    }
+    
+    // Calculate hit rates - note that this may return a success even if we had to use fallbacks
+    // since calculateHitTypeRates doesn't require player stats directly, and can use default values
     const hitRates = await calculateHitTypeRates(
       batterId,
       gameId,
@@ -718,6 +729,7 @@ export async function calculateHitProjection(
 
     // If hit rates calculation failed, use conservative defaults
     if (!hitRates) {
+      console.warn(`Using fallback values for hit projection as hit rates calculation failed`);
       const defaultProjection: DetailedHitProjection = {
         expectedHits: 0.7, // MLB average is about 1 hit per game
         byType: {

@@ -21,6 +21,7 @@ import {
 } from "../types/analysis/run-production";
 import { BallparkFactors } from "../types/environment/ballpark";
 import { MLBGame } from "../types/game";
+import { Batter } from "../types/domain/player";
 
 // Points awarded in DraftKings for runs and RBIs
 export const RUN_POINTS = 2;
@@ -98,14 +99,14 @@ export async function getPlayerRunProductionStats(
 
     // Skip pitchers unless they have significant batting stats
     if (
-      playerData.primaryPosition === "P" &&
-      playerData.seasonStats.atBats < 20
+      playerData.position === "P" &&
+      playerData.currentSeason.atBats < 20
     ) {
       return null;
     }
 
-    // Extract season batting stats
-    const batting = playerData.seasonStats;
+    // Extract season batting stats from domain model
+    const batting = playerData.currentSeason;
 
     // If we don't have the stats we need, return null
     if (!batting || !batting.gamesPlayed || !batting.atBats) {
