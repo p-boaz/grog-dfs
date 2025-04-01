@@ -8,8 +8,8 @@
 import {
   getBatterPlatoonSplits,
   getMatchupHitStats,
-} from "../lib/mlb/dfs-analysis/batters/hits";
-import { getBatterStats } from "../lib/mlb/player/batter-stats";
+} from "../../lib/mlb/dfs-analysis/batters/hits";
+import { getBatterStats } from "../../lib/mlb/player/batter-stats";
 
 async function testBatterStats() {
   try {

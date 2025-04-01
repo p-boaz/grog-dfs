@@ -18,12 +18,15 @@ import {
   getPitcherHitVulnerability,
   getPlayerHitStats,
   getWeatherHitImpact,
-} from "../lib/mlb/dfs-analysis/batters/hits";
+} from "../../lib/mlb/dfs-analysis/batters/hits";
 
 // Import the module to mock
 
 // Logger setup
-const LOG_FILE_PATH = path.join(__dirname, "../logs/type-migration-test.log");
+const LOG_FILE_PATH = path.join(
+  __dirname,
+  "../../logs/type-migration-test.log"
+);
 
 // Create logs directory if it doesn't exist
 if (!fs.existsSync(path.dirname(LOG_FILE_PATH))) {
