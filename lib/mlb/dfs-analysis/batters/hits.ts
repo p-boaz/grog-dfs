@@ -3,26 +3,23 @@
  * Handles singles (+3 pts), doubles (+5 pts), and triples (+8 pts)
  */
 
-import { getBallparkFactors, getGameEnvironmentData } from "../index";
-import { getBatterStats } from "../player/batter-stats";
-import { getPitcherStats } from "../player/pitcher-stats";
+import { getBallparkFactors, getGameEnvironmentData } from "../../index";
+import { getBatterStats } from "../../player/batter-stats";
+import { getPitcherStats } from "../../player/pitcher-stats";
 import {
   BallparkHitFactor,
   BatterPlatoonSplits,
   CareerHitProfile,
+  HIT_TYPE_POINTS,
+  HitType,
   HitTypeRates,
   MatchupHitStats,
   PitcherHitVulnerability,
   PlayerHitStats,
   WeatherHitImpact,
-  HitType,
-  HIT_TYPE_POINTS,
-} from "../types/analysis/hits";
+} from "../../types/analysis/hits";
 
-import { DetailedHitProjection } from "../types/analysis/batter";
-import { BatterSeasonStats } from "../types/player/batter";
-import { Batter, BatterStats } from "../types/domain/player";
-import { GameEnvironment, BallparkFactors } from "../types/domain/game";
+import { DetailedHitProjection } from "../../types/analysis/batter";
 
 // Interfaces for internal use
 interface PitcherTeam {
@@ -59,10 +56,7 @@ export async function getPlayerHitStats(
     });
 
     // Skip pitchers unless they have significant batting stats
-    if (
-      batter.position === "P" &&
-      batter.currentSeason.atBats < 20
-    ) {
+    if (batter.position === "P" && batter.currentSeason.atBats < 20) {
       return null;
     }
 
@@ -542,31 +536,51 @@ export async function getBatterPlatoonSplits(
     const isLefty = batterStats.handedness === "L";
     const splitFactor = isLefty ? 0.035 : 0.02;
 
-    // Return properly typed BatterPlatoonSplits 
+    // Return properly typed BatterPlatoonSplits
     // Note: We're estimating walkRate and strikeoutRate since we don't have that data
     const estimatedWalkRate = 0.08; // League average is roughly 8-9%
     const estimatedStrikeoutRate = 0.22; // League average is roughly 22-23%
 
     return {
       vsLeft: {
-        battingAverage: isLefty ? stats.battingAverage * 0.9 : stats.battingAverage * 1.1,
-        onBasePercentage: isLefty ? stats.onBasePercentage * 0.9 : stats.onBasePercentage * 1.1,
-        sluggingPct: isLefty ? stats.sluggingPct * 0.9 : stats.sluggingPct * 1.1,
+        battingAverage: isLefty
+          ? stats.battingAverage * 0.9
+          : stats.battingAverage * 1.1,
+        onBasePercentage: isLefty
+          ? stats.onBasePercentage * 0.9
+          : stats.onBasePercentage * 1.1,
+        sluggingPct: isLefty
+          ? stats.sluggingPct * 0.9
+          : stats.sluggingPct * 1.1,
         ops: isLefty ? stats.ops - splitFactor : stats.ops + splitFactor,
         atBats: Math.round(stats.atBats * 0.3), // Estimate - assuming roughly 30% of PAs vs LHP
         plateAppearances: Math.round(stats.atBats * 0.3 * 1.1), // Slightly more than atBats to account for walks
-        hits: Math.round(stats.atBats * 0.3 * (isLefty ? stats.battingAverage * 0.9 : stats.battingAverage * 1.1)),
+        hits: Math.round(
+          stats.atBats *
+            0.3 *
+            (isLefty ? stats.battingAverage * 0.9 : stats.battingAverage * 1.1)
+        ),
         walkRate: estimatedWalkRate * (isLefty ? 0.9 : 1.1),
         strikeoutRate: estimatedStrikeoutRate * (isLefty ? 1.1 : 0.9),
       },
       vsRight: {
-        battingAverage: isLefty ? stats.battingAverage * 1.1 : stats.battingAverage * 0.9,
-        onBasePercentage: isLefty ? stats.onBasePercentage * 1.1 : stats.onBasePercentage * 0.9,
-        sluggingPct: isLefty ? stats.sluggingPct * 1.1 : stats.sluggingPct * 0.9,
+        battingAverage: isLefty
+          ? stats.battingAverage * 1.1
+          : stats.battingAverage * 0.9,
+        onBasePercentage: isLefty
+          ? stats.onBasePercentage * 1.1
+          : stats.onBasePercentage * 0.9,
+        sluggingPct: isLefty
+          ? stats.sluggingPct * 1.1
+          : stats.sluggingPct * 0.9,
         ops: isLefty ? stats.ops + splitFactor : stats.ops - splitFactor,
         atBats: Math.round(stats.atBats * 0.7), // Estimate - assuming roughly 70% of PAs vs RHP
         plateAppearances: Math.round(stats.atBats * 0.7 * 1.1), // Slightly more than atBats
-        hits: Math.round(stats.atBats * 0.7 * (isLefty ? stats.battingAverage * 1.1 : stats.battingAverage * 0.9)),
+        hits: Math.round(
+          stats.atBats *
+            0.7 *
+            (isLefty ? stats.battingAverage * 1.1 : stats.battingAverage * 0.9)
+        ),
         walkRate: estimatedWalkRate * (isLefty ? 1.1 : 0.9),
         strikeoutRate: estimatedStrikeoutRate * (isLefty ? 0.9 : 1.1),
       },
@@ -596,7 +610,9 @@ export async function calculateHitTypeRates(
     const playerHitStats = await getPlayerHitStats(batterId);
 
     if (!playerHitStats) {
-      console.error(`Cannot calculate hit type rates without player hit stats for ID ${batterId}`);
+      console.error(
+        `Cannot calculate hit type rates without player hit stats for ID ${batterId}`
+      );
       return null;
     }
 
@@ -713,11 +729,13 @@ export async function calculateHitProjection(
     // Get player hit stats first to make sure we have basic player data
     const playerHitStats = await getPlayerHitStats(batterId);
     if (!playerHitStats) {
-      console.error(`Cannot calculate hit projection without player hit stats for ID ${batterId}`);
+      console.error(
+        `Cannot calculate hit projection without player hit stats for ID ${batterId}`
+      );
       // CRITICAL: Return null when player hit stats are missing
       return null;
     }
-    
+
     // Calculate hit rates - note that this may return a success even if we had to use fallbacks
     // since calculateHitTypeRates doesn't require player stats directly, and can use default values
     const hitRates = await calculateHitTypeRates(
@@ -729,7 +747,9 @@ export async function calculateHitProjection(
 
     // If hit rates calculation failed, use conservative defaults
     if (!hitRates) {
-      console.warn(`Using fallback values for hit projection as hit rates calculation failed`);
+      console.warn(
+        `Using fallback values for hit projection as hit rates calculation failed`
+      );
       const defaultProjection: DetailedHitProjection = {
         expectedHits: 0.7, // MLB average is about 1 hit per game
         byType: {

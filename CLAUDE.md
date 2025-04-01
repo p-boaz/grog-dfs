@@ -72,7 +72,9 @@
 
 ### Key Analysis Modules
 
-The `/lib/mlb/dfs-analysis` directory contains specialized modules for analyzing key scoring events:
+The `/lib/mlb/dfs-analysis` directory contains specialized modules organized by player type:
+
+#### Batter Analysis (`/lib/mlb/dfs-analysis/batters/`)
 
 1. **batter-analysis.ts**: Comprehensive batter projection system
 
@@ -81,45 +83,86 @@ The `/lib/mlb/dfs-analysis` directory contains specialized modules for analyzing
    - Integrates environmental factors and lineup position into projections
    - Provides category-specific scoring breakdowns with confidence ratings
 
-2. **home-runs.ts**: Home run probability analysis (10 pts)
+2. **hits.ts**: Foundation for hit analysis
+
+   - Core hit probability calculations by type (singles, doubles, etc.)
+   - Baseline for most other batter scoring projections
+   - Incorporates matchup data and situational analysis
+
+3. **home-runs.ts**: Home run probability analysis (10 pts)
 
    - Evaluates batter power metrics and career/recent HR trends
    - Analyzes pitcher vulnerability to home runs by handedness
    - Incorporates ballpark-specific HR factors and weather impacts
    - Estimates HR probability and expected DFS points
 
-3. **stolen-bases.ts**: Stolen base opportunity analysis (5 pts)
+4. **run-production.ts**: Runs and RBI analysis (2 pts each)
+
+   - Projects run scoring and run production opportunities
+   - Analyzes lineup position impact on RBI opportunities
+   - Integrates with team offensive context
+
+5. **stolen-bases.ts**: Stolen base opportunity analysis (5 pts)
 
    - Connects player steal tendencies with catcher defense metrics
    - Analyzes historical stolen base success rates and trends
    - Redirects to specialized modules for base stealing and defense
 
-4. **pitcher-win.ts**: Win probability modeling (4 pts)
+#### Pitcher Analysis (`/lib/mlb/dfs-analysis/pitchers/`)
+
+1. **starting-pitcher-analysis.ts**: Master pitcher analysis module
+   - Integrates all pitcher metrics into comprehensive projections
+   - Handles multi-season data with prioritization rules
+   - Combines strikeouts, innings, wins, and control metrics
+   - Offers relative rankings and filtering for lineup construction
+
+2. **pitcher-control.ts**: Control metrics analysis
+   - Evaluates walks and hits allowed (-0.6 pts each)
+   - Analyzes command and location patterns
+   - Critical for predicting negative point events
+
+3. **pitcher-win.ts**: Win probability modeling (4 pts)
 
    - Calculates win probability based on pitcher performance metrics
    - Factors in team run support and bullpen strength
    - Considers home/away advantage and environmental conditions
    - Provides confidence scores acknowledging inherent uncertainty
 
-5. **strikeouts.ts**: Strikeout projection system (2 pts)
+4. **strikeouts.ts**: Strikeout projection system (2 pts)
 
    - Projects strikeout totals based on pitcher skills and team vulnerability
    - Incorporates pitch mix data and control metrics
    - Provides expected strikeout ranges (low/mid/high) with confidence scores
    - Identifies high-K upside pitchers against vulnerable lineups
 
-6. **innings-pitched.ts**: Pitcher longevity analysis (2.25 pts/inning)
+5. **innings-pitched.ts**: Pitcher longevity analysis (2.25 pts/inning)
 
    - Evaluates pitcher durability, efficiency, and team "hook" tendencies
    - Analyzes complete game and shutout potential for bonus points
    - Factors in pitch efficiency and environmental impacts on endurance
    - Provides foundation for overall pitcher scoring projections
 
-7. **starting-pitcher-analysis.ts**: Master pitcher analysis module
-   - Integrates all pitcher metrics into comprehensive projections
-   - Handles multi-season data with prioritization rules
-   - Combines strikeouts, innings, wins, and control metrics
-   - Offers relative rankings and filtering for lineup construction
+6. **rare-events.ts**: High-upside pitcher events
+   - Analyzes complete games, shutouts, and no-hitters
+   - Models probability of bonus point achievements
+   - Identifies high-ceiling pitchers for tournaments
+
+#### Shared Analysis (`/lib/mlb/dfs-analysis/shared/`)
+
+1. **plate-discipline.ts**: Plate approach analysis
+   - Evaluates walks and strikeouts from both perspectives
+   - Used in both batter and pitcher projections
+   - Models batter patience vs. pitcher command
+
+2. **quality-metrics.ts**: Standardized player evaluation
+   - Creates normalized quality ratings for players
+   - Enables relative comparisons across positions
+   - Provides foundation for consistency modeling
+
+3. **aggregate-scoring.ts**: DFS point calculations
+   - Unified scoring system for all player types
+   - Combines individual scoring elements into projections
+   - Handles point breakdowns and expected value ranges
 
 These modules work together to create detailed fantasy scoring projections by analyzing specific scoring categories and combining them into comprehensive player evaluations.
 

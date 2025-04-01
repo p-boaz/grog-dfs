@@ -1,13 +1,13 @@
 import {
   getPitcherHomeRunVulnerability,
   getPitcherStats,
-} from "../player/pitcher-stats";
+} from "../../player/pitcher-stats";
+import { calculateExpectedStrikeouts } from "../strikeouts";
 import { calculatePitcherDfsProjection } from "./aggregate-scoring";
 import { calculateExpectedInnings } from "./innings-pitched";
 import { calculateControlProjection } from "./pitcher-control";
 import { calculatePitcherWinProbability } from "./pitcher-win";
 import { calculateRareEventPotential } from "./rare-events";
-import { calculateExpectedStrikeouts } from "./strikeouts";
 
 // Constants for placeholder values
 const PLACEHOLDER = {

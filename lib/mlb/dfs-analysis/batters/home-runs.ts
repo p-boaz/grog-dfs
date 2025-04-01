@@ -2,15 +2,15 @@
  * Specialized functions for analyzing home run potential and predictions
  */
 
-import { getBallparkFactors, getGameEnvironmentData } from "../index";
+import { getBallparkFactors, getGameEnvironmentData } from "../../index";
 import {
   estimateBarrelRate,
   estimateExitVelocity,
   getEnhancedBatterData,
-} from "../services/batter-data-service";
-import { getEnhancedPitcherData } from "../services/pitcher-data-service";
-import { HomeRunAnalysis } from "../types/analysis/events";
-import { PitcherHomeRunVulnerability } from "../types/player/pitcher";
+} from "../../services/batter-data-service";
+import { getEnhancedPitcherData } from "../../services/pitcher-data-service";
+import { HomeRunAnalysis } from "../../types/analysis/events";
+import { PitcherHomeRunVulnerability } from "../../types/player/pitcher";
 
 /**
  * Get player's season stats with focus on home run metrics
@@ -366,13 +366,16 @@ export async function getWeatherHomeRunImpact(gamePk: string): Promise<{
 export async function getPitcherHomeRunVulnerability(
   pitcherId: number,
   season = new Date().getFullYear()
-): Promise<(PitcherHomeRunVulnerability & {
-  vsLHB?: number;
-  vsRHB?: number;
-  parkFactor?: number;
-  hardHitPercent?: number;
-  barrelRate?: number;
-}) | null> {
+): Promise<
+  | (PitcherHomeRunVulnerability & {
+      vsLHB?: number;
+      vsRHB?: number;
+      parkFactor?: number;
+      hardHitPercent?: number;
+      barrelRate?: number;
+    })
+  | null
+> {
   try {
     // Fetch enhanced pitcher data including Statcast metrics
     const pitcherData = await getEnhancedPitcherData(pitcherId, season);
@@ -448,24 +451,28 @@ export async function estimateHomeRunProbability(
   pitcherId: number,
   ballparkId: number,
   isHome: boolean,
-  weatherConditions?: number | {
-    temperature?: number;
-    windSpeed?: number;
-    windDirection?: string;
-    isOutdoor?: boolean;
+  weatherConditions?:
+    | number
+    | {
+        temperature?: number;
+        windSpeed?: number;
+        windDirection?: string;
+        isOutdoor?: boolean;
+      }
+): Promise<
+  Omit<HomeRunAnalysis, "multipleHRProbability"> & {
+    probability: number; // 0-1 scale
+    confidence: number; // 1-10 scale
+    factors: {
+      batterProfile: number; // Weight: how much batter metrics influenced the result
+      pitcherVulnerability: number; // Weight: how much pitcher metrics influenced the result
+      ballpark: number; // Weight: how much park factors influenced the result
+      weather: number; // Weight: how much weather influenced the result
+      platoonAdvantage: number; // Weight: how much handedness matchup influenced the result
+    };
+    expectedValue: number; // Expected fantasy points from HRs
   }
-): Promise<Omit<HomeRunAnalysis, 'multipleHRProbability'> & {
-  probability: number; // 0-1 scale
-  confidence: number; // 1-10 scale
-  factors: {
-    batterProfile: number; // Weight: how much batter metrics influenced the result
-    pitcherVulnerability: number; // Weight: how much pitcher metrics influenced the result
-    ballpark: number; // Weight: how much park factors influenced the result
-    weather: number; // Weight: how much weather influenced the result
-    platoonAdvantage: number; // Weight: how much handedness matchup influenced the result
-  };
-  expectedValue: number; // Expected fantasy points from HRs
-}> {
+> {
   try {
     // Fetch all data in parallel
     const [batterStats, pitcherVuln, batterProfile] = await Promise.all([
@@ -545,24 +552,56 @@ export async function estimateHomeRunProbability(
     }
 
     // Adjust for ballpark
-    if (ballparkFactors && ballparkFactors.types && ballparkFactors.types.homeRuns) {
+    if (
+      ballparkFactors &&
+      ballparkFactors.types &&
+      ballparkFactors.types.homeRuns
+    ) {
       parkFactor = ballparkFactors.types.homeRuns;
     }
 
     // Adjust for weather if available and outdoors
-    if (gameEnvironment && typeof gameEnvironment !== 'number' && gameEnvironment.isOutdoor) {
+    if (
+      gameEnvironment &&
+      typeof gameEnvironment !== "number" &&
+      gameEnvironment.isOutdoor
+    ) {
       // Temperature effect on HR
-      if (typeof gameEnvironment !== 'number' && gameEnvironment.temperature) {
-        if (typeof gameEnvironment !== 'number' && gameEnvironment.temperature > 85) weatherFactor += 0.2;
-        else if (typeof gameEnvironment !== 'number' && gameEnvironment.temperature > 75) weatherFactor += 0.1;
-        else if (typeof gameEnvironment !== 'number' && gameEnvironment.temperature < 50) weatherFactor -= 0.1;
-        else if (typeof gameEnvironment !== 'number' && gameEnvironment.temperature < 40) weatherFactor -= 0.2;
+      if (typeof gameEnvironment !== "number" && gameEnvironment.temperature) {
+        if (
+          typeof gameEnvironment !== "number" &&
+          gameEnvironment.temperature > 85
+        )
+          weatherFactor += 0.2;
+        else if (
+          typeof gameEnvironment !== "number" &&
+          gameEnvironment.temperature > 75
+        )
+          weatherFactor += 0.1;
+        else if (
+          typeof gameEnvironment !== "number" &&
+          gameEnvironment.temperature < 50
+        )
+          weatherFactor -= 0.1;
+        else if (
+          typeof gameEnvironment !== "number" &&
+          gameEnvironment.temperature < 40
+        )
+          weatherFactor -= 0.2;
       }
 
       // Wind effect
-      if (typeof gameEnvironment !== 'number' && gameEnvironment.windSpeed && gameEnvironment.windDirection) {
-        const windSpeed = typeof gameEnvironment !== 'number' ? gameEnvironment.windSpeed : 0;
-        const windDir = typeof gameEnvironment !== 'number' && gameEnvironment.windDirection ? gameEnvironment.windDirection.toLowerCase() : '';
+      if (
+        typeof gameEnvironment !== "number" &&
+        gameEnvironment.windSpeed &&
+        gameEnvironment.windDirection
+      ) {
+        const windSpeed =
+          typeof gameEnvironment !== "number" ? gameEnvironment.windSpeed : 0;
+        const windDir =
+          typeof gameEnvironment !== "number" && gameEnvironment.windDirection
+            ? gameEnvironment.windDirection.toLowerCase()
+            : "";
 
         if (windSpeed > 10) {
           if (windDir.includes("out") || windDir.includes("center")) {

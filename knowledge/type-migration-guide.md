@@ -125,7 +125,9 @@ const teamContext = await getTeamOffensiveContext(teamId);
 
 ## Module-Specific Migration Notes
 
-### 1. hits.ts Migration
+### Batter Modules
+
+#### 1. batters/hits.ts Migration
 
 Key changes:
 - Updated all `playerData.seasonStats` references to `playerData.currentSeason`
@@ -133,7 +135,7 @@ Key changes:
 - Updated batSide references to handedness
 - Removed all @ts-ignore comments and fixed underlying issues
 
-### 2. run-production.ts Migration
+#### 2. batters/run-production.ts Migration
 
 Key changes:
 - Updated all seasonStats references to currentSeason
@@ -190,17 +192,85 @@ Object.entries(playerData.careerByYear).forEach(([year, stats]) => {
 
 **Solution**: Use playerData.teamId instead of playerData.currentTeam.id.
 
+### Runtime Type Safety
+
+**Problem**: Need to validate data structure at runtime.
+
+**Solution**: Use provided type guards for runtime validation.
+```typescript
+import { isBatterStats, createEmptyBatterStats } from "../types/domain/player";
+
+function processBatterStats(stats: unknown) {
+  // Validate at runtime
+  if (!isBatterStats(stats)) {
+    return createEmptyBatterStats();
+  }
+  
+  // TypeScript now knows this is valid BatterStats
+  return stats;
+}
+```
+
+### Gradual Migration with Adapters
+
+**Problem**: Need to update dependent modules without breaking existing code.
+
+**Solution**: Create adapters that convert between old and new types.
+```typescript
+// Adapter to make new domain model work with old code
+function adaptToBatterSeasonStats(domainBatter) {
+  return {
+    gamesPlayed: domainBatter.currentSeason.gamesPlayed,
+    atBats: domainBatter.currentSeason.atBats,
+    // ...other properties
+  };
+}
+```
+
+## Key Benefits
+
+1. **Match Reality**: Types now match actual API responses
+2. **Validation**: Runtime validation ensures data consistency
+3. **Normalization**: String values properly converted to numbers
+4. **Safety**: Optional chaining and nullish coalescing reduce errors
+5. **Maintainability**: Layered approach separates concerns
+6. **Runtime Safety**: Type guards verify data at runtime
+
+## Module Organization 
+
+The DFS analysis modules have been reorganized into a more structured directory layout:
+
+```
+/lib/mlb/dfs-analysis/
+  ├── batters/     # Batter-focused analysis modules
+  ├── pitchers/    # Pitcher-focused analysis modules
+  ├── shared/      # Modules used by both batters and pitchers
+  └── index.ts     # Re-exports for backward compatibility
+```
+
+This organization helps clarify module responsibilities while maintaining backward compatibility through the index.ts file.
+
 ## Next Modules for Migration
 
 Based on dependencies and complexity, here's the recommended order for migration:
 
-1. ✅ hits.ts
-2. ✅ run-production.ts
-3. plate-discipline.ts
-4. pitcher-control.ts
-5. strikeouts.ts
-6. innings-pitched.ts
-7. home-runs.ts
-8. stolen-bases.ts
-9. batter-analysis.ts
-10. starting-pitcher-analysis.ts
+### Batter Modules
+1. ✅ batters/hits.ts
+2. ✅ batters/run-production.ts
+3. shared/plate-discipline.ts
+4. batters/home-runs.ts
+5. batters/stolen-bases.ts
+6. batters/batter-analysis.ts
+
+### Pitcher Modules
+1. pitchers/pitcher-control.ts
+2. pitchers/strikeouts.ts
+3. pitchers/innings-pitched.ts
+4. pitchers/pitcher-win.ts
+5. pitchers/rare-events.ts
+6. pitchers/starting-pitcher-analysis.ts
+
+### Shared Modules
+1. shared/plate-discipline.ts
+2. shared/quality-metrics.ts
+3. shared/aggregate-scoring.ts

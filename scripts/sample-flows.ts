@@ -10,9 +10,9 @@
 
 import { getBallparkFactors } from "../lib/mlb/core/team-mapping";
 import { analyzeBatters } from "../lib/mlb/dfs-analysis/batter-analysis";
-import { calculateHitProjections } from "../lib/mlb/dfs-analysis/hits";
-import { estimateHomeRunProbability } from "../lib/mlb/dfs-analysis/home-runs";
-import { calculatePitcherDfsProjection } from "../lib/mlb/dfs-analysis/starting-pitcher-analysis";
+import { calculateHitProjections } from "../lib/mlb/dfs-analysis/batters/hits";
+import { estimateHomeRunProbability } from "../lib/mlb/dfs-analysis/batters/home-runs";
+import { calculatePitcherDfsProjection } from "../lib/mlb/dfs-analysis/pitchers/starting-pitcher-analysis";
 import { estimateStolenBaseProbability } from "../lib/mlb/dfs-analysis/stolen-bases";
 import { getGameFeed } from "../lib/mlb/game/game-feed";
 import { getBatterStats } from "../lib/mlb/player/batter-stats";

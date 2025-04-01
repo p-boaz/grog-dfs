@@ -3,17 +3,17 @@
  * Both walks and hit-by-pitch are worth +2 points in DraftKings
  */
 
-import { getBatterSplits, getBatterStats } from "../player/batter-stats";
-import { analyzeHitterMatchup } from "../player/matchups";
-import { getPitcherStats } from "../player/pitcher-stats";
-import { getEnhancedBatterData } from "../services/batter-data-service";
-import { getEnhancedPitcherData } from "../services/pitcher-data-service";
+import { getBatterSplits, getBatterStats } from "../../player/batter-stats";
+import { analyzeHitterMatchup } from "../../player/matchups";
+import { getPitcherStats } from "../../player/pitcher-stats";
+import { getEnhancedBatterData } from "../../services/batter-data-service";
+import { getEnhancedPitcherData } from "../../services/pitcher-data-service";
 import {
   ControlMatchupData,
   ControlProjection,
   PitcherControlProfile,
-} from "../types/analysis/pitcher";
-import { BatterPlateDiscipline } from "../types/player/batter";
+} from "../../types/analysis/pitcher";
+import { BatterPlateDiscipline } from "../../types/player/batter";
 
 // Points awarded in DraftKings for these categories
 export const WALK_POINTS = 2;

@@ -3,14 +3,16 @@
  * Used to determine the overall quality of a player for DFS projections
  */
 
-import { BatterQualityMetrics, SeasonStats } from "../types/analysis";
+import { BatterQualityMetrics, SeasonStats } from "../../types/analysis";
 
 /**
  * Calculate quality metrics for a batter based on current season stats
  * @param stats Season statistics for the batter
  * @returns BatterQualityMetrics object with scores from 0-1
  */
-export function calculateQualityMetrics(stats: SeasonStats): BatterQualityMetrics {
+export function calculateQualityMetrics(
+  stats: SeasonStats
+): BatterQualityMetrics {
   try {
     // Calculate batted ball quality (based on BABIP and ISO)
     const babip = stats.babip || 0;
@@ -68,9 +70,9 @@ export function calculateQualityMetrics(stats: SeasonStats): BatterQualityMetric
 function calculateBattedBallQuality(babip: number, iso: number): number {
   // BABIP ranges typically from .250 to .350
   // ISO ranges typically from .100 to .250
-  const babipScore = Math.min(Math.max((babip - 0.250) / 0.100, 0), 1);
-  const isoScore = Math.min(Math.max((iso - 0.100) / 0.150, 0), 1);
-  
+  const babipScore = Math.min(Math.max((babip - 0.25) / 0.1, 0), 1);
+  const isoScore = Math.min(Math.max((iso - 0.1) / 0.15, 0), 1);
+
   // Combined score with higher weight on BABIP
   return babipScore * 0.6 + isoScore * 0.4;
 }
@@ -82,8 +84,8 @@ function calculatePowerMetrics(hrRate: number, iso: number): number {
   // HR rate typically ranges from 0.01 to 0.08
   // ISO ranges typically from .100 to .250
   const hrRateScore = Math.min(Math.max((hrRate - 0.01) / 0.07, 0), 1);
-  const isoScore = Math.min(Math.max((iso - 0.100) / 0.150, 0), 1);
-  
+  const isoScore = Math.min(Math.max((iso - 0.1) / 0.15, 0), 1);
+
   // Combined score with higher weight on HR rate
   return hrRateScore * 0.7 + isoScore * 0.3;
 }
@@ -94,9 +96,9 @@ function calculatePowerMetrics(hrRate: number, iso: number): number {
 function calculateContactRate(kRate: number, avg: number): number {
   // K rate typically ranges from 0.10 to 0.30 (lower is better)
   // Batting average typically ranges from .220 to .320
-  const kRateScore = Math.min(Math.max(1 - ((kRate - 0.10) / 0.20), 0), 1);
-  const avgScore = Math.min(Math.max((avg - 0.220) / 0.100, 0), 1);
-  
+  const kRateScore = Math.min(Math.max(1 - (kRate - 0.1) / 0.2, 0), 1);
+  const avgScore = Math.min(Math.max((avg - 0.22) / 0.1, 0), 1);
+
   // Combined score with higher weight on K rate
   return kRateScore * 0.6 + avgScore * 0.4;
 }
@@ -107,9 +109,9 @@ function calculateContactRate(kRate: number, avg: number): number {
 function calculatePlateApproach(bbRate: number, obp: number): number {
   // BB rate typically ranges from 0.05 to 0.15
   // OBP typically ranges from .300 to .400
-  const bbRateScore = Math.min(Math.max((bbRate - 0.05) / 0.10, 0), 1);
-  const obpScore = Math.min(Math.max((obp - 0.300) / 0.100, 0), 1);
-  
+  const bbRateScore = Math.min(Math.max((bbRate - 0.05) / 0.1, 0), 1);
+  const obpScore = Math.min(Math.max((obp - 0.3) / 0.1, 0), 1);
+
   // Combined score with equal weight
   return bbRateScore * 0.5 + obpScore * 0.5;
 }
@@ -122,7 +124,7 @@ function calculateSpeedScore(sbRate: number, triplesRate: number): number {
   // Triples rate typically very low, around 0 to 0.05 per game
   const sbRateScore = Math.min(Math.max((sbRate - 0.6) / 0.3, 0), 1);
   const triplesRateScore = Math.min(Math.max(triplesRate / 0.05, 0), 1);
-  
+
   // Combined score with higher weight on SB rate
   return sbRateScore * 0.7 + triplesRateScore * 0.3;
 }
@@ -134,12 +136,12 @@ function calculateConsistencyScore(stats: SeasonStats): number {
   // This would ideally use variance in game-to-game stats
   // For now, use a simple model where more games played = more reliable data
   const gamesPlayed = stats.gamesPlayed || 0;
-  
+
   // Score based on games played, maxing out at 100 games
   const baseScore = Math.min(gamesPlayed / 100, 1) * 80;
-  
+
   // Add small bonus for overall contact rate
   const contactBonus = (1 - (stats.kRate || 0.2)) * 20;
-  
+
   return Math.round(baseScore + contactBonus);
 }

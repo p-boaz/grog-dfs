@@ -11,7 +11,7 @@ import {
 import { getGameEnvironmentData } from "../mlb/weather/weather";
 import { saveToJsonFile } from "./core/file-utils";
 import { analyzeBatters } from "./dfs-analysis/batter-analysis";
-import { analyzeStartingPitchers } from "./dfs-analysis/starting-pitcher-analysis";
+import { analyzeStartingPitchers } from "./dfs-analysis/pitchers/starting-pitcher-analysis";
 import { populateMlbIds } from "./draftkings/player-mapping";
 import { getDKSalaries } from "./draftkings/salaries";
 import type { DailyMLBData } from "./types/core";

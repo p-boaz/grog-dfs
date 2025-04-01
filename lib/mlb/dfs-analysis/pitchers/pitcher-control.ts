@@ -9,9 +9,12 @@
 import {
   getBatterPlateDiscipline,
   getBatterStats,
-} from "../player/batter-stats";
-import { analyzeHitterMatchup } from "../player/matchups";
-import { getPitcherPitchMix, getPitcherStats } from "../player/pitcher-stats";
+} from "../../player/batter-stats";
+import { analyzeHitterMatchup } from "../../player/matchups";
+import {
+  getPitcherPitchMix,
+  getPitcherStats,
+} from "../../player/pitcher-stats";
 import {
   BatterControlFactors,
   CareerControlProfile,
@@ -20,7 +23,7 @@ import {
   ExpectedControlEvents,
   PitcherControlProfile,
   PitcherControlStats,
-} from "../types/analysis";
+} from "../../types/analysis";
 
 // Negative points in DraftKings for these categories
 export const HIT_AGAINST_POINTS = -0.6;
