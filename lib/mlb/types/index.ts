@@ -1,14 +1,33 @@
 /**
- * MLB Type Definitions - Main Export File
- *
- * This file re-exports all MLB-related type definitions for easier imports.
- * Import from this file to access any MLB type without needing to know its exact location.
+ * MLB Type System - Main Export
+ * 
+ * This file provides the central entry point for all MLB type definitions.
+ * It exposes a three-layer type system:
+ * 
+ * 1. API Layer: Raw API response types
+ * 2. Domain Layer: Normalized domain objects
+ * 3. Analysis Layer: DFS-specific types
+ * 
+ * This structure promotes proper separation of concerns while allowing
+ * for a gradual migration path from the old type system.
  */
 
-// Core types
+// API Types - Raw API response types matching real data
+import * as Api from './api';
+export { Api };
+
+// Domain Types - Normalized business objects
+import * as Domain from './domain';
+export { Domain };
+
+// Analysis Types - DFS-specific types
+import * as Analysis from './analysis';
+export { Analysis };
+
+// Legacy re-exports for backward compatibility
+// These will be maintained during the migration period
 export * from './core';
 
-// Game types - explicitly imported to avoid conflicts
 export type {
   MLBGame,
   GameFeedResponse,
@@ -23,7 +42,6 @@ export type {
   MLBWeatherData
 } from './game';
 
-// Draftkings types
 export type {
   DraftKingsCSVEntry,
   DraftKingsPlayer,
@@ -62,43 +80,35 @@ export type {
   MatchupStats as PlayerMatchupStats
 } from './player';
 
-// Environment types - renamed to avoid conflicts
-export type {
-  DetailedWeatherInfo as DetailedGameWeatherInfo,
-  GameEnvironmentData as GameEnvironmentDetails,
-  MLBWeatherData as MLBWeatherRecord,
-  BallparkFactors,
-  BallparkDimensions
-} from './environment';
+// Export convenience types and functions
+// These make migration easier by providing shortcuts to commonly used types
 
-// Add MLBWeatherData as WeatherData for compatibility
-export type { MLBWeatherData as WeatherData } from './environment';
+/**
+ * @deprecated Use Domain.Batter instead
+ * Type alias for backward compatibility
+ */
+export type Batter = Domain.Batter;
 
-// Analysis types - explicitly export to avoid ambiguity
-export type {
-  BatterAnalysis,
-  BatterInfo,
-  BatterProjections,
-  BatterQualityMetrics,
-  DetailedHitProjection,
-  DetailedHitProjections,
-  DKPlayer,
-  GameInfo,
-  HitProjection,
-  LineupContext,
-  PitcherRunAllowance,
-  Projections,
-  RunProductionAnalysis,
-  RunProductionStats,
-  TeamOffensiveContext
-} from './analysis';
+/**
+ * @deprecated Use Domain.Pitcher instead
+ * Type alias for backward compatibility
+ */
+export type Pitcher = Domain.Pitcher;
 
-// Statcast types - explicitly import known types to avoid duplicates
-export type {
-  PitchUsage,
-  // Add only types that actually exist
-} from './statcast';
+/**
+ * @deprecated Use Domain.Game instead
+ * Type alias for backward compatibility
+ */
+export type Game = Domain.Game;
 
-// Re-export entire modules to ensure all types are available
-export * from './statcast';
-export * from './validation';
+/**
+ * @deprecated Use Analysis.BatterProjection instead
+ * Type alias for backward compatibility
+ */
+export type BatterProjection = Analysis.BatterProjection;
+
+/**
+ * @deprecated Use Analysis.PitcherProjection instead
+ * Type alias for backward compatibility 
+ */
+export type PitcherProjection = Analysis.PitcherProjection;

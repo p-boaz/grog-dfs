@@ -1,7 +1,9 @@
 import { DEFAULT_CACHE_TTL, markAsApiSource, withCache } from "../cache";
 import { makeMLBApiRequest } from "../core/api-client";
 import { BatterPlateDiscipline, BatterSplits } from "../types/player";
-import { BatterStats } from "../types/player/batter";
+import { BatterApiResponse } from "../types/api/player";
+import { batterFromApi, Batter, BatterStats } from "../types/domain/player";
+import { ApiSourceMarker } from "../types/api/common";
 
 /**
  * Fetch batter stats from MLB API

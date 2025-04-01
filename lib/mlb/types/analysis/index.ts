@@ -2,9 +2,10 @@
  * MLB Analysis Type Definitions - Index File
  *
  * This file re-exports all analysis-related type definitions.
+ * It integrates both legacy and new types for a gradual migration path.
  */
 
-// Explicitly export batter analysis types
+// Explicitly export legacy batter analysis types
 export type {
   BatterAnalysis,
   BatterInfo,
@@ -20,12 +21,38 @@ export type {
   Projections,
   RunProductionAnalysis,
   RunProductionStats,
-  SeasonStats,
   TeamOffensiveContext
 } from "./batter";
 
-// Export other modules with type keyword
+// Keep SeasonStats alias for backward compatibility
+import { BatterStats } from '../domain/player';
+export type SeasonStats = BatterStats;
+
+// Export other legacy modules 
 export * from "./events";
 export * from "./matchups";
 export * from "./pitcher";
+
+// New types from scoring module with both legacy and modern types
 export * from "./scoring";
+
+// Export domain types selectively for convenience
+export { 
+  Batter, 
+  BatterStats, 
+  Pitcher, 
+  PitcherStats, 
+  isBatter, 
+  isPitcher,
+  isBatterStats,
+  isPitcherStats
+} from '../domain/player';
+
+export {
+  Game,
+  GameStatus,
+  GameEnvironment,
+  BallparkFactors,
+  isGame,
+  isGameEnvironment
+} from '../domain/game';

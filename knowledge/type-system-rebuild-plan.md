@@ -24,11 +24,12 @@
 
 ### Phase 1: Data Validation and Mapping
 
-1. **Create Test Environment with Real Data**
-   - Extract and save representative data samples from API responses
-   - Add serialized versions of real runtime objects
-   - Create validation tests that compare type definitions to actual data
-   - Use test environment to validate each interface change
+1. **API Response Capture and Analysis**
+   - Capture real MLB API responses using the instrumented API client
+   - Run `scripts/capture-api-samples.ts` to collect basic API responses
+   - Run `scripts/sample-flows.ts` to simulate key application flows
+   - Generate type definitions directly from actual API shapes
+   - Compare captured response types with current interface definitions
 
 2. **Unified Type Reference**
    - Document all existing types and their relationships
