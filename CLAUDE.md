@@ -6,6 +6,7 @@
 - The project is configured for pnpm, using npx can cause dependency and environment issues
 - ALWAYS remove the use of default values in functions, use the actual values instead
 - NEVER run `pnpm typecheck` - use `pnpm lint` for code quality checks
+- NEVER run tests directly - instead, ask the user to run tests and wait for their response
 - IMPORTANT: This is a PRODUCTION codebase. Every decision must reflect professional standards. Verify all information from context. Never make assumptions or speculate without evidence
 
 ## Git Workflow
@@ -34,6 +35,7 @@
 - Test:
   - Lint: `pnpm lint`
   - TypeCheck: `pnpm typecheck`
+  - Run TypeScript files: `pnpm tsx <file>` (NEVER use ts-node)
 - Database:
   - Setup: `pnpm run db:setup`
   - Seed: `pnpm run db:seed`

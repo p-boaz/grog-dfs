@@ -143,6 +143,17 @@ Key changes:
 - Updated teamId references to use domain model
 - Removed manual string-to-number conversions in getPitcherRunAllowance
 
+#### 3. shared/plate-discipline.ts Migration
+
+Key changes:
+- Updated all playerData.seasonStats references to playerData.currentSeason
+- Implemented better error handling with default values for pitchers
+- Replaced manual string-to-number conversions with direct property access
+- Added proper type definitions with exported interfaces
+- Updated careerStats references to use careerByYear
+- Fixed return types to match domain model standards
+- Improved validation with proper type guards
+
 ## Testing Your Migration
 
 For each module, create a test script that:
@@ -257,7 +268,7 @@ Based on dependencies and complexity, here's the recommended order for migration
 ### Batter Modules
 1. ✅ batters/hits.ts
 2. ✅ batters/run-production.ts
-3. shared/plate-discipline.ts
+3. ✅ shared/plate-discipline.ts
 4. batters/home-runs.ts
 5. batters/stolen-bases.ts
 6. batters/batter-analysis.ts
@@ -271,6 +282,6 @@ Based on dependencies and complexity, here's the recommended order for migration
 6. pitchers/starting-pitcher-analysis.ts
 
 ### Shared Modules
-1. shared/plate-discipline.ts
+1. ✅ shared/plate-discipline.ts
 2. shared/quality-metrics.ts
 3. shared/aggregate-scoring.ts

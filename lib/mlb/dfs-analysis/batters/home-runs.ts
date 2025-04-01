@@ -11,6 +11,7 @@ import {
 import { getEnhancedPitcherData } from "../../services/pitcher-data-service";
 import { HomeRunAnalysis } from "../../types/analysis/events";
 import { PitcherHomeRunVulnerability } from "../../types/player/pitcher";
+import { Batter, Pitcher, isBatterStats } from "../../types/domain/player";
 
 /**
  * Get player's season stats with focus on home run metrics
@@ -44,17 +45,17 @@ export async function getPlayerHomeRunStats(
 
     // Skip pitchers unless they have significant batting stats
     if (
-      playerData.primaryPosition === "P" &&
-      playerData.seasonStats.atBats < 20
+      playerData.position === "P" &&
+      playerData.currentSeason.atBats < 20
     ) {
       return null;
     }
 
     // Extract season batting stats
-    const batting = playerData.seasonStats;
+    const batting = playerData.currentSeason;
 
     // If we don't have the stats we need, return null
-    if (!batting || !batting.gamesPlayed || !batting.atBats) {
+    if (!isBatterStats(batting) || !batting.gamesPlayed || !batting.atBats) {
       console.log(
         `No batting stats found for player ${playerId}, season ${season}`
       );
@@ -128,12 +129,12 @@ export async function getCareerHomeRunProfile(playerId: number): Promise<{
 } | null> {
   try {
     // Get enhanced player data with Statcast metrics
-    const playerData = await getEnhancedBatterData(playerId);
+    const playerData: Batter = await getEnhancedBatterData(playerId);
 
     if (
       !playerData ||
-      !playerData.careerStats ||
-      playerData.careerStats.length === 0
+      !playerData.careerByYear ||
+      Object.keys(playerData.careerByYear).length === 0
     ) {
       return null;
     }
@@ -152,7 +153,10 @@ export async function getCareerHomeRunProfile(playerId: number): Promise<{
     const recentSeasons: Array<{ season: string; hrRate: number }> = [];
 
     // Process each season
-    playerData.careerStats.forEach((season) => {
+    Object.entries(playerData.careerByYear).forEach(([seasonYear, season]) => {
+      // Skip if no valid stats
+      if (!isBatterStats(season)) return;
+
       // Get HR from appropriate field
       const seasonHR = season.homeRuns || 0;
       const seasonGames = season.gamesPlayed || 0;
@@ -175,10 +179,10 @@ export async function getCareerHomeRunProfile(playerId: number): Promise<{
 
       // Track for recent trend (last 3 seasons)
       const currentYear = new Date().getFullYear();
-      const seasonYear = parseInt(season.season);
-      if (seasonYear >= currentYear - 3 && seasonGames >= 20) {
+      const seasonYearInt = parseInt(seasonYear);
+      if (seasonYearInt >= currentYear - 3 && seasonGames >= 20) {
         recentSeasons.push({
-          season: season.season,
+          season: seasonYear,
           hrRate: seasonRate,
         });
       }
@@ -378,13 +382,13 @@ export async function getPitcherHomeRunVulnerability(
 > {
   try {
     // Fetch enhanced pitcher data including Statcast metrics
-    const pitcherData = await getEnhancedPitcherData(pitcherId, season);
+    const pitcherData: Pitcher = await getEnhancedPitcherData(pitcherId, season);
 
-    if (!pitcherData) {
+    if (!pitcherData || !pitcherData.currentSeason) {
       return null;
     }
 
-    const stats = pitcherData.seasonStats;
+    const stats = pitcherData.currentSeason;
     const homeRunsAllowed = stats.homeRunsAllowed || 0;
     const inningsPitched = stats.inningsPitched || 0;
 
@@ -422,7 +426,7 @@ export async function getPitcherHomeRunVulnerability(
     vulnerability = Math.max(1, Math.min(10, vulnerability));
 
     return {
-      gamesStarted: pitcherData.seasonStats.gamesStarted || 0,
+      gamesStarted: stats.gamesStarted || 0,
       homeRunsAllowed,
       inningsPitched,
       hrPer9,

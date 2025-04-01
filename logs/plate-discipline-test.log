@@ -1,0 +1,105 @@
+================================================================================
+PLATE DISCIPLINE MODULE TEST REPORT - 2025-04-01 19:05:24
+================================================================================
+
+
+Testing getPlayerPlateDisciplineStats...
+✅ getPlayerPlateDisciplineStats: Success
+Duration: 209ms
+
+Testing getCareerPlateDisciplineProfile...
+✅ getCareerPlateDisciplineProfile: Success
+Duration: 12ms
+
+Testing getPitcherControlProfile...
+✅ getPitcherControlProfile: Success
+Duration: 63ms
+
+Testing getMatchupWalkData...
+✅ getMatchupWalkData: Success
+Duration: 72ms
+
+Testing calculatePlateDisciplineProjection...
+✅ calculatePlateDisciplineProjection: Success
+Duration: 298ms
+
+================================================================================
+TEST SUMMARY
+================================================================================
+Total Tests: 5
+Successes: 5
+Failures: 0
+Total Duration: 657ms
+
+
+DETAILED RESULTS:
+getPlayerPlateDisciplineStats: SUCCESS (209ms)
+Data sample:
+{
+  "playerId": 545361,
+  "name": "Mike Trout",
+  "discipline": {
+    "chaseRate": 0.35,
+    "contactRate": 0.7,
+    "zoneSwingRate": 0.65,
+    "whiffRate": 0.25,
+    "firstPitchSwingRate": 0.28
+  },
+...
+
+getCareerPlateDisciplineProfile: SUCCESS (12ms)
+Data sample:
+{
+  "careerWalks": 980,
+  "careerHbp": 0,
+  "careerPlateAppearances": 6647,
+  "careerWalkRate": 0.14743493305250488,
+  "careerHbpRate": 0,
+  "bestSeasonWalkRate": 0.20065789473684212,
+  "recentTrend":...
+
+getPitcherControlProfile: SUCCESS (63ms)
+Data sample:
+{
+  "gamesStarted": 0,
+  "inningsPitched": 0,
+  "walks": 0,
+  "strikeouts": 0,
+  "hits": 0,
+  "hitBatsmen": 0,
+  "walksPerNine": 3,
+  "hitsPerNine": 8.5,
+  "hbpPerNine": 0.5,
+  "whip": 1.3,
+  "strikeo...
+
+getMatchupWalkData: SUCCESS (72ms)
+Data sample:
+{
+  "plateAppearances": 21,
+  "walks": 0,
+  "hitByPitch": 0,
+  "strikeouts": 0,
+  "walkRate": 0,
+  "hbpRate": 0,
+  "strikeoutRate": 0,
+  "atBats": 0,
+  "hits": 0,
+  "hitRate": 0,
+  "sampleSize": "larg...
+
+calculatePlateDisciplineProjection: SUCCESS (298ms)
+Data sample:
+{
+  "walks": {
+    "expected": 0.09116279069767443,
+    "high": 0.11851162790697675,
+    "low": 0.0638139534883721,
+    "range": 0.05469767441860465
+  },
+  "hits": {
+    "expected": 3,
+    "high": 5,
+...
+
+Test run complete

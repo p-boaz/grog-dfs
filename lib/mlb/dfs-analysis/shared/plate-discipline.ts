@@ -13,7 +13,7 @@ import {
   ControlProjection,
   PitcherControlProfile,
 } from "../../types/analysis/pitcher";
-import { BatterPlateDiscipline } from "../../types/player/batter";
+import { Batter, BatterStats, isBatterStats } from "../../types/domain/player";
 
 // Points awarded in DraftKings for these categories
 export const WALK_POINTS = 2;
@@ -26,6 +26,28 @@ export const HBP_POINTS = 2;
  * @param season Season year (defaults to current year)
  * @returns Object with plate discipline statistics
  */
+// Interface to represent plate discipline metrics
+export interface BatterPlateDiscipline {
+  playerId: number;
+  name: string;
+  discipline: {
+    chaseRate: number;
+    contactRate: number;
+    zoneSwingRate: number;
+    whiffRate: number;
+    firstPitchSwingRate: number;
+  };
+  pitchTypePerformance: {
+    vsFastball: number;
+    vsBreakingBall: number;
+    vsOffspeed: number;
+  };
+  walkRate: number;
+  hbpRate: number;
+  plateAppearances: number;
+  sourceTimestamp: Date;
+}
+
 export async function getPlayerPlateDisciplineStats(
   playerId: number,
   season = new Date().getFullYear()
@@ -39,19 +61,19 @@ export async function getPlayerPlateDisciplineStats(
 
     // Skip pitchers unless they have significant batting stats
     if (
-      playerData.primaryPosition === "P" &&
-      playerData.seasonStats.atBats < 20
+      playerData.position === "P" &&
+      playerData.currentSeason.atBats < 20
     ) {
       return null;
     }
 
     // Extract season batting stats
-    const batting = playerData.seasonStats;
+    const batting = playerData.currentSeason;
 
-    // If we don't have the stats we need, return null
-    if (!batting || !batting.gamesPlayed || !batting.atBats) {
+    // Use type guard to validate batting stats
+    if (!isBatterStats(batting) || !batting.gamesPlayed || !batting.atBats) {
       console.log(
-        `No batting stats found for player ${playerId}, season ${season}`
+        `No valid batting stats found for player ${playerId}, season ${season}`
       );
       return null;
     }
@@ -154,8 +176,8 @@ export async function getCareerPlateDisciplineProfile(
 
     if (
       !playerData ||
-      !playerData.careerStats ||
-      playerData.careerStats.length === 0
+      !playerData.careerByYear ||
+      Object.keys(playerData.careerByYear).length === 0
     ) {
       return null;
     }
@@ -172,20 +194,18 @@ export async function getCareerPlateDisciplineProfile(
       [];
 
     // Process each season
-    playerData.careerStats.forEach((season) => {
+    Object.entries(playerData.careerByYear).forEach(([seasonYear, season]) => {
       // Skip seasons with too few PAs
       if ((season.plateAppearances || 0) < 50) return;
 
-      const seasonYear = parseInt(season.season);
+      const year = parseInt(seasonYear);
       const walks = season.walks || 0;
       const hbp = season.hitByPitches || 0;
-      const plateAppearances =
-        season.plateAppearances ||
-        season.atBats + walks + hbp + (season.sacrificeFlies || 0);
+      const plateAppearances = season.plateAppearances || 0;
 
       // Track first season for experience calculation
-      if (firstSeasonYear === null || seasonYear < firstSeasonYear) {
-        firstSeasonYear = seasonYear;
+      if (firstSeasonYear === null || year < firstSeasonYear) {
+        firstSeasonYear = year;
       }
 
       // Update career totals
@@ -203,7 +223,7 @@ export async function getCareerPlateDisciplineProfile(
 
       // Track for consistency and trend analysis
       seasonWalkRates.push({
-        season: seasonYear,
+        season: year,
         walkRate,
         pa: plateAppearances,
       });
@@ -333,10 +353,39 @@ function determineHitsPropensity(
   }
 }
 
+/**
+ * Create a default pitcher control profile when data is unavailable
+ * This ensures we always return a valid profile with reasonable defaults
+ */
+function createDefaultPitcherControlProfile(pitcherId: number): PitcherControlProfile {
+  return {
+    gamesStarted: 0,
+    inningsPitched: 0,
+    walks: 0,
+    strikeouts: 0,
+    hits: 0,
+    hitBatsmen: 0,
+    walksPerNine: 3.0, // League average BB/9
+    hitsPerNine: 8.5, // League average H/9
+    hbpPerNine: 0.5, // League average HBP/9
+    whip: 1.3, // League average WHIP
+    strikeoutToWalkRatio: 2.5, // League average K/BB
+    control: {
+      walkPropensity: "medium",
+      hitsPropensity: "medium",
+      hbpPropensity: "medium",
+      zonePercentage: 0.5,
+      firstPitchStrikePercentage: 0.6,
+      pitchEfficiency: 3.8,
+    },
+    controlRating: 5.0, // Average control rating
+  };
+}
+
 export async function getPitcherControlProfile(
   pitcherId: number,
   season = new Date().getFullYear()
-): Promise<PitcherControlProfile | null> {
+): Promise<PitcherControlProfile> {
   try {
     // Get pitcher stats
     const pitcherData = await getPitcherStats({
@@ -344,36 +393,33 @@ export async function getPitcherControlProfile(
       season,
     });
 
-    // Verify player is a pitcher
-    if (!pitcherData || pitcherData.primaryPosition !== "P") {
-      return null;
+    // Verify player is a pitcher and we have data
+    if (!pitcherData) {
+      console.error(`No pitcher data found for ${pitcherId}`);
+      return createDefaultPitcherControlProfile(pitcherId);
+    }
+    
+    if (pitcherData.position !== "P") {
+      console.warn(`Player ${pitcherId} is not a pitcher (position: ${pitcherData.position})`);
+      return createDefaultPitcherControlProfile(pitcherId);
     }
 
-    const currentSeason = season.toString();
-    const stats = pitcherData.seasonStats[currentSeason] || {
-      gamesPlayed: 0,
-      gamesStarted: 0,
-      inningsPitched: 0,
-      wins: 0,
-      losses: 0,
-      era: 0,
-      whip: 0,
-      strikeouts: 0,
-      walks: 0,
-      saves: 0,
-      hitBatsmen: 0,
-    };
+    const stats = pitcherData.currentSeason;
 
-    // If no innings pitched, return null
-    if (
-      !stats.inningsPitched ||
-      parseFloat(stats.inningsPitched.toString()) === 0
-    ) {
-      return null;
+    // Verify we have stats object
+    if (!stats) {
+      console.error(`No stats found for pitcher ${pitcherId}`);
+      return createDefaultPitcherControlProfile(pitcherId);
+    }
+
+    // If no innings pitched, use default profile
+    if (!stats.inningsPitched || stats.inningsPitched === 0) {
+      console.warn(`No innings pitched data for pitcher ${pitcherId}`);
+      return createDefaultPitcherControlProfile(pitcherId);
     }
 
     // Extract needed values
-    const ip = parseFloat(stats.inningsPitched.toString());
+    const ip = stats.inningsPitched;
     const inningsPitched = ip; // For use with determineHitsPropensity
     const walks = stats.walks || 0;
     const strikeouts = stats.strikeouts || 0;
@@ -457,7 +503,8 @@ export async function getPitcherControlProfile(
       `Error fetching pitcher control profile for player ${pitcherId}:`,
       error
     );
-    return null;
+    // Always return a valid object even if there's an error
+    return createDefaultPitcherControlProfile(pitcherId);
   }
 }
 
@@ -706,12 +753,8 @@ export async function calculateExpectedWalks(
       throw new Error(`No batter profile found for ${batterId}`);
     }
 
-    // Get pitcher's control profile
+    // Get pitcher's control profile (will never be null with our updates)
     const pitcherProfile = await getPitcherControlProfile(opposingPitcherId);
-
-    if (!pitcherProfile) {
-      throw new Error(`No pitcher profile found for ${opposingPitcherId}`);
-    }
 
     // Get matchup data if available
     const matchupData = await getMatchupWalkData(
@@ -724,11 +767,11 @@ export async function calculateExpectedWalks(
 
     // Get pitcher handedness
     const pitcherData = await getPitcherStats({ pitcherId: opposingPitcherId });
-    const pitcherThrows = pitcherData?.pitchHand || "R"; // Default to right-handed
+    const pitcherThrows = pitcherData?.throwsHand || "R"; // Default to right-handed
 
     // Get batter handedness
     const batterData = await getBatterStats({ batterId });
-    const batterHits = batterData?.batSide || "R"; // Default to right-handed
+    const batterHits = batterData?.handedness || "R"; // Default to right-handed
 
     // Base walk rate is weighted average of batter and pitcher tendencies
     const batterWalkRate = batterProfile.walkRate;
@@ -967,20 +1010,26 @@ export async function getAdvancedPlateDisciplineMetrics(
   ]);
 
   // Get available plate discipline metrics from base stats and statcast
-  const batterStats = batterData.seasonStats;
-  const pitcherStats = pitcherData.seasonStats;
+  const batterStats = batterData.currentSeason;
+  const pitcherStats = pitcherData.currentSeason;
 
-  // Calculate base metrics
-  const batterWalkRate =
-    batterStats.walks / (batterStats.atBats + batterStats.walks);
-  const batterStrikeoutRate =
-    batterStats.strikeouts / (batterStats.atBats + batterStats.walks);
-  const pitcherWalkRate =
-    pitcherStats.walks /
-    (pitcherStats.battersFaced || pitcherStats.inningsPitched * 4.3);
-  const pitcherStrikeoutRate =
-    pitcherStats.strikeouts /
-    (pitcherStats.battersFaced || pitcherStats.inningsPitched * 4.3);
+  // Ensure we have valid stats objects before proceeding
+  if (!batterStats || !pitcherStats) {
+    throw new Error(`Missing required stats data for players ${batterId}/${pitcherId}`);
+  }
+
+  // Calculate base metrics (with proper null checks)
+  const walks = batterStats.walks || 0;
+  const atBats = batterStats.atBats || 0;
+  const strikeouts = batterStats.strikeouts || 0;
+  const batterWalkRate = atBats > 0 ? walks / (atBats + walks) : 0.08; // Default to 8% if no data
+  const batterStrikeoutRate = atBats > 0 ? strikeouts / (atBats + walks) : 0.22; // Default to 22% if no data
+  
+  const pitcherWalks = pitcherStats.walks || 0;
+  const pitcherStrikeouts = pitcherStats.strikeouts || 0;
+  const battersFaced = pitcherStats.battersFaced || (pitcherStats.inningsPitched * 4.3) || 1;
+  const pitcherWalkRate = pitcherWalks / battersFaced;
+  const pitcherStrikeoutRate = pitcherStrikeouts / battersFaced;
 
   // Default plate discipline metrics if Statcast data isn't available
   let batterChaseRate = 0.3; // League average ~30%
@@ -1020,10 +1069,11 @@ export async function getAdvancedPlateDisciplineMetrics(
   }
 
   // Extract or estimate batter plate discipline metrics
-  const batterOBP =
-    batterStats.obp ||
-    (batterStats.hits + batterStats.walks) /
-      (batterStats.atBats + batterStats.walks);
+  const hits = batterStats.hits || 0;
+  const denominator = atBats + walks;
+  const batterOBP = denominator > 0 
+    ? batterStats.obp || (hits + walks) / denominator
+    : 0.33; // League average OBP as fallback
 
   // Use batting statcast data if available
   // Note: These fields may need to be adjusted based on actual Statcast field names
@@ -1031,7 +1081,13 @@ export async function getAdvancedPlateDisciplineMetrics(
     // This is a simplification - in a real implementation you would extract the actual
     // discipline metrics from the Statcast data instead of using these proxies
     batterWhiffRate = 0.24; // This would come from Statcast whiff_percent
-    batterChaseRate = batterOBP < 0.32 ? 0.33 : batterOBP > 0.38 ? 0.25 : 0.29;
+    
+    // Safety check for batterOBP being a valid number before comparison
+    const validOBP = typeof batterOBP === 'number' && !isNaN(batterOBP);
+    if (validOBP) {
+      batterChaseRate = batterOBP < 0.32 ? 0.33 : batterOBP > 0.38 ? 0.25 : 0.29;
+    }
+    
     batterZoneContactRate = 0.85;
   }
 

@@ -48,12 +48,12 @@ export {
   getPitcherStats,
 } from "./player/pitcher-stats";
 
-// Stolen base module
-export {
-  getCareerStolenBaseProfile,
-  getCatcherStolenBaseDefense,
-  getPlayerSeasonStats,
-} from "./dfs-analysis/stolen-bases";
+// Note: Stolen base module is imported directly in files that need it
+// export {
+//   getCareerStolenBaseProfile,
+//   getCatcherStolenBaseDefense,
+//   getPlayerSeasonStats,
+// } from "./dfs-analysis/stolen-bases";
 // Game module
 export {
   getGameContent,
