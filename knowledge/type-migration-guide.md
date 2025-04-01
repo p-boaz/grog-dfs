@@ -10,16 +10,20 @@ Our type system is organized into three distinct layers:
    - Located in `/lib/mlb/types/api`
    - Represents data exactly as received from external APIs
    - Typically has string values for numeric fields (e.g., `"avg": "0.280"`)
+   - Minimal processing, matches actual API shape
 
 2. **Domain Layer**: Normalized data with proper types
    - Located in `/lib/mlb/types/domain`
    - Converts API data to proper types (strings to numbers, etc.)
    - Provides a consistent interface for application code
+   - Adds convenience calculations and normalized access patterns
+   - Provides validation and type guards for runtime safety
 
 3. **Analysis Layer**: DFS-specific types for projections
    - Located in `/lib/mlb/types/analysis`
    - Builds on domain layer for fantasy sports specific calculations
    - Includes projections, ratings, and scoring-specific types
+   - Specific to fantasy scoring and projections
 
 ## Migration Checklist
 
@@ -35,17 +39,22 @@ For each module you're migrating, follow these steps in order:
    - Update imports to use domain layer types
    - Add missing imports from domain layer 
    - Update function signatures with proper return types
+   - Import and use type guards for runtime validation
 
 3. **Implementation Migration**
    - Replace `playerData.seasonStats` with `playerData.currentSeason`
    - Replace `playerData.careerStats` with `playerData.careerByYear`
    - Update property names to match domain model (e.g., batSide → handedness)
    - Remove manual string-to-number conversions
+   - Use converter functions for API responses
+   - Consider creating adapters for backward compatibility
 
 4. **Test and Verify**
    - Create a focused test script for the module
    - Test all functions with real player data
    - Verify error handling with invalid data
+   - Run the linter to ensure code quality
+   - Remove any `// @ts-ignore` comments
 
 ## Common Migration Patterns
 

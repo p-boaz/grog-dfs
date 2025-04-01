@@ -8,6 +8,17 @@
 - NEVER run `pnpm typecheck` - use `pnpm lint` for code quality checks
 - IMPORTANT: This is a PRODUCTION codebase. Every decision must reflect professional standards. Verify all information from context. Never make assumptions or speculate without evidence
 
+## Git Workflow
+
+- Create detailed commit messages with clear explanations of changes
+- Format commit messages with:
+  - Brief summary line describing the change
+  - Detailed bullet points explaining implementation details
+  - Each bullet should be specific about what was changed and why
+- Always include changes to documentation with related code changes
+- Group related changes in a single commit
+- When migrating code, note specific patterns and replacements made
+
 ## Database Schema Changes & Migrations
 
 - NEVER manually write migration files
