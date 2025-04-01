@@ -10,7 +10,6 @@ import {
   BallparkHitFactor,
   BatterPlatoonSplits,
   CareerHitProfile,
-  DetailedHitProjection,
   HitTypeRates,
   MatchupHitStats,
   PitcherHitVulnerability,
@@ -20,6 +19,8 @@ import {
   HIT_TYPE_POINTS,
 } from "../types/analysis/hits";
 
+import { DetailedHitProjection } from "../types/analysis/batter";
+import { BatterSeasonStats } from "../types/player/batter";
 import { Batter, BatterStats } from "../types/domain/player";
 import { GameEnvironment, BallparkFactors } from "../types/domain/game";
 
@@ -37,30 +38,7 @@ interface PitcherData {
   currentTeam: PitcherTeam;
 }
 
-// Career stats representation for a batter
-interface BatterCareerStats {
-  season: string;
-  team: string;
-  gamesPlayed: number;
-  atBats: number;
-  hits: number;
-  homeRuns: number;
-  rbi: number;
-  avg: number;
-  obp: number;
-  slg: number;
-  ops: number;
-  stolenBases: number;
-  caughtStealing: number;
-  doubles?: number;
-  triples?: number;
-  strikeouts?: number;
-  walks?: number;
-  wOBA?: number;
-  iso?: number;
-  babip?: number;
-  plateAppearances?: number;
-}
+// Using domain model for career stats representation
 
 /**
  * Get player's season stats with focus on hit metrics
@@ -74,84 +52,58 @@ export async function getPlayerHitStats(
   season = new Date().getFullYear()
 ): Promise<PlayerHitStats | null> {
   try {
-    // Fetch full player stats
-    const playerData = await getBatterStats({
+    // Fetch batter stats using the new domain model
+    const batter = await getBatterStats({
       batterId: playerId,
       season,
     });
 
     // Skip pitchers unless they have significant batting stats
     if (
-      playerData.primaryPosition === "P" &&
-      playerData.seasonStats &&
-      typeof playerData.seasonStats === "object" &&
-      "atBats" in playerData.seasonStats &&
-      playerData.seasonStats.atBats < 20
+      batter.position === "P" &&
+      batter.currentSeason.atBats < 20
     ) {
       return null;
     }
 
-    // Extract season batting stats
-    const batting =
-      playerData.seasonStats && typeof playerData.seasonStats === "object"
-        ? playerData.seasonStats
-        : {
-            gamesPlayed: 0,
-            atBats: 0,
-            hits: 0,
-            homeRuns: 0,
-            doubles: 0,
-            triples: 0,
-            avg: 0,
-            obp: 0,
-            slg: 0,
-            strikeouts: 0,
-            rbi: 0,
-            ops: 0,
-            stolenBases: 0,
-            caughtStealing: 0,
-          };
+    // Get current season stats from the domain model
+    const stats = batter.currentSeason;
 
     // If we don't have the stats we need, return null
-    if (!batting || !batting.gamesPlayed || !batting.atBats) {
+    if (!stats || !stats.gamesPlayed || !stats.atBats) {
       console.log(
         `No batting stats found for player ${playerId}, season ${season}`
       );
       return null;
     }
 
-    // Calculate number of singles, doubles, triples
-    const totalHits = batting.hits || 0;
-    const homeRuns = batting.homeRuns || 0;
-    const doubles = batting.doubles || 0;
-    const triples = batting.triples || 0;
+    // Calculate number of singles (already properly typed in domain model)
+    const totalHits = stats.hits;
+    const homeRuns = stats.homeRuns;
+    const doubles = stats.doubles;
+    const triples = stats.triples;
     const singles = totalHits - homeRuns - doubles - triples;
 
     // Calculate rates
-    const hitRate = batting.atBats > 0 ? totalHits / batting.atBats : 0;
-    const singleRate = batting.atBats > 0 ? singles / batting.atBats : 0;
-    const doubleRate = batting.atBats > 0 ? doubles / batting.atBats : 0;
-    const tripleRate = batting.atBats > 0 ? triples / batting.atBats : 0;
+    const hitRate = stats.atBats > 0 ? totalHits / stats.atBats : 0;
+    const singleRate = stats.atBats > 0 ? singles / stats.atBats : 0;
+    const doubleRate = stats.atBats > 0 ? doubles / stats.atBats : 0;
+    const tripleRate = stats.atBats > 0 ? triples / stats.atBats : 0;
 
-    // Calculate BABIP (Batting Average on Balls In Play)
-    // BABIP = (H - HR) / (AB - K - HR + SF)
-    // Since we don't have SF (sacrifice flies), approximating
-    const strikeouts = batting.strikeouts || 0;
-    const babip =
-      (totalHits - homeRuns) /
-      Math.max(1, batting.atBats - strikeouts - homeRuns);
+    // BABIP is already calculated in the domain model
+    const babip = stats.babip;
 
-    // @ts-ignore Property mismatches with PlayerHitStats
+    // Create a proper PlayerHitStats object
     return {
-      battingAverage: batting.avg || 0,
-      onBasePercentage: batting.obp || 0,
-      sluggingPct: batting.slg || 0,
+      battingAverage: stats.avg,
+      onBasePercentage: stats.obp,
+      sluggingPct: stats.slg,
       hits: totalHits,
       singles,
       doubles,
       triples,
-      atBats: batting.atBats || 0,
-      games: batting.gamesPlayed,
+      atBats: stats.atBats,
+      games: stats.gamesPlayed,
       hitRate,
       singleRate,
       doubleRate,
@@ -159,7 +111,7 @@ export async function getPlayerHitStats(
       babip,
       // These would come from Statcast data in a real implementation
       lineDriverRate: 0.2, // Default value
-      contactRate: batting.avg > 0 ? batting.avg * 1.5 : 0.75, // Estimated
+      contactRate: stats.avg > 0 ? stats.avg * 1.5 : 0.75, // Estimated
     };
   } catch (error) {
     console.error(`Error fetching hit stats for player ${playerId}:`, error);
@@ -209,8 +161,8 @@ export async function getCareerHitProfile(
       const seasonGames = season.gamesPlayed || 0;
       const seasonAB = season.atBats || 0;
       const seasonHR = season.homeRuns || 0;
-      const seasonDoubles = (season as BatterCareerStats).doubles || 0;
-      const seasonTriples = (season as BatterCareerStats).triples || 0;
+      const seasonDoubles = season.doubles || 0;
+      const seasonTriples = season.triples || 0;
       const seasonAvg = season.avg || 0;
 
       // Update career totals
@@ -273,7 +225,7 @@ export async function getCareerHitProfile(
     const homeAvg = careerBattingAverage * homeAwayFactor;
     const awayAvg = careerBattingAverage * (2 - homeAwayFactor);
 
-    // @ts-ignore Property mismatches with CareerHitProfile
+    // Return a properly typed CareerHitProfile
     return {
       careerHits,
       careerSingles,
@@ -318,8 +270,7 @@ export async function getBallparkHitFactor(
       return null;
     }
 
-    // Return specific hit factors
-    // @ts-ignore Property mismatches with BallparkHitFactor
+    // Return properly typed BallparkHitFactor
     return {
       overall: factors.overall,
       singles: factors.types.singles || 1.0,
@@ -399,7 +350,7 @@ export async function getWeatherHitImpact(
         temperatureFactor * windFactor * (windDirection === "out" ? 1.2 : 0.9), // Wind direction affects HRs most
     };
 
-    // @ts-ignore Property mismatches with WeatherHitImpact
+    // Return properly typed WeatherHitImpact
     return {
       temperature,
       windSpeed,
@@ -441,28 +392,23 @@ export async function getPitcherHitVulnerability(
     const stats = pitcherData.seasonStats;
 
     // If no innings pitched, return null
-    if (
-      !stats.inningsPitched ||
-      parseFloat(stats.inningsPitched.toString()) === 0
-    ) {
+    if (!stats.inningsPitched || stats.inningsPitched === 0) {
       return null;
     }
 
-    // Extract hits allowed
-    const ip = parseFloat(stats.inningsPitched.toString());
-    const whip = parseFloat(stats.whip?.toString() || "1.3");
-    const walks = Number(stats.walks || Math.round((ip * 3.5) / 9)); // Ensure numeric with Number()
-    const hitsAllowed = Math.round(Number(whip) * Number(ip) - walks);
+    // Extract hits allowed - using domain model with proper number types
+    const ip = stats.inningsPitched;
+    const whip = stats.whip || 1.3;
+    const walks = stats.walks || Math.round((ip * 3.5) / 9);
+    const hitsAllowed = Math.round(whip * ip - walks);
     const hitsPer9 = (hitsAllowed / ip) * 9;
 
     // Calculate BABIP (Batting Average on Balls In Play allowed)
     // For pitchers, league average BABIP is around .300
-    const homeRunsAllowed = Number(
-      stats.homeRunsAllowed || Math.round((ip * 1.2) / 9)
-    ); // Ensure numeric
-    const strikeouts = Number(stats.strikeouts || Math.round((ip * 8.0) / 9)); // Ensure numeric
-    const battersFaced = Number(ip * 4.3); // Ensure numeric
-    const atBats = battersFaced - walks; // Now both are definitely numbers
+    const homeRunsAllowed = stats.homeRunsAllowed || Math.round((ip * 1.2) / 9);
+    const strikeouts = stats.strikeouts || Math.round((ip * 8.0) / 9);
+    const battersFaced = ip * 4.3;
+    const atBats = battersFaced - walks;
     const babip =
       (hitsAllowed - homeRunsAllowed) /
       Math.max(1, atBats - strikeouts - homeRunsAllowed);
@@ -478,11 +424,9 @@ export async function getPitcherHitVulnerability(
     const doubleVuln = vulnerability * 0.9; // Doubles slightly lower
     const tripleVuln = 5; // Default to average for triples (rare event)
 
-    // Convert stats.gamesStarted to a number to match PitcherHitVulnerability type
-    // @ts-ignore Property mismatches with PitcherHitVulnerability
+    // Return properly typed PitcherHitVulnerability
     return {
-      gamesStarted:
-        typeof stats.gamesStarted === "number" ? stats.gamesStarted : 0,
+      gamesStarted: stats.gamesStarted,
       inningsPitched: ip,
       hitsAllowed,
       hitsPer9,
@@ -522,12 +466,11 @@ export async function getMatchupHitStats(
     }
 
     // Use season stats as an approximation
-    const atBats = (batterStats.seasonStats as BatterSeasonStats).atBats || 0;
-    const hits = (batterStats.seasonStats as BatterSeasonStats).hits || 0;
-    const homeRuns =
-      (batterStats.seasonStats as BatterSeasonStats).homeRuns || 0;
-    const doubles = (batterStats.seasonStats as BatterSeasonStats).doubles || 0;
-    const triples = (batterStats.seasonStats as BatterSeasonStats).triples || 0;
+    const atBats = batterStats.seasonStats.atBats || 0;
+    const hits = batterStats.seasonStats.hits || 0;
+    const homeRuns = batterStats.seasonStats.homeRuns || 0;
+    const doubles = batterStats.seasonStats.doubles || 0;
+    const triples = batterStats.seasonStats.triples || 0;
     const singles = hits - homeRuns - doubles - triples;
     const battingAverage = atBats > 0 ? hits / atBats : 0;
 
@@ -549,7 +492,7 @@ export async function getMatchupHitStats(
       advantage = "pitcher";
     }
 
-    // @ts-ignore Property mismatches with MatchupHitStats
+    // Return properly typed MatchupHitStats
     return {
       atBats,
       hits,
@@ -598,15 +541,33 @@ export async function getBatterPlatoonSplits(
     const isLefty = batterStats.batSide === "L";
     const splitFactor = isLefty ? 0.035 : 0.02;
 
-    // @ts-ignore Missing fields in BatterPlatoonSplits
+    // Return properly typed BatterPlatoonSplits 
+    // Note: We're estimating walkRate and strikeoutRate since we don't have that data
+    const estimatedWalkRate = 0.08; // League average is roughly 8-9%
+    const estimatedStrikeoutRate = 0.22; // League average is roughly 22-23%
+
     return {
       vsLeft: {
-        ...stats,
+        battingAverage: isLefty ? stats.battingAverage * 0.9 : stats.battingAverage * 1.1,
+        onBasePercentage: isLefty ? stats.onBasePercentage * 0.9 : stats.onBasePercentage * 1.1,
+        sluggingPct: isLefty ? stats.sluggingPct * 0.9 : stats.sluggingPct * 1.1,
         ops: isLefty ? stats.ops - splitFactor : stats.ops + splitFactor,
+        atBats: Math.round(stats.atBats * 0.3), // Estimate - assuming roughly 30% of PAs vs LHP
+        plateAppearances: Math.round(stats.atBats * 0.3 * 1.1), // Slightly more than atBats to account for walks
+        hits: Math.round(stats.atBats * 0.3 * (isLefty ? stats.battingAverage * 0.9 : stats.battingAverage * 1.1)),
+        walkRate: estimatedWalkRate * (isLefty ? 0.9 : 1.1),
+        strikeoutRate: estimatedStrikeoutRate * (isLefty ? 1.1 : 0.9),
       },
       vsRight: {
-        ...stats,
+        battingAverage: isLefty ? stats.battingAverage * 1.1 : stats.battingAverage * 0.9,
+        onBasePercentage: isLefty ? stats.onBasePercentage * 1.1 : stats.onBasePercentage * 0.9,
+        sluggingPct: isLefty ? stats.sluggingPct * 1.1 : stats.sluggingPct * 0.9,
         ops: isLefty ? stats.ops + splitFactor : stats.ops - splitFactor,
+        atBats: Math.round(stats.atBats * 0.7), // Estimate - assuming roughly 70% of PAs vs RHP
+        plateAppearances: Math.round(stats.atBats * 0.7 * 1.1), // Slightly more than atBats
+        hits: Math.round(stats.atBats * 0.7 * (isLefty ? stats.battingAverage * 1.1 : stats.battingAverage * 0.9)),
+        walkRate: estimatedWalkRate * (isLefty ? 1.1 : 0.9),
+        strikeoutRate: estimatedStrikeoutRate * (isLefty ? 0.9 : 1.1),
       },
       platoonAdvantage: isLefty ? "vs-right" : "vs-left",
       platoonSplit: splitFactor,
@@ -655,8 +616,7 @@ export async function calculateHitTypeRates(
       getPitcherStats({ pitcherId })
         .then((data) => {
           // Use pitcher data to get venue id
-          const venueId =
-            (data as unknown as PitcherData)?.currentTeam?.venue?.id || 1;
+          const venueId = data?.currentTeam?.venue?.id || 1;
           return getBallparkHitFactor(venueId).catch(() => null);
         })
         .catch(() => null),
@@ -710,8 +670,7 @@ export async function calculateHitTypeRates(
     const adjustedTripleRate = playerHitStats.tripleRate * adjustedBA;
     const adjustedHomeRunRate = 0.05 * adjustedBA; // Default to league average HR rate
 
-    // Return the calculated rates
-    // @ts-ignore Property expectedBA missing in HitTypeRates
+    // Return properly typed HitTypeRates
     return {
       expectedBA: adjustedBA,
       hitTypeRates: {
@@ -747,7 +706,7 @@ export async function calculateHitProjection(
   gameId: string,
   opposingPitcherId: number,
   isHome: boolean
-): Promise<any> { // Using any to bypass missing DetailedHitProjection
+): Promise<DetailedHitProjection> {
   try {
     // Calculate hit rates
     const hitRates = await calculateHitTypeRates(
@@ -759,8 +718,7 @@ export async function calculateHitProjection(
 
     // If hit rates calculation failed, use conservative defaults
     if (!hitRates) {
-      // @ts-ignore Using structure that conforms to expected DetailedHitProjection
-      const defaultProjection = {
+      const defaultProjection: DetailedHitProjection = {
         expectedHits: 0.7, // MLB average is about 1 hit per game
         byType: {
           singles: {
@@ -826,7 +784,8 @@ export async function calculateHitProjection(
     // Ensure confidence is in valid range
     confidence = Math.max(0.3, Math.min(0.95, confidence));
 
-    const projection: DetailedHitProjection = {
+    // Return properly typed DetailedHitProjection
+    return {
       expectedHits,
       byType: {
         singles: {
@@ -850,7 +809,6 @@ export async function calculateHitProjection(
       atBats,
       confidence,
     };
-    return projection;
   } catch (error) {
     console.error(
       `Error calculating hit projection for player ${batterId}:`,
