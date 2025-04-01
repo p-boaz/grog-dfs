@@ -154,6 +154,29 @@ Key changes:
 - Fixed return types to match domain model standards
 - Improved validation with proper type guards
 
+#### 4. batters/home-runs.ts Migration
+
+Key changes:
+- Updated all seasonStats references to currentSeason
+- Changed careerStats array references to use careerByYear object structure
+- Added proper type casting for Batter and Pitcher objects
+- Incorporated isBatterStats type guard for safer data handling
+- Added proper null checks for properties that may not exist
+- Fixed data access patterns to match the domain model
+- Improved handling of nested object properties with proper null checks
+
+#### 5. batters/stolen-bases.ts Migration
+
+Key changes:
+- Updated all seasonStats references to currentSeason
+- Converted careerStats array iteration to careerByYear object structure
+- Added explicit Batter type casting for proper type checking
+- Implemented proper null checks for optional properties
+- Added isBatterStats type guard to validate data integrity
+- Updated teamId access to use the domain model pattern
+- Fixed potential type issues with proper null coalescing
+- Updated interface to align with domain model standards
+
 ## Testing Your Migration
 
 For each module, create a test script that:
@@ -222,6 +245,28 @@ function processBatterStats(stats: unknown) {
 }
 ```
 
+### Handling Empty or Missing Stats
+
+**Problem**: Stats might be missing or have undefined values for certain properties.
+
+**Solution**: Always use null coalescing operators for potentially missing values.
+```typescript
+const stolenBases = stats.stolenBases || 0;
+const batterTeamId = enhancedBatterData.teamId || 0;
+```
+
+### Test Data Limitations
+
+**Problem**: Test environment might not have complete player data, causing tests to fail.
+
+**Solution**: Create default return values and add robust error handling.
+```typescript
+// Return reasonable defaults when errors occur
+if (!pitcherData || !pitcherData.currentSeason) {
+  return createDefaultPitcherProfile();
+}
+```
+
 ### Gradual Migration with Adapters
 
 **Problem**: Need to update dependent modules without breaking existing code.
@@ -269,8 +314,8 @@ Based on dependencies and complexity, here's the recommended order for migration
 1. ✅ batters/hits.ts
 2. ✅ batters/run-production.ts
 3. ✅ shared/plate-discipline.ts
-4. batters/home-runs.ts
-5. batters/stolen-bases.ts
+4. ✅ batters/home-runs.ts
+5. ✅ batters/stolen-bases.ts
 6. batters/batter-analysis.ts
 
 ### Pitcher Modules

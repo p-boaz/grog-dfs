@@ -4,3 +4,76 @@ HOME RUNS MODULE TEST REPORT - 2025-04-01 19:10:47
 
 
 Testing getPlayerHomeRunStats...
+❌ getPlayerHomeRunStats: Failed (null result)
+Duration: 503ms
+
+Testing getCareerHomeRunProfile...
+❌ getCareerHomeRunProfile: Failed (null result)
+Duration: 51ms
+
+Testing getBallparkHomeRunFactor...
+✅ getBallparkHomeRunFactor: Success
+Duration: 0ms
+
+Testing getWeatherHomeRunImpact...
+✅ getWeatherHomeRunImpact: Success
+Duration: 250ms
+
+Testing getPitcherHomeRunVulnerability...
+❌ getPitcherHomeRunVulnerability: Failed (null result)
+Duration: 294ms
+
+Testing estimateHomeRunProbability...
+✅ estimateHomeRunProbability: Success
+Duration: 1276ms
+
+================================================================================
+TEST SUMMARY
+================================================================================
+Total Tests: 6
+Successes: 3
+Failures: 3
+Total Duration: 2376ms
+
+
+DETAILED RESULTS:
+getPlayerHomeRunStats: FAILURE (503ms)
+getCareerHomeRunProfile: FAILURE (51ms)
+getBallparkHomeRunFactor: SUCCESS (0ms)
+Data sample:
+{
+  "overall": 1,
+  "homeRunFactor": 1,
+  "byHandedness": {
+    "rHB": 1,
+    "lHB": 1
+  }
+}...
+
+getWeatherHomeRunImpact: SUCCESS (250ms)
+Data sample:
+{
+  "temperature": 85,
+  "windSpeed": 3,
+  "windDirection": "Out To LF",
+  "isOutdoor": true,
+  "temperatureFactor": 1.015,
+  "windFactor": 1,
+  "overallFactor": 1.015
+}...
+
+getPitcherHomeRunVulnerability: FAILURE (294ms)
+estimateHomeRunProbability: SUCCESS (1276ms)
+Data sample:
+{
+  "probability": 0.03,
+  "homeRunProbability": 0.03,
+  "expectedHomeRuns": 0.03,
+  "confidence": 5,
+  "factors": {
+    "batterProfile": 1,
+    "pitcherVulnerability": 1,
+    "ballpark": 1,
+    "weat...
+
+Test run complete

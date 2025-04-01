@@ -2,18 +2,15 @@
  * Specialized functions for analyzing stolen base potential and probabilities
  */
 
-import { getGameFeed } from "../game/game-feed";
-import { getCatcherDefense } from "../player/defense-stats";
-import { getEnhancedBatterData } from "../services/batter-data-service";
-import { getEnhancedPitcherData } from "../services/pitcher-data-service";
-import { StolenBaseAnalysis } from "../types/analysis/events";
-import {
-  PlayerSBCareerProfile,
-  PlayerSBSeasonStats,
-} from "../types/player/batter";
-import { CatcherDefenseMetrics } from "../types/player/common";
-import { PitcherHoldMetrics } from "../types/player/pitcher";
-import { getGameEnvironmentData } from "../weather/weather";
+import { getGameFeed } from "../../game/game-feed";
+import { getCatcherDefense } from "../../player/defense-stats";
+import { getEnhancedBatterData } from "../../services/batter-data-service";
+import { getEnhancedPitcherData } from "../../services/pitcher-data-service";
+import { StolenBaseAnalysis } from "../../types/analysis/events";
+import { Batter, isBatterStats } from "../../types/domain/player";
+import { CatcherDefenseMetrics } from "../../types/player/common";
+import { PitcherHoldMetrics } from "../../types/player/pitcher";
+import { getGameEnvironmentData } from "../../weather/weather";
 
 /**
  * Result interface for stolen base probability calculations
@@ -39,6 +36,32 @@ export interface StolenBaseProbabilityResult {
 }
 
 /**
+ * Player's stolen base statistics for a single season
+ */
+export interface PlayerSBSeasonStats {
+  battingAverage: number;
+  stolenBases: number;
+  stolenBaseAttempts: number;
+  caughtStealing: number;
+  gamesPlayed: number;
+  stolenBaseRate: number; // SB per game
+  stolenBaseSuccess: number; // Success rate (0-1)
+  sprintSpeed?: number; // Player's sprint speed in ft/sec
+}
+
+/**
+ * Player's career stolen base profile
+ */
+export interface PlayerSBCareerProfile {
+  careerStolenBases: number;
+  careerGames: number;
+  careerRate: number; // Career SB per game
+  bestSeasonSB: number; // Most SB in a single season
+  bestSeasonRate: number; // Best SB per game in a season
+  recentTrend: "increasing" | "decreasing" | "stable";
+}
+
+/**
  * Get player's season stats with focus on stolen bases and baserunning
  *
  * @param playerId MLB player ID
@@ -54,28 +77,34 @@ export async function getPlayerSeasonStats(
     const enhancedData = await getEnhancedBatterData(playerId, season);
 
     // If no stats are available, return null
-    if (!enhancedData || !enhancedData.seasonStats) {
+    if (!enhancedData || !enhancedData.currentSeason) {
       return null;
     }
 
-    const stats = enhancedData.seasonStats;
+    const stats = enhancedData.currentSeason;
+
+    // Validate stats using type guard
+    if (!isBatterStats(stats)) {
+      console.warn(`Invalid batter stats for player ${playerId}, season ${season}`);
+      return null;
+    }
 
     // Calculate attempts and rate
-    const stolenBaseAttempts = stats.stolenBases + stats.caughtStealing;
+    const stolenBaseAttempts = (stats.stolenBases || 0) + (stats.caughtStealing || 0);
     const stolenBaseRate =
-      stats.gamesPlayed > 0 ? stats.stolenBases / stats.gamesPlayed : 0;
+      stats.gamesPlayed > 0 ? (stats.stolenBases || 0) / stats.gamesPlayed : 0;
     const stolenBaseSuccess =
-      stolenBaseAttempts > 0 ? stats.stolenBases / stolenBaseAttempts : 0;
+      stolenBaseAttempts > 0 ? (stats.stolenBases || 0) / stolenBaseAttempts : 0;
 
     // Use sprint speed from enhanced data if available
     const sprintSpeed = enhancedData.runningMetrics?.sprintSpeed;
 
     return {
-      battingAverage: stats.avg,
-      stolenBases: stats.stolenBases,
+      battingAverage: stats.avg || 0,
+      stolenBases: stats.stolenBases || 0,
       stolenBaseAttempts,
-      caughtStealing: stats.caughtStealing,
-      gamesPlayed: stats.gamesPlayed,
+      caughtStealing: stats.caughtStealing || 0,
+      gamesPlayed: stats.gamesPlayed || 0,
       stolenBaseRate,
       stolenBaseSuccess,
       sprintSpeed,
@@ -98,12 +127,12 @@ export async function getCareerStolenBaseProfile(
 ): Promise<PlayerSBCareerProfile | null> {
   try {
     // Get enhanced player data with career stats
-    const enhancedData = await getEnhancedBatterData(playerId);
+    const enhancedData: Batter = await getEnhancedBatterData(playerId);
 
     if (
       !enhancedData ||
-      !enhancedData.careerStats ||
-      enhancedData.careerStats.length === 0
+      !enhancedData.careerByYear ||
+      Object.keys(enhancedData.careerByYear).length === 0
     ) {
       return null;
     }
@@ -117,7 +146,10 @@ export async function getCareerStolenBaseProfile(
     const recentSeasons: Array<{ season: string; sbRate: number }> = [];
 
     // Analyze career stats
-    enhancedData.careerStats.forEach((season) => {
+    Object.entries(enhancedData.careerByYear).forEach(([seasonYear, season]) => {
+      // Skip invalid stats
+      if (!isBatterStats(season)) return;
+      
       careerStolenBases += season.stolenBases || 0;
       careerGames += season.gamesPlayed || 0;
 
@@ -138,10 +170,10 @@ export async function getCareerStolenBaseProfile(
 
       // Track recent seasons for trend analysis
       const currentYear = new Date().getFullYear();
-      const seasonYear = parseInt(season.season);
-      if (seasonYear >= currentYear - 3 && season.gamesPlayed >= 20) {
+      const seasonYearInt = parseInt(seasonYear);
+      if (seasonYearInt >= currentYear - 3 && season.gamesPlayed >= 20) {
         recentSeasons.push({
-          season: season.season,
+          season: seasonYear,
           sbRate: seasonRate,
         });
       }
@@ -280,7 +312,7 @@ export async function calculateStolenBaseProbability(
 ): Promise<StolenBaseAnalysis & StolenBaseProbabilityResult> {
   try {
     // Get enhanced batter data with Statcast metrics
-    const enhancedBatterData = await getEnhancedBatterData(batterId);
+    const enhancedBatterData: Batter = await getEnhancedBatterData(batterId);
 
     // Get game data to find catcher
     const gameData = await getGameFeed({ gamePk });
@@ -290,9 +322,9 @@ export async function calculateStolenBaseProbability(
 
     try {
       // Determine if batter is home or away
-      const batterTeamId = enhancedBatterData.currentTeam;
+      const batterTeamId = enhancedBatterData.teamId || 0;
       const homeTeamId = gameData?.gameData?.teams?.home?.team?.id;
-      const isHome = homeTeamId && batterTeamId === String(homeTeamId);
+      const isHome = homeTeamId && batterTeamId === homeTeamId;
 
       // Get opposing team's catcher
       const oppTeam = isHome ? "away" : "home";
@@ -509,17 +541,18 @@ export async function calculateStolenBaseProbability(
       stealAttemptProbability: attemptLikelihood,
       stealSuccessProbability: finalProbability,
       factors: {
-        batterSpeed: sprintSpeedFactor,
-        batterTendency: batterFactor,
-        catcherDefense: catcherFactor,
-        pitcherHoldRate: pitcherFactor,
-        gameScriptFactor: contextFactor,
+        batterSpeed: sprintSpeedFactor * 10,
+        batterTendency: batterFactor * 3.3,
+        catcherDefense: catcherFactor * 5,
+        pitcherHoldRate: pitcherFactor * 6.7,
+        gameScriptFactor: contextFactor * 10,
+        // Additional properties for StolenBaseProbabilityResult
         batterProfile: batterFactor,
         pitcherHold: pitcherFactor,
         gameContext: contextFactor,
         sprintSpeed: sprintSpeedFactor,
       },
-      confidence: finalConfidence,
+      confidence: finalConfidence * 10, // Convert to 0-100 scale for StolenBaseAnalysis
 
       // Additional properties
       probability: finalProbability,
@@ -544,12 +577,12 @@ export async function calculateStolenBaseProbability(
         catcherDefense: 5.0, // Average defense
         pitcherHoldRate: 5.0, // Average hold
         gameScriptFactor: 5.0, // Average game situation
-        batterProfile: 5.0, // Average profile
-        pitcherHold: 5.0, // Average hold
-        gameContext: 5.0, // Average context
-        sprintSpeed: 27.0, // Average sprint speed
+        batterProfile: 1.0, // Average profile
+        pitcherHold: 1.0, // Average hold
+        gameContext: 1.0, // Average context
+        sprintSpeed: 1.0, // Average sprint speed
       },
-      confidence: 3, // Low confidence due to error
+      confidence: 30, // Low confidence due to error (0-100 scale)
 
       // Additional properties
       probability: 0.67, // League average success rate

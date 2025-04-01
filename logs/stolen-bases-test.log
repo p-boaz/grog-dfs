@@ -1,0 +1,71 @@
+================================================================================
+STOLEN BASES MODULE TEST REPORT - 2025-04-01 19:14:59
+================================================================================
+
+
+Testing getPlayerSeasonStats...
+❌ getPlayerSeasonStats: Failed (null result)
+Duration: 17645ms
+
+Testing getCareerStolenBaseProfile...
+❌ getCareerStolenBaseProfile: Failed (null result)
+Duration: 102ms
+
+Testing getCatcherStolenBaseDefense...
+✅ getCatcherStolenBaseDefense: Success
+Duration: 413ms
+
+Testing getPitcherRunningGameControl...
+✅ getPitcherRunningGameControl: Success
+Duration: 32871ms
+
+Testing calculateStolenBaseProbability...
+✅ calculateStolenBaseProbability: Success
+Duration: 566ms
+
+================================================================================
+TEST SUMMARY
+================================================================================
+Total Tests: 5
+Successes: 3
+Failures: 2
+Total Duration: 51601ms
+
+
+DETAILED RESULTS:
+getPlayerSeasonStats: FAILURE (17645ms)
+getCareerStolenBaseProfile: FAILURE (102ms)
+getCatcherStolenBaseDefense: SUCCESS (413ms)
+Data sample:
+{
+  "playerId": 592663,
+  "fullName": "J.T. Realmuto",
+  "caughtStealingPercentage": 1,
+  "stolenBasesAllowed": 0,
+  "caughtStealing": 1,
+  "attemptsPer9": 0.36,
+  "defensiveRating": 90,
+  "popTime": ...
+
+getPitcherRunningGameControl: SUCCESS (32871ms)
+Data sample:
+{
+  "pickoffMoves": 5,
+  "slideStepTime": 1.2,
+  "timeToPlate": 1.4,
+  "stolenBaseAllowedRate": 0.5,
+  "holdRating": 5
+}...
+
+calculateStolenBaseProbability: SUCCESS (566ms)
+Data sample:
+{
+  "expectedSteals": 0.30150000000000005,
+  "stealAttemptProbability": 0.5,
+  "stealSuccessProbability": 0.6030000000000001,
+  "factors": {
+    "batterSpeed": 10,
+    "batterTendency": 3.3,
+    "catc...
+
+Test run complete
