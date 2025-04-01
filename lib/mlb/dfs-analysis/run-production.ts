@@ -169,8 +169,8 @@ export async function getCareerRunProductionProfile(
 
     if (
       !playerData ||
-      !playerData.careerStats ||
-      playerData.careerStats.length === 0
+      !playerData.careerByYear ||
+      Object.keys(playerData.careerByYear).length === 0
     ) {
       return null;
     }
@@ -194,11 +194,11 @@ export async function getCareerRunProductionProfile(
     let previousRunsPerGame: number | null = null;
     let previousRBIPerGame: number | null = null;
 
-    // Process each season
-    playerData.careerStats.forEach((season) => {
-      const seasonRuns = "runs" in season ? (season.runs as number) || 0 : 0;
-      const seasonRBI = "rbi" in season ? (season.rbi as number) || 0 : 0;
-      const seasonGames = season.gamesPlayed || 0;
+    // Process each season from careerByYear in the domain model
+    Object.entries(playerData.careerByYear).forEach(([seasonYear, seasonStats]) => {
+      const seasonRuns = seasonStats.runs || 0;
+      const seasonRBI = seasonStats.rbi || 0;
+      const seasonGames = seasonStats.gamesPlayed || 0;
 
       // Update career totals
       careerRuns += seasonRuns;
@@ -220,10 +220,10 @@ export async function getCareerRunProductionProfile(
 
         // Track recent seasons for trend analysis
         const currentYear = new Date().getFullYear();
-        const seasonYear = parseInt(season.season);
-        if (seasonYear >= currentYear - 3) {
+        const year = parseInt(seasonYear);
+        if (year >= currentYear - 3) {
           recentSeasons.push({
-            season: season.season,
+            season: seasonYear,
             runsPerGame,
             rbiPerGame,
           });
@@ -472,9 +472,9 @@ export async function getPitcherRunAllowance(
       return null;
     }
 
-    // Get the stats for the specific season
-    const currentSeason = season.toString();
-    const stats = pitcherData.seasonStats[currentSeason] || {
+    // Use currentSeason from the domain model
+    // PitcherStats are already properly typed with numerical values
+    const stats = pitcherData.currentSeason || {
       gamesPlayed: 0,
       gamesStarted: 0,
       inningsPitched: 0,
@@ -488,17 +488,17 @@ export async function getPitcherRunAllowance(
       hitBatsmen: 0,
     };
 
-    // Parse numeric values with safeguards
-    const ip = parseFloat(stats.inningsPitched.toString());
-    const era = parseFloat(stats.era.toString()) || 4.5; // MLB average if not available
-    const whip = parseFloat(stats.whip.toString()) || 1.3; // MLB average if not available
+    // Use values directly - they're already numbers in the domain model
+    const ip = stats.inningsPitched;
+    const era = stats.era || 4.5; // MLB average if not available 
+    const whip = stats.whip || 1.3; // MLB average if not available
 
     // Estimate earned runs and total runs
     const earnedRuns = Math.round((era * ip) / 9);
     const runsAllowed = Math.round(earnedRuns * 1.1); // ~10% of runs are unearned
 
     // Calculate runs per 9 innings
-    const runsPer9 = (runsAllowed / ip) * 9;
+    const runsPer9 = ip > 0 ? (runsAllowed / ip) * 9 : null;
 
     // Calculate opportunity rate from WHIP
     // WHIP correlates with runners getting on base (opportunities for runs)
@@ -589,9 +589,9 @@ export async function calculateExpectedRuns(
     let teamFactor = 1.0;
     if (playerData) {
       // Better offensive teams create more run opportunities for all batters
-      const teamContext = await getTeamOffensiveContext(
-        playerData.currentTeam.id
-      );
+      // Get teamId from the domain model
+      const teamId = playerData.teamId || 0;
+      const teamContext = await getTeamOffensiveContext(teamId);
       teamFactor = (teamContext?.teamOffensiveRating || 50) / 50; // 50 is average
     }
 
@@ -815,9 +815,9 @@ export async function calculateExpectedRBIs(
     let teamFactor = 1.0;
     if (playerData) {
       // Better offensive teams get more runners on base for RBI opportunities
-      const teamContext = await getTeamOffensiveContext(
-        playerData.currentTeam.id
-      );
+      // Get teamId from the domain model
+      const teamId = playerData.teamId || 0;
+      const teamContext = await getTeamOffensiveContext(teamId);
       teamFactor = (teamContext?.teamOffensiveRating || 50) / 50;
     }
 
