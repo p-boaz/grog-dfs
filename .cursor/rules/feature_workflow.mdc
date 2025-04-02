@@ -1,6 +1,10 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
 name: Feature Implementation Workflow
 description: Defines how to implement new features using the structured plan in implementation-plan.mdc.
-globs: ["**/*.ts", "**/*.tsx", "implementation-plan.mdc"]
 
 ---
 

@@ -1,11 +1,10 @@
 ---
 description: 
-globs: 
+globs: *.ts,*.tsx
 alwaysApply: false
 ---
 name: Editing Behavior
 description: Dictates how file edits and interactions with the user should be handled during coding.
-globs: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"]
 
 ---
 

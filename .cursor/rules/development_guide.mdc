@@ -1,16 +1,16 @@
 ---
 description: 
 globs: 
-alwaysApply: false
+alwaysApply: true
 ---
 name: Development Guide
 description: Development standards, environment setup, testing, MLB analysis modules, and scoring logic.
-globs: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.md", "pnpm-lock.yaml", "schema.ts"]
 
 ---
 
 ## 🧠 Important Rules
 
+- We are in the year 2025
 - ALWAYS use `pnpm` for running scripts; NEVER use `npx`
 - The project is configured for `pnpm`; using `npx` can break dependencies
 - DO NOT use default values in functions — pass actual values explicitly

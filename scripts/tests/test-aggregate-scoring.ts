@@ -3,10 +3,13 @@
  */
 import * as fs from "fs";
 import * as path from "path";
+import { makeMLBApiRequest } from "../../lib/mlb/core/api-client";
 import {
   calculatePitcherDfsProjection,
   rankPitcherProjections,
 } from "../../lib/mlb/dfs-analysis/shared/aggregate-scoring";
+
+import { Game } from "../../lib/mlb/types/domain/game";
 
 // Setup logging
 const LOG_FILE = path.join(__dirname, "../../logs/aggregate-scoring-test.log");
@@ -21,33 +24,101 @@ function log(message: string) {
   fs.appendFileSync(LOG_FILE, message + "\n", "utf-8");
 }
 
+interface Game {
+  gamePk: number;
+  teams: {
+    away: {
+      team: {
+        id: number;
+        name: string;
+      };
+      probablePitcher?: {
+        id: number;
+        fullName: string;
+      };
+    };
+    home: {
+      team: {
+        id: number;
+        name: string;
+      };
+      probablePitcher?: {
+        id: number;
+        fullName: string;
+      };
+    };
+  };
+}
+
+async function getTodaysGames(): Promise<Game[]> {
+  const today = new Date();
+  const formattedDate = today.toISOString().split("T")[0];
+  log(`Fetching MLB schedule for date: ${formattedDate}`);
+
+  try {
+    const scheduleResponse = await makeMLBApiRequest<{
+      dates: Array<{ games: Game[] }>;
+    }>(`/schedule?sportId=1&date=${formattedDate}&hydrate=probablePitcher`);
+
+    if (!scheduleResponse.dates || scheduleResponse.dates.length === 0) {
+      log("No games found for today");
+      return [];
+    }
+
+    return scheduleResponse.dates[0].games;
+  } catch (error) {
+    log(`Error fetching today's games: ${error}`);
+    return [];
+  }
+}
+
 async function testAggregateScoringModule() {
   try {
-    // Test pitchers with valid game IDs from recent games
-    const testPitchers = [
-      { id: 592789, name: "Max Scherzer", gamePk: "778506" }, // Elite pitcher
-      { id: 543606, name: "Alex Cobb", gamePk: "778504" }, // Average pitcher
-      { id: 608334, name: "Michael Kopech", gamePk: "778502" }, // Volatile pitcher
-    ];
+    // Get today's games with probable pitchers
+    const games = await getTodaysGames();
+
+    if (games.length === 0) {
+      log("No games available for testing");
+      return false;
+    }
+
+    // Extract probable pitchers with team context
+    const testPitchers = games.flatMap((game) => {
+      const pitchers = [];
+      if (game.teams.away.probablePitcher) {
+        pitchers.push({
+          id: game.teams.away.probablePitcher.id,
+          name: game.teams.away.probablePitcher.fullName,
+          gamePk: game.gamePk.toString(),
+          opposingTeamId: game.teams.home.team.id,
+        });
+      }
+      if (game.teams.home.probablePitcher) {
+        pitchers.push({
+          id: game.teams.home.probablePitcher.id,
+          name: game.teams.home.probablePitcher.fullName,
+          gamePk: game.gamePk.toString(),
+          opposingTeamId: game.teams.away.team.id,
+        });
+      }
+      return pitchers;
+    });
+
+    log(
+      `Testing calculatePitcherDfsProjection with ${testPitchers.length} probable pitchers...`
+    );
 
     // Test calculatePitcherDfsProjection
-    log("Testing calculatePitcherDfsProjection...");
-
     const projections = await Promise.all(
       testPitchers.map(async (pitcher) => {
         try {
-          // Use current season instead of future season
           const currentYear = new Date().getFullYear();
           const projection = await calculatePitcherDfsProjection(
             pitcher.id,
             pitcher.gamePk,
-            currentYear
+            currentYear,
+            pitcher.opposingTeamId
           );
-
-          if (!projection) {
-            log(`No projection available for ${pitcher.name}`);
-            return null;
-          }
 
           return {
             name: pitcher.name,
@@ -107,11 +178,10 @@ async function testAggregateScoringModule() {
       log(`- Negative: ${p.projection.points.breakdown.negative.toFixed(1)}`);
     });
 
-    // Test rankPitcherProjections with current year
+    // Test rankPitcherProjections
     log("\nTesting rankPitcherProjections...");
 
     // Create map of pitcher IDs to game PKs
-    const pitcherIds = testPitchers.map((p) => p.id);
     const gamePksMap = testPitchers.reduce((map, pitcher) => {
       map[pitcher.id] = pitcher.gamePk;
       return map;
@@ -119,7 +189,7 @@ async function testAggregateScoringModule() {
 
     const currentYear = new Date().getFullYear();
     const rankings = await rankPitcherProjections(
-      pitcherIds,
+      testPitchers.map((p) => p.id),
       gamePksMap,
       currentYear
     );

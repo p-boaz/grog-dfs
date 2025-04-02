@@ -1,12 +1,10 @@
 ---
 description: 
-globs: 
+globs: *.tsx,*.ts
 alwaysApply: false
 ---
 name: Code Quality Guidelines
 description: Ensures edits maintain high standards in readability, performance, error handling, and test coverage.
-globs: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"]
-
 ---
 
 - Use explicit, descriptive variable names—avoid ambiguity.

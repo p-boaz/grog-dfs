@@ -83,7 +83,7 @@ export async function calculatePitcherDfsProjection(
 }> {
   try {
     // Collect all category-specific projections in parallel
-    // First, try to get the game feed to extract team info
+    // First, try to get the game feed to extract team info if opposingTeamId not provided
     let opposingTeamID = opposingTeamId;
 
     if (!opposingTeamID) {
