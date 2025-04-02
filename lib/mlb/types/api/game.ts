@@ -5,7 +5,7 @@
  * for game data, including game feeds, schedules, and environments.
  */
 
-import { ApiSourceMarker, GameDate, MLBApiResponse } from './common';
+import { ApiSourceMarker, GameDate, MLBApiResponse } from "./common";
 
 /**
  * Schedule API response
@@ -53,18 +53,17 @@ export interface GameData {
     gameNumber: number;
     season: string;
     seasonDisplay: string;
-    datetime: GameDateTime;
-    status: GameDetailedStatus;
-    teams: GameTeams;
-    venue: GameVenue;
-    weather: GameWeather;
-    probablePitchers: {
-      home?: { id: number; fullName: string; link: string };
-      away?: { id: number; fullName: string; link: string };
-    };
+  };
+  datetime: GameDateTime;
+  status: GameDetailedStatus;
+  teams: GameTeams;
+  venue: GameVenue;
+  weather: GameWeather;
+  probablePitchers: {
+    home?: { id: number; fullName: string; link: string };
+    away?: { id: number; fullName: string; link: string };
   };
   players: Record<string, GamePlayer>;
-  status?: GameDetailedStatus; // Status may be at this level in some responses
 }
 
 /**
@@ -287,15 +286,23 @@ export interface GameBoxscoreTeam {
     batting: Record<string, any>;
     pitching: Record<string, any>;
   };
-  players: Record<string, {
-    person: { id: number; fullName: string; link: string };
-    jerseyNumber: string;
-    position: { code: string; name: string; type: string; abbreviation: string };
-    status: { code: string; description: string };
-    parentTeamId: number;
-    batterStats?: Record<string, any>;
-    pitcherStats?: Record<string, any>;
-  }>;
+  players: Record<
+    string,
+    {
+      person: { id: number; fullName: string; link: string };
+      jerseyNumber: string;
+      position: {
+        code: string;
+        name: string;
+        type: string;
+        abbreviation: string;
+      };
+      status: { code: string; description: string };
+      parentTeamId: number;
+      batterStats?: Record<string, any>;
+      pitcherStats?: Record<string, any>;
+    }
+  >;
   batters: number[];
   pitchers: number[];
   bench: number[];

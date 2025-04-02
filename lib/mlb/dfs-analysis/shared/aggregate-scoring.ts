@@ -27,7 +27,7 @@ function extractTeamId(teamData: any): number | undefined {
  * Updated to match actual API response structure
  */
 function findPitcherTeamId(
-  gameFeedData: any,
+  gameFeedData: GameFeedApiResponse,
   pitcherId: number
 ): number | undefined {
   if (!gameFeedData?.gameData?.players) {
