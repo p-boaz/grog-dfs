@@ -14,7 +14,11 @@
     "dev:with-types": "concurrently \"pnpm dev\" \"pnpm typecheck\"",
     "collect": "tsx scripts/collect-data.ts",
     "collect:test": "tsx scripts/collect-data-1-game.ts",
-    "collect:detailed": "tsx scripts/collect-data-detailed.ts"
+    "collect:detailed": "tsx scripts/collect-data-detailed.ts",
+    "test:all": "tsx scripts/run-all-tests.ts",
+    "validate:api-types": "tsx scripts/validate-api-types.ts",
+    "update:api-types": "tsx scripts/update-api-types.ts",
+    "analyze:api-response": "tsx scripts/analyze-api-response.ts"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.3",

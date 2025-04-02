@@ -1,0 +1,14 @@
+
+====================================
+Type System Migration Test Results
+Run Date: 2025-04-02T22:13:38.633Z
+====================================
+
+Testing hits module type compatibility...
+
+Type System Information:
+Test Date: 4/2/2025, 3:13:38 PM
+Node Version: v21.6.1
+TypeScript Module: Configured via tsconfig.json
+
+--- Testing getPlayerHitStats ---

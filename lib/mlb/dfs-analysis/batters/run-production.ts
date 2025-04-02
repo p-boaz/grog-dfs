@@ -3,11 +3,11 @@
  * Each run and RBI is worth +2 points in DraftKings
  */
 
-import { getGameFeed } from "../game/game-feed";
-import { getBallparkFactors } from "../index";
-import { getBatterStats } from "../player/batter-stats";
-import { getPitcherStats } from "../player/pitcher-stats";
-import { getTeamStats } from "../schedule/schedule";
+import { getGameFeed } from "../../game/game-feed";
+import { getBallparkFactors } from "../../index";
+import { getBatterStats } from "../../player/batter-stats";
+import { getPitcherStats } from "../../player/pitcher-stats";
+import { getTeamStats } from "../../schedule/schedule";
 import { RunProductionStats } from "../types/analysis/batter";
 import { BallparkHitFactor } from "../types/analysis/events";
 import {

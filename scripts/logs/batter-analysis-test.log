@@ -1,0 +1,83 @@
+================================================================================
+BATTER ANALYSIS MODULE TEST REPORT - 2025-04-02 22:13:18
+================================================================================
+
+
+Testing getDefaultBatterAnalysis...
+✅ getDefaultBatterAnalysis: Success
+Duration: 0ms
+
+Testing getDefaultBatterAnalysis with null game...
+✅ getDefaultBatterAnalysis with null game: Success
+Duration: 0ms
+
+================================================================================
+TEST SUMMARY
+================================================================================
+Total Tests: 2
+Successes: 2
+Failures: 0
+Total Duration: 2ms
+
+
+DETAILED RESULTS:
+getDefaultBatterAnalysis: SUCCESS (0ms)
+Data sample:
+{
+  "batterId": 545361,
+  "name": "Mike Trout",
+  "team": "Unknown",
+  "opponent": "Unknown",
+  "opposingPitcher": {
+    "id": 543037,
+    "name": "Gerrit Cole",
+    "throwsHand": "R"
+  },
+  "position": "CF",
+  "gameId": 717465,
+  "venue": "Angel Stadium",
+  "stats": {
+    "seasonStats": {
+      "2024": {
+        "gamesPlayed": 0,
+        "atBats": 0,
+        "hits": 0,
+        "homeRuns": 0,
+        "rbi": 0,
+        "avg": 0,
+        "obp": 0,
+        "slg": 0,
+        "ops": 0,
+        "stole...
+
+getDefaultBatterAnalysis with null game: SUCCESS (0ms)
+Data sample:
+{
+  "batterId": 545361,
+  "name": "Mike Trout",
+  "team": "Unknown",
+  "opponent": "Unknown",
+  "opposingPitcher": {
+    "id": 0,
+    "name": "Unknown",
+    "throwsHand": "R"
+  },
+  "position": "CF",
+  "gameId": 0,
+  "venue": "Unknown",
+  "stats": {
+    "seasonStats": {
+      "2024": {
+        "gamesPlayed": 0,
+        "atBats": 0,
+        "hits": 0,
+        "homeRuns": 0,
+        "rbi": 0,
+        "avg": 0,
+        "obp": 0,
+        "slg": 0,
+        "ops": 0,
+        "stolenBases": 0,
+        ...
+
+Test run complete

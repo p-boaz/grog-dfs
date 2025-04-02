@@ -1,0 +1,68 @@
+--- MLB API Type Validation Report ---
+Generated on: 4/2/2025, 2:49:33 PM
+
+Type definitions analyzed: 36
+Sample files analyzed: 10
+Issues found: 10
+
+--- Issues ---
+
+Properties found in game_feed sample 0 but missing in GameData:
+  officialVenue, gameInfo, review, flags, alerts, officialScorer, primaryDatacaster, moundVisits
+Properties found in game_feed sample 1 but missing in GameData:
+  officialVenue, gameInfo, review, flags, alerts, officialScorer, primaryDatacaster, moundVisits
+Properties found in game_feed sample 0 but missing in LiveData:
+  leaders
+Properties found in game_feed sample 1 but missing in LiveData:
+  leaders
+Properties found in player_batter sample 1 but missing in BatterApiResponse:
+  team, position, handedness, currentSeason, careerByYear, career
+Properties found in player_batter sample 1 but missing in BatterSeasonApiStats:
+  id, fullName, team, position, handedness, currentSeason, careerByYear, career
+Properties found in player_pitcher sample 0 but missing in PitcherSeasonApiStats:
+  2015, 2016, 2017, 2018, 2019, 2021, 2022, 2023
+Properties found in player_pitcher sample 1 but missing in PitcherSeasonApiStats:
+  2015, 2016, 2017, 2018, 2019, 2021, 2022, 2023
+Properties found in schedule_today sample 0 but missing in GameDate:
+  events
+Properties found in schedule_today sample 1 but missing in GameDate:
+  events
+
+--- Type Definitions Summary ---
+
+ApiSourceMarker: 2 properties
+MLBApiResponse: 1 properties
+MLBEntityReference: 3 properties
+PlayerReference: 3 properties
+TeamReference: 4 properties
+VenueReference: 3 properties
+PlayerPosition: 4 properties
+GameDate: 6 properties
+GameSummary: 9 properties
+GameStatus: 5 properties
+TeamGameInfo: 6 properties
+Handedness: 2 properties
+ScheduleApiResponse: 5 properties
+GameFeedApiResponse: 5 properties
+GameMetaData: 4 properties
+GameData: 8 properties
+GameDateTime: 5 properties
+GameDetailedStatus: 6 properties
+GameTeams: 2 properties
+GameTeam: 7 properties
+GameVenue: 5 properties
+GameWeather: 3 properties
+GamePlayer: 35 properties
+LiveData: 4 properties
+GamePlays: 4 properties
+GameLinescore: 13 properties
+GameBoxscore: 4 properties
+GameBoxscoreTeam: 10 properties
+GameEnvironmentApiResponse: 8 properties
+BatterApiResponse: 7 properties
+PitcherApiResponse: 7 properties
+BatterSeasonApiStats: 26 properties
+BatterCareerApiStats: 21 properties
+PitcherSeasonApiStats: 20 properties
+PitcherCareerApiStats: 14 properties
+PitchMixApiData: 4 properties

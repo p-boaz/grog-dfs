@@ -1,0 +1,12 @@
+--- MLB API Type Update Report ---
+Generated on: 4/2/2025, 2:51:36 PM
+
+Files updated: 5
+
+--- Update Log ---
+
+Updated interfaces in game.ts: GameFeedApiResponse, GameData, LiveData, GameTeams
+Updated interfaces in player.ts: BatterApiResponse, BatterSeasonApiStats
+Updated interfaces in player.ts: PitcherApiResponse, PitcherSeasonApiStats
+Updated interfaces in game.ts: ScheduleApiResponse, GameDate
+Updated interfaces in game.ts: GameEnvironmentApiResponse
