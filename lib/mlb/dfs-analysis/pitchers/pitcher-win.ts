@@ -4,11 +4,10 @@
 
 import { makeMLBApiRequest } from "../../core/api-client";
 import { getGameFeed } from "../../game/game-feed";
-import { getGameEnvironmentData } from "../../weather/weather";
 import { getTeamStats } from "../../schedule/schedule";
-import { WinProbabilityAnalysis } from "../../types/analysis/pitcher";
-import { Pitcher } from "../../types/domain/player";
 import { getEnhancedPitcherData } from "../../services/pitcher-data-service";
+import { WinProbabilityAnalysis } from "../../types/analysis/pitcher";
+import { getGameEnvironmentData } from "../../weather/weather";
 
 /**
  * Get pitcher's win statistics and performance metrics
@@ -143,6 +142,15 @@ async function getTeamIdByName(teamName: string): Promise<number | null> {
     "baltimore orioles": 110,
     orioles: 110,
 
+    // AL East Minor League Affiliates
+    "durham bulls": 139, // Triple-A affiliate of Tampa Bay Rays
+    bulls: 139,
+    "worcester red sox": 111, // Triple-A affiliate of Boston Red Sox
+    "norfolk tides": 110, // Triple-A affiliate of Baltimore Orioles
+    "buffalo bisons": 141, // Triple-A affiliate of Toronto Blue Jays
+    "scranton/wilkes-barre railriders": 147, // Triple-A affiliate of New York Yankees
+    railriders: 147,
+
     // AL Central
     "chicago white sox": 145,
     "white sox": 145,
@@ -208,25 +216,23 @@ async function getTeamIdByName(teamName: string): Promise<number | null> {
     giants: 137,
   };
 
-  // Try direct match with normalized input
+  // Try to find an exact match first
   if (teamIds[normalizedInput]) {
     return teamIds[normalizedInput];
   }
 
-  // Try to find a partial match
-  const matchingTeam = Object.keys(teamIds).find((name) => {
-    // Check if the normalized input contains the team name
-    // or if the team name contains the normalized input
-    return normalizedInput.includes(name) || name.includes(normalizedInput);
-  });
+  // If no exact match, try to find a partial match
+  const possibleMatches = Object.keys(teamIds).filter(
+    (key) => normalizedInput.includes(key) || key.includes(normalizedInput)
+  );
 
-  if (matchingTeam) {
-    return teamIds[matchingTeam];
+  if (possibleMatches.length > 0) {
+    // Use the first match found
+    return teamIds[possibleMatches[0]];
   }
 
-  console.warn(
-    `Could not find team ID for team name: "${teamName}" (normalized: "${normalizedInput}")`
-  );
+  // If no match found, log a warning and return null
+  console.warn(`Could not find team ID for team name: ${teamName}`);
   return null;
 }
 

@@ -1,3 +1,76 @@
 --- Starting-Pitcher-Analysis Module Test ---
 
 Testing analyzeStartingPitchers...
+Analysis completed in 42.192 seconds
+Total pitchers analyzed: 4
+
+Testing sortPitchersByProjectedPoints...
+Sorted pitcher rankings:
+1. Michael Kopech - 21.1 points
+2. Alex Cobb - 15.2 points
+3. Max Scherzer - 15.2 points
+4. Jack Flaherty - 8.5 points
+
+Testing filterPitchersByWinProbability (>55%)...
+Pitchers with win probability >55%: 0
+
+Testing filterPitchersByExpectedStrikeouts (>5)...
+Pitchers with expected K's >5: 0
+
+Detailed analysis for the top pitcher:
+{
+  "pitcherId": 608334,
+  "name": "Michael Kopech",
+  "team": "Chicago White Sox",
+  "opponent": "San Francisco Giants",
+  "gameId": 717632,
+  "venue": "Guaranteed Rate Field",
+  "stats": {
+    "seasonStats": {
+      "gamesPlayed": 37,
+      "inningsPitched": "86.2",
+      "wins": 0,
+      "losses": 5,
+      "era": "4.15",
+      "whip": "1.40",
+      "strikeouts": 0,
+      "walks": 40,
+      "saves": 0,
+      "homeRunsAllowed": 11
+    },
+    "homeRunVulnerability": {
+      "hrPer9": 1.148491879350348,
+      "flyBallPct": 0.35,
+      "hrPerFlyBall": 0.12,
+      "homeRunVulnerability": 4.593967517401392
+    }
+  },
+  "projections": {
+    "winProbability": 20,
+    "expectedStrikeouts": 1,
+    "expectedInnings": 9,
+    "dfsProjection": {
+      "expectedPoints": 21.143500000000003,
+      "upside": 25.372200000000003,
+      "floor": 16.914800000000003
+    }
+  },
+  "environment": {
+    "temperature": 75,
+    "windSpeed": 8,
+    "windDirection": "Out to CF",
+    "isOutdoor": true
+  },
+  "ballparkFactors": {
+    "overall": 105,
+    "homeRuns": 110
+  },
+  "draftKings": {
+    "draftKingsId": null,
+    "salary": null,
+    "positions": [],
+    "avgPointsPerGame": 0
+  }
+}
+
+All tests completed successfully!

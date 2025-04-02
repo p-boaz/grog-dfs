@@ -23,11 +23,11 @@ function log(message: string) {
 
 async function testAggregateScoringModule() {
   try {
-    // Test pitchers
+    // Test pitchers with valid game IDs from recent games
     const testPitchers = [
-      { id: 592789, name: "Max Scherzer", gamePk: "717633" }, // Elite pitcher
-      { id: 543606, name: "Alex Cobb", gamePk: "717632" }, // Average pitcher
-      { id: 608334, name: "Michael Kopech", gamePk: "717632" }, // Volatile pitcher
+      { id: 592789, name: "Max Scherzer", gamePk: "778506" }, // Elite pitcher
+      { id: 543606, name: "Alex Cobb", gamePk: "778504" }, // Average pitcher
+      { id: 608334, name: "Michael Kopech", gamePk: "778502" }, // Volatile pitcher
     ];
 
     // Test calculatePitcherDfsProjection
@@ -36,18 +36,29 @@ async function testAggregateScoringModule() {
     const projections = await Promise.all(
       testPitchers.map(async (pitcher) => {
         try {
+          // Use current season instead of future season
+          const currentYear = new Date().getFullYear();
           const projection = await calculatePitcherDfsProjection(
             pitcher.id,
             pitcher.gamePk,
-            2025
+            currentYear
           );
+
+          if (!projection) {
+            log(`No projection available for ${pitcher.name}`);
+            return null;
+          }
 
           return {
             name: pitcher.name,
             projection,
           };
         } catch (error) {
-          log(`Error projecting ${pitcher.name}: ${error}`);
+          log(
+            `Error projecting ${pitcher.name}: ${
+              error instanceof Error ? error.message : String(error)
+            }`
+          );
           return null;
         }
       })
@@ -96,7 +107,7 @@ async function testAggregateScoringModule() {
       log(`- Negative: ${p.projection.points.breakdown.negative.toFixed(1)}`);
     });
 
-    // Test rankPitcherProjections
+    // Test rankPitcherProjections with current year
     log("\nTesting rankPitcherProjections...");
 
     // Create map of pitcher IDs to game PKs
@@ -106,7 +117,12 @@ async function testAggregateScoringModule() {
       return map;
     }, {} as Record<number, string>);
 
-    const rankings = await rankPitcherProjections(pitcherIds, gamePksMap, 2025);
+    const currentYear = new Date().getFullYear();
+    const rankings = await rankPitcherProjections(
+      pitcherIds,
+      gamePksMap,
+      currentYear
+    );
 
     log("\nPitcher Rankings:");
     rankings.rankings.forEach((rank) => {
