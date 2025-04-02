@@ -1,4 +1,8 @@
---- Innings Pitched Test Log ---
+
+====================================
+Innings Pitched Test Results
+Run Date: 2025-04-02T22:48:10.669Z
+====================================
 
 Starting tests for innings-pitched.ts module...
 
@@ -85,31 +89,37 @@ Risk/reward rating: 1.2/10
 Test 5: getPitcherInningsStats for Wheeler
 Result: Success
 Pitcher name: Zack Wheeler
-Avg innings per start: 6.00
-Durability rating: 7.3/10
+Avg innings per start: 3.05
+Durability rating: 4.8/10
 {
   "name": "Zack Wheeler",
   "teamName": "Philadelphia Phillies",
-  "gamesStarted": 1,
-  "inningsPitched": "6.0",
-  "avgInningsPerStart": 6,
+  "gamesStarted": 2,
+  "inningsPitched": "6.1",
+  "avgInningsPerStart": 3.05,
   "qualityStartPercentage": 0.65,
-  "completionRate": 0.75,
-  "pitchEfficiency": 17,
-  "earlyHookRate": 0.15,
-  "durabilityRating": 7.25
+  "completionRate": 0.25,
+  "pitchEfficiency": 16.9672131147541,
+  "earlyHookRate": 0.6,
+  "durabilityRating": 4.75
 }
 
 ---
 
 Test 6: Comparing innings potential for multiple pitchers
-Successfully retrieved stats for 1 out of 4 pitchers
+Successfully retrieved stats for 2 out of 4 pitchers
 Pitcher Innings Comparison (Sorted by Durability Rating):
 [
   {
     "name": "Max Scherzer",
     "inningsPitched": "3.0",
     "avgInningsPerStart": 3,
+    "durabilityRating": 3.25
+  },
+  {
+    "name": "Corbin Burnes",
+    "inningsPitched": "4.1",
+    "avgInningsPerStart": 4.1,
     "durabilityRating": 3.25
   }
 ]

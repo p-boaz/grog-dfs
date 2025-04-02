@@ -3,7 +3,7 @@ import { makeMLBApiRequest } from "../core/api-client";
 import { 
   GameBoxScoreResponse, 
   GameFeedResponse 
-} from "../types/game";
+} from "../types";
 
 /**
  * Fetch game data with different strategies for live vs historical games
@@ -11,12 +11,12 @@ import {
  */
 async function fetchGameFeed(params: {
   gamePk: string;
-}): Promise<GameFeedResponse> {
+}): Promise<Api.GameFeedApiResponse> {
   const { gamePk } = params;
 
   // First try the v1.1 live feed endpoint for real-time data
   try {
-    const data = await makeMLBApiRequest<GameFeedResponse>(
+    const data = await makeMLBApiRequest<Api.GameFeedApiResponse>(
       `/game/${gamePk}/feed/live`,
       "V11"
     );
@@ -30,7 +30,7 @@ async function fetchGameFeed(params: {
     console.log("Live feed not available, fetching historical data...");
 
     try {
-      const boxscoreData = await makeMLBApiRequest<GameBoxScoreResponse>(
+      const boxscoreData = await makeMLBApiRequest<Api.GameBoxScoreApiResponse>(
         `/game/${gamePk}/boxscore`,
         "V1"
       );
@@ -74,7 +74,7 @@ async function fetchGameFeed(params: {
  * Fetch game data with caching
  * Live games have short TTL (15 minutes), historical games longer (1 hour)
  */
-export const getGameFeed = withCache(
+export const getGameFeed = withCache<{gamePk: string}, Api.GameFeedApiResponse>(
   fetchGameFeed,
   "game-feed",
   DEFAULT_CACHE_TTL.game
@@ -118,8 +118,8 @@ export const getGameContent = withCache(
 /**
  * Fetch game status updates
  */
-export async function getGameStatus(gamePk: string): Promise<any> {
-  const data = await makeMLBApiRequest<any>(`/game/${gamePk}/feed/live`, "V11");
+export async function getGameStatus(gamePk: string): Promise<Api.GameFeedApiResponse> {
+  const data = await makeMLBApiRequest<Api.GameFeedApiResponse>(`/game/${gamePk}/feed/live`, "V11");
   return markAsApiSource(data);
 }
 

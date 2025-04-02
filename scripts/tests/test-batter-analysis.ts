@@ -1,231 +1,307 @@
 /**
- * Test script for batter-analysis module after type migration
- *
- * Tests the getDefaultBatterAnalysis function from the batter-analysis module
- * and outputs detailed results to logs/batter-analysis-test.log
+ * Test script for batter-analysis module with real MLB data
+ * 
+ * This test analyzes real MLB batters using actual player IDs and game data
  */
 
-import fs from "fs";
-import path from "path";
-import { getDefaultBatterAnalysis } from "../../lib/mlb/dfs-analysis/batters/batter-analysis";
+import * as fs from "fs";
+import * as path from "path";
+import { 
+  analyzeBatters, 
+  analyzeBatter, 
+  estimateBatterPoints,
+  calculateProjections,
+  getDefaultBatterAnalysis
+} from "../../lib/mlb/dfs-analysis/batters/batter-analysis";
 
-// Create logs directory if it doesn't exist
-const logsDir = path.join(__dirname, "..", "logs");
-if (!fs.existsSync(logsDir)) {
-  fs.mkdirSync(logsDir, { recursive: true });
-}
+// Import functions from other modules for the specific analyses
+import { estimateHomeRunProbability } from "../../lib/mlb/dfs-analysis/batters/home-runs";
+import { calculateRunProduction } from "../../lib/mlb/dfs-analysis/batters/run-production";
 
-// Create log file path
-const logFilePath = path.join(logsDir, "batter-analysis-test.log");
-const logStream = fs.createWriteStream(logFilePath, { flags: "w" });
+// Setup logging
+const LOG_FILE = path.join(
+  __dirname,
+  "../../logs/batter-analysis-test.log"
+);
+fs.writeFileSync(
+  LOG_FILE,
+  "--- Batter Analysis Module Test ---\n\n",
+  "utf-8"
+);
 
-// Helper to write to both console and log file
 function log(message: string) {
   console.log(message);
-  logStream.write(message + "\n");
+  fs.appendFileSync(LOG_FILE, message + "\n", "utf-8");
 }
 
-// Format date for report header
-const formatDate = () => {
-  const now = new Date();
-  return now.toISOString().replace("T", " ").substring(0, 19);
-};
-
-// Test result type
-interface TestResult<T> {
-  name: string;
-  success: boolean;
-  data: T | null;
-  error?: Error;
-  duration: number;
-}
-
-// Test function that returns detailed results
-async function testFunction<T>(
-  name: string,
-  fn: () => Promise<T | null>
-): Promise<TestResult<T>> {
-  log(`Testing ${name}...`);
-  const startTime = Date.now();
-  let success = false;
-  let error: Error | undefined;
-  let data: T | null = null;
-
-  try {
-    data = await fn();
-    success = data !== null;
-
-    if (success) {
-      log(`✅ ${name}: Success`);
-    } else {
-      log(`❌ ${name}: Failed (null result)`);
-    }
-  } catch (e) {
-    error = e as Error;
-    log(`❌ Error in ${name}: ${error.message}`);
-  }
-
-  const duration = Date.now() - startTime;
-  log(`Duration: ${duration}ms\n`);
-
-  return {
-    name,
-    success,
-    data,
-    error,
-    duration,
-  };
-}
-
-async function runTests(): Promise<void> {
-  const testResults: TestResult<any>[] = [];
-  const testStartTime = Date.now();
-
-  // Write report header
-  log("=".repeat(80));
-  log(`BATTER ANALYSIS MODULE TEST REPORT - ${formatDate()}`);
-  log("=".repeat(80));
-  log("\n");
-
-  // Test the getDefaultBatterAnalysis function which doesn't have external dependencies
-
-  // Create a sample game and batter
-  const sampleGameId = "717465";
-  const mikeTroutId = 545361;
-
-  // Sample batter info
-  const sampleBatter = {
-    id: mikeTroutId,
-    name: "Mike Trout",
-    position: "CF",
-    lineupPosition: 2,
-    isHome: true,
-    opposingPitcher: {
-      id: 543037,
-      name: "Gerrit Cole",
-      throwsHand: "R",
+// Sample game data for testing with REAL PLAYER IDs
+const sampleGames = [
+  {
+    gameId: 717465,
+    homeTeam: { id: 108, name: "Los Angeles Angels" },
+    awayTeam: { id: 140, name: "Texas Rangers" },
+    pitchers: {
+      home: { id: 592789, fullName: "Tyler Anderson" },
+      away: { id: 592346, fullName: "Jon Gray" },
     },
-  };
-
-  // Sample game info
-  const sampleGame = {
-    gameId: parseInt(sampleGameId),
     venue: { name: "Angel Stadium" },
-    homeTeam: { name: "Los Angeles Angels", id: 108 },
-    awayTeam: { name: "New York Yankees", id: 147 },
+    ballpark: { overall: 102, types: { homeRuns: 103 } },
     environment: {
-      temperature: 75,
+      temperature: 78,
       windSpeed: 5,
-      windDirection: "Out to CF",
+      windDirection: "Out to RF",
       isOutdoor: true,
     },
-    ballpark: {
-      overall: 1.02,
-      types: {
-        singles: 1.01,
-        doubles: 1.03,
-        triples: 0.95,
-        homeRuns: 1.05,
-        runs: 1.02,
-      },
+    lineups: {
+      home: [
+        545361, // Mike Trout
+        660271, // Jo Adell
+        600303, // Anthony Rendon
+        571740, // Tyler Wade
+        592743, // Luis Rengifo
+        456078, // Justin Upton
+        543760, // Kurt Suzuki
+        571466, // Andrew Velazquez
+      ],
+      away: [
+        608369, // Corey Seager
+        543760, // Marcus Semien
+        643376, // Adolis Garcia
+        670096, // Nathaniel Lowe
+        608336, // Jonah Heim
+        665750, // Leody Taveras
+        608671, // Travis Jankowski
+        677649, // Ezequiel Duran
+      ],
     },
+  },
+  {
+    gameId: 717466,
+    homeTeam: { id: 111, name: "Boston Red Sox" },
+    awayTeam: { id: 147, name: "New York Yankees" },
     pitchers: {
-      home: { id: 545361, name: "Mike Trout", throwsHand: "R" }, // Just for testing
-      away: { id: 543037, name: "Gerrit Cole", throwsHand: "R" },
+      home: { id: 605483, fullName: "Nathan Eovaldi" },
+      away: { id: 543037, fullName: "Gerrit Cole" },
+    },
+    venue: { name: "Fenway Park" },
+    ballpark: { overall: 112, types: { homeRuns: 109 } },
+    environment: {
+      temperature: 72,
+      windSpeed: 10,
+      windDirection: "Left to Right",
+      isOutdoor: true,
     },
     lineups: {
-      homeCatcher: { id: 123456, name: "Sample Catcher" },
-      awayCatcher: { id: 654321, name: "Sample Catcher" },
+      home: [
+        646240, // Alex Verdugo
+        646240, // Rafael Devers
+        605141, // Xander Bogaerts
+        646240, // J.D. Martinez
+        502110, // Christian Vazquez
+        646240, // Trevor Story
+        605141, // Bobby Dalbec
+        646240, // Jackie Bradley Jr.
+      ],
+      away: [
+        624413, // DJ LeMahieu
+        592450, // Aaron Judge
+        650402, // Anthony Rizzo
+        518934, // Giancarlo Stanton
+        596142, // Josh Donaldson
+        650402, // Gleyber Torres
+        656555, // Joey Gallo
+        665487, // Isiah Kiner-Falefa
+      ],
     },
-  };
+  },
+];
 
-  // Test getDefaultBatterAnalysis function
-  testResults.push(
-    await testFunction("getDefaultBatterAnalysis", async () => {
-      try {
-        return getDefaultBatterAnalysis(sampleBatter, sampleGame);
-      } catch (error) {
-        console.error("Error in getDefaultBatterAnalysis:", error);
-        return null;
+async function testBatterAnalysis() {
+  try {
+    log("Testing individual analyzeBatter calls with real MLB data...");
+
+    // Extract batters from sample games and create batter info objects
+    const batters = [];
+    const results = [];
+    
+    // Process each game
+    for (const game of sampleGames) {
+      const gameId = game.gameId.toString();
+      
+      // Process home batters
+      for (const batterId of game.lineups.home) {
+        const batterInfo = {
+          id: batterId,
+          name: `Player ${batterId}`, // We don't have names, just IDs
+          position: "Unknown",
+          lineupPosition: game.lineups.home.indexOf(batterId) + 1,
+          isHome: true,
+          opposingPitcher: {
+            id: game.pitchers.away.id,
+            name: game.pitchers.away.fullName,
+            throwsHand: "R", // Assuming right-handed for simplicity
+          },
+        };
+        
+        try {
+          log(`Analyzing batter ID ${batterId} (home team) vs pitcher ${game.pitchers.away.fullName}...`);
+          const analysis = await analyzeBatter(
+            batterId,
+            gameId,
+            true,
+            game.pitchers.away.id
+          );
+          results.push(analysis);
+        } catch (error) {
+          log(`Error analyzing batter ${batterId}: ${error}`);
+        }
       }
-    })
-  );
-
-  // Verify that type guard function isBatterStats works correctly
-  // This is part of the domain model and should always return a non-null result
-  testResults.push(
-    await testFunction("getDefaultBatterAnalysis with null game", async () => {
-      try {
-        return getDefaultBatterAnalysis(sampleBatter, null);
-      } catch (error) {
-        console.error(
-          "Error in getDefaultBatterAnalysis with null game:",
-          error
-        );
-        return null;
+      
+      // Process away batters
+      for (const batterId of game.lineups.away) {
+        const batterInfo = {
+          id: batterId,
+          name: `Player ${batterId}`, // We don't have names, just IDs
+          position: "Unknown",
+          lineupPosition: game.lineups.away.indexOf(batterId) + 1,
+          isHome: false,
+          opposingPitcher: {
+            id: game.pitchers.home.id,
+            name: game.pitchers.home.fullName,
+            throwsHand: "R", // Assuming right-handed for simplicity
+          },
+        };
+        
+        try {
+          log(`Analyzing batter ID ${batterId} (away team) vs pitcher ${game.pitchers.home.fullName}...`);
+          const analysis = await analyzeBatter(
+            batterId,
+            gameId,
+            false,
+            game.pitchers.home.id
+          );
+          results.push(analysis);
+        } catch (error) {
+          log(`Error analyzing batter ${batterId}: ${error}`);
+        }
       }
-    })
-  );
+    }
+    
+    const analyses = results;
+    const startTime = Date.now();
+    const endTime = Date.now();
 
-  // Generate summary report
-  const testEndTime = Date.now();
-  const totalDuration = testEndTime - testStartTime;
-  const successCount = testResults.filter((r) => r.success).length;
-  const failureCount = testResults.length - successCount;
+    log(`Analysis completed in ${(endTime - startTime) / 1000} seconds`);
+    log(`Total batters analyzed: ${analyses.length}`);
 
-  log("=".repeat(80));
-  log("TEST SUMMARY");
-  log("=".repeat(80));
-  log(`Total Tests: ${testResults.length}`);
-  log(`Successes: ${successCount}`);
-  log(`Failures: ${failureCount}`);
-  log(`Total Duration: ${totalDuration}ms`);
-  log("\n");
+    // Sort batters manually by expected points
+    log("\nSorting batters by projected points...");
+    const sortedBatters = [...analyses].sort((a, b) => {
+      const pointsA = a.projections?.expectedPoints || 0;
+      const pointsB = b.projections?.expectedPoints || 0;
+      return pointsB - pointsA; // Sort descending
+    });
 
-  // Per-test result summary
-  log("DETAILED RESULTS:");
-  testResults.forEach((result) => {
-    log(
-      `${result.name}: ${result.success ? "SUCCESS" : "FAILURE"} (${
-        result.duration
-      }ms)`
+    log("Top 10 batters by projected points:");
+    sortedBatters.slice(0, 10).forEach((batter, index) => {
+      const points = batter.projections?.expectedPoints ?? 0;
+      log(`${index + 1}. ${batter.name} (${batter.team}) - ${points.toFixed(1)} points`);
+    });
+
+    // Test individual batter analysis
+    log("\nTesting analyzeBatter for specific player...");
+    const mikeTroutId = 545361; // Mike Trout
+    
+    // Find the game where Mike Trout is playing
+    const mikeTroutGame = sampleGames.find(game => 
+      game.lineups.home.includes(mikeTroutId) || 
+      game.lineups.away.includes(mikeTroutId)
     );
-
-    // For successful tests, write the first 500 chars of the result data
-    if (result.success && result.data) {
-      log("Data sample:");
-      try {
-        log(JSON.stringify(result.data, null, 2).substring(0, 500) + "...\n");
-      } catch (error) {
-        log(`Error stringifying result: ${error}\n`);
-      }
+    
+    if (mikeTroutGame) {
+      const isHome = mikeTroutGame.lineups.home.includes(mikeTroutId);
+      const opposingPitcherId = isHome ? 
+        mikeTroutGame.pitchers.away.id : 
+        mikeTroutGame.pitchers.home.id;
+      
+      const batterAnalysis = await analyzeBatter(
+        mikeTroutId,
+        mikeTroutGame.gameId,
+        isHome,
+        opposingPitcherId
+      );
+      
+      log(`Analysis for Mike Trout vs ${isHome ? 'away' : 'home'} pitcher (ID: ${opposingPitcherId}):`);
+      log(`  Expected points: ${batterAnalysis.projections?.expectedPoints?.toFixed(2) || 'N/A'}`);
+      log(`  Confidence: ${batterAnalysis.projections?.confidence || 'N/A'}`);
+    } else {
+      log("Mike Trout not found in sample games lineup.");
     }
 
-    // For failed tests, include the error
-    if (!result.success && result.error) {
-      log(`Error: ${result.error.message}`);
-      if (result.error.stack) {
-        log(result.error.stack);
-      }
-      log("");
+    // Test home run probability directly
+    log("\nTesting estimateHomeRunProbability...");
+    const aaronJudgeId = 592450; // Aaron Judge
+    const gerritColeId = 543037; // Gerrit Cole (use in reverse as opposing pitcher)
+    
+    try {
+      const hrProbability = await estimateHomeRunProbability(
+        aaronJudgeId,
+        gerritColeId,
+        717466
+      );
+      
+      log(`Home run probability for Aaron Judge vs Gerrit Cole:`);
+      log(`  Expected HR: ${hrProbability.expectedHomeRuns?.toFixed(3) || 'N/A'}`);
+      log(`  Expected points: ${hrProbability.expectedPoints?.toFixed(2) || 'N/A'}`);
+      log(`  Confidence: ${hrProbability.confidence || 'N/A'}`);
+    } catch (error) {
+      log(`Error estimating home run probability: ${error}`);
     }
-  });
 
-  // Close log file
-  log("Test run complete");
-  logStream.end();
+    // Test run production directly
+    log("\nTesting calculateRunProduction...");
+    const coreySeagerId = 608369; // Corey Seager
+    const tylerAndersonId = 592789; // Tyler Anderson
+    
+    try {
+      const runProduction = await calculateRunProduction(
+        coreySeagerId,
+        tylerAndersonId,
+        717465
+      );
+      
+      log(`Run production for Corey Seager vs Tyler Anderson:`);
+      log(`  Expected runs: ${runProduction.expectedRuns?.toFixed(2) || 'N/A'}`);
+      log(`  Expected RBIs: ${runProduction.expectedRbis?.toFixed(2) || 'N/A'}`);
+      log(`  Expected points: ${runProduction.expectedPoints?.toFixed(2) || 'N/A'}`);
+      log(`  Confidence: ${runProduction.confidence || 'N/A'}`);
+    } catch (error) {
+      log(`Error calculating run production: ${error}`);
+    }
 
-  // Output filepath to console
-  console.log(`\nDetailed test report written to: ${logFilePath}`);
+    // Output detailed analysis for one batter
+    if (analyses.length > 0) {
+      log("\nDetailed analysis for the top batter:");
+      const topBatter = sortedBatters[0];
+      log(JSON.stringify(topBatter, null, 2));
+    }
 
-  // Ensure the process terminates
-  setTimeout(() => {
-    process.exit(0);
-  }, 500);
+    log("\nAll tests completed successfully!");
+    return true;
+  } catch (error) {
+    log(`Error testing batter-analysis module: ${error}`);
+    if (error instanceof Error) {
+      log(error.stack || "No stack trace available");
+    }
+    return false;
+  }
 }
 
 // Run the tests
-runTests().catch((error) => {
-  console.error("Fatal error during test execution:", error);
-  process.exit(1);
-});
+(async () => {
+  try {
+    await testBatterAnalysis();
+  } catch (error) {
+    console.error("Test execution error:", error);
+  }
+})();

@@ -1,15 +1,21 @@
+
+====================================
+Home Runs Test Results
+Run Date: 2025-04-02T22:43:59.748Z
+====================================
+
 ================================================================================
-HOME RUNS MODULE TEST REPORT - 2025-04-01 19:10:47
+HOME RUNS MODULE TEST REPORT - 2025-04-02T22:43:59.754Z
 ================================================================================
 
 
 Testing getPlayerHomeRunStats...
 ❌ getPlayerHomeRunStats: Failed (null result)
-Duration: 503ms
+Duration: 2743ms
 
 Testing getCareerHomeRunProfile...
 ❌ getCareerHomeRunProfile: Failed (null result)
-Duration: 51ms
+Duration: 62ms
 
 Testing getBallparkHomeRunFactor...
 ✅ getBallparkHomeRunFactor: Success
@@ -17,15 +23,15 @@ Duration: 0ms
 
 Testing getWeatherHomeRunImpact...
 ✅ getWeatherHomeRunImpact: Success
-Duration: 250ms
+Duration: 203ms
 
 Testing getPitcherHomeRunVulnerability...
 ❌ getPitcherHomeRunVulnerability: Failed (null result)
-Duration: 294ms
+Duration: 266ms
 
 Testing estimateHomeRunProbability...
 ✅ estimateHomeRunProbability: Success
-Duration: 1276ms
+Duration: 1231ms
 
 ================================================================================
 TEST SUMMARY
@@ -33,12 +39,12 @@ TEST SUMMARY
 Total Tests: 6
 Successes: 3
 Failures: 3
-Total Duration: 2376ms
+Total Duration: 4509ms
 
 
 DETAILED RESULTS:
-getPlayerHomeRunStats: FAILURE (503ms)
-getCareerHomeRunProfile: FAILURE (51ms)
+getPlayerHomeRunStats: FAILURE (2743ms)
+getCareerHomeRunProfile: FAILURE (62ms)
 getBallparkHomeRunFactor: SUCCESS (0ms)
 Data sample:
 {
@@ -50,7 +56,7 @@ Data sample:
   }
 }...
 
-getWeatherHomeRunImpact: SUCCESS (250ms)
+getWeatherHomeRunImpact: SUCCESS (203ms)
 Data sample:
 {
   "temperature": 85,
@@ -62,8 +68,8 @@ Data sample:
   "overallFactor": 1.015
 }...
 
-getPitcherHomeRunVulnerability: FAILURE (294ms)
-estimateHomeRunProbability: SUCCESS (1276ms)
+getPitcherHomeRunVulnerability: FAILURE (266ms)
+estimateHomeRunProbability: SUCCESS (1231ms)
 Data sample:
 {
   "probability": 0.03,

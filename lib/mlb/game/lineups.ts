@@ -1,6 +1,6 @@
 import { withCache, DEFAULT_CACHE_TTL, markAsApiSource } from "../cache";
 import { makeMLBApiRequest } from "../core/api-client";
-import { ProbableLineup } from "../types/game";
+import { ProbableLineup } from "../types";
 
 /**
  * Predict lineup based on historical data and team patterns
@@ -145,7 +145,7 @@ async function fetchProbableLineups(params: {
 
   try {
     // First try to get the actual lineup if the game has started
-    const liveFeedData = await makeMLBApiRequest<any>(
+    const liveFeedData = await makeMLBApiRequest<Api.GameFeedApiResponse>(
       `/game/${gamePk}/feed/live`,
       "V11"
     ).catch(() => null);

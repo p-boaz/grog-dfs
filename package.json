@@ -16,9 +16,11 @@
     "collect:test": "tsx scripts/collect-data-1-game.ts",
     "collect:detailed": "tsx scripts/collect-data-detailed.ts",
     "test:all": "tsx scripts/run-all-tests.ts",
+    "test:single": "tsx scripts/run-single-test.ts",
     "validate:api-types": "tsx scripts/validate-api-types.ts",
     "update:api-types": "tsx scripts/update-api-types.ts",
-    "analyze:api-response": "tsx scripts/analyze-api-response.ts"
+    "analyze:api-response": "tsx scripts/analyze-api-response.ts",
+    "fix:imports": "tsx scripts/fix-import-paths.ts"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.3",

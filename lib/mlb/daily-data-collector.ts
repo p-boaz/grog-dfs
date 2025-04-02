@@ -10,11 +10,12 @@ import {
 } from "../mlb/schedule/schedule";
 import { getGameEnvironmentData } from "../mlb/weather/weather";
 import { saveToJsonFile } from "./core/file-utils";
-import { analyzeBatters } from "./dfs-analysis/batter-analysis";
+import { analyzeBatters } from "./dfs-analysis/batters/batter-analysis";
 import { analyzeStartingPitchers } from "./dfs-analysis/pitchers/starting-pitcher-analysis";
 import { populateMlbIds } from "./draftkings/player-mapping";
 import { getDKSalaries } from "./draftkings/salaries";
 import type { DailyMLBData } from "./types/core";
+import type { BatterInfo } from "./types/analysis";
 
 // Constants for placeholder values
 const PLACEHOLDER = {
@@ -362,11 +363,29 @@ export async function collectDailyDFSData(
 
     // Analyze batters
     console.log("\nStarting batter analysis...");
-    // @ts-ignore Type mismatch with gameData
-    const batterAnalysis = await analyzeBatters(
-      gameData,
-      Array.from(dkBatters.values())
-    );
+    
+    // Process each batter separately by game
+    const allBatterAnalysis = [];
+    
+    // Group batters by game
+    const battersByGame = new Map<string, BatterInfo[]>();
+    Array.from(dkBatters.values()).forEach(batter => {
+      if (!batter.gameId) return;
+      
+      const gameIdStr = batter.gameId.toString();
+      if (!battersByGame.has(gameIdStr)) {
+        battersByGame.set(gameIdStr, []);
+      }
+      battersByGame.get(gameIdStr)?.push(batter);
+    });
+    
+    // Analyze batters for each game
+    for (const [gameId, batters] of battersByGame.entries()) {
+      const gameAnalysis = await analyzeBatters(gameId, batters);
+      allBatterAnalysis.push(...gameAnalysis);
+    }
+    
+    const batterAnalysis = allBatterAnalysis;
     // Add DraftKings data to batter analysis
     let matchedBatters = 0;
     batterAnalysis.forEach((batter) => {

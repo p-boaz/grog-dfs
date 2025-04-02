@@ -20,7 +20,7 @@ import {
   TeamOffensiveContext,
 } from "../types/analysis/run-production";
 import { BallparkFactors } from "../types/environment/ballpark";
-import { MLBGame } from "../types/game";
+import { MLBGame } from "../types";
 import { Batter } from "../types/domain/player";
 
 // Points awarded in DraftKings for runs and RBIs

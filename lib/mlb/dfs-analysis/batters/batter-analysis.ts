@@ -9,22 +9,14 @@
  */
 
 import { estimateHomeRunProbability } from "./home-runs";
-// @ts-ignore Missing function name mismatches
 import { estimateStolenBaseProbability } from "./stolen-bases";
-// @ts-ignore Missing function name mismatches
 import { calculateRunProduction } from "./run-production";
 import { calculatePlateDisciplineProjection } from "../shared/plate-discipline";
-// @ts-ignore Missing function name mismatches
 import { calculateHitProjections } from "./hits";
-import { getGameEnvironmentData } from "../../weather/weather";
-// @ts-ignore Missing module
-import { getBallparkFactors } from "../../environment";
+import { getGameEnvironmentData, getBallparkFactors } from "../../weather/weather";
 import { getBatterStats } from "../../player/batter-stats";
 import { getPitcherStats } from "../../player/pitcher-stats";
-// @ts-ignore Missing export
-import { getMatchupData } from "../../player/matchups";
-// @ts-ignore Missing export
-import { calculatePitcherDfsProjection } from "../pitchers/starting-pitcher-analysis";
+import { calculatePitcherDfsProjection } from "../shared/aggregate-scoring";
 import {
   BatterAnalysis,
   BatterInfo,
@@ -54,24 +46,38 @@ export async function analyzeBatters(
 ): Promise<BatterAnalysis[]> {
   try {
     // Get game environment data
-    // @ts-ignore Parameter type mismatch
-    const game = await getGameEnvironmentData(gameId);
+    const game = await getGameEnvironmentData({ gamePk: gameId });
     if (!game) {
       console.error(`No game data found for game ${gameId}`);
       return batters.map((batter) => getDefaultBatterAnalysis(batter, null));
     }
 
+    // Convert environment data to GameInfo interface
+    const gameInfo: GameInfo = {
+      gameId: parseInt(gameId),
+      venue: {
+        id: game.venueId || 0,
+        name: game.venueName || "Unknown"
+      },
+      homeTeam: { name: "Home Team" },
+      awayTeam: { name: "Away Team" },
+      environment: {
+        temperature: game.temperature,
+        windSpeed: game.windSpeed,
+        windDirection: game.windDirection,
+        isOutdoor: game.isOutdoor
+      }
+    };
+
     // Process batters
     const results: BatterAnalysis[] = [];
     for (const batter of batters) {
       try {
-        // @ts-ignore Type mismatch with GameInfo
-        const analysis = await analyzeBatter(batter, game);
+        const analysis = await analyzeBatter(batter, gameInfo);
         results.push(analysis);
       } catch (error) {
         console.error(`Error analyzing batter ${batter.id}:`, error);
-        // @ts-ignore Type mismatch with GameInfo
-        results.push(getDefaultBatterAnalysis(batter, game));
+        results.push(getDefaultBatterAnalysis(batter, gameInfo));
       }
     }
 
@@ -210,15 +216,10 @@ export async function analyzeBatter(
         },
         ballpark: {
           overall: game.ballpark?.overall || 1.0,
-          // @ts-ignore Type mismatch in ballpark structure
           singles: game.ballpark?.types?.singles || 1.0,
-          // @ts-ignore Type mismatch in ballpark structure
           doubles: game.ballpark?.types?.doubles || 1.0,
-          // @ts-ignore Type mismatch in ballpark structure
           triples: game.ballpark?.types?.triples || 1.0,
-          // @ts-ignore Type mismatch in ballpark structure
           homeRuns: game.ballpark?.types?.homeRuns || 1.0,
-          // @ts-ignore Type mismatch in ballpark structure
           runs: game.ballpark?.types?.runs || 1.0,
         },
         platoon: false,
@@ -262,11 +263,12 @@ export async function analyzeBatter(
       const qualityMetrics = calculateQualityMetrics(currentStats);
 
       // Get HR probability projection
-      // @ts-ignore Type mismatch with BallparkFactors
+      // Call with the correct parameter format
       const hrProbability = await estimateHomeRunProbability(
         enhancedBatterData.id,
-        game.pitchers.away.id,
-        game.ballpark,
+        batter.isHome ? game.pitchers.away.id : game.pitchers.home.id,
+        game.venue.id,
+        batter.isHome,
         game.environment
       );
 
@@ -297,11 +299,26 @@ export async function analyzeBatter(
       );
 
       // Calculate final projections
-      // @ts-ignore Type mismatch with BallparkFactors
+      // Create a properly structured BallparkFactors object
+      const ballparkFactors: BallparkFactors = {
+        overall: game.ballpark?.overall || 1.0,
+        handedness: {
+          rHB: 1.0,
+          lHB: 1.0
+        },
+        types: {
+          singles: game.ballpark?.types?.singles || 1.0,
+          doubles: game.ballpark?.types?.doubles || 1.0,
+          triples: game.ballpark?.types?.triples || 1.0,
+          homeRuns: game.ballpark?.types?.homeRuns || 1.0,
+          runs: game.ballpark?.types?.runs || 1.0
+        }
+      };
+      
       const projections = await calculateProjections(
         currentStats,
         game.environment,
-        game.ballpark,
+        ballparkFactors,
         batter,
         game
       );
@@ -322,14 +339,16 @@ export async function analyzeBatter(
 
       // Update entry with all calculated data
       entry.factors.platoon = platoonAdvantage;
-      // @ts-ignore Property mismatch in HR factors
-      entry.factors.weather.temperatureFactor =
-        hrProbability.factors.temperature || 1.0;
-      // @ts-ignore Property mismatch in HR factors
-      entry.factors.weather.windFactor = hrProbability.factors.wind || 1.0;
-      // @ts-ignore Property mismatch in HR factors
-      entry.factors.weather.overallFactor =
-        hrProbability.factors.weatherOverall || 1.0;
+      
+      // Safely update weather factors from HR probability
+      if (entry.factors.weather && hrProbability.factors) {
+        entry.factors.weather.temperatureFactor = 
+          hrProbability.factors.temperature || 1.0;
+        entry.factors.weather.windFactor = 
+          hrProbability.factors.wind || 1.0;
+        entry.factors.weather.overallFactor = 
+          hrProbability.factors.weatherOverall || 1.0;
+      }
 
       entry.matchup = {
         advantageScore: matchup ? matchup.advantageScore : 0.5,

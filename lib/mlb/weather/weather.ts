@@ -1,6 +1,6 @@
 import { withCache, DEFAULT_CACHE_TTL, markAsApiSource } from "../cache";
 import { makeMLBApiRequest } from "../core/api-client";
-import { GameFeedResponse } from "../types/game";
+import { Api } from "../types";
 import { 
   MLBWeatherData, 
   DetailedWeatherInfo,
@@ -71,7 +71,7 @@ async function fetchGameWeatherData(params: {
   const { gamePk } = params;
 
   try {
-    const data = await makeMLBApiRequest<GameFeedResponse>(
+    const data = await makeMLBApiRequest<Api.GameFeedApiResponse>(
       `/game/${gamePk}/feed/live`,
       "V11"
     );
@@ -118,7 +118,7 @@ async function fetchGameEnvironmentData(params: {
 
   try {
     // Make a single API call instead of two separate calls
-    const data = await makeMLBApiRequest<GameFeedResponse>(
+    const data = await makeMLBApiRequest<Api.GameFeedApiResponse>(
       `/game/${gamePk}/feed/live`,
       "V11"
     );

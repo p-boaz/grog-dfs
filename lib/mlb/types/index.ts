@@ -24,61 +24,43 @@ export { Domain };
 import * as Analysis from './analysis';
 export { Analysis };
 
-// Legacy re-exports for backward compatibility
-// These will be maintained during the migration period
-export * from './core';
+// Legacy type aliases maintained for backward compatibility
+// These make migration easier by providing shortcuts to commonly used types
 
-export type {
-  MLBGame,
-  GameFeedResponse,
-  GameBoxScoreResponse,
-  GameSchedule,
-  MLBScheduleResponse,
-  PlayerGameStats,
-  GameEnvironmentData,
-  ProbableLineup,
-  DailyMLBData,
-  DetailedWeatherInfo,
-  MLBWeatherData
-} from './game';
+/**
+ * @deprecated Use Api.GameFeedApiResponse instead 
+ */
+export type GameFeedResponse = Api.GameFeedApiResponse;
 
-export type {
-  DraftKingsCSVEntry,
-  DraftKingsPlayer,
-  DraftKingsMapping,
-  DraftKingsScoringRules
-} from './draftkings';
+/**
+ * @deprecated Use Api.GameBoxScoreApiResponse instead
+ */
+export type GameBoxScoreResponse = Api.GameBoxScoreApiResponse;
 
-// Re-export DraftKingsInfo with a different name to avoid conflict
-export type { DraftKingsInfo as DKPlayerInfo } from './draftkings';
+/**
+ * @deprecated Use Api.ScheduleApiResponse instead
+ */
+export type MLBScheduleResponse = Api.ScheduleApiResponse;
 
-// Player types - explicitly export to avoid ambiguity with other modules
-export type {
-  // Batter types
-  BatterSeasonStats,
-  BatterStats,
-  BatterStatsResponse,
-  BatterPlateDiscipline,
-  BatterSplits,
-  MLBBatter,
-  PlayerSBSeasonStats,
-  PlayerSBCareerProfile,
-  StolenBaseProjection,
-  StolenBaseContext,
-  
-  // Pitcher types
-  PitcherStats,
-  PitcherSeasonStats,
-  PitcherPitchMixData,
-  PitcherBatterMatchup
-} from './player';
+/**
+ * @deprecated Use Domain types instead
+ */
+export type MLBGame = Api.GameFeedApiResponse;
 
-// Adjust imports for missing or renamed types
-export type {
-  PitcherCareerStatsSeason as PitcherCareerStats,
-  PitcherHoldMetrics as PitcherControlMetrics,
-  MatchupStats as PlayerMatchupStats
-} from './player';
+/**
+ * @deprecated Use Domain types instead
+ */
+export type GameEnvironmentData = Api.GameEnvironmentApiResponse;
+
+/**
+ * @deprecated Use Domain types instead
+ */
+export type ProbableLineup = Record<string, any>;
+
+// Type aliases for core domain objects  
+export type MLBWeatherData = Record<string, any>;
+export type DetailedWeatherInfo = Record<string, any>;
+export type DailyMLBData = Record<string, any>;
 
 // Export convenience types and functions
 // These make migration easier by providing shortcuts to commonly used types
