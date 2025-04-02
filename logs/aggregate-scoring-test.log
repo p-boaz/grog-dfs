@@ -3,11 +3,11 @@
 Testing calculatePitcherDfsProjection...
 
 Max Scherzer Projection:
-- Total Points: 10.3
-- Range: 7.7 - 12.3
+- Total Points: 10.2
+- Range: 7.6 - 12.2
 - Projected Innings: 5.0
 - Projected Strikeouts: 1.0
-- Win Probability: 22.0%
+- Win Probability: 20.0%
 - Projected Earned Runs: 0.0
 - Quality Rating: 4.0/10
 - Confidence: 37
@@ -15,7 +15,7 @@ Max Scherzer Projection:
 Points Breakdown:
 - Innings: 11.3
 - Strikeouts: 2.0
-- Win: 0.9
+- Win: 0.8
 - Rare Events: 0.0
 - Negative: -3.9
 
@@ -57,11 +57,11 @@ Testing rankPitcherProjections...
 
 Pitcher Rankings:
 1. Carson Fulmer: 16.1 points (Value: 2.01 pts/$1K)
-2. Noah Syndergaard: 10.3 points (Value: 1.29 pts/$1K)
+2. Noah Syndergaard: 10.2 points (Value: 1.27 pts/$1K)
 3. Jake Odorizzi: 10.2 points (Value: 1.27 pts/$1K)
 
 Average Projection: 12.2
-Top Tier Threshold: 15.3
+Top Tier Threshold: 15.2
 Mid Tier Threshold: 11.0
 
 All tests completed successfully!

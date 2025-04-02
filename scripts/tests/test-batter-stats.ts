@@ -5,46 +5,94 @@
  * as returned by the API and transformed by our domain models.
  */
 
+import * as fs from "fs";
+import * as path from "path";
 import {
   getBatterPlatoonSplits,
   getMatchupHitStats,
 } from "../../lib/mlb/dfs-analysis/batters/hits";
 import { getBatterStats } from "../../lib/mlb/player/batter-stats";
 
+// Logger setup
+const LOG_FILE_PATH = path.join(__dirname, "../../logs/batter-stats-test.log");
+
+// Create logs directory if it doesn't exist
+if (!fs.existsSync(path.dirname(LOG_FILE_PATH))) {
+  fs.mkdirSync(path.dirname(LOG_FILE_PATH), { recursive: true });
+}
+
+// Initialize log file with timestamp
+const initLogMessage = `
+====================================
+Batter Stats Test Results
+Run Date: ${new Date().toISOString()}
+====================================
+
+`;
+
+fs.writeFileSync(LOG_FILE_PATH, initLogMessage);
+
+// Logger function for both console and file
+function log(message: string): void {
+  console.log(message);
+  fs.appendFileSync(LOG_FILE_PATH, message + "\n");
+}
+
 async function testBatterStats() {
   try {
-    console.log("Fetching stats for Mike Trout (ID: 545361)...");
+    log("Fetching stats for Mike Trout (ID: 545361)...");
     const batterStats = await getBatterStats({ batterId: 545361 });
 
-    console.log("=== Complete Batter Object ===");
-    console.log(JSON.stringify(batterStats, null, 2));
+    log("=== Complete Batter Object ===");
+    log(JSON.stringify(batterStats, null, 2));
 
-    console.log("\n=== Current Season Stats ===");
-    console.log(JSON.stringify(batterStats.currentSeason, null, 2));
+    log("\n=== Current Season Stats ===");
+    log(JSON.stringify(batterStats.currentSeason, null, 2));
 
     // Check if seasonStats field exists in the batter object (should not exist in domain model)
-    console.log("\n=== Checking for 'seasonStats' field ===");
+    log("\n=== Checking for 'seasonStats' field ===");
     const hasSeasonStats = "seasonStats" in batterStats;
-    console.log(`Has 'seasonStats' property: ${hasSeasonStats}`);
+    log(`Has 'seasonStats' property: ${hasSeasonStats}`);
 
     if (hasSeasonStats) {
-      console.log(JSON.stringify((batterStats as any).seasonStats, null, 2));
+      log(JSON.stringify((batterStats as any).seasonStats, null, 2));
     }
 
     // Test the related functions that were updated
-    console.log("\n=== Testing getMatchupHitStats ===");
+    log("\n=== Testing getMatchupHitStats ===");
     const matchupStats = await getMatchupHitStats(545361, 594798);
-    console.log(JSON.stringify(matchupStats, null, 2));
+    log(JSON.stringify(matchupStats, null, 2));
 
-    console.log("\n=== Testing getBatterPlatoonSplits ===");
+    log("\n=== Testing getBatterPlatoonSplits ===");
     const platoonSplits = await getBatterPlatoonSplits(545361);
-    console.log(JSON.stringify(platoonSplits, null, 2));
+    log(JSON.stringify(platoonSplits, null, 2));
   } catch (error) {
-    console.error("Error during testing:", error);
+    log(
+      `Error during testing: ${
+        error instanceof Error ? error.message : String(error)
+      }`
+    );
+    fs.appendFileSync(
+      LOG_FILE_PATH,
+      `\nStack trace: ${
+        error instanceof Error ? error.stack : "No stack trace"
+      }\n`
+    );
   }
 }
 
-console.log("Running batter stats diagnostic tool...");
+log("Running batter stats diagnostic tool...");
 testBatterStats()
-  .catch(console.error)
-  .finally(() => console.log("Diagnostic complete"));
+  .catch((error) => {
+    log(
+      `Fatal error: ${error instanceof Error ? error.message : String(error)}`
+    );
+    fs.appendFileSync(
+      LOG_FILE_PATH,
+      `\nFATAL ERROR: ${error}\n${
+        error instanceof Error ? error.stack : "No stack trace"
+      }\n`
+    );
+    process.exit(1);
+  })
+  .finally(() => log("Diagnostic complete"));

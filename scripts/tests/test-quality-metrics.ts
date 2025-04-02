@@ -6,13 +6,32 @@ import * as path from "path";
 import { calculateQualityMetrics } from "../../lib/mlb/dfs-analysis/shared/quality-metrics";
 import { BatterStats } from "../../lib/mlb/types/domain/player";
 
-// Setup logging
-const LOG_FILE = path.join(__dirname, "../../logs/quality-metrics-test.log");
-fs.writeFileSync(LOG_FILE, "--- Quality Metrics Module Test ---\n\n", "utf-8");
+// Logger setup
+const LOG_FILE_PATH = path.join(
+  __dirname,
+  "../../logs/quality-metrics-test.log"
+);
 
-function log(message: string) {
+// Create logs directory if it doesn't exist
+if (!fs.existsSync(path.dirname(LOG_FILE_PATH))) {
+  fs.mkdirSync(path.dirname(LOG_FILE_PATH), { recursive: true });
+}
+
+// Initialize log file with timestamp
+const initLogMessage = `
+====================================
+Quality Metrics Test Results
+Run Date: ${new Date().toISOString()}
+====================================
+
+`;
+
+fs.writeFileSync(LOG_FILE_PATH, initLogMessage);
+
+// Logger function for both console and file
+function log(message: string): void {
   console.log(message);
-  fs.appendFileSync(LOG_FILE, message + "\n", "utf-8");
+  fs.appendFileSync(LOG_FILE_PATH, message + "\n");
 }
 
 // Sample batting stats for testing

@@ -1,0 +1,58 @@
+--- Quality Metrics Module Test ---
+
+Testing calculateQualityMetrics...
+
+Star Player Metrics:
+{
+  "battedBallQuality": 0.754,
+  "power": 0.8799999999999999,
+  "contactRate": 0.599,
+  "plateApproach": 0.68,
+  "speed": 0.20979020979020976,
+  "consistency": 96
+}
+
+Average Player Metrics:
+{
+  "battedBallQuality": 0.3999999999999999,
+  "power": 0.4499999999999999,
+  "contactRate": 0.44800000000000006,
+  "plateApproach": 0.29000000000000004,
+  "speed": 0.09999999999999999,
+  "consistency": 96
+}
+
+Rookie Player Metrics:
+{
+  "battedBallQuality": 0.40266666666666684,
+  "power": 0.576,
+  "contactRate": 0.16899999999999998,
+  "plateApproach": 0.28,
+  "speed": 0,
+  "consistency": 40
+}
+
+Testing with invalid data (should use defaults):
+{
+  "battedBallQuality": 0.3,
+  "power": 0.3,
+  "contactRate": 0.3,
+  "plateApproach": 0.3,
+  "speed": 0.3,
+  "consistency": 30
+}
+
+Comparison of specific metrics:
+Star player power rating: 0.88
+Average player power rating: 0.45
+Rookie player power rating: 0.58
+
+Star player contact rating: 0.60
+Average player contact rating: 0.45
+Rookie player contact rating: 0.17
+
+Star player consistency: 96
+Average player consistency: 96
+Rookie player consistency: 40
+
+All tests completed successfully!

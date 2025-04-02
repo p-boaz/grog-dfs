@@ -1,27 +1,27 @@
 ================================================================================
-STOLEN BASES MODULE TEST REPORT - 2025-04-01 19:14:59
+STOLEN BASES MODULE TEST REPORT - 2025-04-01 22:40:35
 ================================================================================
 
 
 Testing getPlayerSeasonStats...
 ❌ getPlayerSeasonStats: Failed (null result)
-Duration: 17645ms
+Duration: 2730ms
 
 Testing getCareerStolenBaseProfile...
 ❌ getCareerStolenBaseProfile: Failed (null result)
-Duration: 102ms
+Duration: 87ms
 
 Testing getCatcherStolenBaseDefense...
 ✅ getCatcherStolenBaseDefense: Success
-Duration: 413ms
+Duration: 323ms
 
 Testing getPitcherRunningGameControl...
 ✅ getPitcherRunningGameControl: Success
-Duration: 32871ms
+Duration: 69ms
 
 Testing calculateStolenBaseProbability...
 ✅ calculateStolenBaseProbability: Success
-Duration: 566ms
+Duration: 1501ms
 
 ================================================================================
 TEST SUMMARY
@@ -29,13 +29,13 @@ TEST SUMMARY
 Total Tests: 5
 Successes: 3
 Failures: 2
-Total Duration: 51601ms
+Total Duration: 4711ms
 
 
 DETAILED RESULTS:
-getPlayerSeasonStats: FAILURE (17645ms)
-getCareerStolenBaseProfile: FAILURE (102ms)
-getCatcherStolenBaseDefense: SUCCESS (413ms)
+getPlayerSeasonStats: FAILURE (2730ms)
+getCareerStolenBaseProfile: FAILURE (87ms)
+getCatcherStolenBaseDefense: SUCCESS (323ms)
 Data sample:
 {
   "playerId": 592663,
@@ -47,7 +47,7 @@ Data sample:
   "defensiveRating": 90,
   "popTime": ...
 
-getPitcherRunningGameControl: SUCCESS (32871ms)
+getPitcherRunningGameControl: SUCCESS (69ms)
 Data sample:
 {
   "pickoffMoves": 5,
@@ -57,7 +57,7 @@ Data sample:
   "holdRating": 5
 }...
 
-calculateStolenBaseProbability: SUCCESS (566ms)
+calculateStolenBaseProbability: SUCCESS (1501ms)
 Data sample:
 {
   "expectedSteals": 0.30150000000000005,

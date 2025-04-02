@@ -1,0 +1,147 @@
+--- Strikeouts Test Log ---
+
+Starting tests for strikeouts.ts module...
+
+Test 1: getPitcherStrikeoutStats for Gerrit Cole
+Result: Failed
+
+---
+
+Test 2: getTeamStrikeoutVulnerability for Red Sox
+Result: Success
+Team: Boston Red Sox
+Strikeouts per game: 0.00
+Strikeout rate: 0.0%
+Vulnerability rating: 1.0/10
+{
+  "teamName": "Boston Red Sox",
+  "gamesPlayed": 5,
+  "strikeouts": 0,
+  "strikeoutsPerGame": 0,
+  "strikeoutRate": 0,
+  "strikeoutVulnerability": 1
+}
+
+---
+
+Test 3: calculateExpectedStrikeouts for Cole vs. Red Sox
+Result: Success
+Expected strikeouts: 1.0
+Range: 0.7 - 1.3
+Expected DFS points from Ks: 2.0
+Confidence: 5/10
+{
+  "expectedStrikeouts": 1,
+  "lowRange": 0.7,
+  "highRange": 1.3,
+  "expectedRatePerInning": 0.2,
+  "perInningRate": 0.2,
+  "confidence": 5,
+  "ranges": {
+    "low": 0.7,
+    "high": 1.3
+  },
+  "factors": {
+    "pitcherBaseline": 1,
+    "teamVulnerability": 0.2,
+    "ballpark": 1,
+    "weather": 1,
+    "pitcherKRate": 5,
+    "opposingTeamKRate": 1,
+    "parkFactor": 5
+  },
+  "expectedDfsPoints": 2
+}
+
+---
+
+Test 4: getPitcherStrikeoutStats for Max Scherzer
+Result: Success
+Pitcher name: Max Scherzer
+Strikeout rate (K/9): 0.00
+Strikeout percentage: 0.0%
+Strikeout stuff rating: 5.5/10
+{
+  "name": "Max Scherzer",
+  "teamName": "Mets",
+  "gamesStarted": 1,
+  "inningsPitched": "3.0",
+  "strikeouts": 0,
+  "strikeoutRate": 0,
+  "strikeoutPercentage": 0,
+  "swingingStrikeRate": 24,
+  "whiff": 24,
+  "pitchMix": {
+    "fastballPct": 0,
+    "sliderPct": 0,
+    "curvePct": 0,
+    "changeupPct": 0,
+    "cutterPct": 0,
+    "splitterPct": 0,
+    "otherPct": 0,
+    "avgFastballVelo": 93,
+    "maxFastballVelo": 95.5,
+    "controlMetrics": {
+      "zonePercentage": 48,
+      "firstPitchStrikePercent": 60,
+      "swingingStrikePercent": 24,
+      "chaseRate": 28
+    }
+  },
+  "zonePct": 48,
+  "outsidePitchPct": 52,
+  "firstPitchStrikePercentage": 60,
+  "strikeoutStuff": 5.5
+}
+
+---
+
+Test 5: getTeamStrikeoutVulnerability for Angels
+Result: Success
+Team: Los Angeles Angels
+Strikeouts per game: 0.00
+Strikeout rate: 0.0%
+Vulnerability rating: 1.0/10
+{
+  "teamName": "Los Angeles Angels",
+  "gamesPlayed": 4,
+  "strikeouts": 0,
+  "strikeoutsPerGame": 0,
+  "strikeoutRate": 0,
+  "strikeoutVulnerability": 1
+}
+
+---
+
+Test 6: calculateExpectedStrikeouts for Burnes vs. Athletics
+Result: Success
+Expected strikeouts: 1.0
+Range: 0.7 - 1.3
+Expected DFS points from Ks: 2.0
+Confidence: 5/10
+{
+  "expectedStrikeouts": 1,
+  "lowRange": 0.7,
+  "highRange": 1.3,
+  "expectedRatePerInning": 0.2,
+  "perInningRate": 0.2,
+  "confidence": 5,
+  "ranges": {
+    "low": 0.7,
+    "high": 1.3
+  },
+  "factors": {
+    "pitcherBaseline": 1,
+    "teamVulnerability": 0.2,
+    "ballpark": 1,
+    "weather": 1,
+    "pitcherKRate": 5,
+    "opposingTeamKRate": 1,
+    "parkFactor": 5
+  },
+  "expectedDfsPoints": 2
+}
+
+---
+
+Tests completed for strikeouts.ts module.

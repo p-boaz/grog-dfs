@@ -3,8 +3,8 @@
  * Used to validate the migration to the domain model types
  */
 
-import fs from "fs";
-import path from "path";
+import * as fs from "fs";
+import * as path from "path";
 import {
   calculateControlProjection,
   calculateExpectedControlEvents,
@@ -13,34 +13,40 @@ import {
   getPitcherControlStats,
 } from "../../lib/mlb/dfs-analysis/pitchers/pitcher-control";
 
+// Logger setup
+const LOG_FILE_PATH = path.join(
+  __dirname,
+  "../../logs/pitcher-control-test.log"
+);
+
+// Create logs directory if it doesn't exist
+if (!fs.existsSync(path.dirname(LOG_FILE_PATH))) {
+  fs.mkdirSync(path.dirname(LOG_FILE_PATH), { recursive: true });
+}
+
+// Initialize log file with timestamp
+const initLogMessage = `
+====================================
+Pitcher Control Test Results
+Run Date: ${new Date().toISOString()}
+====================================
+
+`;
+
+fs.writeFileSync(LOG_FILE_PATH, initLogMessage);
+
+// Logger function for both console and file
+function log(message: string): void {
+  console.log(message);
+  fs.appendFileSync(LOG_FILE_PATH, message + "\n");
+}
+
 // Test pitcher IDs
 const GERRIT_COLE_ID = 543037;
 const CORBIN_BURNES_ID = 669203;
 const YANKEES_LINEUP = [
   664086, 547989, 624413, 650402, 543760, 665487, 677951, 489334, 609280,
 ];
-
-// Create logs directory if it doesn't exist
-const logsDir = path.join(__dirname, "../../logs");
-if (!fs.existsSync(logsDir)) {
-  fs.mkdirSync(logsDir, { recursive: true });
-}
-
-// Create log file path
-const logFilePath = path.join(__dirname, "../../logs/pitcher-control-test.log");
-const logStream = fs.createWriteStream(logFilePath, { flags: "w" });
-
-// Helper to write to both console and log file
-function log(message: string) {
-  console.log(message);
-  logStream.write(message + "\n");
-}
-
-// Format date for report header
-const formatDate = () => {
-  const now = new Date();
-  return now.toISOString().replace("T", " ").substring(0, 19);
-};
 
 // Test result type
 interface TestResult<T> {
@@ -94,7 +100,12 @@ async function runTests(): Promise<void> {
 
   // Write report header
   log("=".repeat(80));
-  log(`PITCHER CONTROL MODULE TEST REPORT - ${formatDate()}`);
+  log(
+    `PITCHER CONTROL MODULE TEST REPORT - ${new Date()
+      .toISOString()
+      .replace("T", " ")
+      .substring(0, 19)}`
+  );
   log("=".repeat(80));
   log("\n");
 
@@ -175,10 +186,9 @@ async function runTests(): Promise<void> {
 
   // Close log file
   log("Test run complete");
-  logStream.end();
 
   // Output filepath to console
-  console.log(`\nDetailed test report written to: ${logFilePath}`);
+  console.log(`\nDetailed test report written to: ${LOG_FILE_PATH}`);
 
   // Ensure the process terminates
   setTimeout(() => {

@@ -5,8 +5,8 @@
  * and outputs detailed results to logs/stolen-bases-test.log
  */
 
-import fs from "fs";
-import path from "path";
+import * as fs from "fs";
+import * as path from "path";
 import {
   calculateStolenBaseProbability,
   getCareerStolenBaseProfile,
@@ -15,27 +15,30 @@ import {
   getPlayerSeasonStats,
 } from "../../lib/mlb/dfs-analysis/batters/stolen-bases";
 
+// Logger setup
+const LOG_FILE_PATH = path.join(__dirname, "../../logs/stolen-bases-test.log");
+
 // Create logs directory if it doesn't exist
-const logsDir = path.join(__dirname, "../../logs");
-if (!fs.existsSync(logsDir)) {
-  fs.mkdirSync(logsDir, { recursive: true });
+if (!fs.existsSync(path.dirname(LOG_FILE_PATH))) {
+  fs.mkdirSync(path.dirname(LOG_FILE_PATH), { recursive: true });
 }
 
-// Create log file path
-const logFilePath = path.join(__dirname, "../../logs/stolen-bases-test.log");
-const logStream = fs.createWriteStream(logFilePath, { flags: "w" });
+// Initialize log file with timestamp
+const initLogMessage = `
+====================================
+Stolen Bases Test Results
+Run Date: ${new Date().toISOString()}
+====================================
 
-// Helper to write to both console and log file
-function log(message: string) {
+`;
+
+fs.writeFileSync(LOG_FILE_PATH, initLogMessage);
+
+// Logger function for both console and file
+function log(message: string): void {
   console.log(message);
-  logStream.write(message + "\n");
+  fs.appendFileSync(LOG_FILE_PATH, message + "\n");
 }
-
-// Format date for report header
-const formatDate = () => {
-  const now = new Date();
-  return now.toISOString().replace("T", " ").substring(0, 19);
-};
 
 // Test result type
 interface TestResult<T> {
@@ -89,7 +92,7 @@ async function runTests(): Promise<void> {
 
   // Write report header
   log("=".repeat(80));
-  log(`STOLEN BASES MODULE TEST REPORT - ${formatDate()}`);
+  log(`STOLEN BASES MODULE TEST REPORT - ${new Date().toISOString()}`);
   log("=".repeat(80));
   log("\n");
 
@@ -171,10 +174,9 @@ async function runTests(): Promise<void> {
 
   // Close log file
   log("Test run complete");
-  logStream.end();
 
   // Output filepath to console
-  console.log(`\nDetailed test report written to: ${logFilePath}`);
+  console.log(`\nDetailed test report written to: ${LOG_FILE_PATH}`);
 
   // Ensure the process terminates
   setTimeout(() => {

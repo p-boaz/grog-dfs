@@ -1,27 +1,27 @@
 ================================================================================
-PITCHER CONTROL MODULE TEST REPORT - 2025-04-01 20:46:41
+PITCHER CONTROL MODULE TEST REPORT - 2025-04-01 22:38:30
 ================================================================================
 
 
 Testing getPitcherControlStats...
 ❌ getPitcherControlStats: Failed (null result)
-Duration: 206ms
+Duration: 200ms
 
 Testing getPitcherControlProfile...
 ❌ getPitcherControlProfile: Failed (null result)
-Duration: 60ms
+Duration: 1391ms
 
 Testing getCareerControlProfile...
 ❌ getCareerControlProfile: Failed (null result)
-Duration: 1022ms
+Duration: 1034ms
 
 Testing calculateExpectedControlEvents...
 ✅ calculateExpectedControlEvents: Success
-Duration: 76ms
+Duration: 104ms
 
 Testing calculateControlProjection...
 ✅ calculateControlProjection: Success
-Duration: 62ms
+Duration: 82ms
 
 ================================================================================
 TEST SUMMARY
@@ -29,14 +29,14 @@ TEST SUMMARY
 Total Tests: 5
 Successes: 2
 Failures: 3
-Total Duration: 1428ms
+Total Duration: 2813ms
 
 
 DETAILED RESULTS:
-getPitcherControlStats: FAILURE (206ms)
-getPitcherControlProfile: FAILURE (60ms)
-getCareerControlProfile: FAILURE (1022ms)
-calculateExpectedControlEvents: SUCCESS (76ms)
+getPitcherControlStats: FAILURE (200ms)
+getPitcherControlProfile: FAILURE (1391ms)
+getCareerControlProfile: FAILURE (1034ms)
+calculateExpectedControlEvents: SUCCESS (104ms)
 Data sample:
 {
   "expectedHitsAllowed": 6,
@@ -51,7 +51,7 @@ Data sample:
   }
 }...
 
-calculateControlProjection: SUCCESS (62ms)
+calculateControlProjection: SUCCESS (82ms)
 Data sample:
 {
   "hits": {
