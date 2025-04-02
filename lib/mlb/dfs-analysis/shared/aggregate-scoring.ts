@@ -93,7 +93,8 @@ export async function calculatePitcherDfsProjection(
 
         // Get the game feed to extract team info
         const gameFeedData = await makeMLBApiRequest<any>(
-          `/game/${gamePk}/feed/live`
+          `/game/${gamePk}/feed/live`,
+          "V11"
         );
 
         // Get home and away team IDs

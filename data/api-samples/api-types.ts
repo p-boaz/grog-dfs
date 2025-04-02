@@ -2,7 +2,7 @@
  * MLB API Response Types
  * 
  * Auto-generated from actual API responses
- * Generated on: 3/31/2025, 4:21:41 PM
+ * Generated on: 4/2/2025, 11:09:15 AM
  */
 
 /**

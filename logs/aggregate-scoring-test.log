@@ -3,65 +3,65 @@
 Testing calculatePitcherDfsProjection...
 
 Max Scherzer Projection:
-- Total Points: 10.2
-- Range: 7.6 - 12.2
-- Projected Innings: 5.0
-- Projected Strikeouts: 1.0
-- Win Probability: 20.0%
+- Total Points: 0.0
+- Range: 0.0 - 0.0
+- Projected Innings: 0.0
+- Projected Strikeouts: 0.0
+- Win Probability: 0.0%
 - Projected Earned Runs: 0.0
-- Quality Rating: 4.0/10
-- Confidence: 37
+- Quality Rating: 0.0/10
+- Confidence: 0
 
 Points Breakdown:
-- Innings: 11.3
-- Strikeouts: 2.0
-- Win: 0.8
+- Innings: 0.0
+- Strikeouts: 0.0
+- Win: 0.0
 - Rare Events: 0.0
-- Negative: -3.9
+- Negative: 0.0
 
 Alex Cobb Projection:
-- Total Points: 10.2
-- Range: 7.7 - 12.3
-- Projected Innings: 5.0
-- Projected Strikeouts: 1.0
-- Win Probability: 21.0%
+- Total Points: 0.0
+- Range: 0.0 - 0.0
+- Projected Innings: 0.0
+- Projected Strikeouts: 0.0
+- Win Probability: 0.0%
 - Projected Earned Runs: 0.0
-- Quality Rating: 4.0/10
-- Confidence: 33
+- Quality Rating: 0.0/10
+- Confidence: 0
 
 Points Breakdown:
-- Innings: 11.3
-- Strikeouts: 2.0
-- Win: 0.8
+- Innings: 0.0
+- Strikeouts: 0.0
+- Win: 0.0
 - Rare Events: 0.0
-- Negative: -3.9
+- Negative: 0.0
 
 Michael Kopech Projection:
-- Total Points: 16.1
-- Range: 12.1 - 19.3
-- Projected Innings: 9.0
-- Projected Strikeouts: 1.0
-- Win Probability: 20.0%
+- Total Points: 0.0
+- Range: 0.0 - 0.0
+- Projected Innings: 0.0
+- Projected Strikeouts: 0.0
+- Win Probability: 0.0%
 - Projected Earned Runs: 0.0
-- Quality Rating: 4.0/10
-- Confidence: 47
+- Quality Rating: 0.0/10
+- Confidence: 0
 
 Points Breakdown:
-- Innings: 20.3
-- Strikeouts: 2.0
-- Win: 0.8
+- Innings: 0.0
+- Strikeouts: 0.0
+- Win: 0.0
 - Rare Events: 0.0
-- Negative: -7.0
+- Negative: 0.0
 
 Testing rankPitcherProjections...
 
 Pitcher Rankings:
-1. Carson Fulmer: 16.1 points (Value: 2.01 pts/$1K)
-2. Noah Syndergaard: 10.2 points (Value: 1.27 pts/$1K)
-3. Jake Odorizzi: 10.2 points (Value: 1.27 pts/$1K)
+1. Pitcher 592789: 0.0 points (Value: 0.00 pts/$1K)
+2. Pitcher 543606: 0.0 points (Value: 0.00 pts/$1K)
+3. Pitcher 608334: 0.0 points (Value: 0.00 pts/$1K)
 
-Average Projection: 12.2
-Top Tier Threshold: 15.2
-Mid Tier Threshold: 11.0
+Average Projection: 0.0
+Top Tier Threshold: 0.0
+Mid Tier Threshold: 0.0
 
 All tests completed successfully!

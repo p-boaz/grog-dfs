@@ -1,0 +1,16 @@
+{
+  "endpoint": "weather/game/717465",
+  "timestamp": "2025-04-02T18:09:15.619Z",
+  "response": {
+    "temperature": 85,
+    "windSpeed": 3,
+    "windDirection": "Out To LF",
+    "precipitation": false,
+    "isOutdoor": true,
+    "venueId": 3309,
+    "venueName": "Nationals Park",
+    "hasRoof": false,
+    "sourceTimestamp": "2025-04-02T18:09:15.619Z",
+    "__isApiSource": true
+  }
+}

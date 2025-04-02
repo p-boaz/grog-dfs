@@ -1,6 +1,6 @@
 # MLB API Response Analysis
 
-Generated on: 3/31/2025, 4:21:41 PM
+Generated on: 4/2/2025, 11:09:15 AM
 
 This document contains API response samples and type information.
 
@@ -8,7 +8,7 @@ This document contains API response samples and type information.
 
 ### game/feed/717465
 
-Samples: 1
+Samples: 2
 
 #### Properties
 
@@ -58960,12 +58960,247 @@ Samples: 1
 
 ### player/batter/665742
 
-Samples: 1
+Samples: 2
 
 #### Properties
 
 - `__isApiSource`
 - `batSide`
+- `career`
+- `career.atBats`
+- `career.avg`
+- `career.babip`
+- `career.bbRate`
+- `career.caughtStealing`
+- `career.doubles`
+- `career.gamesPlayed`
+- `career.hitByPitches`
+- `career.hits`
+- `career.homeRuns`
+- `career.hrRate`
+- `career.iso`
+- `career.kRate`
+- `career.obp`
+- `career.ops`
+- `career.plateAppearances`
+- `career.rbi`
+- `career.runs`
+- `career.sacrificeFlies`
+- `career.sbRate`
+- `career.slg`
+- `career.stolenBases`
+- `career.strikeouts`
+- `career.triples`
+- `career.walks`
+- `careerByYear`
+- `careerByYear.2018`
+- `careerByYear.2018.atBats`
+- `careerByYear.2018.avg`
+- `careerByYear.2018.babip`
+- `careerByYear.2018.bbRate`
+- `careerByYear.2018.caughtStealing`
+- `careerByYear.2018.doubles`
+- `careerByYear.2018.gamesPlayed`
+- `careerByYear.2018.hitByPitches`
+- `careerByYear.2018.hits`
+- `careerByYear.2018.homeRuns`
+- `careerByYear.2018.hrRate`
+- `careerByYear.2018.iso`
+- `careerByYear.2018.kRate`
+- `careerByYear.2018.obp`
+- `careerByYear.2018.ops`
+- `careerByYear.2018.plateAppearances`
+- `careerByYear.2018.rbi`
+- `careerByYear.2018.runs`
+- `careerByYear.2018.sacrificeFlies`
+- `careerByYear.2018.sbRate`
+- `careerByYear.2018.slg`
+- `careerByYear.2018.stolenBases`
+- `careerByYear.2018.strikeouts`
+- `careerByYear.2018.triples`
+- `careerByYear.2018.walks`
+- `careerByYear.2019`
+- `careerByYear.2019.atBats`
+- `careerByYear.2019.avg`
+- `careerByYear.2019.babip`
+- `careerByYear.2019.bbRate`
+- `careerByYear.2019.caughtStealing`
+- `careerByYear.2019.doubles`
+- `careerByYear.2019.gamesPlayed`
+- `careerByYear.2019.hitByPitches`
+- `careerByYear.2019.hits`
+- `careerByYear.2019.homeRuns`
+- `careerByYear.2019.hrRate`
+- `careerByYear.2019.iso`
+- `careerByYear.2019.kRate`
+- `careerByYear.2019.obp`
+- `careerByYear.2019.ops`
+- `careerByYear.2019.plateAppearances`
+- `careerByYear.2019.rbi`
+- `careerByYear.2019.runs`
+- `careerByYear.2019.sacrificeFlies`
+- `careerByYear.2019.sbRate`
+- `careerByYear.2019.slg`
+- `careerByYear.2019.stolenBases`
+- `careerByYear.2019.strikeouts`
+- `careerByYear.2019.triples`
+- `careerByYear.2019.walks`
+- `careerByYear.2020`
+- `careerByYear.2020.atBats`
+- `careerByYear.2020.avg`
+- `careerByYear.2020.babip`
+- `careerByYear.2020.bbRate`
+- `careerByYear.2020.caughtStealing`
+- `careerByYear.2020.doubles`
+- `careerByYear.2020.gamesPlayed`
+- `careerByYear.2020.hitByPitches`
+- `careerByYear.2020.hits`
+- `careerByYear.2020.homeRuns`
+- `careerByYear.2020.hrRate`
+- `careerByYear.2020.iso`
+- `careerByYear.2020.kRate`
+- `careerByYear.2020.obp`
+- `careerByYear.2020.ops`
+- `careerByYear.2020.plateAppearances`
+- `careerByYear.2020.rbi`
+- `careerByYear.2020.runs`
+- `careerByYear.2020.sacrificeFlies`
+- `careerByYear.2020.sbRate`
+- `careerByYear.2020.slg`
+- `careerByYear.2020.stolenBases`
+- `careerByYear.2020.strikeouts`
+- `careerByYear.2020.triples`
+- `careerByYear.2020.walks`
+- `careerByYear.2021`
+- `careerByYear.2021.atBats`
+- `careerByYear.2021.avg`
+- `careerByYear.2021.babip`
+- `careerByYear.2021.bbRate`
+- `careerByYear.2021.caughtStealing`
+- `careerByYear.2021.doubles`
+- `careerByYear.2021.gamesPlayed`
+- `careerByYear.2021.hitByPitches`
+- `careerByYear.2021.hits`
+- `careerByYear.2021.homeRuns`
+- `careerByYear.2021.hrRate`
+- `careerByYear.2021.iso`
+- `careerByYear.2021.kRate`
+- `careerByYear.2021.obp`
+- `careerByYear.2021.ops`
+- `careerByYear.2021.plateAppearances`
+- `careerByYear.2021.rbi`
+- `careerByYear.2021.runs`
+- `careerByYear.2021.sacrificeFlies`
+- `careerByYear.2021.sbRate`
+- `careerByYear.2021.slg`
+- `careerByYear.2021.stolenBases`
+- `careerByYear.2021.strikeouts`
+- `careerByYear.2021.triples`
+- `careerByYear.2021.walks`
+- `careerByYear.2022`
+- `careerByYear.2022.atBats`
+- `careerByYear.2022.avg`
+- `careerByYear.2022.babip`
+- `careerByYear.2022.bbRate`
+- `careerByYear.2022.caughtStealing`
+- `careerByYear.2022.doubles`
+- `careerByYear.2022.gamesPlayed`
+- `careerByYear.2022.hitByPitches`
+- `careerByYear.2022.hits`
+- `careerByYear.2022.homeRuns`
+- `careerByYear.2022.hrRate`
+- `careerByYear.2022.iso`
+- `careerByYear.2022.kRate`
+- `careerByYear.2022.obp`
+- `careerByYear.2022.ops`
+- `careerByYear.2022.plateAppearances`
+- `careerByYear.2022.rbi`
+- `careerByYear.2022.runs`
+- `careerByYear.2022.sacrificeFlies`
+- `careerByYear.2022.sbRate`
+- `careerByYear.2022.slg`
+- `careerByYear.2022.stolenBases`
+- `careerByYear.2022.strikeouts`
+- `careerByYear.2022.triples`
+- `careerByYear.2022.walks`
+- `careerByYear.2023`
+- `careerByYear.2023.atBats`
+- `careerByYear.2023.avg`
+- `careerByYear.2023.babip`
+- `careerByYear.2023.bbRate`
+- `careerByYear.2023.caughtStealing`
+- `careerByYear.2023.doubles`
+- `careerByYear.2023.gamesPlayed`
+- `careerByYear.2023.hitByPitches`
+- `careerByYear.2023.hits`
+- `careerByYear.2023.homeRuns`
+- `careerByYear.2023.hrRate`
+- `careerByYear.2023.iso`
+- `careerByYear.2023.kRate`
+- `careerByYear.2023.obp`
+- `careerByYear.2023.ops`
+- `careerByYear.2023.plateAppearances`
+- `careerByYear.2023.rbi`
+- `careerByYear.2023.runs`
+- `careerByYear.2023.sacrificeFlies`
+- `careerByYear.2023.sbRate`
+- `careerByYear.2023.slg`
+- `careerByYear.2023.stolenBases`
+- `careerByYear.2023.strikeouts`
+- `careerByYear.2023.triples`
+- `careerByYear.2023.walks`
+- `careerByYear.2024`
+- `careerByYear.2024.atBats`
+- `careerByYear.2024.avg`
+- `careerByYear.2024.babip`
+- `careerByYear.2024.bbRate`
+- `careerByYear.2024.caughtStealing`
+- `careerByYear.2024.doubles`
+- `careerByYear.2024.gamesPlayed`
+- `careerByYear.2024.hitByPitches`
+- `careerByYear.2024.hits`
+- `careerByYear.2024.homeRuns`
+- `careerByYear.2024.hrRate`
+- `careerByYear.2024.iso`
+- `careerByYear.2024.kRate`
+- `careerByYear.2024.obp`
+- `careerByYear.2024.ops`
+- `careerByYear.2024.plateAppearances`
+- `careerByYear.2024.rbi`
+- `careerByYear.2024.runs`
+- `careerByYear.2024.sacrificeFlies`
+- `careerByYear.2024.sbRate`
+- `careerByYear.2024.slg`
+- `careerByYear.2024.stolenBases`
+- `careerByYear.2024.strikeouts`
+- `careerByYear.2024.triples`
+- `careerByYear.2024.walks`
+- `careerByYear.2025`
+- `careerByYear.2025.atBats`
+- `careerByYear.2025.avg`
+- `careerByYear.2025.babip`
+- `careerByYear.2025.bbRate`
+- `careerByYear.2025.caughtStealing`
+- `careerByYear.2025.doubles`
+- `careerByYear.2025.gamesPlayed`
+- `careerByYear.2025.hitByPitches`
+- `careerByYear.2025.hits`
+- `careerByYear.2025.homeRuns`
+- `careerByYear.2025.hrRate`
+- `careerByYear.2025.iso`
+- `careerByYear.2025.kRate`
+- `careerByYear.2025.obp`
+- `careerByYear.2025.ops`
+- `careerByYear.2025.plateAppearances`
+- `careerByYear.2025.rbi`
+- `careerByYear.2025.runs`
+- `careerByYear.2025.sacrificeFlies`
+- `careerByYear.2025.sbRate`
+- `careerByYear.2025.slg`
+- `careerByYear.2025.stolenBases`
+- `careerByYear.2025.strikeouts`
+- `careerByYear.2025.triples`
+- `careerByYear.2025.walks`
 - `careerStats`
 - `careerStats[].atBats`
 - `careerStats[].avg`
@@ -58985,9 +59220,37 @@ Samples: 1
 - `careerStats[].strikeouts`
 - `careerStats[].team`
 - `careerStats[].walks`
+- `currentSeason`
+- `currentSeason.atBats`
+- `currentSeason.avg`
+- `currentSeason.babip`
+- `currentSeason.bbRate`
+- `currentSeason.caughtStealing`
+- `currentSeason.doubles`
+- `currentSeason.gamesPlayed`
+- `currentSeason.hitByPitches`
+- `currentSeason.hits`
+- `currentSeason.homeRuns`
+- `currentSeason.hrRate`
+- `currentSeason.iso`
+- `currentSeason.kRate`
+- `currentSeason.obp`
+- `currentSeason.ops`
+- `currentSeason.plateAppearances`
+- `currentSeason.rbi`
+- `currentSeason.runs`
+- `currentSeason.sacrificeFlies`
+- `currentSeason.sbRate`
+- `currentSeason.slg`
+- `currentSeason.stolenBases`
+- `currentSeason.strikeouts`
+- `currentSeason.triples`
+- `currentSeason.walks`
 - `currentTeam`
 - `fullName`
+- `handedness`
 - `id`
+- `position`
 - `primaryPosition`
 - `seasonStats`
 - `seasonStats.atBats`
@@ -59017,6 +59280,7 @@ Samples: 1
 - `seasonStats.triples`
 - `seasonStats.walks`
 - `sourceTimestamp`
+- `team`
 
 #### Sample Response
 
@@ -59266,7 +59530,7 @@ Samples: 1
 
 ### player/pitcher/592789
 
-Samples: 1
+Samples: 2
 
 #### Properties
 
@@ -59737,7 +60001,7 @@ Samples: 1
 
 ### schedule/today
 
-Samples: 1
+Samples: 2
 
 #### Properties
 
@@ -62504,7 +62768,7 @@ Samples: 1
 
 ### weather/game/717465
 
-Samples: 1
+Samples: 2
 
 #### Properties
 
