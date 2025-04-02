@@ -8,6 +8,7 @@
 - NEVER run `pnpm typecheck` - use `pnpm lint` for code quality checks
 - NEVER run tests directly - instead, ask the user to run tests and wait for their response
 - IMPORTANT: This is a PRODUCTION codebase. Every decision must reflect professional standards. Verify all information from context. Never make assumptions or speculate without evidence
+- NEVER create new types/interfaces in code - all types must be defined in `/lib/mlb/types` and imported as needed
 
 ## Git Workflow
 
@@ -113,12 +114,14 @@ The `/lib/mlb/dfs-analysis` directory contains specialized modules organized by 
 #### Pitcher Analysis (`/lib/mlb/dfs-analysis/pitchers/`)
 
 1. **starting-pitcher-analysis.ts**: Master pitcher analysis module
+
    - Integrates all pitcher metrics into comprehensive projections
    - Handles multi-season data with prioritization rules
    - Combines strikeouts, innings, wins, and control metrics
    - Offers relative rankings and filtering for lineup construction
 
 2. **pitcher-control.ts**: Control metrics analysis
+
    - Evaluates walks and hits allowed (-0.6 pts each)
    - Analyzes command and location patterns
    - Critical for predicting negative point events
@@ -152,11 +155,13 @@ The `/lib/mlb/dfs-analysis` directory contains specialized modules organized by 
 #### Shared Analysis (`/lib/mlb/dfs-analysis/shared/`)
 
 1. **plate-discipline.ts**: Plate approach analysis
+
    - Evaluates walks and strikeouts from both perspectives
    - Used in both batter and pitcher projections
    - Models batter patience vs. pitcher command
 
 2. **quality-metrics.ts**: Standardized player evaluation
+
    - Creates normalized quality ratings for players
    - Enables relative comparisons across positions
    - Provides foundation for consistency modeling

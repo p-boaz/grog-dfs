@@ -11,6 +11,7 @@ description: Development standards, environment setup, testing, MLB analysis mod
 ## 🧠 Important Rules
 
 - We are in the year 2025
+- NEVER create new types/interfaces in code - all types must be defined in `/lib/mlb/types` and imported as needed
 - ALWAYS use `pnpm` for running scripts; NEVER use `npx`
 - The project is configured for `pnpm`; using `npx` can break dependencies
 - DO NOT use default values in functions — pass actual values explicitly

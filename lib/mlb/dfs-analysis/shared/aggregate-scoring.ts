@@ -5,17 +5,26 @@
 
 import { makeMLBApiRequest } from "../../core/api-client";
 import { getEnhancedPitcherData } from "../../services/pitcher-data-service";
+import { GameFeedApiResponse } from "../../types/api/game";
 import { isPitcherStats } from "../../types/domain/player";
 import { calculateExpectedInnings } from "../pitchers/innings-pitched";
 import { calculatePitcherWinProbability } from "../pitchers/pitcher-win";
 import { calculateRareEventPotential } from "../pitchers/rare-events";
 import { calculateExpectedStrikeouts } from "../pitchers/strikeouts";
+/**
+ * Helper function to safely extract team ID from game feed data
+ * Based on actual API response structure from api-samples
+ */
+function extractTeamId(teamData: any): number | undefined {
+  if (!teamData) return undefined;
+
+  // From the sample data, we can see the ID is directly on the team object
+  return teamData.id;
+}
 
 /**
  * Helper function to find which team a pitcher is on in a game
- * @param gameFeedData Game feed data from MLB API
- * @param pitcherId MLB Player ID for the pitcher
- * @returns Team ID for the pitcher's team, or undefined if not found
+ * Updated to match actual API response structure
  */
 function findPitcherTeamId(
   gameFeedData: any,
@@ -33,8 +42,26 @@ function findPitcherTeamId(
     return undefined;
   }
 
-  // Get the pitcher's current team ID
-  return pitcher.currentTeam?.id;
+  // In the sample data, we need to look up the team through the boxscore
+  // as player data doesn't directly contain current team ID
+  const boxscore = gameFeedData.liveData?.boxscore;
+  if (!boxscore) return undefined;
+
+  // Check both teams' player lists
+  const homeTeamId = gameFeedData.gameData.teams.home.id;
+  const awayTeamId = gameFeedData.gameData.teams.away.id;
+
+  // Check if pitcher is in home team's roster
+  if (boxscore.teams.home.players[pitcherKey]) {
+    return homeTeamId;
+  }
+
+  // Check if pitcher is in away team's roster
+  if (boxscore.teams.away.players[pitcherKey]) {
+    return awayTeamId;
+  }
+
+  return undefined;
 }
 
 /**
@@ -92,24 +119,31 @@ export async function calculatePitcherDfsProjection(
         const pitcherData = await getEnhancedPitcherData(pitcherId, season);
 
         // Get the game feed to extract team info
-        const gameFeedData = await makeMLBApiRequest<any>(
+        const gameFeedData = await makeMLBApiRequest<GameFeedApiResponse>(
           `/game/${gamePk}/feed/live`,
           "V11"
         );
 
-        // Get home and away team IDs
-        const homeTeamId = gameFeedData?.gameData?.teams?.home?.team?.id;
-        const awayTeamId = gameFeedData?.gameData?.teams?.away?.team?.id;
+        // Get home and away team IDs - now using correct path from sample data
+        const homeTeamId = extractTeamId(gameFeedData?.gameData?.teams?.home);
+        const awayTeamId = extractTeamId(gameFeedData?.gameData?.teams?.away);
 
         // Get the pitcher's team ID from the game data
         const pitcherTeamId = findPitcherTeamId(gameFeedData, pitcherId);
+
+        if (!homeTeamId || !awayTeamId) {
+          console.warn(
+            `Missing team IDs in game feed for game ${gamePk}. Home: ${homeTeamId}, Away: ${awayTeamId}`
+          );
+        }
 
         // Determine opposing team (the team the pitcher is not on)
         opposingTeamID = pitcherTeamId === homeTeamId ? awayTeamId : homeTeamId;
 
         if (!opposingTeamID) {
           console.warn(
-            `Could not determine opposing team ID for game ${gamePk}, skipping team-specific calculations`
+            `Could not determine opposing team ID for game ${gamePk}. ` +
+              `Pitcher Team: ${pitcherTeamId}, Home: ${homeTeamId}, Away: ${awayTeamId}`
           );
           // Return a default projection without team-specific data
           return {

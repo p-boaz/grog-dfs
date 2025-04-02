@@ -9,7 +9,7 @@ import {
   rankPitcherProjections,
 } from "../../lib/mlb/dfs-analysis/shared/aggregate-scoring";
 
-import { ScheduleApiResponse } from "../../lib/mlb/types/api/game";
+import { Game } from "../../lib/mlb/types/domain/game";
 
 // Setup logging
 const LOG_FILE = path.join(__dirname, "../../logs/aggregate-scoring-test.log");
@@ -24,15 +24,41 @@ function log(message: string) {
   fs.appendFileSync(LOG_FILE, message + "\n", "utf-8");
 }
 
-async function getTodaysGames() {
+interface Game {
+  gamePk: number;
+  teams: {
+    away: {
+      team: {
+        id: number;
+        name: string;
+      };
+      probablePitcher?: {
+        id: number;
+        fullName: string;
+      };
+    };
+    home: {
+      team: {
+        id: number;
+        name: string;
+      };
+      probablePitcher?: {
+        id: number;
+        fullName: string;
+      };
+    };
+  };
+}
+
+async function getTodaysGames(): Promise<Game[]> {
   const today = new Date();
   const formattedDate = today.toISOString().split("T")[0];
   log(`Fetching MLB schedule for date: ${formattedDate}`);
 
   try {
-    const scheduleResponse = await makeMLBApiRequest<ScheduleApiResponse>(
-      `/schedule?sportId=1&date=${formattedDate}&hydrate=probablePitcher`
-    );
+    const scheduleResponse = await makeMLBApiRequest<{
+      dates: Array<{ games: Game[] }>;
+    }>(`/schedule?sportId=1&date=${formattedDate}&hydrate=probablePitcher`);
 
     if (!scheduleResponse.dates || scheduleResponse.dates.length === 0) {
       log("No games found for today");
