@@ -349,10 +349,23 @@ export async function insertGame(game: Domain.Game): Promise<void> {
     status = MLBGameStatus.CANCELLED;
   }
 
+  // Ensure date format is correct for database
+  let dateString: string;
+  let dateObj: Date;
+  
+  if (typeof game.gameDate === 'string') {
+    dateString = game.gameDate.split('T')[0]; // Just the date part
+    dateObj = new Date(game.gameDate);
+  } else {
+    const now = new Date();
+    dateString = now.toISOString().split('T')[0];
+    dateObj = now;
+  }
+
   const newGame: NewMLBGame = {
     gamePk: game.gamePk,
-    gameDate: new Date(game.gameDate.split('T')[0]), // Just the date part
-    gameTime: new Date(game.gameDate), // Full timestamp
+    gameDate: dateString, // Store as YYYY-MM-DD string
+    gameTime: dateObj, // Full timestamp
     homeTeamId: game.teams.home.team.id,
     awayTeamId: game.teams.away.team.id,
     homeTeamName: game.teams.home.team.name,

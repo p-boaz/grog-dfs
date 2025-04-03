@@ -24,6 +24,7 @@ import {
   saveBatterProjection,
   savePitcherProjection
 } from "../db/queries";
+import { formatDateForDb } from "../db/utils";
 
 // Constants for placeholder values
 const PLACEHOLDER = {
@@ -348,42 +349,56 @@ export async function collectDailyDFSData(
 
           // Create a game object from our game data
           if (game) {
-            await insertGame({
-              gamePk: game.gameId,
-              gameDate: game.gameTime,
-              teams: {
-                home: {
-                  team: {
-                    id: game.homeTeam.id,
-                    name: game.homeTeam.name
+            // Use simple date string in YYYY-MM-DD format for consistent handling
+            const today = new Date();
+            const dateString = today.toISOString().split('T')[0]; // Just YYYY-MM-DD
+            
+            try {
+              await insertGame({
+                gamePk: game.gameId,
+                gameDate: dateString, // Simple date string
+                teams: {
+                  home: {
+                    team: {
+                      id: game.homeTeam.id,
+                      name: game.homeTeam.name
+                    }
+                  },
+                  away: {
+                    team: {
+                      id: game.awayTeam.id,
+                      name: game.awayTeam.name
+                    }
                   }
                 },
-                away: {
-                  team: {
-                    id: game.awayTeam.id,
-                    name: game.awayTeam.name
-                  }
-                }
-              },
-              venue: game.venue,
-              status: game.status
-            });
+                venue: game.venue,
+                status: game.status
+              });
+              console.log(`✅ Successfully inserted game ${game.gameId}`);
+            } catch (error) {
+              console.error(`❌ Error inserting game ${game.gameId}:`, error);
+            }
           }
 
           // Save projection data
-          await savePitcherProjection({
-            playerId: pitcher.pitcherId,
-            gamePk: pitcher.gameId,
-            projectedPoints: pitcher.projections.dfsProjection.expectedPoints || 0,
-            confidence: 70, // Default value
-            draftKingsSalary: pitcher.draftKings.salary || 0,
-            projectedInnings: pitcher.projections.expectedInnings || 0,
-            projectedStrikeouts: pitcher.projections.expectedStrikeouts || 0,
-            projectedWinProbability: pitcher.projections.winProbability || 0,
-            projectedQualityStart: 0.5, // Default value - should be calculated properly
-            opposingLineupStrength: 0.5, // Default value - should be calculated properly
-            analysisFactors: ["pitcher analysis", "matchup", "weather"]
-          });
+          try {
+            await savePitcherProjection({
+              playerId: pitcher.pitcherId,
+              gamePk: pitcher.gameId,
+              projectedPoints: pitcher.projections.dfsProjection.expectedPoints || 0,
+              confidence: 70, // Default value
+              draftKingsSalary: pitcher.draftKings.salary || 0,
+              projectedInnings: pitcher.projections.expectedInnings || 0,
+              projectedStrikeouts: pitcher.projections.expectedStrikeouts || 0,
+              projectedWinProbability: pitcher.projections.winProbability || 0,
+              projectedQualityStart: 0.5, // Default value - should be calculated properly
+              opposingLineupStrength: 0.5, // Default value - should be calculated properly
+              analysisFactors: ["pitcher analysis", "matchup", "weather"]
+            });
+            console.log(`✅ Successfully saved projection for pitcher ${pitcher.name}`);
+          } catch (error) {
+            console.error(`❌ Error saving projection for pitcher ${pitcher.name}:`, error);
+          }
           
           console.log(`✅ Saved pitcher data for ${pitcher.name}`);
         } catch (error) {
@@ -546,44 +561,58 @@ export async function collectDailyDFSData(
 
           // Create a game object from our game data if not already inserted
           if (game) {
-            await insertGame({
-              gamePk: game.gameId,
-              gameDate: game.gameTime,
-              teams: {
-                home: {
-                  team: {
-                    id: game.homeTeam.id,
-                    name: game.homeTeam.name
+            // Use simple date string in YYYY-MM-DD format for consistent handling
+            const today = new Date();
+            const dateString = today.toISOString().split('T')[0]; // Just YYYY-MM-DD
+            
+            try {
+              await insertGame({
+                gamePk: game.gameId,
+                gameDate: dateString, // Simple date string
+                teams: {
+                  home: {
+                    team: {
+                      id: game.homeTeam.id,
+                      name: game.homeTeam.name
+                    }
+                  },
+                  away: {
+                    team: {
+                      id: game.awayTeam.id,
+                      name: game.awayTeam.name
+                    }
                   }
                 },
-                away: {
-                  team: {
-                    id: game.awayTeam.id,
-                    name: game.awayTeam.name
-                  }
-                }
-              },
-              venue: game.venue,
-              status: game.status
-            });
+                venue: game.venue,
+                status: game.status
+              });
+              console.log(`✅ Successfully inserted game ${game.gameId}`);
+            } catch (error) {
+              console.error(`❌ Error inserting game ${game.gameId}:`, error);
+            }
           }
 
           // Save projection data for batters
-          await saveBatterProjection({
-            playerId: batter.batterId,
-            gamePk: batter.gameId,
-            projectedPoints: batter.projections.dfsProjection.expectedPoints || 0,
-            confidence: 70, // Default value
-            draftKingsSalary: batter.draftKings.salary || 0,
-            projectedHits: batter.projections.expectedHits?.total || 0,
-            projectedHomeRuns: batter.projections.homeRunProbability || 0,
-            projectedRbi: batter.projections.dfsProjection.breakdown?.rbi || 0,
-            projectedRuns: batter.projections.dfsProjection.breakdown?.runs || 0,
-            projectedStolenBases: batter.projections.stolenBaseProbability || 0,
-            battingOrderPosition: batter.lineupPosition,
-            opposingPitcherId: batter.opposingPitcher?.id,
-            analysisFactors: ["batter analysis", "matchup", "weather"]
-          });
+          try {
+            await saveBatterProjection({
+              playerId: batter.batterId,
+              gamePk: batter.gameId,
+              projectedPoints: batter.projections.dfsProjection.expectedPoints || 0,
+              confidence: 70, // Default value
+              draftKingsSalary: batter.draftKings.salary || 0,
+              projectedHits: batter.projections.expectedHits?.total || 0,
+              projectedHomeRuns: batter.projections.homeRunProbability || 0,
+              projectedRbi: batter.projections.dfsProjection.breakdown?.rbi || 0,
+              projectedRuns: batter.projections.dfsProjection.breakdown?.runs || 0,
+              projectedStolenBases: batter.projections.stolenBaseProbability || 0,
+              battingOrderPosition: batter.lineupPosition,
+              opposingPitcherId: batter.opposingPitcher?.id,
+              analysisFactors: ["batter analysis", "matchup", "weather"]
+            });
+            console.log(`✅ Successfully saved projection for batter ${batter.name}`);
+          } catch (error) {
+            console.error(`❌ Error saving projection for batter ${batter.name}:`, error);
+          }
           
           savedBatters++;
           

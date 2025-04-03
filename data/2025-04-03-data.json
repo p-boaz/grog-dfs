@@ -1,0 +1,2081 @@
+{
+  "date": "2025-04-03",
+  "games": [
+    {
+      "gameId": 778470,
+      "gameTime": "2025-04-03T17:05:00Z",
+      "status": {
+        "abstractGameState": "Final",
+        "codedGameState": "F",
+        "detailedState": "Final",
+        "statusCode": "F",
+        "startTimeTBD": false,
+        "abstractGameCode": "F"
+      },
+      "homeTeam": {
+        "id": 110,
+        "name": "Baltimore Orioles"
+      },
+      "awayTeam": {
+        "id": 111,
+        "name": "Boston Red Sox"
+      },
+      "venue": {
+        "id": 2,
+        "name": "Oriole Park at Camden Yards"
+      },
+      "lineups": {
+        "away": [
+          680776,
+          646240,
+          608324,
+          671213,
+          596115,
+          677800,
+          692225,
+          665966,
+          678882
+        ],
+        "home": [
+          656775,
+          668939,
+          676059,
+          656811,
+          641933,
+          663624,
+          702616,
+          602104,
+          666185
+        ],
+        "awayBatters": [
+          {
+            "id": 680776,
+            "fullName": "Jarren Duran",
+            "position": "LF"
+          },
+          {
+            "id": 646240,
+            "fullName": "Rafael Devers",
+            "position": "DH"
+          },
+          {
+            "id": 608324,
+            "fullName": "Alex Bregman",
+            "position": "3B"
+          },
+          {
+            "id": 671213,
+            "fullName": "Triston Casas",
+            "position": "1B"
+          },
+          {
+            "id": 596115,
+            "fullName": "Trevor Story",
+            "position": "SS"
+          },
+          {
+            "id": 677800,
+            "fullName": "Wilyer Abreu",
+            "position": "RF"
+          },
+          {
+            "id": 692225,
+            "fullName": "Kristian Campbell",
+            "position": "2B"
+          },
+          {
+            "id": 665966,
+            "fullName": "Carlos Narváez",
+            "position": "C"
+          },
+          {
+            "id": 678882,
+            "fullName": "Ceddanne Rafaela",
+            "position": "CF"
+          },
+          {
+            "id": 656557,
+            "fullName": "Tanner Houck",
+            "position": "P"
+          },
+          {
+            "id": 677161,
+            "fullName": "Zack Kelly",
+            "position": "P"
+          },
+          {
+            "id": 458677,
+            "fullName": "Justin Wilson",
+            "position": "P"
+          },
+          {
+            "id": 686580,
+            "fullName": "Justin Slaten",
+            "position": "P"
+          },
+          {
+            "id": 676477,
+            "fullName": "Garrett Whitlock",
+            "position": "P"
+          }
+        ],
+        "homeBatters": [
+          {
+            "id": 656775,
+            "fullName": "Cedric Mullins",
+            "position": "CF"
+          },
+          {
+            "id": 668939,
+            "fullName": "Adley Rutschman",
+            "position": "C"
+          },
+          {
+            "id": 676059,
+            "fullName": "Jordan Westburg",
+            "position": "2B"
+          },
+          {
+            "id": 656811,
+            "fullName": "Ryan O'Hearn",
+            "position": "RF"
+          },
+          {
+            "id": 641933,
+            "fullName": "Tyler O'Neill",
+            "position": "DH"
+          },
+          {
+            "id": 677008,
+            "fullName": "Heston Kjerstad",
+            "position": "RF"
+          },
+          {
+            "id": 663624,
+            "fullName": "Ryan Mountcastle",
+            "position": "1B"
+          },
+          {
+            "id": 702616,
+            "fullName": "Jackson Holliday",
+            "position": "SS"
+          },
+          {
+            "id": 602104,
+            "fullName": "Ramón Urías",
+            "position": "3B"
+          },
+          {
+            "id": 666185,
+            "fullName": "Dylan Carlson",
+            "position": "LF"
+          },
+          {
+            "id": 450203,
+            "fullName": "Charlie Morton",
+            "position": "P"
+          },
+          {
+            "id": 641329,
+            "fullName": "Bryan Baker",
+            "position": "P"
+          },
+          {
+            "id": 669211,
+            "fullName": "Keegan Akin",
+            "position": "P"
+          },
+          {
+            "id": 621199,
+            "fullName": "Matt Bowman",
+            "position": "P"
+          }
+        ],
+        "confirmed": true,
+        "sourceTimestamp": "2025-04-03T23:01:19.364Z",
+        "__isApiSource": true
+      },
+      "pitchers": {
+        "away": {
+          "id": 656557,
+          "fullName": "Tanner Houck"
+        },
+        "home": {
+          "id": 450203,
+          "fullName": "Charlie Morton"
+        }
+      },
+      "environment": {
+        "temperature": 71,
+        "windSpeed": 12,
+        "windDirection": "Out To LF",
+        "precipitation": false,
+        "isOutdoor": true,
+        "venueId": 2,
+        "venueName": "Oriole Park at Camden Yards",
+        "hasRoof": false,
+        "sourceTimestamp": "2025-04-03T23:01:19.081Z",
+        "__isApiSource": true
+      },
+      "teamStats": {
+        "home": {
+          "hitting": {
+            "gamesPlayed": 7,
+            "groundOuts": 45,
+            "airOuts": 65,
+            "runs": 36,
+            "doubles": 10,
+            "triples": 0,
+            "homeRuns": 11,
+            "strikeOuts": 64,
+            "baseOnBalls": 20,
+            "intentionalWalks": 0,
+            "hits": 65,
+            "hitByPitch": 4,
+            "avg": ".277",
+            "atBats": 235,
+            "obp": ".338",
+            "slg": ".460",
+            "ops": ".798",
+            "caughtStealing": 2,
+            "stolenBases": 4,
+            "stolenBasePercentage": ".667",
+            "groundIntoDoublePlay": 7,
+            "numberOfPitches": 1054,
+            "plateAppearances": 263,
+            "totalBases": 108,
+            "rbi": 35,
+            "leftOnBase": 41,
+            "sacBunts": 0,
+            "sacFlies": 4,
+            "babip": ".329",
+            "groundOutsToAirouts": "0.69",
+            "catchersInterference": 0,
+            "atBatsPerHomeRun": "21.36"
+          },
+          "pitching": {
+            "gamesPlayed": 7,
+            "gamesStarted": 7,
+            "groundOuts": 50,
+            "airOuts": 61,
+            "runs": 34,
+            "doubles": 14,
+            "triples": 1,
+            "homeRuns": 7,
+            "strikeOuts": 65,
+            "baseOnBalls": 24,
+            "intentionalWalks": 0,
+            "hits": 62,
+            "hitByPitch": 1,
+            "avg": ".265",
+            "atBats": 234,
+            "obp": ".331",
+            "slg": ".423",
+            "ops": ".754",
+            "caughtStealing": 1,
+            "stolenBases": 2,
+            "stolenBasePercentage": ".667",
+            "groundIntoDoublePlay": 3,
+            "numberOfPitches": 1063,
+            "era": "4.87",
+            "inningsPitched": "61.0",
+            "wins": 3,
+            "losses": 4,
+            "saves": 0,
+            "saveOpportunities": 0,
+            "holds": 4,
+            "blownSaves": 0,
+            "earnedRuns": 33,
+            "whip": "1.41",
+            "battersFaced": 263,
+            "outs": 183,
+            "gamesPitched": 7,
+            "completeGames": 0,
+            "shutouts": 0,
+            "strikes": 681,
+            "strikePercentage": ".640",
+            "hitBatsmen": 1,
+            "balks": 1,
+            "wildPitches": 5,
+            "pickoffs": 1,
+            "totalBases": 99,
+            "groundOutsToAirouts": "0.82",
+            "winPercentage": ".429",
+            "pitchesPerInning": "17.43",
+            "gamesFinished": 7,
+            "strikeoutWalkRatio": "2.71",
+            "strikeoutsPer9Inn": "9.59",
+            "walksPer9Inn": "3.54",
+            "hitsPer9Inn": "9.15",
+            "runsScoredPer9": "5.02",
+            "homeRunsPer9": "1.03",
+            "catchersInterference": 0,
+            "sacBunts": 0,
+            "sacFlies": 4
+          },
+          "name": "Baltimore Orioles"
+        },
+        "away": {
+          "hitting": {
+            "gamesPlayed": 7,
+            "groundOuts": 55,
+            "airOuts": 56,
+            "runs": 27,
+            "doubles": 11,
+            "triples": 1,
+            "homeRuns": 7,
+            "strikeOuts": 75,
+            "baseOnBalls": 25,
+            "intentionalWalks": 1,
+            "hits": 55,
+            "hitByPitch": 1,
+            "avg": ".229",
+            "atBats": 240,
+            "obp": ".303",
+            "slg": ".371",
+            "ops": ".674",
+            "caughtStealing": 0,
+            "stolenBases": 9,
+            "stolenBasePercentage": "1.000",
+            "groundIntoDoublePlay": 2,
+            "numberOfPitches": 1090,
+            "plateAppearances": 267,
+            "totalBases": 89,
+            "rbi": 26,
+            "leftOnBase": 51,
+            "sacBunts": 0,
+            "sacFlies": 1,
+            "babip": ".302",
+            "groundOutsToAirouts": "0.98",
+            "catchersInterference": 0,
+            "atBatsPerHomeRun": "34.29"
+          },
+          "pitching": {
+            "gamesPlayed": 7,
+            "gamesStarted": 7,
+            "groundOuts": 54,
+            "airOuts": 62,
+            "runs": 25,
+            "doubles": 9,
+            "triples": 0,
+            "homeRuns": 6,
+            "strikeOuts": 47,
+            "baseOnBalls": 14,
+            "intentionalWalks": 0,
+            "hits": 56,
+            "hitByPitch": 3,
+            "avg": ".258",
+            "atBats": 217,
+            "obp": ".309",
+            "slg": ".382",
+            "ops": ".691",
+            "caughtStealing": 1,
+            "stolenBases": 5,
+            "stolenBasePercentage": ".833",
+            "groundIntoDoublePlay": 10,
+            "numberOfPitches": 872,
+            "era": "3.81",
+            "inningsPitched": "59.0",
+            "wins": 3,
+            "losses": 4,
+            "saves": 2,
+            "saveOpportunities": 2,
+            "holds": 1,
+            "blownSaves": 0,
+            "earnedRuns": 25,
+            "whip": "1.19",
+            "battersFaced": 237,
+            "outs": 177,
+            "gamesPitched": 7,
+            "completeGames": 0,
+            "shutouts": 1,
+            "strikes": 565,
+            "strikePercentage": ".650",
+            "hitBatsmen": 3,
+            "balks": 0,
+            "wildPitches": 0,
+            "pickoffs": 0,
+            "totalBases": 83,
+            "groundOutsToAirouts": "0.87",
+            "winPercentage": ".429",
+            "pitchesPerInning": "14.78",
+            "gamesFinished": 7,
+            "strikeoutWalkRatio": "3.36",
+            "strikeoutsPer9Inn": "7.17",
+            "walksPer9Inn": "2.14",
+            "hitsPer9Inn": "8.54",
+            "runsScoredPer9": "3.81",
+            "homeRunsPer9": "0.92",
+            "catchersInterference": 1,
+            "sacBunts": 0,
+            "sacFlies": 2
+          },
+          "name": "Boston Red Sox"
+        }
+      },
+      "ballpark": {
+        "overall": 1,
+        "handedness": {
+          "rHB": 1,
+          "lHB": 1
+        },
+        "types": {
+          "singles": 1,
+          "doubles": 1,
+          "triples": 1,
+          "homeRuns": 1,
+          "runs": 1
+        },
+        "venueId": 2
+      }
+    },
+    {
+      "gameId": 778467,
+      "gameTime": "2025-04-03T17:05:00Z",
+      "status": {
+        "abstractGameState": "Final",
+        "codedGameState": "F",
+        "detailedState": "Final",
+        "statusCode": "F",
+        "startTimeTBD": false,
+        "abstractGameCode": "F"
+      },
+      "homeTeam": {
+        "id": 143,
+        "name": "Philadelphia Phillies"
+      },
+      "awayTeam": {
+        "id": 115,
+        "name": "Colorado Rockies"
+      },
+      "venue": {
+        "id": 2681,
+        "name": "Citizens Bank Park"
+      },
+      "lineups": {
+        "away": [
+          686668,
+          678662,
+          641857,
+          696100,
+          669911,
+          656248,
+          607732,
+          687597,
+          671289
+        ],
+        "home": [
+          656941,
+          607208,
+          547180,
+          664761,
+          596146,
+          592206,
+          592663,
+          681082,
+          669016
+        ],
+        "awayBatters": [
+          {
+            "id": 686668,
+            "fullName": "Brenton Doyle",
+            "position": "CF"
+          },
+          {
+            "id": 678662,
+            "fullName": "Ezequiel Tovar",
+            "position": "SS"
+          },
+          {
+            "id": 641857,
+            "fullName": "Ryan McMahon",
+            "position": "3B"
+          },
+          {
+            "id": 696100,
+            "fullName": "Hunter Goodman",
+            "position": "DH"
+          },
+          {
+            "id": 669911,
+            "fullName": "Michael Toglia",
+            "position": "1B"
+          },
+          {
+            "id": 605361,
+            "fullName": "Nick Martini",
+            "position": "RF"
+          },
+          {
+            "id": 656248,
+            "fullName": "Sean Bouchard",
+            "position": "PH"
+          },
+          {
+            "id": 607732,
+            "fullName": "Jacob Stallings",
+            "position": "C"
+          },
+          {
+            "id": 666160,
+            "fullName": "Mickey Moniak",
+            "position": "LF"
+          },
+          {
+            "id": 571657,
+            "fullName": "Kyle Farmer",
+            "position": "PH"
+          },
+          {
+            "id": 687597,
+            "fullName": "Jordan Beck",
+            "position": "PR"
+          },
+          {
+            "id": 671289,
+            "fullName": "Tyler Freeman",
+            "position": "2B"
+          },
+          {
+            "id": 622608,
+            "fullName": "Antonio Senzatela",
+            "position": "P"
+          },
+          {
+            "id": 678821,
+            "fullName": "Luis Peralta",
+            "position": "P"
+          },
+          {
+            "id": 641755,
+            "fullName": "Tyler Kinley",
+            "position": "P"
+          },
+          {
+            "id": 680767,
+            "fullName": "Victor Vodnik",
+            "position": "P"
+          }
+        ],
+        "homeBatters": [
+          {
+            "id": 656941,
+            "fullName": "Kyle Schwarber",
+            "position": "DH"
+          },
+          {
+            "id": 607208,
+            "fullName": "Trea Turner",
+            "position": "SS"
+          },
+          {
+            "id": 547180,
+            "fullName": "Bryce Harper",
+            "position": "1B"
+          },
+          {
+            "id": 664761,
+            "fullName": "Alec Bohm",
+            "position": "3B"
+          },
+          {
+            "id": 596146,
+            "fullName": "Max Kepler",
+            "position": "LF"
+          },
+          {
+            "id": 592206,
+            "fullName": "Nick Castellanos",
+            "position": "RF"
+          },
+          {
+            "id": 592663,
+            "fullName": "J.T. Realmuto",
+            "position": "C"
+          },
+          {
+            "id": 681082,
+            "fullName": "Bryson Stott",
+            "position": "2B"
+          },
+          {
+            "id": 669016,
+            "fullName": "Brandon Marsh",
+            "position": "CF"
+          },
+          {
+            "id": 592836,
+            "fullName": "Taijuan Walker",
+            "position": "P"
+          },
+          {
+            "id": 689147,
+            "fullName": "Orion Kerkering",
+            "position": "P"
+          },
+          {
+            "id": 605447,
+            "fullName": "Jordan Romano",
+            "position": "P"
+          },
+          {
+            "id": 621237,
+            "fullName": "José Alvarado",
+            "position": "P"
+          }
+        ],
+        "confirmed": true,
+        "sourceTimestamp": "2025-04-03T23:01:19.455Z",
+        "__isApiSource": true
+      },
+      "pitchers": {
+        "away": {
+          "id": 622608,
+          "fullName": "Antonio Senzatela"
+        },
+        "home": {
+          "id": 592836,
+          "fullName": "Taijuan Walker"
+        }
+      },
+      "environment": {
+        "temperature": 71,
+        "windSpeed": 12,
+        "windDirection": "Out To LF",
+        "precipitation": false,
+        "isOutdoor": true,
+        "venueId": 2,
+        "venueName": "Oriole Park at Camden Yards",
+        "hasRoof": false,
+        "sourceTimestamp": "2025-04-03T23:01:19.081Z",
+        "__isApiSource": true
+      },
+      "teamStats": {
+        "home": {
+          "hitting": {
+            "gamesPlayed": 7,
+            "groundOuts": 45,
+            "airOuts": 65,
+            "runs": 36,
+            "doubles": 10,
+            "triples": 0,
+            "homeRuns": 11,
+            "strikeOuts": 64,
+            "baseOnBalls": 20,
+            "intentionalWalks": 0,
+            "hits": 65,
+            "hitByPitch": 4,
+            "avg": ".277",
+            "atBats": 235,
+            "obp": ".338",
+            "slg": ".460",
+            "ops": ".798",
+            "caughtStealing": 2,
+            "stolenBases": 4,
+            "stolenBasePercentage": ".667",
+            "groundIntoDoublePlay": 7,
+            "numberOfPitches": 1054,
+            "plateAppearances": 263,
+            "totalBases": 108,
+            "rbi": 35,
+            "leftOnBase": 41,
+            "sacBunts": 0,
+            "sacFlies": 4,
+            "babip": ".329",
+            "groundOutsToAirouts": "0.69",
+            "catchersInterference": 0,
+            "atBatsPerHomeRun": "21.36"
+          },
+          "pitching": {
+            "gamesPlayed": 7,
+            "gamesStarted": 7,
+            "groundOuts": 50,
+            "airOuts": 61,
+            "runs": 34,
+            "doubles": 14,
+            "triples": 1,
+            "homeRuns": 7,
+            "strikeOuts": 65,
+            "baseOnBalls": 24,
+            "intentionalWalks": 0,
+            "hits": 62,
+            "hitByPitch": 1,
+            "avg": ".265",
+            "atBats": 234,
+            "obp": ".331",
+            "slg": ".423",
+            "ops": ".754",
+            "caughtStealing": 1,
+            "stolenBases": 2,
+            "stolenBasePercentage": ".667",
+            "groundIntoDoublePlay": 3,
+            "numberOfPitches": 1063,
+            "era": "4.87",
+            "inningsPitched": "61.0",
+            "wins": 3,
+            "losses": 4,
+            "saves": 0,
+            "saveOpportunities": 0,
+            "holds": 4,
+            "blownSaves": 0,
+            "earnedRuns": 33,
+            "whip": "1.41",
+            "battersFaced": 263,
+            "outs": 183,
+            "gamesPitched": 7,
+            "completeGames": 0,
+            "shutouts": 0,
+            "strikes": 681,
+            "strikePercentage": ".640",
+            "hitBatsmen": 1,
+            "balks": 1,
+            "wildPitches": 5,
+            "pickoffs": 1,
+            "totalBases": 99,
+            "groundOutsToAirouts": "0.82",
+            "winPercentage": ".429",
+            "pitchesPerInning": "17.43",
+            "gamesFinished": 7,
+            "strikeoutWalkRatio": "2.71",
+            "strikeoutsPer9Inn": "9.59",
+            "walksPer9Inn": "3.54",
+            "hitsPer9Inn": "9.15",
+            "runsScoredPer9": "5.02",
+            "homeRunsPer9": "1.03",
+            "catchersInterference": 0,
+            "sacBunts": 0,
+            "sacFlies": 4
+          },
+          "name": "Baltimore Orioles"
+        },
+        "away": {
+          "hitting": {
+            "gamesPlayed": 7,
+            "groundOuts": 55,
+            "airOuts": 56,
+            "runs": 27,
+            "doubles": 11,
+            "triples": 1,
+            "homeRuns": 7,
+            "strikeOuts": 75,
+            "baseOnBalls": 25,
+            "intentionalWalks": 1,
+            "hits": 55,
+            "hitByPitch": 1,
+            "avg": ".229",
+            "atBats": 240,
+            "obp": ".303",
+            "slg": ".371",
+            "ops": ".674",
+            "caughtStealing": 0,
+            "stolenBases": 9,
+            "stolenBasePercentage": "1.000",
+            "groundIntoDoublePlay": 2,
+            "numberOfPitches": 1090,
+            "plateAppearances": 267,
+            "totalBases": 89,
+            "rbi": 26,
+            "leftOnBase": 51,
+            "sacBunts": 0,
+            "sacFlies": 1,
+            "babip": ".302",
+            "groundOutsToAirouts": "0.98",
+            "catchersInterference": 0,
+            "atBatsPerHomeRun": "34.29"
+          },
+          "pitching": {
+            "gamesPlayed": 7,
+            "gamesStarted": 7,
+            "groundOuts": 54,
+            "airOuts": 62,
+            "runs": 25,
+            "doubles": 9,
+            "triples": 0,
+            "homeRuns": 6,
+            "strikeOuts": 47,
+            "baseOnBalls": 14,
+            "intentionalWalks": 0,
+            "hits": 56,
+            "hitByPitch": 3,
+            "avg": ".258",
+            "atBats": 217,
+            "obp": ".309",
+            "slg": ".382",
+            "ops": ".691",
+            "caughtStealing": 1,
+            "stolenBases": 5,
+            "stolenBasePercentage": ".833",
+            "groundIntoDoublePlay": 10,
+            "numberOfPitches": 872,
+            "era": "3.81",
+            "inningsPitched": "59.0",
+            "wins": 3,
+            "losses": 4,
+            "saves": 2,
+            "saveOpportunities": 2,
+            "holds": 1,
+            "blownSaves": 0,
+            "earnedRuns": 25,
+            "whip": "1.19",
+            "battersFaced": 237,
+            "outs": 177,
+            "gamesPitched": 7,
+            "completeGames": 0,
+            "shutouts": 1,
+            "strikes": 565,
+            "strikePercentage": ".650",
+            "hitBatsmen": 3,
+            "balks": 0,
+            "wildPitches": 0,
+            "pickoffs": 0,
+            "totalBases": 83,
+            "groundOutsToAirouts": "0.87",
+            "winPercentage": ".429",
+            "pitchesPerInning": "14.78",
+            "gamesFinished": 7,
+            "strikeoutWalkRatio": "3.36",
+            "strikeoutsPer9Inn": "7.17",
+            "walksPer9Inn": "2.14",
+            "hitsPer9Inn": "8.54",
+            "runsScoredPer9": "3.81",
+            "homeRunsPer9": "0.92",
+            "catchersInterference": 1,
+            "sacBunts": 0,
+            "sacFlies": 2
+          },
+          "name": "Boston Red Sox"
+        }
+      },
+      "ballpark": {
+        "overall": 1,
+        "handedness": {
+          "rHB": 1,
+          "lHB": 1
+        },
+        "types": {
+          "singles": 1,
+          "doubles": 1,
+          "triples": 1,
+          "homeRuns": 1,
+          "runs": 1
+        },
+        "venueId": 2
+      }
+    },
+    {
+      "gameId": 778462,
+      "gameTime": "2025-04-03T20:10:00Z",
+      "status": {
+        "abstractGameState": "Final",
+        "codedGameState": "F",
+        "detailedState": "Final",
+        "statusCode": "F",
+        "startTimeTBD": false,
+        "abstractGameCode": "F"
+      },
+      "homeTeam": {
+        "id": 142,
+        "name": "Minnesota Twins"
+      },
+      "awayTeam": {
+        "id": 117,
+        "name": "Houston Astros"
+      },
+      "venue": {
+        "id": 3312,
+        "name": "Target Field"
+      },
+      "lineups": {
+        "away": [
+          676694,
+          670623,
+          670541,
+          572233,
+          665161,
+          605170,
+          663898,
+          676801,
+          643289
+        ],
+        "home": [
+          670242,
+          621043,
+          621439,
+          663616,
+          664034,
+          650489,
+          669304,
+          680777,
+          664056
+        ],
+        "awayBatters": [
+          {
+            "id": 514888,
+            "fullName": "Jose Altuve",
+            "position": "LF"
+          },
+          {
+            "id": 676694,
+            "fullName": "Jake Meyers",
+            "position": "CF"
+          },
+          {
+            "id": 670623,
+            "fullName": "Isaac Paredes",
+            "position": "3B"
+          },
+          {
+            "id": 670541,
+            "fullName": "Yordan Alvarez",
+            "position": "DH"
+          },
+          {
+            "id": 572233,
+            "fullName": "Christian Walker",
+            "position": "1B"
+          },
+          {
+            "id": 665161,
+            "fullName": "Jeremy Peña",
+            "position": "SS"
+          },
+          {
+            "id": 605170,
+            "fullName": "Victor Caratini",
+            "position": "C"
+          },
+          {
+            "id": 663898,
+            "fullName": "Brendan Rodgers",
+            "position": "2B"
+          },
+          {
+            "id": 701358,
+            "fullName": "Cam Smith",
+            "position": "RF"
+          },
+          {
+            "id": 676801,
+            "fullName": "Chas McCormick",
+            "position": "RF"
+          },
+          {
+            "id": 643289,
+            "fullName": "Mauricio Dubón",
+            "position": "LF"
+          },
+          {
+            "id": 686613,
+            "fullName": "Hunter Brown",
+            "position": "P"
+          },
+          {
+            "id": 687911,
+            "fullName": "Bryan King",
+            "position": "P"
+          },
+          {
+            "id": 650556,
+            "fullName": "Bryan Abreu",
+            "position": "P"
+          },
+          {
+            "id": 623352,
+            "fullName": "Josh Hader",
+            "position": "P"
+          }
+        ],
+        "homeBatters": [
+          {
+            "id": 670242,
+            "fullName": "Matt Wallner",
+            "position": "RF"
+          },
+          {
+            "id": 621043,
+            "fullName": "Carlos Correa",
+            "position": "SS"
+          },
+          {
+            "id": 621439,
+            "fullName": "Byron Buxton",
+            "position": "CF"
+          },
+          {
+            "id": 663616,
+            "fullName": "Trevor Larnach",
+            "position": "DH"
+          },
+          {
+            "id": 664034,
+            "fullName": "Ty France",
+            "position": "1B"
+          },
+          {
+            "id": 650489,
+            "fullName": "Willi Castro",
+            "position": "2B"
+          },
+          {
+            "id": 666397,
+            "fullName": "Edouard Julien",
+            "position": "2B"
+          },
+          {
+            "id": 669304,
+            "fullName": "Jose Miranda",
+            "position": "3B"
+          },
+          {
+            "id": 680777,
+            "fullName": "Ryan Jeffers",
+            "position": "C"
+          },
+          {
+            "id": 664056,
+            "fullName": "Harrison Bader",
+            "position": "LF"
+          },
+          {
+            "id": 657746,
+            "fullName": "Joe Ryan",
+            "position": "P"
+          },
+          {
+            "id": 686973,
+            "fullName": "Louis Varland",
+            "position": "P"
+          },
+          {
+            "id": 660896,
+            "fullName": "Jorge Alcala",
+            "position": "P"
+          },
+          {
+            "id": 670766,
+            "fullName": "Darren McCaughan",
+            "position": "P"
+          }
+        ],
+        "confirmed": true,
+        "sourceTimestamp": "2025-04-03T23:01:19.552Z",
+        "__isApiSource": true
+      },
+      "pitchers": {
+        "away": {
+          "id": 686613,
+          "fullName": "Hunter Brown"
+        },
+        "home": {
+          "id": 657746,
+          "fullName": "Joe Ryan"
+        }
+      },
+      "environment": {
+        "temperature": 71,
+        "windSpeed": 12,
+        "windDirection": "Out To LF",
+        "precipitation": false,
+        "isOutdoor": true,
+        "venueId": 2,
+        "venueName": "Oriole Park at Camden Yards",
+        "hasRoof": false,
+        "sourceTimestamp": "2025-04-03T23:01:19.081Z",
+        "__isApiSource": true
+      },
+      "teamStats": {
+        "home": {
+          "hitting": {
+            "gamesPlayed": 7,
+            "groundOuts": 45,
+            "airOuts": 65,
+            "runs": 36,
+            "doubles": 10,
+            "triples": 0,
+            "homeRuns": 11,
+            "strikeOuts": 64,
+            "baseOnBalls": 20,
+            "intentionalWalks": 0,
+            "hits": 65,
+            "hitByPitch": 4,
+            "avg": ".277",
+            "atBats": 235,
+            "obp": ".338",
+            "slg": ".460",
+            "ops": ".798",
+            "caughtStealing": 2,
+            "stolenBases": 4,
+            "stolenBasePercentage": ".667",
+            "groundIntoDoublePlay": 7,
+            "numberOfPitches": 1054,
+            "plateAppearances": 263,
+            "totalBases": 108,
+            "rbi": 35,
+            "leftOnBase": 41,
+            "sacBunts": 0,
+            "sacFlies": 4,
+            "babip": ".329",
+            "groundOutsToAirouts": "0.69",
+            "catchersInterference": 0,
+            "atBatsPerHomeRun": "21.36"
+          },
+          "pitching": {
+            "gamesPlayed": 7,
+            "gamesStarted": 7,
+            "groundOuts": 50,
+            "airOuts": 61,
+            "runs": 34,
+            "doubles": 14,
+            "triples": 1,
+            "homeRuns": 7,
+            "strikeOuts": 65,
+            "baseOnBalls": 24,
+            "intentionalWalks": 0,
+            "hits": 62,
+            "hitByPitch": 1,
+            "avg": ".265",
+            "atBats": 234,
+            "obp": ".331",
+            "slg": ".423",
+            "ops": ".754",
+            "caughtStealing": 1,
+            "stolenBases": 2,
+            "stolenBasePercentage": ".667",
+            "groundIntoDoublePlay": 3,
+            "numberOfPitches": 1063,
+            "era": "4.87",
+            "inningsPitched": "61.0",
+            "wins": 3,
+            "losses": 4,
+            "saves": 0,
+            "saveOpportunities": 0,
+            "holds": 4,
+            "blownSaves": 0,
+            "earnedRuns": 33,
+            "whip": "1.41",
+            "battersFaced": 263,
+            "outs": 183,
+            "gamesPitched": 7,
+            "completeGames": 0,
+            "shutouts": 0,
+            "strikes": 681,
+            "strikePercentage": ".640",
+            "hitBatsmen": 1,
+            "balks": 1,
+            "wildPitches": 5,
+            "pickoffs": 1,
+            "totalBases": 99,
+            "groundOutsToAirouts": "0.82",
+            "winPercentage": ".429",
+            "pitchesPerInning": "17.43",
+            "gamesFinished": 7,
+            "strikeoutWalkRatio": "2.71",
+            "strikeoutsPer9Inn": "9.59",
+            "walksPer9Inn": "3.54",
+            "hitsPer9Inn": "9.15",
+            "runsScoredPer9": "5.02",
+            "homeRunsPer9": "1.03",
+            "catchersInterference": 0,
+            "sacBunts": 0,
+            "sacFlies": 4
+          },
+          "name": "Baltimore Orioles"
+        },
+        "away": {
+          "hitting": {
+            "gamesPlayed": 7,
+            "groundOuts": 55,
+            "airOuts": 56,
+            "runs": 27,
+            "doubles": 11,
+            "triples": 1,
+            "homeRuns": 7,
+            "strikeOuts": 75,
+            "baseOnBalls": 25,
+            "intentionalWalks": 1,
+            "hits": 55,
+            "hitByPitch": 1,
+            "avg": ".229",
+            "atBats": 240,
+            "obp": ".303",
+            "slg": ".371",
+            "ops": ".674",
+            "caughtStealing": 0,
+            "stolenBases": 9,
+            "stolenBasePercentage": "1.000",
+            "groundIntoDoublePlay": 2,
+            "numberOfPitches": 1090,
+            "plateAppearances": 267,
+            "totalBases": 89,
+            "rbi": 26,
+            "leftOnBase": 51,
+            "sacBunts": 0,
+            "sacFlies": 1,
+            "babip": ".302",
+            "groundOutsToAirouts": "0.98",
+            "catchersInterference": 0,
+            "atBatsPerHomeRun": "34.29"
+          },
+          "pitching": {
+            "gamesPlayed": 7,
+            "gamesStarted": 7,
+            "groundOuts": 54,
+            "airOuts": 62,
+            "runs": 25,
+            "doubles": 9,
+            "triples": 0,
+            "homeRuns": 6,
+            "strikeOuts": 47,
+            "baseOnBalls": 14,
+            "intentionalWalks": 0,
+            "hits": 56,
+            "hitByPitch": 3,
+            "avg": ".258",
+            "atBats": 217,
+            "obp": ".309",
+            "slg": ".382",
+            "ops": ".691",
+            "caughtStealing": 1,
+            "stolenBases": 5,
+            "stolenBasePercentage": ".833",
+            "groundIntoDoublePlay": 10,
+            "numberOfPitches": 872,
+            "era": "3.81",
+            "inningsPitched": "59.0",
+            "wins": 3,
+            "losses": 4,
+            "saves": 2,
+            "saveOpportunities": 2,
+            "holds": 1,
+            "blownSaves": 0,
+            "earnedRuns": 25,
+            "whip": "1.19",
+            "battersFaced": 237,
+            "outs": 177,
+            "gamesPitched": 7,
+            "completeGames": 0,
+            "shutouts": 1,
+            "strikes": 565,
+            "strikePercentage": ".650",
+            "hitBatsmen": 3,
+            "balks": 0,
+            "wildPitches": 0,
+            "pickoffs": 0,
+            "totalBases": 83,
+            "groundOutsToAirouts": "0.87",
+            "winPercentage": ".429",
+            "pitchesPerInning": "14.78",
+            "gamesFinished": 7,
+            "strikeoutWalkRatio": "3.36",
+            "strikeoutsPer9Inn": "7.17",
+            "walksPer9Inn": "2.14",
+            "hitsPer9Inn": "8.54",
+            "runsScoredPer9": "3.81",
+            "homeRunsPer9": "0.92",
+            "catchersInterference": 1,
+            "sacBunts": 0,
+            "sacFlies": 2
+          },
+          "name": "Boston Red Sox"
+        }
+      },
+      "ballpark": {
+        "overall": 1,
+        "handedness": {
+          "rHB": 1,
+          "lHB": 1
+        },
+        "types": {
+          "singles": 1,
+          "doubles": 1,
+          "triples": 1,
+          "homeRuns": 1,
+          "runs": 1
+        },
+        "venueId": 2
+      }
+    },
+    {
+      "gameId": 778466,
+      "gameTime": "2025-04-03T23:05:00Z",
+      "status": {
+        "abstractGameState": "Live",
+        "codedGameState": "P",
+        "detailedState": "Warmup",
+        "statusCode": "PW",
+        "startTimeTBD": false,
+        "abstractGameCode": "L"
+      },
+      "homeTeam": {
+        "id": 147,
+        "name": "New York Yankees"
+      },
+      "awayTeam": {
+        "id": 109,
+        "name": "Arizona Diamondbacks"
+      },
+      "venue": {
+        "id": 3313,
+        "name": "Yankee Stadium"
+      },
+      "lineups": {
+        "away": [
+          682998,
+          672695,
+          656976,
+          647304,
+          666971,
+          553993,
+          677950,
+          641658,
+          645444
+        ],
+        "home": [
+          700250,
+          641355,
+          592450,
+          665862,
+          691176,
+          683011,
+          663757,
+          641555,
+          665828
+        ],
+        "awayBatters": [
+          {
+            "id": 682998,
+            "fullName": "Corbin Carroll",
+            "position": "RF"
+          },
+          {
+            "id": 672695,
+            "fullName": "Geraldo Perdomo",
+            "position": "SS"
+          },
+          {
+            "id": 656976,
+            "fullName": "Pavin Smith",
+            "position": "1B"
+          },
+          {
+            "id": 647304,
+            "fullName": "Josh Naylor",
+            "position": "DH"
+          },
+          {
+            "id": 666971,
+            "fullName": "Lourdes Gurriel Jr.",
+            "position": "LF"
+          },
+          {
+            "id": 553993,
+            "fullName": "Eugenio Suárez",
+            "position": "3B"
+          },
+          {
+            "id": 677950,
+            "fullName": "Alek Thomas",
+            "position": "CF"
+          },
+          {
+            "id": 641658,
+            "fullName": "Garrett Hampson",
+            "position": "2B"
+          },
+          {
+            "id": 645444,
+            "fullName": "Jose Herrera",
+            "position": "C"
+          },
+          {
+            "id": 518876,
+            "fullName": "Merrill Kelly",
+            "position": "P"
+          }
+        ],
+        "homeBatters": [
+          {
+            "id": 700250,
+            "fullName": "Ben Rice",
+            "position": "1B"
+          },
+          {
+            "id": 641355,
+            "fullName": "Cody Bellinger",
+            "position": "RF"
+          },
+          {
+            "id": 592450,
+            "fullName": "Aaron Judge",
+            "position": "DH"
+          },
+          {
+            "id": 665862,
+            "fullName": "Jazz Chisholm Jr.",
+            "position": "2B"
+          },
+          {
+            "id": 691176,
+            "fullName": "Jasson Domínguez",
+            "position": "LF"
+          },
+          {
+            "id": 683011,
+            "fullName": "Anthony Volpe",
+            "position": "SS"
+          },
+          {
+            "id": 663757,
+            "fullName": "Trent Grisham",
+            "position": "CF"
+          },
+          {
+            "id": 641555,
+            "fullName": "J.C. Escarra",
+            "position": "C"
+          },
+          {
+            "id": 665828,
+            "fullName": "Oswaldo Cabrera",
+            "position": "3B"
+          },
+          {
+            "id": 471911,
+            "fullName": "Carlos Carrasco",
+            "position": "P"
+          }
+        ],
+        "confirmed": true,
+        "sourceTimestamp": "2025-04-03T23:01:19.569Z",
+        "__isApiSource": true
+      },
+      "pitchers": {
+        "away": {
+          "id": 518876,
+          "fullName": "Merrill Kelly"
+        },
+        "home": {
+          "id": 471911,
+          "fullName": "Carlos Carrasco"
+        }
+      },
+      "environment": {
+        "temperature": 71,
+        "windSpeed": 12,
+        "windDirection": "Out To LF",
+        "precipitation": false,
+        "isOutdoor": true,
+        "venueId": 2,
+        "venueName": "Oriole Park at Camden Yards",
+        "hasRoof": false,
+        "sourceTimestamp": "2025-04-03T23:01:19.081Z",
+        "__isApiSource": true
+      },
+      "teamStats": {
+        "home": {
+          "hitting": {
+            "gamesPlayed": 7,
+            "groundOuts": 45,
+            "airOuts": 65,
+            "runs": 36,
+            "doubles": 10,
+            "triples": 0,
+            "homeRuns": 11,
+            "strikeOuts": 64,
+            "baseOnBalls": 20,
+            "intentionalWalks": 0,
+            "hits": 65,
+            "hitByPitch": 4,
+            "avg": ".277",
+            "atBats": 235,
+            "obp": ".338",
+            "slg": ".460",
+            "ops": ".798",
+            "caughtStealing": 2,
+            "stolenBases": 4,
+            "stolenBasePercentage": ".667",
+            "groundIntoDoublePlay": 7,
+            "numberOfPitches": 1054,
+            "plateAppearances": 263,
+            "totalBases": 108,
+            "rbi": 35,
+            "leftOnBase": 41,
+            "sacBunts": 0,
+            "sacFlies": 4,
+            "babip": ".329",
+            "groundOutsToAirouts": "0.69",
+            "catchersInterference": 0,
+            "atBatsPerHomeRun": "21.36"
+          },
+          "pitching": {
+            "gamesPlayed": 7,
+            "gamesStarted": 7,
+            "groundOuts": 50,
+            "airOuts": 61,
+            "runs": 34,
+            "doubles": 14,
+            "triples": 1,
+            "homeRuns": 7,
+            "strikeOuts": 65,
+            "baseOnBalls": 24,
+            "intentionalWalks": 0,
+            "hits": 62,
+            "hitByPitch": 1,
+            "avg": ".265",
+            "atBats": 234,
+            "obp": ".331",
+            "slg": ".423",
+            "ops": ".754",
+            "caughtStealing": 1,
+            "stolenBases": 2,
+            "stolenBasePercentage": ".667",
+            "groundIntoDoublePlay": 3,
+            "numberOfPitches": 1063,
+            "era": "4.87",
+            "inningsPitched": "61.0",
+            "wins": 3,
+            "losses": 4,
+            "saves": 0,
+            "saveOpportunities": 0,
+            "holds": 4,
+            "blownSaves": 0,
+            "earnedRuns": 33,
+            "whip": "1.41",
+            "battersFaced": 263,
+            "outs": 183,
+            "gamesPitched": 7,
+            "completeGames": 0,
+            "shutouts": 0,
+            "strikes": 681,
+            "strikePercentage": ".640",
+            "hitBatsmen": 1,
+            "balks": 1,
+            "wildPitches": 5,
+            "pickoffs": 1,
+            "totalBases": 99,
+            "groundOutsToAirouts": "0.82",
+            "winPercentage": ".429",
+            "pitchesPerInning": "17.43",
+            "gamesFinished": 7,
+            "strikeoutWalkRatio": "2.71",
+            "strikeoutsPer9Inn": "9.59",
+            "walksPer9Inn": "3.54",
+            "hitsPer9Inn": "9.15",
+            "runsScoredPer9": "5.02",
+            "homeRunsPer9": "1.03",
+            "catchersInterference": 0,
+            "sacBunts": 0,
+            "sacFlies": 4
+          },
+          "name": "Baltimore Orioles"
+        },
+        "away": {
+          "hitting": {
+            "gamesPlayed": 7,
+            "groundOuts": 55,
+            "airOuts": 56,
+            "runs": 27,
+            "doubles": 11,
+            "triples": 1,
+            "homeRuns": 7,
+            "strikeOuts": 75,
+            "baseOnBalls": 25,
+            "intentionalWalks": 1,
+            "hits": 55,
+            "hitByPitch": 1,
+            "avg": ".229",
+            "atBats": 240,
+            "obp": ".303",
+            "slg": ".371",
+            "ops": ".674",
+            "caughtStealing": 0,
+            "stolenBases": 9,
+            "stolenBasePercentage": "1.000",
+            "groundIntoDoublePlay": 2,
+            "numberOfPitches": 1090,
+            "plateAppearances": 267,
+            "totalBases": 89,
+            "rbi": 26,
+            "leftOnBase": 51,
+            "sacBunts": 0,
+            "sacFlies": 1,
+            "babip": ".302",
+            "groundOutsToAirouts": "0.98",
+            "catchersInterference": 0,
+            "atBatsPerHomeRun": "34.29"
+          },
+          "pitching": {
+            "gamesPlayed": 7,
+            "gamesStarted": 7,
+            "groundOuts": 54,
+            "airOuts": 62,
+            "runs": 25,
+            "doubles": 9,
+            "triples": 0,
+            "homeRuns": 6,
+            "strikeOuts": 47,
+            "baseOnBalls": 14,
+            "intentionalWalks": 0,
+            "hits": 56,
+            "hitByPitch": 3,
+            "avg": ".258",
+            "atBats": 217,
+            "obp": ".309",
+            "slg": ".382",
+            "ops": ".691",
+            "caughtStealing": 1,
+            "stolenBases": 5,
+            "stolenBasePercentage": ".833",
+            "groundIntoDoublePlay": 10,
+            "numberOfPitches": 872,
+            "era": "3.81",
+            "inningsPitched": "59.0",
+            "wins": 3,
+            "losses": 4,
+            "saves": 2,
+            "saveOpportunities": 2,
+            "holds": 1,
+            "blownSaves": 0,
+            "earnedRuns": 25,
+            "whip": "1.19",
+            "battersFaced": 237,
+            "outs": 177,
+            "gamesPitched": 7,
+            "completeGames": 0,
+            "shutouts": 1,
+            "strikes": 565,
+            "strikePercentage": ".650",
+            "hitBatsmen": 3,
+            "balks": 0,
+            "wildPitches": 0,
+            "pickoffs": 0,
+            "totalBases": 83,
+            "groundOutsToAirouts": "0.87",
+            "winPercentage": ".429",
+            "pitchesPerInning": "14.78",
+            "gamesFinished": 7,
+            "strikeoutWalkRatio": "3.36",
+            "strikeoutsPer9Inn": "7.17",
+            "walksPer9Inn": "2.14",
+            "hitsPer9Inn": "8.54",
+            "runsScoredPer9": "3.81",
+            "homeRunsPer9": "0.92",
+            "catchersInterference": 1,
+            "sacBunts": 0,
+            "sacFlies": 2
+          },
+          "name": "Boston Red Sox"
+        }
+      },
+      "ballpark": {
+        "overall": 1,
+        "handedness": {
+          "rHB": 1,
+          "lHB": 1
+        },
+        "types": {
+          "singles": 1,
+          "doubles": 1,
+          "triples": 1,
+          "homeRuns": 1,
+          "runs": 1
+        },
+        "venueId": 2
+      }
+    },
+    {
+      "gameId": 778468,
+      "gameTime": "2025-04-03T23:40:00Z",
+      "status": {
+        "abstractGameState": "Preview",
+        "codedGameState": "P",
+        "detailedState": "Pre-Game",
+        "statusCode": "P",
+        "startTimeTBD": false,
+        "abstractGameCode": "P"
+      },
+      "homeTeam": {
+        "id": 158,
+        "name": "Milwaukee Brewers"
+      },
+      "awayTeam": {
+        "id": 113,
+        "name": "Cincinnati Reds"
+      },
+      "venue": {
+        "id": 32,
+        "name": "American Family Field"
+      },
+      "lineups": {
+        "away": [
+          670770,
+          680574,
+          682829,
+          687952,
+          600869,
+          694362,
+          668715,
+          669289,
+          624431
+        ],
+        "home": [
+          694192,
+          592885,
+          661388,
+          656555,
+          686217,
+          681962,
+          686555,
+          687401,
+          668930
+        ],
+        "awayBatters": [
+          {
+            "id": 670770,
+            "fullName": "TJ Friedl",
+            "position": "CF"
+          },
+          {
+            "id": 680574,
+            "fullName": "Matt McLain",
+            "position": "2B"
+          },
+          {
+            "id": 682829,
+            "fullName": "Elly De La Cruz",
+            "position": "SS"
+          },
+          {
+            "id": 687952,
+            "fullName": "Christian Encarnacion-Strand",
+            "position": "1B"
+          },
+          {
+            "id": 600869,
+            "fullName": "Jeimer Candelario",
+            "position": "3B"
+          },
+          {
+            "id": 694362,
+            "fullName": "Blake Dunn",
+            "position": "RF"
+          },
+          {
+            "id": 668715,
+            "fullName": "Spencer Steer",
+            "position": "DH"
+          },
+          {
+            "id": 669289,
+            "fullName": "Santiago Espinal",
+            "position": "LF"
+          },
+          {
+            "id": 624431,
+            "fullName": "Jose Trevino",
+            "position": "C"
+          },
+          {
+            "id": 666157,
+            "fullName": "Nick Lodolo",
+            "position": "P"
+          }
+        ],
+        "homeBatters": [
+          {
+            "id": 694192,
+            "fullName": "Jackson Chourio",
+            "position": "RF"
+          },
+          {
+            "id": 592885,
+            "fullName": "Christian Yelich",
+            "position": "DH"
+          },
+          {
+            "id": 661388,
+            "fullName": "William Contreras",
+            "position": "C"
+          },
+          {
+            "id": 656555,
+            "fullName": "Rhys Hoskins",
+            "position": "1B"
+          },
+          {
+            "id": 686217,
+            "fullName": "Sal Frelick",
+            "position": "CF"
+          },
+          {
+            "id": 681962,
+            "fullName": "Vinny Capra",
+            "position": "3B"
+          },
+          {
+            "id": 686555,
+            "fullName": "Isaac Collins",
+            "position": "LF"
+          },
+          {
+            "id": 687401,
+            "fullName": "Joey Ortiz",
+            "position": "SS"
+          },
+          {
+            "id": 668930,
+            "fullName": "Brice Turang",
+            "position": "2B"
+          },
+          {
+            "id": 641482,
+            "fullName": "Nestor Cortes",
+            "position": "P"
+          }
+        ],
+        "confirmed": true,
+        "sourceTimestamp": "2025-04-03T23:01:19.639Z",
+        "__isApiSource": true
+      },
+      "pitchers": {
+        "away": {
+          "id": 666157,
+          "fullName": "Nick Lodolo"
+        },
+        "home": {
+          "id": 641482,
+          "fullName": "Nestor Cortes"
+        }
+      },
+      "environment": {
+        "temperature": 71,
+        "windSpeed": 12,
+        "windDirection": "Out To LF",
+        "precipitation": false,
+        "isOutdoor": true,
+        "venueId": 2,
+        "venueName": "Oriole Park at Camden Yards",
+        "hasRoof": false,
+        "sourceTimestamp": "2025-04-03T23:01:19.081Z",
+        "__isApiSource": true
+      },
+      "teamStats": {
+        "home": {
+          "hitting": {
+            "gamesPlayed": 7,
+            "groundOuts": 45,
+            "airOuts": 65,
+            "runs": 36,
+            "doubles": 10,
+            "triples": 0,
+            "homeRuns": 11,
+            "strikeOuts": 64,
+            "baseOnBalls": 20,
+            "intentionalWalks": 0,
+            "hits": 65,
+            "hitByPitch": 4,
+            "avg": ".277",
+            "atBats": 235,
+            "obp": ".338",
+            "slg": ".460",
+            "ops": ".798",
+            "caughtStealing": 2,
+            "stolenBases": 4,
+            "stolenBasePercentage": ".667",
+            "groundIntoDoublePlay": 7,
+            "numberOfPitches": 1054,
+            "plateAppearances": 263,
+            "totalBases": 108,
+            "rbi": 35,
+            "leftOnBase": 41,
+            "sacBunts": 0,
+            "sacFlies": 4,
+            "babip": ".329",
+            "groundOutsToAirouts": "0.69",
+            "catchersInterference": 0,
+            "atBatsPerHomeRun": "21.36"
+          },
+          "pitching": {
+            "gamesPlayed": 7,
+            "gamesStarted": 7,
+            "groundOuts": 50,
+            "airOuts": 61,
+            "runs": 34,
+            "doubles": 14,
+            "triples": 1,
+            "homeRuns": 7,
+            "strikeOuts": 65,
+            "baseOnBalls": 24,
+            "intentionalWalks": 0,
+            "hits": 62,
+            "hitByPitch": 1,
+            "avg": ".265",
+            "atBats": 234,
+            "obp": ".331",
+            "slg": ".423",
+            "ops": ".754",
+            "caughtStealing": 1,
+            "stolenBases": 2,
+            "stolenBasePercentage": ".667",
+            "groundIntoDoublePlay": 3,
+            "numberOfPitches": 1063,
+            "era": "4.87",
+            "inningsPitched": "61.0",
+            "wins": 3,
+            "losses": 4,
+            "saves": 0,
+            "saveOpportunities": 0,
+            "holds": 4,
+            "blownSaves": 0,
+            "earnedRuns": 33,
+            "whip": "1.41",
+            "battersFaced": 263,
+            "outs": 183,
+            "gamesPitched": 7,
+            "completeGames": 0,
+            "shutouts": 0,
+            "strikes": 681,
+            "strikePercentage": ".640",
+            "hitBatsmen": 1,
+            "balks": 1,
+            "wildPitches": 5,
+            "pickoffs": 1,
+            "totalBases": 99,
+            "groundOutsToAirouts": "0.82",
+            "winPercentage": ".429",
+            "pitchesPerInning": "17.43",
+            "gamesFinished": 7,
+            "strikeoutWalkRatio": "2.71",
+            "strikeoutsPer9Inn": "9.59",
+            "walksPer9Inn": "3.54",
+            "hitsPer9Inn": "9.15",
+            "runsScoredPer9": "5.02",
+            "homeRunsPer9": "1.03",
+            "catchersInterference": 0,
+            "sacBunts": 0,
+            "sacFlies": 4
+          },
+          "name": "Baltimore Orioles"
+        },
+        "away": {
+          "hitting": {
+            "gamesPlayed": 7,
+            "groundOuts": 55,
+            "airOuts": 56,
+            "runs": 27,
+            "doubles": 11,
+            "triples": 1,
+            "homeRuns": 7,
+            "strikeOuts": 75,
+            "baseOnBalls": 25,
+            "intentionalWalks": 1,
+            "hits": 55,
+            "hitByPitch": 1,
+            "avg": ".229",
+            "atBats": 240,
+            "obp": ".303",
+            "slg": ".371",
+            "ops": ".674",
+            "caughtStealing": 0,
+            "stolenBases": 9,
+            "stolenBasePercentage": "1.000",
+            "groundIntoDoublePlay": 2,
+            "numberOfPitches": 1090,
+            "plateAppearances": 267,
+            "totalBases": 89,
+            "rbi": 26,
+            "leftOnBase": 51,
+            "sacBunts": 0,
+            "sacFlies": 1,
+            "babip": ".302",
+            "groundOutsToAirouts": "0.98",
+            "catchersInterference": 0,
+            "atBatsPerHomeRun": "34.29"
+          },
+          "pitching": {
+            "gamesPlayed": 7,
+            "gamesStarted": 7,
+            "groundOuts": 54,
+            "airOuts": 62,
+            "runs": 25,
+            "doubles": 9,
+            "triples": 0,
+            "homeRuns": 6,
+            "strikeOuts": 47,
+            "baseOnBalls": 14,
+            "intentionalWalks": 0,
+            "hits": 56,
+            "hitByPitch": 3,
+            "avg": ".258",
+            "atBats": 217,
+            "obp": ".309",
+            "slg": ".382",
+            "ops": ".691",
+            "caughtStealing": 1,
+            "stolenBases": 5,
+            "stolenBasePercentage": ".833",
+            "groundIntoDoublePlay": 10,
+            "numberOfPitches": 872,
+            "era": "3.81",
+            "inningsPitched": "59.0",
+            "wins": 3,
+            "losses": 4,
+            "saves": 2,
+            "saveOpportunities": 2,
+            "holds": 1,
+            "blownSaves": 0,
+            "earnedRuns": 25,
+            "whip": "1.19",
+            "battersFaced": 237,
+            "outs": 177,
+            "gamesPitched": 7,
+            "completeGames": 0,
+            "shutouts": 1,
+            "strikes": 565,
+            "strikePercentage": ".650",
+            "hitBatsmen": 3,
+            "balks": 0,
+            "wildPitches": 0,
+            "pickoffs": 0,
+            "totalBases": 83,
+            "groundOutsToAirouts": "0.87",
+            "winPercentage": ".429",
+            "pitchesPerInning": "14.78",
+            "gamesFinished": 7,
+            "strikeoutWalkRatio": "3.36",
+            "strikeoutsPer9Inn": "7.17",
+            "walksPer9Inn": "2.14",
+            "hitsPer9Inn": "8.54",
+            "runsScoredPer9": "3.81",
+            "homeRunsPer9": "0.92",
+            "catchersInterference": 1,
+            "sacBunts": 0,
+            "sacFlies": 2
+          },
+          "name": "Boston Red Sox"
+        }
+      },
+      "ballpark": {
+        "overall": 1,
+        "handedness": {
+          "rHB": 1,
+          "lHB": 1
+        },
+        "types": {
+          "singles": 1,
+          "doubles": 1,
+          "triples": 1,
+          "homeRuns": 1,
+          "runs": 1
+        },
+        "venueId": 2
+      }
+    }
+  ],
+  "count": 0,
+  "collectTimestamp": "2025-04-03T23:01:18.970Z",
+  "seasons": [
+    "2024",
+    "2025"
+  ]
+}

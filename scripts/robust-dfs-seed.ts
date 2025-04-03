@@ -652,11 +652,26 @@ async function seedGames() {
     { id: 4705, name: "Truist Park" }
   ];
   
+  // Interface to match the database schema
+  interface GameInsert {
+    gamePk: number;
+    gameDate: string;  // YYYY-MM-DD 
+    gameTime: Date;    // Full date with time
+    homeTeamId: number;
+    awayTeamId: number;
+    homeTeamName: string;
+    awayTeamName: string;
+    venueId: number;
+    venueName: string;
+    status: string;
+    detailedState: string;
+  }
+
   // Create games for the next 7 days
   for (let i = 0; i < 7; i++) {
     const gameDate = new Date(today);
     gameDate.setDate(today.getDate() + i);
-    const dateString = gameDate.toISOString().split('T')[0];
+    const dateString = gameDate.toISOString().split('T')[0]; // YYYY-MM-DD
     
     // Create 3 games for each day
     for (let j = 0; j < 3; j++) {
@@ -687,10 +702,11 @@ async function seedGames() {
         status = MLBGameStatus.FINAL;
       }
       
-      games.push({
+      // Create the game object in the correct format for the database
+      const game: GameInsert = {
         gamePk,
-        gameDate: dateString as any, // Casting to bypass TypeScript's date validation
-        gameTime: gameTime.toISOString() as any,
+        gameDate: dateString,  // Use YYYY-MM-DD format
+        gameTime,              // Use Date object directly for timestamp
         homeTeamId: teams[homeTeamIndex].id,
         awayTeamId: teams[awayTeamIndex].id,
         homeTeamName: teams[homeTeamIndex].name,
@@ -700,7 +716,9 @@ async function seedGames() {
         status,
         detailedState: status === MLBGameStatus.LIVE ? "In Progress" : 
                        status === MLBGameStatus.FINAL ? "Final" : "Scheduled"
-      });
+      };
+      
+      games.push(game);
     }
   }
   

@@ -1,0 +1,562 @@
+[
+  {
+    "pitcherId": 450203,
+    "name": "Charlie Morton",
+    "team": "Baltimore Orioles",
+    "opponent": "Boston Red Sox",
+    "gameId": 778470,
+    "venue": "Oriole Park at Camden Yards",
+    "stats": {
+      "seasonStats": {
+        "gamesPlayed": 2,
+        "inningsPitched": "8.1",
+        "wins": 0,
+        "losses": 2,
+        "era": "9.72",
+        "whip": "1.92",
+        "strikeouts": 0,
+        "walks": 3,
+        "saves": 0,
+        "homeRunsAllowed": 2
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 2.2222222222222223,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 8.88888888888889
+      }
+    },
+    "projections": {
+      "winProbability": 27,
+      "expectedStrikeouts": 0,
+      "expectedInnings": 4.455,
+      "dfsProjection": {
+        "expectedPoints": 8.7435,
+        "upside": 10.492199999999999,
+        "floor": 6.9948
+      }
+    },
+    "environment": {
+      "temperature": 71,
+      "windSpeed": 12,
+      "windDirection": "Out To LF",
+      "isOutdoor": true
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38263673",
+      "salary": 6800,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 14.73
+    }
+  },
+  {
+    "pitcherId": 656557,
+    "name": "Tanner Houck",
+    "team": "Boston Red Sox",
+    "opponent": "Baltimore Orioles",
+    "gameId": 778470,
+    "venue": "Oriole Park at Camden Yards",
+    "stats": {
+      "seasonStats": {
+        "gamesPlayed": 2,
+        "inningsPitched": "9.2",
+        "wins": 0,
+        "losses": 1,
+        "era": "6.52",
+        "whip": "1.76",
+        "strikeouts": 0,
+        "walks": 5,
+        "saves": 0,
+        "homeRunsAllowed": 3
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 2.9347826086956523,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 10
+      }
+    },
+    "projections": {
+      "winProbability": 20,
+      "expectedStrikeouts": 0,
+      "expectedInnings": 5.06,
+      "dfsProjection": {
+        "expectedPoints": 8.8435,
+        "upside": 10.6122,
+        "floor": 7.074800000000001
+      }
+    },
+    "environment": {
+      "temperature": 71,
+      "windSpeed": 12,
+      "windDirection": "Out To LF",
+      "isOutdoor": true
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38263657",
+      "salary": 7600,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 16.5
+    }
+  },
+  {
+    "pitcherId": 592836,
+    "name": "Taijuan Walker",
+    "team": "Philadelphia Phillies",
+    "opponent": "Colorado Rockies",
+    "gameId": 778467,
+    "venue": "Citizens Bank Park",
+    "stats": {
+      "seasonStats": {
+        "gamesPlayed": 1,
+        "inningsPitched": "6.0",
+        "wins": 1,
+        "losses": 0,
+        "era": "0.00",
+        "whip": "0.67",
+        "strikeouts": 0,
+        "walks": 1,
+        "saves": 0,
+        "homeRunsAllowed": 0
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 0,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 1
+      }
+    },
+    "projections": {
+      "winProbability": 80,
+      "expectedStrikeouts": 0,
+      "expectedInnings": 6.6000000000000005,
+      "dfsProjection": {
+        "expectedPoints": 12.52584375,
+        "upside": 15.0310125,
+        "floor": 10.020675
+      }
+    },
+    "environment": {
+      "temperature": 71,
+      "windSpeed": 12,
+      "windDirection": "Out To LF",
+      "isOutdoor": true
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38263689",
+      "salary": 6400,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 5.06
+    }
+  },
+  {
+    "pitcherId": 622608,
+    "name": "Antonio Senzatela",
+    "team": "Colorado Rockies",
+    "opponent": "Philadelphia Phillies",
+    "gameId": 778467,
+    "venue": "Citizens Bank Park",
+    "stats": {
+      "seasonStats": {
+        "gamesPlayed": 2,
+        "inningsPitched": "9.2",
+        "wins": 0,
+        "losses": 1,
+        "era": "0.00",
+        "whip": "2.17",
+        "strikeouts": 0,
+        "walks": 2,
+        "saves": 0,
+        "homeRunsAllowed": 0
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 0,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 1
+      }
+    },
+    "projections": {
+      "winProbability": 20,
+      "expectedStrikeouts": 0,
+      "expectedInnings": 5.06,
+      "dfsProjection": {
+        "expectedPoints": 8.881375,
+        "upside": 10.65765,
+        "floor": 7.1051
+      }
+    },
+    "environment": {
+      "temperature": 71,
+      "windSpeed": 12,
+      "windDirection": "Out To LF",
+      "isOutdoor": true
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38263662",
+      "salary": 7200,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 3.32
+    }
+  },
+  {
+    "pitcherId": 657746,
+    "name": "Joe Ryan",
+    "team": "Minnesota Twins",
+    "opponent": "Houston Astros",
+    "gameId": 778462,
+    "venue": "Target Field",
+    "stats": {
+      "seasonStats": {
+        "gamesPlayed": 2,
+        "inningsPitched": "10.0",
+        "wins": 0,
+        "losses": 1,
+        "era": "4.50",
+        "whip": "1.00",
+        "strikeouts": 0,
+        "walks": 0,
+        "saves": 0,
+        "homeRunsAllowed": 2
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 1.8,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 7.199999999999999
+      }
+    },
+    "projections": {
+      "winProbability": 20,
+      "expectedStrikeouts": 0,
+      "expectedInnings": 5.5,
+      "dfsProjection": {
+        "expectedPoints": 9.171999999999999,
+        "upside": 11.006399999999998,
+        "floor": 7.337599999999999
+      }
+    },
+    "environment": {
+      "temperature": 71,
+      "windSpeed": 12,
+      "windDirection": "Out To LF",
+      "isOutdoor": true
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38263642",
+      "salary": 8700,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 18.71
+    }
+  },
+  {
+    "pitcherId": 686613,
+    "name": "Hunter Brown",
+    "team": "Houston Astros",
+    "opponent": "Minnesota Twins",
+    "gameId": 778462,
+    "venue": "Target Field",
+    "stats": {
+      "seasonStats": {
+        "gamesPlayed": 2,
+        "inningsPitched": "12.0",
+        "wins": 1,
+        "losses": 1,
+        "era": "3.00",
+        "whip": "1.00",
+        "strikeouts": 0,
+        "walks": 3,
+        "saves": 0,
+        "homeRunsAllowed": 1
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 0.75,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 3
+      }
+    },
+    "projections": {
+      "winProbability": 40,
+      "expectedStrikeouts": 0,
+      "expectedInnings": 6.6000000000000005,
+      "dfsProjection": {
+        "expectedPoints": 10.56975,
+        "upside": 12.6837,
+        "floor": 8.455800000000002
+      }
+    },
+    "environment": {
+      "temperature": 71,
+      "windSpeed": 12,
+      "windDirection": "Out To LF",
+      "isOutdoor": true
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": null,
+      "salary": 0,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 0
+    }
+  },
+  {
+    "pitcherId": 471911,
+    "name": "Carlos Carrasco",
+    "team": "New York Yankees",
+    "opponent": "Arizona Diamondbacks",
+    "gameId": 778466,
+    "venue": "Yankee Stadium",
+    "stats": {
+      "seasonStats": {
+        "gamesPlayed": 1,
+        "inningsPitched": "2.0",
+        "wins": 0,
+        "losses": 0,
+        "era": "13.50",
+        "whip": "2.50",
+        "strikeouts": 0,
+        "walks": 0,
+        "saves": 0,
+        "homeRunsAllowed": 1
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 4.5,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 10
+      }
+    },
+    "projections": {
+      "winProbability": 42,
+      "expectedStrikeouts": 0,
+      "expectedInnings": 5.5,
+      "dfsProjection": {
+        "expectedPoints": 9.9445,
+        "upside": 11.933399999999999,
+        "floor": 7.9556000000000004
+      }
+    },
+    "environment": {
+      "temperature": 71,
+      "windSpeed": 12,
+      "windDirection": "Out To LF",
+      "isOutdoor": true
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": null,
+      "salary": 0,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 0
+    }
+  },
+  {
+    "pitcherId": 518876,
+    "name": "Merrill Kelly",
+    "team": "Arizona Diamondbacks",
+    "opponent": "New York Yankees",
+    "gameId": 778466,
+    "venue": "Yankee Stadium",
+    "stats": {
+      "seasonStats": {
+        "gamesPlayed": 1,
+        "inningsPitched": "5.1",
+        "wins": 1,
+        "losses": 0,
+        "era": "1.69",
+        "whip": "1.31",
+        "strikeouts": 0,
+        "walks": 4,
+        "saves": 0,
+        "homeRunsAllowed": 0
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 0,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 1
+      }
+    },
+    "projections": {
+      "winProbability": 80,
+      "expectedStrikeouts": 0,
+      "expectedInnings": 5.61,
+      "dfsProjection": {
+        "expectedPoints": 11.579125,
+        "upside": 13.89495,
+        "floor": 9.2633
+      }
+    },
+    "environment": {
+      "temperature": 71,
+      "windSpeed": 12,
+      "windDirection": "Out To LF",
+      "isOutdoor": true
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": null,
+      "salary": 0,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 0
+    }
+  },
+  {
+    "pitcherId": 641482,
+    "name": "Nestor Cortes",
+    "team": "Milwaukee Brewers",
+    "opponent": "Cincinnati Reds",
+    "gameId": 778468,
+    "venue": "American Family Field",
+    "stats": {
+      "seasonStats": {
+        "gamesPlayed": 1,
+        "inningsPitched": "2.0",
+        "wins": 0,
+        "losses": 1,
+        "era": "36.00",
+        "whip": "5.50",
+        "strikeouts": 0,
+        "walks": 5,
+        "saves": 0,
+        "homeRunsAllowed": 5
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 22.5,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 10
+      }
+    },
+    "projections": {
+      "winProbability": 20,
+      "expectedStrikeouts": 0,
+      "expectedInnings": 2.2,
+      "dfsProjection": {
+        "expectedPoints": 7.1434999999999995,
+        "upside": 8.572199999999999,
+        "floor": 5.7148
+      }
+    },
+    "environment": {
+      "temperature": 71,
+      "windSpeed": 12,
+      "windDirection": "Out To LF",
+      "isOutdoor": true
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": "38263670",
+      "salary": 6900,
+      "positions": [
+        "RP"
+      ],
+      "avgPointsPerGame": 14.68
+    }
+  },
+  {
+    "pitcherId": 666157,
+    "name": "Nick Lodolo",
+    "team": "Cincinnati Reds",
+    "opponent": "Milwaukee Brewers",
+    "gameId": 778468,
+    "venue": "American Family Field",
+    "stats": {
+      "seasonStats": {
+        "gamesPlayed": 1,
+        "inningsPitched": "6.0",
+        "wins": 1,
+        "losses": 0,
+        "era": "3.00",
+        "whip": "0.83",
+        "strikeouts": 0,
+        "walks": 0,
+        "saves": 0,
+        "homeRunsAllowed": 1
+      },
+      "homeRunVulnerability": {
+        "hrPer9": 1.5,
+        "flyBallPct": 0.35,
+        "hrPerFlyBall": 0.12,
+        "homeRunVulnerability": 6
+      }
+    },
+    "projections": {
+      "winProbability": 65,
+      "expectedStrikeouts": 0,
+      "expectedInnings": 6.6000000000000005,
+      "dfsProjection": {
+        "expectedPoints": 11.612875,
+        "upside": 13.935450000000001,
+        "floor": 9.2903
+      }
+    },
+    "environment": {
+      "temperature": 71,
+      "windSpeed": 12,
+      "windDirection": "Out To LF",
+      "isOutdoor": true
+    },
+    "ballparkFactors": {
+      "overall": 1,
+      "homeRuns": 1
+    },
+    "draftKings": {
+      "draftKingsId": null,
+      "salary": 0,
+      "positions": [
+        "SP"
+      ],
+      "avgPointsPerGame": 0
+    }
+  }
+]
