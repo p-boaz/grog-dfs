@@ -138,6 +138,35 @@ await saveBatterProjection({
 4. All tables include timestamp columns for tracking data freshness
 5. Foreign key constraints maintain referential integrity
 
+## API Integration
+
+The MLB API integration with the database follows these patterns:
+
+1. **Daily Data Collection**: The `daily-data-collector.ts` module collects and analyzes MLB data, then persists it to the database.
+   - Game data is inserted using `insertGame` function
+   - Player data is inserted using `insertPlayer` function 
+   - Projections are saved using `saveBatterProjection` and `savePitcherProjection` functions
+
+2. **Fallback Strategies**: The API endpoints implement fallback mechanisms when database queries fail:
+   - First attempt: Database queries via the repository layer
+   - Second attempt: Static JSON files in the data directory
+   - Third attempt: In-memory sample data as a last resort
+
+3. **Connection Pooling**: Database connections are managed via a connection pool in `drizzle.ts`:
+   - Configuration includes idle timeout, connection limits, and error handling
+   - Health checks are available through `checkDatabaseConnection()`
+   - Graceful shutdown is handled through process exit handlers
+
+## Data Refresh Workflow
+
+The data refresh strategy follows this progression:
+
+1. Collect MLB data from the API using the daily collector
+2. Process and analyze the data for DFS scoring
+3. Persist the data to PostgreSQL using the query functions
+4. Provide API access to the persisted data for the frontend
+5. Fall back to static files if the database is unavailable
+
 ## Migration Strategy
 
 Database migrations are handled through Drizzle ORM:

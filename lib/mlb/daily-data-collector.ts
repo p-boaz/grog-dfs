@@ -16,6 +16,14 @@ import { populateMlbIds } from "./draftkings/player-mapping";
 import { getDKSalaries } from "./draftkings/salaries";
 import type { DailyMLBData } from "./types/core";
 import type { BatterInfo } from "./types/analysis";
+import { 
+  insertGame, 
+  insertPlayer, 
+  insertBatterStats, 
+  insertPitcherStats,
+  saveBatterProjection,
+  savePitcherProjection
+} from "../db/queries";
 
 // Constants for placeholder values
 const PLACEHOLDER = {
@@ -27,6 +35,12 @@ const PLACEHOLDER = {
 
 // Add multi-season support
 const SUPPORTED_SEASONS = ["2024", "2025"];
+
+// Database integration flag - set to false to skip database operations
+const ENABLE_DATABASE = true;
+
+// Flag to control database error handling
+const CONTINUE_ON_DB_ERROR = true;
 
 /**
  * Collect and analyze daily DFS data for MLB games
@@ -308,6 +322,87 @@ export async function collectDailyDFSData(
       `\nSaved pitcher analysis to ${pitcherOutputPath} (${pitcherAnalysis.length} entries)`
     );
 
+    // Save pitcher data to database
+    if (ENABLE_DATABASE) {
+      console.log("\nSaving pitcher data to database...");
+      let dbErrorCount = 0;
+      
+      for (const pitcher of pitcherAnalysis) {
+        try {
+          // Get team ID if available
+          const game = data.games.find(g => g.gameId === pitcher.gameId);
+          const teamId = pitcher.team === (game?.homeTeam.name || "") 
+            ? game?.homeTeam.id || 0 
+            : game?.awayTeam.id || 0;
+          
+          // First insert the player
+          await insertPlayer({
+            id: pitcher.pitcherId,
+            fullName: pitcher.name,
+            team: pitcher.team,
+            teamId: teamId,
+            position: "SP",
+            throwsHand: "R", // Default - would need to be captured correctly
+            isPitcher: true
+          });
+
+          // Create a game object from our game data
+          if (game) {
+            await insertGame({
+              gamePk: game.gameId,
+              gameDate: game.gameTime,
+              teams: {
+                home: {
+                  team: {
+                    id: game.homeTeam.id,
+                    name: game.homeTeam.name
+                  }
+                },
+                away: {
+                  team: {
+                    id: game.awayTeam.id,
+                    name: game.awayTeam.name
+                  }
+                }
+              },
+              venue: game.venue,
+              status: game.status
+            });
+          }
+
+          // Save projection data
+          await savePitcherProjection({
+            playerId: pitcher.pitcherId,
+            gamePk: pitcher.gameId,
+            projectedPoints: pitcher.projections.dfsProjection.expectedPoints || 0,
+            confidence: 70, // Default value
+            draftKingsSalary: pitcher.draftKings.salary || 0,
+            projectedInnings: pitcher.projections.expectedInnings || 0,
+            projectedStrikeouts: pitcher.projections.expectedStrikeouts || 0,
+            projectedWinProbability: pitcher.projections.winProbability || 0,
+            projectedQualityStart: 0.5, // Default value - should be calculated properly
+            opposingLineupStrength: 0.5, // Default value - should be calculated properly
+            analysisFactors: ["pitcher analysis", "matchup", "weather"]
+          });
+          
+          console.log(`✅ Saved pitcher data for ${pitcher.name}`);
+        } catch (error) {
+          console.error(`Error saving pitcher ${pitcher.name} to database:`, error);
+          dbErrorCount++;
+          
+          // If we're not continuing on errors and there are too many, break the loop
+          if (!CONTINUE_ON_DB_ERROR && dbErrorCount > 3) {
+            console.error("Too many database errors. Stopping pitcher database operations.");
+            break;
+          }
+        }
+      }
+      
+      console.log(`Database operation complete. Saved ${pitcherAnalysis.length - dbErrorCount} pitchers to database.`);
+    } else {
+      console.log("Database operations disabled. Skipping pitcher database saves.");
+    }
+
     // Log sample of pitcher analysis
     if (pitcherAnalysis.length > 0) {
       console.log("\nSample pitcher analysis:");
@@ -423,6 +518,95 @@ export async function collectDailyDFSData(
       batterAnalysis,
       outputDir
     );
+
+    // Save batter data to database
+    if (ENABLE_DATABASE) {
+      console.log("\nSaving batter data to database...");
+      let dbErrorCount = 0;
+      let savedBatters = 0;
+      
+      for (const batter of batterAnalysis) {
+        try {
+          // Get team ID if available
+          const game = data.games.find(g => g.gameId === batter.gameId);
+          const teamId = batter.team === (game?.homeTeam.name || "") 
+            ? game?.homeTeam.id || 0 
+            : game?.awayTeam.id || 0;
+
+          // First insert the player
+          await insertPlayer({
+            id: batter.batterId,
+            fullName: batter.name,
+            team: batter.team,
+            teamId: teamId,
+            position: batter.position,
+            handedness: "R", // Default - would need to be captured correctly
+            isPitcher: false
+          });
+
+          // Create a game object from our game data if not already inserted
+          if (game) {
+            await insertGame({
+              gamePk: game.gameId,
+              gameDate: game.gameTime,
+              teams: {
+                home: {
+                  team: {
+                    id: game.homeTeam.id,
+                    name: game.homeTeam.name
+                  }
+                },
+                away: {
+                  team: {
+                    id: game.awayTeam.id,
+                    name: game.awayTeam.name
+                  }
+                }
+              },
+              venue: game.venue,
+              status: game.status
+            });
+          }
+
+          // Save projection data for batters
+          await saveBatterProjection({
+            playerId: batter.batterId,
+            gamePk: batter.gameId,
+            projectedPoints: batter.projections.dfsProjection.expectedPoints || 0,
+            confidence: 70, // Default value
+            draftKingsSalary: batter.draftKings.salary || 0,
+            projectedHits: batter.projections.expectedHits?.total || 0,
+            projectedHomeRuns: batter.projections.homeRunProbability || 0,
+            projectedRbi: batter.projections.dfsProjection.breakdown?.rbi || 0,
+            projectedRuns: batter.projections.dfsProjection.breakdown?.runs || 0,
+            projectedStolenBases: batter.projections.stolenBaseProbability || 0,
+            battingOrderPosition: batter.lineupPosition,
+            opposingPitcherId: batter.opposingPitcher?.id,
+            analysisFactors: ["batter analysis", "matchup", "weather"]
+          });
+          
+          savedBatters++;
+          
+          // Log progress for every 10 batters
+          if (savedBatters % 10 === 0) {
+            console.log(`Saved ${savedBatters}/${batterAnalysis.length} batters to database...`);
+          }
+        } catch (error) {
+          console.error(`Error saving batter ${batter.name} to database:`, error);
+          dbErrorCount++;
+          
+          // If we're not continuing on errors and there are too many, break the loop
+          if (!CONTINUE_ON_DB_ERROR && dbErrorCount > 5) {
+            console.error("Too many database errors. Stopping batter database operations.");
+            break;
+          }
+        }
+      }
+      
+      console.log(`Database operation complete. Saved ${savedBatters} of ${batterAnalysis.length} batters to database.`);
+    } else {
+      console.log("Database operations disabled. Skipping batter database saves.");
+    }
 
     // Update count
     data.count = batterAnalysis.length;

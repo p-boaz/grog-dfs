@@ -1,27 +1,37 @@
 # DFS Database Seeding Guide
 
-This guide explains how to use the robust database seeding mechanism for the MLB DFS application. The seeding tools provide reliable test data for development and testing purposes.
+This guide explains how to use the database seeding mechanism for the MLB DFS application. The seeding tools provide reliable test data for development and testing purposes.
 
 ## Available Seeding Tools
 
 The application includes several tools for seeding the database:
 
 1. **Robust DFS Seed Script** (`/scripts/robust-dfs-seed.ts`)
-   - The primary tool for seeding MLB DFS data
+   - The primary tool for seeding MLB DFS data with static data
    - Handles date formatting correctly for PostgreSQL
    - Includes comprehensive error handling
    - Supports multiple options for selective seeding
 
 2. **Run DFS Seed Script** (`/scripts/run-dfs-seed.ts`)
-   - A simple wrapper for the robust seed script
+   - A flexible wrapper for the robust seed script
    - Makes it easier to run the seed script with common options
+   - Supports collecting live data from the MLB API with `--collect-live` flag
+   - Supports database-only operations with the `--db-only` flag
 
-3. **Sample DFS Data** (`/data/sample-dfs-data.json`)
+3. **Daily Data Collector** (`/lib/mlb/daily-data-collector.ts`)
+   - Core module for collecting and analyzing MLB data
+   - Direct integration with the database for persisting data
+   - Can be triggered directly or through the seeding tools
+   - Handles parallel processing for games, batters, and pitchers
+
+4. **Sample DFS Data** (`/data/sample-dfs-data.json`)
    - A static JSON file with sample DFS data
    - Used as a fallback when database access fails
    - Ensures the application works even without a database connection
 
 ## Command Line Options
+
+### Robust DFS Seed Script Options
 
 The robust seed script accepts several options:
 
@@ -32,11 +42,18 @@ The robust seed script accepts several options:
 - `--projections`: Seed projections only
 - `--env=dev|test`: Specify environment (defaults to dev)
 
+### Run DFS Seed Script Additional Options
+
+The run-dfs-seed wrapper adds these extra options:
+
+- `--collect-live`: Fetch live data from MLB API before seeding
+- `--db-only`: Skip the static seeding process and only save API data to the database
+
 ## Usage Examples
 
 ### Basic Seeding
 
-To seed the database with all data (players, games, and projections):
+To seed the database with all data using static sample data:
 
 ```bash
 pnpm tsx scripts/run-dfs-seed.ts
@@ -63,6 +80,20 @@ pnpm tsx scripts/run-dfs-seed.ts --games
 
 # Seed only projections
 pnpm tsx scripts/run-dfs-seed.ts --projections
+```
+
+### Live Data Collection
+
+To collect today's live data from the MLB API and save to the database:
+
+```bash
+pnpm tsx scripts/run-dfs-seed.ts --collect-live --db-only
+```
+
+To collect live data and then run the static seeder:
+
+```bash
+pnpm tsx scripts/run-dfs-seed.ts --collect-live
 ```
 
 ### Environmental Seeding
