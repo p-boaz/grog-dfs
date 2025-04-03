@@ -114,10 +114,39 @@ interface PitchersResponse {
   pitchers: PitcherData[];
 }
 
+interface GameData {
+  gamePk: number;
+  gameDate: string;
+  status: {
+    abstractGameState: string;
+    detailedState: string;
+  };
+  teams: {
+    home: {
+      team: {
+        id: number;
+        name: string;
+      }
+    };
+    away: {
+      team: {
+        id: number;
+        name: string;
+      }
+    }
+  };
+  venue: {
+    id?: number;
+    name?: string;
+  };
+}
+
 interface DFSData {
   batters: BattersResponse;
   pitchers: PitchersResponse;
+  games?: GameData[];
   date: string;
+  source?: string;
 }
 
 export function useDFSData(date?: string) {
@@ -155,7 +184,9 @@ export function useDFSData(date?: string) {
               ? jsonData.pitchers.pitchers
               : [],
           },
+          games: Array.isArray(jsonData.games) ? jsonData.games : [],
           date: jsonData.date,
+          source: jsonData.source || 'api'
         };
 
         setData(formattedData);

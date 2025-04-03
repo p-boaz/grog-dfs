@@ -26,6 +26,7 @@ This directory contains documentation and reference information for the MLB DFS 
 
 - [Type System Architecture](./reference/type-system/architecture.md): Overview of the three-layer type system
 - [MLB API Guide](./guides/api-guide.md): Guide to working with MLB APIs
+- [Database Integration](./reference/database-integration.md): How MLB types are stored in the database
 
 ### Tutorials
 
