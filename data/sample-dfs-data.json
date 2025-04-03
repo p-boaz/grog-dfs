@@ -1,0 +1,576 @@
+{
+  "date": "2025-04-03",
+  "batters": {
+    "date": "2025-04-03",
+    "analysisTimestamp": "2025-04-03T12:00:00Z",
+    "batters": [
+      {
+        "batterId": 665742,
+        "name": "Pete Alonso",
+        "position": "1B",
+        "team": "New York Mets",
+        "opponent": "Philadelphia Phillies",
+        "opposingPitcher": {
+          "id": 592789,
+          "name": "Zack Wheeler",
+          "throwsHand": "R"
+        },
+        "gameId": 717465,
+        "venue": "Citizens Bank Park",
+        "stats": {
+          "seasonStats": {
+            "2025": {
+              "gamesPlayed": 162,
+              "atBats": 552,
+              "hits": 146,
+              "runs": 96,
+              "doubles": 31,
+              "triples": 1,
+              "homeRuns": 46,
+              "rbi": 118,
+              "avg": "0.265",
+              "obp": "0.358",
+              "slg": "0.542",
+              "ops": "0.900",
+              "stolenBases": 4,
+              "caughtStealing": 1
+            }
+          }
+        },
+        "projections": {
+          "dfsProjection": {
+            "expectedPoints": 9.7,
+            "upside": 12.6,
+            "floor": 6.8
+          },
+          "homeRunProbability": 0.26,
+          "stolenBaseProbability": 0.03
+        },
+        "environment": {
+          "temperature": 73,
+          "windSpeed": 8,
+          "windDirection": "NW",
+          "isOutdoor": true
+        },
+        "ballparkFactors": {
+          "overall": 104,
+          "homeRuns": 108,
+          "runs": 102
+        }
+      },
+      {
+        "batterId": 547180,
+        "name": "Trea Turner",
+        "position": "SS",
+        "team": "Philadelphia Phillies",
+        "opponent": "New York Mets",
+        "opposingPitcher": {
+          "id": 656844,
+          "name": "David Peterson",
+          "throwsHand": "L"
+        },
+        "gameId": 717465,
+        "venue": "Citizens Bank Park",
+        "stats": {
+          "seasonStats": {
+            "2025": {
+              "gamesPlayed": 155,
+              "atBats": 592,
+              "hits": 172,
+              "runs": 102,
+              "doubles": 35,
+              "triples": 5,
+              "homeRuns": 26,
+              "rbi": 76,
+              "avg": "0.291",
+              "obp": "0.342",
+              "slg": "0.482",
+              "ops": "0.824",
+              "stolenBases": 30,
+              "caughtStealing": 5
+            }
+          }
+        },
+        "projections": {
+          "dfsProjection": {
+            "expectedPoints": 8.5,
+            "upside": 11.1,
+            "floor": 6.0
+          },
+          "homeRunProbability": 0.18,
+          "stolenBaseProbability": 0.21
+        },
+        "environment": {
+          "temperature": 73,
+          "windSpeed": 8,
+          "windDirection": "NW",
+          "isOutdoor": true
+        },
+        "ballparkFactors": {
+          "overall": 104,
+          "homeRuns": 108,
+          "runs": 102
+        }
+      },
+      {
+        "batterId": 545361,
+        "name": "Mike Trout",
+        "position": "CF",
+        "team": "Los Angeles Angels",
+        "opponent": "Oakland Athletics",
+        "opposingPitcher": {
+          "id": 621244,
+          "name": "Shane Bieber",
+          "throwsHand": "R"
+        },
+        "gameId": 717466,
+        "venue": "Oakland Coliseum",
+        "stats": {
+          "seasonStats": {
+            "2025": {
+              "gamesPlayed": 82,
+              "atBats": 300,
+              "hits": 90,
+              "runs": 62,
+              "doubles": 18,
+              "triples": 2,
+              "homeRuns": 28,
+              "rbi": 65,
+              "avg": "0.300",
+              "obp": "0.402",
+              "slg": "0.633",
+              "ops": "1.035",
+              "stolenBases": 8,
+              "caughtStealing": 2
+            }
+          }
+        },
+        "projections": {
+          "dfsProjection": {
+            "expectedPoints": 10.2,
+            "upside": 13.3,
+            "floor": 7.1
+          },
+          "homeRunProbability": 0.30,
+          "stolenBaseProbability": 0.12
+        },
+        "environment": {
+          "temperature": 65,
+          "windSpeed": 12,
+          "windDirection": "W",
+          "isOutdoor": true
+        },
+        "ballparkFactors": {
+          "overall": 94,
+          "homeRuns": 88,
+          "runs": 92
+        }
+      },
+      {
+        "batterId": 660271,
+        "name": "Juan Soto",
+        "position": "RF",
+        "team": "New York Yankees",
+        "opponent": "Toronto Blue Jays",
+        "opposingPitcher": {
+          "id": 663855,
+          "name": "Shohei Ohtani",
+          "throwsHand": "R"
+        },
+        "gameId": 717467,
+        "venue": "Yankee Stadium",
+        "stats": {
+          "seasonStats": {
+            "2025": {
+              "gamesPlayed": 150,
+              "atBats": 548,
+              "hits": 172,
+              "runs": 111,
+              "doubles": 31,
+              "triples": 3,
+              "homeRuns": 32,
+              "rbi": 98,
+              "avg": "0.315",
+              "obp": "0.425",
+              "slg": "0.555",
+              "ops": "0.980",
+              "stolenBases": 10,
+              "caughtStealing": 3
+            }
+          }
+        },
+        "projections": {
+          "dfsProjection": {
+            "expectedPoints": 9.9,
+            "upside": 12.9,
+            "floor": 6.9
+          },
+          "homeRunProbability": 0.27,
+          "stolenBaseProbability": 0.08
+        },
+        "environment": {
+          "temperature": 68,
+          "windSpeed": 5,
+          "windDirection": "SE",
+          "isOutdoor": true
+        },
+        "ballparkFactors": {
+          "overall": 112,
+          "homeRuns": 118,
+          "runs": 110
+        }
+      },
+      {
+        "batterId": 605141,
+        "name": "Mookie Betts",
+        "position": "RF",
+        "team": "Los Angeles Dodgers",
+        "opponent": "Atlanta Braves",
+        "opposingPitcher": {
+          "id": 477132,
+          "name": "Max Scherzer",
+          "throwsHand": "R"
+        },
+        "gameId": 717468,
+        "venue": "Dodger Stadium",
+        "stats": {
+          "seasonStats": {
+            "2025": {
+              "gamesPlayed": 145,
+              "atBats": 550,
+              "hits": 179,
+              "runs": 118,
+              "doubles": 40,
+              "triples": 4,
+              "homeRuns": 29,
+              "rbi": 89,
+              "avg": "0.325",
+              "obp": "0.405",
+              "slg": "0.570",
+              "ops": "0.975",
+              "stolenBases": 16,
+              "caughtStealing": 2
+            }
+          }
+        },
+        "projections": {
+          "dfsProjection": {
+            "expectedPoints": 9.3,
+            "upside": 12.1,
+            "floor": 6.5
+          },
+          "homeRunProbability": 0.22,
+          "stolenBaseProbability": 0.15
+        },
+        "environment": {
+          "temperature": 75,
+          "windSpeed": 4,
+          "windDirection": "SW",
+          "isOutdoor": true
+        },
+        "ballparkFactors": {
+          "overall": 96,
+          "homeRuns": 94,
+          "runs": 95
+        }
+      }
+    ]
+  },
+  "pitchers": {
+    "date": "2025-04-03",
+    "analysisTimestamp": "2025-04-03T12:00:00Z",
+    "pitchers": [
+      {
+        "pitcherId": 592789,
+        "name": "Zack Wheeler",
+        "team": "Philadelphia Phillies",
+        "opponent": "New York Mets",
+        "gameId": 717465,
+        "venue": "Citizens Bank Park",
+        "stats": {
+          "seasonStats": {
+            "2025": {
+              "gamesPlayed": 32,
+              "gamesStarted": 32,
+              "inningsPitched": 207.0,
+              "wins": 14,
+              "losses": 8,
+              "era": "3.07",
+              "whip": "1.05",
+              "strikeouts": 212,
+              "walks": 45,
+              "saves": 0,
+              "homeRunsAllowed": 23,
+              "hitBatsmen": 5
+            }
+          }
+        },
+        "projections": {
+          "winProbability": 58,
+          "expectedStrikeouts": 7.4,
+          "expectedInnings": 6.2,
+          "dfsProjection": {
+            "expectedPoints": 18.2,
+            "upside": 23.7,
+            "floor": 12.7
+          }
+        },
+        "environment": {
+          "temperature": 73,
+          "windSpeed": 8,
+          "windDirection": "NW",
+          "isOutdoor": true
+        },
+        "ballparkFactors": {
+          "overall": 104,
+          "homeRuns": 108
+        }
+      },
+      {
+        "pitcherId": 656844,
+        "name": "David Peterson",
+        "team": "New York Mets",
+        "opponent": "Philadelphia Phillies",
+        "gameId": 717465,
+        "venue": "Citizens Bank Park",
+        "stats": {
+          "seasonStats": {
+            "2025": {
+              "gamesPlayed": 23,
+              "gamesStarted": 22,
+              "inningsPitched": 118.2,
+              "wins": 8,
+              "losses": 5,
+              "era": "4.32",
+              "whip": "1.42",
+              "strikeouts": 131,
+              "walks": 53,
+              "saves": 0,
+              "homeRunsAllowed": 15,
+              "hitBatsmen": 4
+            }
+          }
+        },
+        "projections": {
+          "winProbability": 42,
+          "expectedStrikeouts": 6.2,
+          "expectedInnings": 5.1,
+          "dfsProjection": {
+            "expectedPoints": 14.6,
+            "upside": 19.0,
+            "floor": 10.2
+          }
+        },
+        "environment": {
+          "temperature": 73,
+          "windSpeed": 8,
+          "windDirection": "NW",
+          "isOutdoor": true
+        },
+        "ballparkFactors": {
+          "overall": 104,
+          "homeRuns": 108
+        }
+      },
+      {
+        "pitcherId": 518516,
+        "name": "Gerrit Cole",
+        "team": "New York Yankees",
+        "opponent": "Toronto Blue Jays",
+        "gameId": 717467,
+        "venue": "Yankee Stadium",
+        "stats": {
+          "seasonStats": {
+            "2025": {
+              "gamesPlayed": 33,
+              "gamesStarted": 33,
+              "inningsPitched": 209.0,
+              "wins": 15,
+              "losses": 4,
+              "era": "2.63",
+              "whip": "0.98",
+              "strikeouts": 222,
+              "walks": 44,
+              "saves": 0,
+              "homeRunsAllowed": 18,
+              "hitBatsmen": 3
+            }
+          }
+        },
+        "projections": {
+          "winProbability": 62,
+          "expectedStrikeouts": 8.5,
+          "expectedInnings": 6.5,
+          "dfsProjection": {
+            "expectedPoints": 21.4,
+            "upside": 27.8,
+            "floor": 14.9
+          }
+        },
+        "environment": {
+          "temperature": 68,
+          "windSpeed": 5,
+          "windDirection": "SE",
+          "isOutdoor": true
+        },
+        "ballparkFactors": {
+          "overall": 112,
+          "homeRuns": 118
+        }
+      },
+      {
+        "pitcherId": 477132,
+        "name": "Max Scherzer",
+        "team": "Texas Rangers",
+        "opponent": "Atlanta Braves",
+        "gameId": 717468,
+        "venue": "Dodger Stadium",
+        "stats": {
+          "seasonStats": {
+            "2025": {
+              "gamesPlayed": 29,
+              "gamesStarted": 29,
+              "inningsPitched": 182.0,
+              "wins": 12,
+              "losses": 7,
+              "era": "3.38",
+              "whip": "1.08",
+              "strikeouts": 201,
+              "walks": 39,
+              "saves": 0,
+              "homeRunsAllowed": 21,
+              "hitBatsmen": 6
+            }
+          }
+        },
+        "projections": {
+          "winProbability": 55,
+          "expectedStrikeouts": 7.8,
+          "expectedInnings": 5.8,
+          "dfsProjection": {
+            "expectedPoints": 17.8,
+            "upside": 23.1,
+            "floor": 12.4
+          }
+        },
+        "environment": {
+          "temperature": 75,
+          "windSpeed": 4,
+          "windDirection": "SW",
+          "isOutdoor": true
+        },
+        "ballparkFactors": {
+          "overall": 96,
+          "homeRuns": 94
+        }
+      }
+    ]
+  },
+  "games": [
+    {
+      "gamePk": 717465,
+      "gameDate": "2025-04-03T19:05:00Z",
+      "status": {
+        "abstractGameState": "Preview",
+        "detailedState": "Scheduled"
+      },
+      "teams": {
+        "home": {
+          "team": {
+            "id": 143,
+            "name": "Philadelphia Phillies"
+          }
+        },
+        "away": {
+          "team": {
+            "id": 121,
+            "name": "New York Mets"
+          }
+        }
+      },
+      "venue": {
+        "id": 2681,
+        "name": "Citizens Bank Park"
+      }
+    },
+    {
+      "gamePk": 717466,
+      "gameDate": "2025-04-03T16:10:00Z",
+      "status": {
+        "abstractGameState": "Preview",
+        "detailedState": "Scheduled"
+      },
+      "teams": {
+        "home": {
+          "team": {
+            "id": 133,
+            "name": "Oakland Athletics"
+          }
+        },
+        "away": {
+          "team": {
+            "id": 108,
+            "name": "Los Angeles Angels"
+          }
+        }
+      },
+      "venue": {
+        "id": 10,
+        "name": "Oakland Coliseum"
+      }
+    },
+    {
+      "gamePk": 717467,
+      "gameDate": "2025-04-03T19:05:00Z",
+      "status": {
+        "abstractGameState": "Preview",
+        "detailedState": "Scheduled"
+      },
+      "teams": {
+        "home": {
+          "team": {
+            "id": 147,
+            "name": "New York Yankees"
+          }
+        },
+        "away": {
+          "team": {
+            "id": 141,
+            "name": "Toronto Blue Jays"
+          }
+        }
+      },
+      "venue": {
+        "id": 3313,
+        "name": "Yankee Stadium"
+      }
+    },
+    {
+      "gamePk": 717468,
+      "gameDate": "2025-04-03T19:10:00Z",
+      "status": {
+        "abstractGameState": "Preview",
+        "detailedState": "Scheduled"
+      },
+      "teams": {
+        "home": {
+          "team": {
+            "id": 119,
+            "name": "Los Angeles Dodgers"
+          }
+        },
+        "away": {
+          "team": {
+            "id": 144,
+            "name": "Atlanta Braves"
+          }
+        }
+      },
+      "venue": {
+        "id": 22,
+        "name": "Dodger Stadium"
+      }
+    }
+  ],
+  "source": "sample_data"
+}
