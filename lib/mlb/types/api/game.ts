@@ -4,7 +4,7 @@
  * These types represent the raw responses from MLB API endpoints
  * for game data, including game feeds, schedules, and environments.
  */
-import { ApiSourceMarker, GameDate, MLBApiResponse } from "./common";
+import { ApiSourceMarker, GameDate as ScheduleGameDate, MLBApiResponse } from "./common";
 /**
  * Schedule API response
  */
@@ -13,7 +13,7 @@ export interface ScheduleApiResponse extends MLBApiResponse {
     totalEvents: number;
     totalGames: number;
     totalGamesInProgress: number;
-    dates: GameDate[];
+    dates: ScheduleGameDate[];
 }
 /**
  * Game feed API response (v1.1)
@@ -351,14 +351,21 @@ export interface GameEnvironmentApiResponse extends ApiSourceMarker {
     venueName: string;
     hasRoof: boolean;
 }
-export interface GameFeedApiResponse {
+/**
+ * @deprecated Raw GameFeedApiResponse interface - use the more detailed one above
+ */
+export interface GameFeedApiResponseRaw {
     gamePk: number;
     link: string;
     metaData: Record<string, any>;
     gameData: Record<string, any>;
     liveData: Record<string, any>;
 }
-export interface GameData {
+
+/**
+ * @deprecated Use the more detailed GameData interface above
+ */
+export interface GameDataRaw {
     game: Record<string, any>;
     datetime: Record<string, any>;
     status: Record<string, any>;
@@ -376,25 +383,38 @@ export interface GameData {
     primaryDatacaster: Record<string, any>;
     moundVisits: Record<string, any>;
 }
-export interface LiveData {
+
+/**
+ * @deprecated Use the more detailed LiveData interface above
+ */
+export interface LiveDataRaw {
     plays: Record<string, any>;
     linescore: Record<string, any>;
     boxscore: Record<string, any>;
     decisions: Record<string, any>;
     leaders: Record<string, any>;
 }
-export interface GameTeams {
+
+/**
+ * @deprecated Use the more detailed GameTeams interface above
+ */
+export interface GameTeamsRaw {
     away: Record<string, any>;
     home: Record<string, any>;
 }
-export interface ScheduleApiResponse {
+
+/**
+ * @deprecated Use the more detailed ScheduleApiResponse interface above
+ */
+export interface ScheduleApiResponseRaw {
     totalItems: number;
     totalEvents: number;
     totalGames: number;
     totalGamesInProgress: number;
     dates: Record<string, any>[];
 }
-export interface GameDate {
+// Legacy type definition - use ScheduleGameDate from common.ts instead
+export interface ScheduleGameDateLegacy {
     date: string;
     totalItems: number;
     totalEvents: number;

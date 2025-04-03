@@ -55,7 +55,15 @@ export type GameEnvironmentData = Api.GameEnvironmentApiResponse;
 /**
  * @deprecated Use Domain types instead
  */
-export type ProbableLineup = Record<string, any>;
+export type ProbableLineup = {
+  away: number[];
+  home: number[];
+  awayBatters?: { id: number; fullName: string; position: string; }[];
+  homeBatters?: { id: number; fullName: string; position: string; }[];
+  confirmed?: boolean;
+  confidence?: number;
+  sourceTimestamp?: Date;
+};
 
 // Type aliases for core domain objects  
 export type MLBWeatherData = Record<string, any>;

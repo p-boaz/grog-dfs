@@ -7,6 +7,7 @@
 
 import { GameEnvironmentApiResponse, GameFeedApiResponse, GamePlays, 
          ScheduleApiResponse } from '../api/game';
+import { GameDate as ScheduleGameDate } from '../api/common';
 
 /**
  * Game status values
